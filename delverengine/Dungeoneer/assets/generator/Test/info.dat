@@ -1,0 +1,18 @@
+{
+    "chunkTiles": 17,
+    "mapChunks": 4,
+    "mapComplexity": 5,
+    "lakes": [],
+    "spawnLights": [],
+    "doors": [],
+    "surprises": [],
+    "decorations": [],
+    "texturePainters": {
+        "greybox": {
+            "floor": {
+                "2": [2, 2, 3]
+            }
+        }
+    },
+    "genInfos": []
+}

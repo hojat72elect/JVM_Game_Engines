@@ -1,0 +1,43 @@
+*.class
+
+# Package Files #
+#*.jar
+*.war
+*.ear
+
+.metadata/*
+
+*/bin/*
+
+**/.DS_Store
+
+save/
+Dungeoneer/save/
+Dungeoneer/assets/packaged_files.txt
+Dungeoneer/assets/errorlog.txt
+DungeoneerDesktop/save
+DungeoneerAndroid/libs
+
+*.iml
+.idea/*
+!/.idea/runConfigurations
+
+Manifest.java
+
+# Gradle ignores
+/local.properties
+.gradle
+Dungeoneer/build
+DungeoneerDesktop/build
+DelvEdit/build
+build/
+**/BuildConfig.java
+
+## Eclipse
+.classpath
+.project
+.settings
+
+## VS Code
+.vscode/*
+!/.vscode/launch.json

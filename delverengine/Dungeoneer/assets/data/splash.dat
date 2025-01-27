@@ -1,0 +1,8 @@
+{
+    "$schema": "http://delverengine.com/jsonschema/current/dungeoneer/screens/SplashScreenInfo.schema.json",
+    "backgroundLevel": null,
+    "backgroundImage": "splash/Background.png",
+    "logoImage": "splash/Delver-Engine-Logo.png",
+    "logoFilter": true,
+    "music": null
+}

@@ -1,0 +1,15 @@
+[
+    {
+        "columns": 4,
+        "filename": "textures.png",
+        "scale": 1,
+        "name": "greybox"
+    },
+    {
+        "columns": 4,
+        "filename": "textures.png",
+        "scale": 1,
+        "name": "greybox-animated",
+        "shader": "animate"
+    }
+]

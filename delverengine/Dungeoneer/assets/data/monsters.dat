@@ -1,0 +1,4 @@
+{
+    "$schema": "http://delverengine.com/jsonschema/current/managers/MonsterManager.schema.json",
+    "monsters": {}
+}
