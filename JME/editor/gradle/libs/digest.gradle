@@ -1,0 +1,37 @@
+import java.security.MessageDigest
+
+def getMD5Hash(input) {
+    if (!(input instanceof File)) {
+        logger.warn("getMD5Hash(): Input is no File. Maybe you forgot file()?")
+    }
+
+    MessageDigest digest = MessageDigest.getInstance("MD5")
+    digest.update(input.getBytes())
+    return new BigInteger(1, digest.digest()).toString(16).padLeft(32, "0");
+}
+
+def getSHA1Hash(input) {
+    if (!(input instanceof File)) {
+        logger.warn("getSHA1Hash(): Input is no File. Maybe you forgot file()?")
+    }
+
+    MessageDigest digest = MessageDigest.getInstance("SHA-1")
+    digest.update(input.getBytes())
+    return new BigInteger(1, digest.digest()).toString(16).padLeft(40, "0");
+}
+
+def getSHA256Hash(input) {
+    if (!(input instanceof File)) {
+        logger.warn("getSHA256Hash(): Input is no File. Maybe you forgot file()?")
+    }
+
+    MessageDigest digest = MessageDigest.getInstance("SHA-256")
+    digest.update(input.getBytes())
+    return new BigInteger(1, digest.digest()).toString(16).padLeft(64, "0");
+}
+
+ext { /* hax to export the methods */
+    getMD5Hash = this.&getMD5Hash
+    getSHA1Hash = this.&getSHA1Hash
+    getSHA256Hash = this.&getSHA256Hash
+}

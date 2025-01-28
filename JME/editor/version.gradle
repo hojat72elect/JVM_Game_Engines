@@ -1,0 +1,185 @@
+/*
+ Version Info Examples
+ =====================
+ 
+ Nightly Build Snapshot
+ * git tag:
+ * Full Version: 3.1-5124
+ * POM Version: 3.1.0-SNAPSHOT
+ * NBM Revision: 5124
+ * NBM UC Suffix: nightly/3.1/plugins
+
+ Nightly Build Snapshot (PBRIsComing branch)
+ * git tag:
+ * Full Version: 3.1-PBRIsComing-5124
+ * POM Version: 3.1.0-PBRIsComing-SNAPSHOT
+ * NBM Revision: 5124
+ * NBM UC Suffix: PBRIsComing-nightly/3.1/plugins
+
+ Alpha1 Release
+ * git tag: v3.1.0-alpha1
+ * Full Version: 3.1-alpha1
+ * POM Version: 3.1.0-alpha1
+ * NBM Revision: 0
+ * NBM UC Suffix: stable/3.1/plugins
+ 
+ Final Release
+ * git tag: v3.1.0
+ * Full Version: 3.1
+ * POM Version: 3.1.0
+ * NBM Revision: 0
+ * NBM UC Suffix: stable/3.1/plugins
+ */ 
+
+import java.text.SimpleDateFormat
+import org.ajoberstar.grgit.*
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:gradle-git:1.2.0'
+    }
+}
+
+ext {
+    jmeRevision     = 0
+    jmeNbmRevision  = 0
+    jmeGitHash      = ""
+    jmeGitTag       = ""
+    jmeShortGitHash = ""
+    jmeBuildDate    = new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+    jmeBranchName   = "unknown"
+    jmeFullVersion  = "${jmeVersion}-UNKNOWN"
+    jmePomVersion   = "unknown"
+    jmeNbmUcSuffix  = "unknown"
+}
+
+def getReleaseInfo(String tag) {
+    if (tag == null || tag == "") {
+        // not a tagged commit
+        return null;
+    }
+    /*if (!tag.startsWith("v")) {
+        // syntax error
+        return null;
+    }
+    tag = tag.substring(1)
+    The SDK has it’s own versioning scheme which doesn’t start with v…*/
+
+    String[] parts = tag.split("-");
+    String mainVersion;
+    boolean prerelease;
+    String releaseName = null;
+
+    if (parts.length == 2) {
+        // prerelease
+        prerelease = true;
+        mainVersion = parts[0];
+        releaseName = parts[1];
+        if (releaseName.size() == 0) {
+            // syntax error
+            println "Warning: getReleaseInfo() found an errorneous tag: \"" + tag + "\". Syntax Error: Release Name is of Length 0!";
+            return null;
+        }
+    } else if (parts.length == 1) {
+        // final release
+        prerelease = false;
+        mainVersion = parts[0];
+    } else if (parts.length == 3) {
+        // sdk doesn't really differentiate.
+        prerelease = true;
+        mainVersion = parts[0];
+        releaseName = parts[1];
+    } else {
+        // error
+        println "Warning: getReleaseInfo() found an errorneous tag: \"" + tag + "\". Syntax Error: The Tag didn't contain the expected number of dash-seperated keywords"
+        return null;
+    }
+
+    if (mainVersion.size() == 0) {
+        // syntax error
+        println "Warning: getReleaseInfo() found an errorneous tag: \"" + tag + "\". Syntax Error: The Main Version (e.g. 3.1) couldn't be extracted successfully."
+        return null;
+    }
+
+    parts = mainVersion.split("\\.");
+    if (parts.size() == 2) {
+        mainVersion = mainVersion + ".0" // Assume Revision Zero
+        parts = mainVersion.split("\\.");
+    }
+    
+    if (parts.size() != 3) {
+        // syntax error
+        println "Warning: getReleaseInfo() found an errorneous tag: \"" + tag + "\". Syntax Error: The Tags Main Version didn't consist of two/three parts"
+        return null;
+    }
+
+    String baseVersion = parts[0] + "." + parts[1];
+
+    return [
+        "tag" : tag,
+        "baseVersion" : baseVersion,
+        "mainVersion" : mainVersion,
+        "prerelease" :  prerelease,
+        "releaseName" : releaseName,
+        "releaseSuffix": (prerelease ? "-${releaseName}": "")
+    ]
+}
+
+task configureVersionInfo {
+    try {
+        def grgit = Grgit.open(project.file('.'))
+        def head = grgit.head()
+        jmeRevision = grgit.log(includes: [head]).size()
+        jmeGitHash = head.id
+        jmeShortGitHash = head.abbreviatedId
+        jmeBranchName = grgit.branch.current.name
+        
+        if (project.hasProperty("tag_name")) {
+            jmeGitTag = project.getProperty("tag_name")
+        } else {
+            jmeGitTag = grgit.tag.list().find { it.commit == head }
+        }
+
+        def releaseInfo = getReleaseInfo(jmeGitTag)
+        if (releaseInfo != null) {
+            jmeFullVersion = "${releaseInfo.baseVersion}${releaseInfo.releaseSuffix}"
+            jmePomVersion = "${releaseInfo.mainVersion}${releaseInfo.releaseSuffix}"
+            jmeNbmRevision = jmeRevision
+            jmeNbmUcSuffix = "stable/${releaseInfo.baseVersion}/plugins"
+        } else {
+            // SNAPSHOT
+            jmeFullVersion = jmeMainVersion
+            jmePomVersion  = jmeVersion
+            if (System.env.TRAVIS_BRANCH != null) {
+                jmeBranchName = System.env.TRAVIS_BRANCH
+            }
+            if (System.env.TRAVIS_PULL_REQUEST != null && 
+                System.env.TRAVIS_PULL_REQUEST != "false") {
+                jmeBranchName += "-pr-" + System.env.TRAVIS_PULL_REQUEST
+            }
+            if (jmeBranchName != "master") {
+                jmeFullVersion += "-${jmeBranchName}"
+                jmePomVersion  += "-${jmeBranchName}"
+                jmeNbmUcSuffix = "${jmeBranchName}-"
+            } else {
+                jmeNbmUcSuffix = ""
+            }
+            jmeNbmUcSuffix += "nightly/" + jmeMainVersion + "/plugins"
+            jmeFullVersion += "-${jmeRevision}"
+            jmePomVersion  += "-SNAPSHOT"
+            jmeNbmRevision = jmeRevision
+        }
+            
+        logger.warn("Full Version: ${jmeFullVersion}")
+        logger.warn("POM Version: ${jmePomVersion}")
+        logger.warn("NBM Revision: ${jmeNbmRevision}")
+        logger.warn("NBM UC Suffix: ${jmeNbmUcSuffix}")
+    } catch (ex) {
+        // Failed to get repo info
+        logger.warn("Failed to get repository info: " + ex.message + ". " + \
+                    "Only partial build info will be generated.")
+    }
+}

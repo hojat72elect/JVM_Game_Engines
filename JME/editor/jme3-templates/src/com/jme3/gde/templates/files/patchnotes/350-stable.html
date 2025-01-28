@@ -1,0 +1,564 @@
+<html>
+    <p>A production-quality release of JMonkeyEngine with the following noteworthy changes relative to v3.4.1-stable:</p>
+    <ul>
+        <li>
+            <p>Upgrade considerations (potential breaking changes):</p>
+            <ul>
+                <li>explicitly requires Java v8 or higher (issue <a 
+                        data-error-text="Failed to load title" data-id="1057648305" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1661" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1661/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1661">#1661</a>)</li>
+                <li>cannot create a GL window on armhf (issue <a 
+                        data-error-text="Failed to load title" data-id="1083920706" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1710" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1710/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1710">#1710</a>)</li>
+                <li>to use the "jme3-lwjgl3" library in a Gradle build, you'll need Gradle v6.3 or later</li>
+                <li>more precise return types for 13 <code>clone()</code> methods (issue <a 
+                        data-error-text="Failed to load title" data-id="1061740053" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1676" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1676/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1676">#1676</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1063940115"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1683"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1683/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1683">#1683</a>)</li>
+                <li>changed the semantics of <code>FastMath.sphericalToCartesianZ()</code> (issue <a
+                        data-error-text="Failed to load title" data-id="602199862"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1349" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1349/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1349">#1349</a>, PR <a
+                        data-error-text="Failed to load title" data-id="917149209"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1573"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1573/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1573">#1573</a>)</li>
+                <li>deleted the <code>Weights</code> class, which was deprecated in v3.4 (issue <a
+                        data-error-text="Failed to load title" data-id="1027670362"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1620"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1620/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1620">#1620</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1034739447"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1632"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1632/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1632">#1632</a>)</li>
+                <li>protected the no-arg constructor of <code>TransformTrack</code> (PR <a 
+                        data-error-text="Failed to load title" data-id="867296253" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1531"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1531/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1531">#1531</a>)</li>
+            </ul>
+        </li>
+        <li>
+            <p>New features:</p>
+            <ul>
+                <li>enhancements to <code>SurfaceView</code> for Android (PR <a 
+                        data-error-text="Failed to load title" data-id="1052174015" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1650"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1650/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1650">#1650</a>), including:
+                    <ul>
+                        <li>optional binding to activity lifecycle</li>
+                        <li>added listeners for "layout drawn" and "renderer started"</li>
+                        <li>new <code>DestructionPolicy</code> applied when exiting an activity</li>
+                        <li>add full stack trace and a "copy log" button to the error dialog</li>
+                        <li>added settings for "show error dialog", "exit on Esc pressed", and "show Esc exit prompt"</li>
+                        <li>added the <code>getGlEsVersion()</code> method</li>
+                    </ul>
+                </li>
+                <li>determine the maximum supported width for lines (issue <a 
+                        data-error-text="Failed to load title" data-id="891292089" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1555" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1555/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1555">#1555</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1046458584"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1643"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1643/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1643">#1643</a>)</li>
+                <li>support for additional compressed texture formats (issue <a 
+                        data-error-text="Failed to load title" data-id="1025045511" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1619" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1619/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1619">#1619</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1028124715"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1621"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1621/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1621">#1621</a>)</li>
+                <li>texture flipping for certain RGTC formats (PR <a 
+                        data-error-text="Failed to load title" data-id="1034361791" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1629"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1629/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1629">#1629</a>)</li>
+                <li>app settings to position the initial window in LWJGL v3 (issue <a 
+                        data-error-text="Failed to load title" data-id="1059679493" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1668"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1668/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1668">#1668</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1059722428"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1670"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1670/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1670">#1670</a>)</li>
+                <li>a color-adjustment filter (issue <a 
+                        data-error-text="Failed to load title" data-id="278709787" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/781" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/781/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/781">#781</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1058624724"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1665"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1665/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1665">#1665</a>, <a 
+                        data-hovercard-type="commit"
+                        data-hovercard-url="https://github.com/jMonkeyEngine/jmonkeyengine/commit/a9e88b0457aefbe79d13e2d4ce145683335e1ca1/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/commit/a9e88b0457aefbe79d13e2d4ce145683335e1ca1"><tt>a9e88b0</tt></a>)
+                </li>
+                <li><code>RectangleMesh</code> class for custom quads (PR <a 
+                        data-error-text="Failed to load title" data-id="1073875428" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1701"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1701/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1701">#1701</a>)</li>
+                <li><code>calculateD()</code> and <code>calculateNormal()</code> methods in <code>Rectangle</code> class (PR
+                    <a  data-error-text="Failed to load title" data-id="1073875428"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1701"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1701/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1701">#1701</a>)</li>
+                <li><code>CenterQuad</code> mesh in jme3-core (PR <a 
+                        data-error-text="Failed to load title" data-id="1077427678" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1704"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1704/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1704">#1704</a>)</li>
+                <li>added <code>getNbMorphTargets()</code>, <code>setKeyframesWeight()</code>, and
+                    <code>setNbMorphTargets()</code> to the <code>MorphTrack</code> class (PR <a
+                        data-error-text="Failed to load title" data-id="1006902354"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1608"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1608/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1608">#1608</a>)</li>
+                <li>made <code>getOffsetTransform()</code> and <code>getAttachmentsNode()</code> accessible to subclasses of
+                    <code>Joint</code> (PR <a  data-error-text="Failed to load title"
+                                               data-id="871287256" data-permission-text="Title is private"
+                                               data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1536"
+                                               data-hovercard-type="pull_request"
+                                               data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1536/hovercard"
+                                               href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1536">#1536</a>)</li>
+                <li>distinguish ARM macOS/Windows from other platforms (issue <a 
+                        data-error-text="Failed to load title" data-id="864564825" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1528" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1528/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1528">#1528</a>, PR <a
+                        data-error-text="Failed to load title" data-id="865710101"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1530"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1530/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1530">#1530</a>)</li>
+                <li><code>Platform.getOs()</code> to determine the generic OS name (<a 
+                        data-hovercard-type="commit"
+                        data-hovercard-url="https://github.com/jMonkeyEngine/jmonkeyengine/commit/cc75352428dc43edbe44c44deeb698840cf1e863/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/commit/cc75352428dc43edbe44c44deeb698840cf1e863"><tt>cc75352</tt></a>)
+                </li>
+                <li>convert inner class Layer to a top-level class (issue <a 
+                        data-error-text="Failed to load title" data-id="901002309" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1566" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1566/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1566">#1566</a>, PRs <a
+                        data-error-text="Failed to load title" data-id="1054228467"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1656"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1656/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1656">#1656</a> and <a
+                        data-error-text="Failed to load title" data-id="1094825638"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1730"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1730/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1730">#1730</a>)</li>
+            </ul>
+        </li>
+        <li>
+            <p>Bugs and defects addressed:</p>
+            <ul>
+                <li>LWJGL v3 hangs while creating a window (issues <a 
+                        data-error-text="Failed to load title" data-id="496487822" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1193" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1193/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1193">#1193</a>, <a
+                        data-error-text="Failed to load title" data-id="851655366"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1514" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1514/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1514">#1514</a>, and <a
+                        data-error-text="Failed to load title" data-id="892362014"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1558" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1558/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1558">#1558</a>; PRs <a
+                        data-error-text="Failed to load title" data-id="1067978375"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1690"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1690/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1690">#1690</a> and <a
+                        data-error-text="Failed to load title" data-id="1089004840"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1722"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1722/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1722">#1722</a>)</li>
+                <li>incorrect cursor position on macOS with Retina (issue <a 
+                        data-error-text="Failed to load title" data-id="358296166" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/893" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/893/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/893">#893</a>, PRs <a
+                        data-error-text="Failed to load title" data-id="997059118"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1607"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1607/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1607">#1607</a>, <a
+                        data-error-text="Failed to load title" data-id="1105175486"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1746"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1746/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1746">#1746</a>, and <a
+                        data-error-text="Failed to load title" data-id="1106311573"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1753"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1753/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1753">#1753</a>; <a 
+                        data-hovercard-type="commit"
+                        data-hovercard-url="https://github.com/jMonkeyEngine/jmonkeyengine/commit/c44d74b4f89561093f08e5e8b1e3cd14e0f9411a/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/commit/c44d74b4f89561093f08e5e8b1e3cd14e0f9411a"><tt>c44d74b</tt></a>)
+                </li>
+                <li>Right-to-Left and cursive fonts displayed incorrectly (issue <a 
+                        data-error-text="Failed to load title" data-id="479299479" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1158" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1158/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1158">#1158</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1065158338"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1685"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1685/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1685">#1685</a>)</li>
+                <li>incorrect <code>VirtualIndexBuffer</code> for a <code>LineLoop</code> mesh (issue <a
+                        data-error-text="Failed to load title" data-id="988355372"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1603" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1603/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1603">#1603</a>, PR <a
+                        data-error-text="Failed to load title" data-id="993936335"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1605"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1605/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1605">#1605</a>)</li>
+                <li><code>ChaseCamera</code> won't rotate after being re-enabled (PR <a 
+                        data-error-text="Failed to load title" data-id="1070191068" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1692"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1692/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1692">#1692</a>)</li>
+                <li>ineffective audio filters (issue <a 
+                        data-error-text="Failed to load title" data-id="1071581812" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1699" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1699/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1699">#1699</a>, PRs <a
+                        data-error-text="Failed to load title" data-id="1079269586"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1707"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1707/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1707">#1707</a> and <a
+                        data-error-text="Failed to load title" data-id="1092889410"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1728"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1728/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1728">#1728</a>)</li>
+                <li><code>NullPointerException</code> in <code>reloadJoysticks()</code> when joystick lacks buttons (issue
+                    <a  data-error-text="Failed to load title" data-id="1099432283"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1739" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1739/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1739">#1739</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1099505321"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1740"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1740/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1740">#1740</a>)</li>
+                <li><code>LwjglCanvas</code> doesn't initialize OpenCL for LWJGL v2 (PR <a 
+                        data-error-text="Failed to load title" data-id="1088509985" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1720"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1720/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1720">#1720</a>)</li>
+                <li><code>sphericalToCartesianZ()</code> doesn't reverse <code>cartesianZToSpherical()</code> (issue <a
+                        data-error-text="Failed to load title" data-id="602199862"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1349" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1349/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1349">#1349</a>, PR <a
+                        data-error-text="Failed to load title" data-id="917149209"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1573"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1573/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1573">#1573</a>)</li>
+                <li>null-pointer exceptions while loading erroneous glTF models:
+                    <ul>
+                        <li>in <code>GltfLoader.findChildren()</code> (PR <a 
+                                data-error-text="Failed to load title" data-id="813234842"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1471"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1471/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1471">#1471</a>)</li>
+                        <li>in <code>SkinningControl.getAttachmentsNode()</code> (issue <a 
+                                data-error-text="Failed to load title" data-id="1011968207"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1612"
+                                data-hovercard-type="issue"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1612/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1612">#1612</a>, PR <a
+                                data-error-text="Failed to load title" data-id="1046180255"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1639"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1639/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1639">#1639</a>)</li>
+                    </ul>
+                </li>
+                <li>cryptic crash when more than 16 textures are used (issue <a 
+                        data-error-text="Failed to load title" data-id="30067689" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/37" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/37/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/37">#37</a>, PR <a
+                        data-error-text="Failed to load title" data-id="918243637"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1574"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1574/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1574">#1574</a>)</li>
+                <li>error 1280 in macOS querying <code>GL_FRAMEBUFFER_SRGB_CAPABLE_EXT</code> (PR <a
+                        data-error-text="Failed to load title" data-id="1105685727"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1749"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1749/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1749">#1749</a>)</li>
+                <li><code>fromJmeKeyCode()</code> returns garbage for unknown keys (issue <a
+                        data-error-text="Failed to load title" data-id="975993582"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1596" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1596/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1596">#1596</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1045487902"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1638"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1638/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1638">#1638</a>)</li>
+                <li>serialization bugs:
+                    <ul>
+                        <li><code>CartoonEdgeFilter</code> class (issue <a 
+                                data-error-text="Failed to load title" data-id="1046197347"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1640"
+                                data-hovercard-type="issue"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1640/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1640">#1640</a>, PR <a
+                                data-error-text="Failed to load title" data-id="1048938903"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1647"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1647/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1647">#1647</a>)</li>
+                        <li><code>RenderState</code> class (issues <a 
+                                data-error-text="Failed to load title" data-id="1088441789"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1718"
+                                data-hovercard-type="issue"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1718/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1718">#1718</a> and <a
+                                data-error-text="Failed to load title" data-id="1089050335"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1723"
+                                data-hovercard-type="issue"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1723/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1723">#1723</a>; PRs <a
+                                data-error-text="Failed to load title" data-id="1088457150"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1719"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1719/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1719">#1719</a> and <a
+                                data-error-text="Failed to load title" data-id="1089485500"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1726"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1726/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1726">#1726</a>)</li>
+                        <li><code>ShaderNodeVariable</code> class (PR <a 
+                                data-error-text="Failed to load title" data-id="938321778"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1585"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1585/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1585">#1585</a>)</li>
+                        <li><code>Torus</code> class (PR <a 
+                                data-error-text="Failed to load title" data-id="938324019"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1586"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1586/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1586">#1586</a>)</li>
+                        <li><code>SkeletonInterBoneWire</code>, <code>SkeletonPoints</code>, <code>SkeletonWire</code>,
+                            <code>ArmatureInterJointsWire</code>, <code>Surface</code>, and <code>CenterQuad</code> (issue
+                            <a  data-error-text="Failed to load title" data-id="1077600885"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1705"
+                                data-hovercard-type="issue"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1705/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1705">#1705</a>, PR <a
+                                data-error-text="Failed to load title" data-id="1106636726"
+                                data-permission-text="Title is private"
+                                data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1754"
+                                data-hovercard-type="pull_request"
+                                data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1754/hovercard"
+                                href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1754">#1754</a>)</li>
+                    </ul>
+                </li>
+                <li>typo in the value returned by <code>LodGenerator.toString()</code> (<a 
+                        data-hovercard-type="commit"
+                        data-hovercard-url="https://github.com/jMonkeyEngine/jmonkeyengine/commit/cfa497db246e9f74a2939ea87af159611127d232/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/commit/cfa497db246e9f74a2939ea87af159611127d232"><tt>cfa497d</tt></a>)
+                </li>
+                <li>typos in logger/exception messages (PRs <a 
+                        data-error-text="Failed to load title" data-id="938317301" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1584"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1584/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1584">#1584</a> and <a
+                        data-error-text="Failed to load title" data-id="1098251510"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1737"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1737/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1737">#1737</a>, <a 
+                        data-hovercard-type="commit"
+                        data-hovercard-url="https://github.com/jMonkeyEngine/jmonkeyengine/commit/3beca2b4ee6ac089c65791f22dcfcc4c516501be/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/commit/3beca2b4ee6ac089c65791f22dcfcc4c516501be"><tt>3beca2b</tt></a>)
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>General improvements:</p>
+            <ul>
+                <li>upgraded LWJGL to v3.3.0 (PR <a  data-error-text="Failed to load title"
+                                                     data-id="1055309183" data-permission-text="Title is private"
+                                                     data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1659"
+                                                     data-hovercard-type="pull_request"
+                                                     data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1659/hovercard"
+                                                     href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1659">#1659</a>)</li>
+                <li>faster asset loading on Android devices (issue <a 
+                        data-error-text="Failed to load title" data-id="1028244436" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1622" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1622/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1622">#1622</a>, PR <a
+                        data-error-text="Failed to load title" data-id="1034097959"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1627"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1627/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1627">#1627</a>)</li>
+                <li>faster writing of MJPEG files (PR <a 
+                        data-error-text="Failed to load title" data-id="956895351" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1592"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1592/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1592">#1592</a>)</li>
+                <li>more efficient logging (issues <a 
+                        data-error-text="Failed to load title" data-id="1061458869" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1672" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1672/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1672">#1672</a> and <a
+                        data-error-text="Failed to load title" data-id="1061879063"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1680" data-hovercard-type="issue"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/issues/1680/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1680">#1680</a>, PRs <a
+                        data-error-text="Failed to load title" data-id="1061608071"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1673"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1673/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1673">#1673</a> and <a
+                        data-error-text="Failed to load title" data-id="1063651872"
+                        data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1682"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1682/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1682">#1682</a>)</li>
+                <li>un-deprecate <code>AndroidBufferImageLoader</code> (PR <a 
+                        data-error-text="Failed to load title" data-id="1056479795" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1660"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1660/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1660">#1660</a>)</li>
+                <li>numerous javadoc improvements</li>
+                <li>improvements to examples and tests</li>
+            </ul>
+        </li>
+        <li>
+            <p>New deprecations:</p>
+            <ul>
+                <li><code>Quaternion.negate()</code> (PR <a 
+                        data-error-text="Failed to load title" data-id="1077203051" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1702"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1702/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1702">#1702</a>)</li>
+                <li><code>BitmapText(BitmapFont font, boolean rightToLeft)</code> (PR <a 
+                        data-error-text="Failed to load title" data-id="1065158338" data-permission-text="Title is private"
+                        data-url="https://github.com/jMonkeyEngine/jmonkeyengine/issues/1685"
+                        data-hovercard-type="pull_request"
+                        data-hovercard-url="/jMonkeyEngine/jmonkeyengine/pull/1685/hovercard"
+                        href="https://github.com/jMonkeyEngine/jmonkeyengine/pull/1685">#1685</a>)</li>
+                <li><code>CenterQuad</code> mesh in jme3-vr (<a  data-hovercard-type="commit"
+                                                                 data-hovercard-url="https://github.com/jMonkeyEngine/jmonkeyengine/commit/3097f05ef1ab7d74b2c4085a211a66eff30628f9/hovercard"
+                                                                 href="https://github.com/jMonkeyEngine/jmonkeyengine/commit/3097f05ef1ab7d74b2c4085a211a66eff30628f9"><tt>3097f05</tt></a>)
+                </li>
+            </ul>
+        </li>
+    </ul>
+</html>

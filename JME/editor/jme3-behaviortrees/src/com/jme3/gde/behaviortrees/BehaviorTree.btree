@@ -1,0 +1,3 @@
+# Most minimal file to get started
+root
+  wait seconds:2

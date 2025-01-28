@@ -1,0 +1,675 @@
+//ant.importBuild 'build.xml'
+import groovy.xml.MarkupBuilder
+import java.util.zip.ZipFile
+
+plugins {
+    id "de.undercouch.download" version "5.1.0"
+}
+
+apply from: 'gradle/libs/digest.gradle'
+apply from: file('version.gradle')
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = ''
+}
+
+repositories {
+	mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven {
+        url "https://maven.google.com/"
+    }
+}
+
+configurations {
+    corelibs
+    optlibs
+    testdatalibs
+    examplelibs
+}
+
+configurations.examplelibs {
+    transitive = false
+}
+
+dependencies {
+    corelibs dep("com.badlogicgames.gdx:gdx-ai:1.8.2", true, true)
+    corelibs dep("javax.help:javahelp:2.0.05", false, false)
+
+    corelibs dep("org.jmonkeyengine:jme3-core:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-desktop:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-awt-dialogs:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-plugins-json:$jmeVersion-$jmeVersionTag", true, true)
+	corelibs dep("org.jmonkeyengine:jme3-plugins-json-gson:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-lwjgl:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-effects:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("com.github.stephengold:Minie:8.2.0", true, true) // replacement for bullet-native
+    corelibs dep("com.github.stephengold:Heart:9.1.0", true, true) // requirement for Minie
+    corelibs dep(fileTree("lib"), false, false)
+    corelibs dep("org.jmonkeyengine:jme3-jogg:$jmeVersion-$jmeVersionTag", true, true)
+
+    corelibs dep("org.jmonkeyengine:jme3-networking:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-niftygui:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-plugins:$jmeVersion-$jmeVersionTag", true, true)
+    corelibs dep("org.jmonkeyengine:jme3-terrain:$jmeVersion-$jmeVersionTag", true, true)
+
+    optlibs dep("com.simsilica:lemur:1.16.0", true, true)
+    optlibs dep("com.simsilica:lemur-props:1.2.0", true, true)
+    optlibs dep("com.simsilica:sio2:1.8.0", true, true)
+    optlibs dep("com.simsilica:sim-math:1.6.0", true, true)
+    optlibs dep("com.simsilica:zay-es:1.5.0", true, true)
+
+    optlibs dep("org.jmonkeyengine:jme3-jbullet:$jmeVersion-$jmeVersionTag", true, true)
+    optlibs dep("org.jmonkeyengine:jme3-android:$jmeVersion-$jmeVersionTag", true, true)
+    optlibs dep("org.jmonkeyengine:jme3-ios:$jmeVersion-$jmeVersionTag", true, true)
+    optlibs dep("org.jmonkeyengine:jme3-android-native:$jmeVersion-$jmeVersionTag", true, true)
+    optlibs dep("org.jmonkeyengine:jme3-lwjgl3:$jmeVersion-$jmeVersionTag", true, true)
+    optlibs dep("com.github.stephengold:Wes:0.8.1", true, true)
+    testdatalibs dep("org.jmonkeyengine:jme3-testdata:$jmeVersion-$jmeVersionTag", false, false)
+    examplelibs dep("org.jmonkeyengine:jme3-examples:$jmeVersion-$jmeVersionTag", false, true)
+}
+
+def dep(coords, javadoc = false, sources = false) {
+    def result = [dependencies.create(coords)]
+    if (javadoc) result << dependencies.create("$coords:javadoc")
+    if (sources) result << dependencies.create("$coords:sources")
+    result
+}
+
+artifacts {
+    //    jar null
+}
+
+task checkPlatformConfig {
+    description = "Downloads the NetBeans platform base and registers it in the SDK project if needed"
+    def platformFile = file("nbproject/private/platform-private.properties")
+    if(!platformFile.exists()){
+        def netbeansFolder = file("netbeans")
+        if(!netbeansFolder.exists() || netbeansFolder.list().length == 0){
+            println "Downloading NetBeans Platform base, this only has to be done once.."
+            /* The following method is discouraged as it does not handle HTTP 301 Redirects
+             * def f = file("netbeans.zip")
+             * new URL(netbeansUrl).withInputStream{ i -> f.withOutputStream{ it << i }}
+             */
+            download.run {
+                src netbeansUrl
+                dest "netbeans.zip"
+                overwrite false // however if overwrite matters the build failed anyway
+            }
+
+            copy {
+                from zipTree(file("netbeans.zip"))
+                into "."
+            }
+            file("netbeans.zip").delete()
+        }
+        file("nbproject/private/").mkdirs()
+        platformFile.createNewFile()
+        platformFile.write("nbplatform.default.netbeans.dest.dir=${netbeansFolder.absolutePath.replace('\\','/')}\r\n"+\
+                           "nbplatform.default.harness.dir=${netbeansFolder.absolutePath.replace('\\','/')}/harness\r\n")
+    }
+}
+
+task copyBaseLibs(dependsOn:configurations.corelibs) {
+    doLast {
+        description "Copies the library files needed to run the SDK to "+
+                    "jme3-core-baselibs and jme3-core-libraries"
+
+        // for each dependency in corelibs..
+        //project.configurations.corelibs.dependencies.each {dep ->
+        //println(project.configurations.corelibs.dependencies)
+
+        project.configurations.corelibs.collect {file ->
+            // copy built jme3 jar files to jme3-core-baselibs
+            if (file.name.startsWith("jme3") && !isSourceOrJavadoc(file.name)){
+                copy {
+                    from file
+                    into "jme3-core-baselibs/release/modules/ext/"
+                }
+            } else if( file.name.contains("Minie") && !isSourceOrJavadoc(file.name)) {
+                // Special handling of Minie, since it doesn't follow the name convention
+                copy {
+                    from file
+                    into "jme3-core-baselibs/release/modules/ext/"
+                }
+            } else if( file.name.contains("Heart") && !isSourceOrJavadoc(file.name)) {
+                // Special handling of Minie, since it doesn't follow the name convention
+                copy {
+                    from file
+                    into "jme3-core-baselibs/release/modules/ext/"
+                }
+            } else if( !isSourceOrJavadoc(file.name)){
+                copy {
+                    from file
+                    into "jme3-core-libraries/release/modules/ext/"
+                }
+            }
+        }
+    }
+}
+
+copyBaseLibs.inputs.files configurations.corelibs.resolve()
+copyBaseLibs.outputs.dir "jme3-core-baselibs/release/modules/ext/"
+copyBaseLibs.outputs.dir "jme3-core-libraries/release/modules/ext/"
+
+static def isSourceOrJavadoc(dep){
+    return isSource(dep) || isJavadoc(dep)
+}
+
+static def isSource(dep){
+    return dep.endsWith("-sources.jar")
+}
+
+static def isJavadoc(dep){
+    return dep.endsWith("-javadoc.jar")
+}
+
+static def isJmeDep(dep) {
+    return dep.startsWith("jme3")
+}
+
+task createBaseXml(dependsOn: configurations.corelibs) {
+    doLast {
+        description "Creates the project.xml files for "+
+                    "jme3-core-baselibs and jme3-core-libraries"
+        def jmeJarFiles = [] // jme3 jar files
+        def externalJarFiles = [] // external jar files
+
+        // collect jar files
+        project.configurations.corelibs.collect {file ->
+            // copy built jme3 jar files to jme3-core-baselibs
+            if (file.name.startsWith("jme3") && !isSourceOrJavadoc(file.name)){
+
+                //collect jme jars
+                if(!jmeJarFiles.contains(file)) {
+                    jmeJarFiles.add(file)
+                }
+
+            } else if( file.name.contains("Minie") && !isSourceOrJavadoc(file.name)) {
+                // Special handling of Minie, since it doesn't follow the name convention
+                if(!jmeJarFiles.contains(file)) {
+                    jmeJarFiles.add(file)
+                }
+            } else if( file.name.contains("Heart") && !isSourceOrJavadoc(file.name)) {
+                // Special handling of Minie, since it doesn't follow the name convention
+                if(!jmeJarFiles.contains(file)) {
+                    jmeJarFiles.add(file)
+                }
+            } else if(!isSourceOrJavadoc(file.name)) {
+                //collect external jars
+                externalJarFiles.add(file)
+
+            }
+        }
+
+        // collect base packages
+        def packages = []
+        jmeJarFiles.each{jarFile ->
+            ZipFile file = new ZipFile(jarFile)
+            file.entries().each { entry ->
+                if(!entry.name.startsWith('META-INF') && entry.name.endsWith('.class')){
+                    // TODO: "/" works on windows?
+                    def pathPart = entry.name.substring(0, Math.max(0, entry.name.lastIndexOf('/')))
+                    def classPath = pathPart.replace('/','.');
+                    if(!classPath.empty && !packages.contains(classPath)){
+                        packages.add(classPath)
+                    }
+                }
+            }
+        }
+
+        // collect library packages
+        def extPackages = []
+        externalJarFiles.each{jarFile ->
+            ZipFile file = new ZipFile(jarFile)
+            file.entries().each { entry ->
+                if(!entry.name.startsWith('META-INF') && entry.name.endsWith('.class')){
+                    // TODO: "/" works on windows?
+                    def pathPart = entry.name.substring(0, Math.max(0, entry.name.lastIndexOf('/')))
+                    def classPath = pathPart.replace('/','.');
+                    if (!classPath.empty && !extPackages.contains(classPath)){
+                        extPackages.add(classPath)
+                    }
+                }
+            }
+        }
+
+        def writer = new StringWriter()
+        def xml = new MarkupBuilder(writer)
+        xml.mkp.xmlDeclaration(version:'1.0')
+        xml.project(xmlns:"http://www.netbeans.org/ns/project/1"){
+            type "org.netbeans.modules.apisupport.project"
+            configuration {
+                data(xmlns:"http://www.netbeans.org/ns/nb-module-project/3") {
+                    "code-name-base" "com.jme3.gde.core.baselibs"
+                    "suite-component"{}
+                    "module-dependencies"{
+                        dependency{
+                            "code-name-base" "com.jme3.gde.core.libraries"
+                            "build-prerequisite"{}
+                            "compile-dependency"{}
+                            "run-dependency"{
+                                "release-version" "1"
+                                "specification-version" jmeVersion
+                            }
+                        }
+                    }
+                    "public-packages"{
+                        packages.each{
+                            "package" it
+                        }
+                    }
+                    jmeJarFiles.each{jarFile ->
+                        "class-path-extension"{
+                            "runtime-relative-path" "ext/${jarFile.name}"
+                            "binary-origin" "release/modules/ext/${jarFile.name}"
+                        }
+                    }
+                }
+            }
+        }
+        // write XML file
+        File baselibsProjectFile = file("jme3-core-baselibs/nbproject/project.xml");
+        baselibsProjectFile.write(writer.toString())
+
+        def extWriter = new StringWriter()
+        def extXml = new MarkupBuilder(extWriter)
+    //    extXml.mkp.xmlDeclaration(version:'1.0')
+        extXml.project(xmlns:"http://www.netbeans.org/ns/project/1"){
+            type "org.netbeans.modules.apisupport.project"
+            configuration {
+                data(xmlns:"http://www.netbeans.org/ns/nb-module-project/3") {
+                    "code-name-base" "com.jme3.gde.core.libraries"
+                    "suite-component"{}
+                    "module-dependencies"{}
+                    "public-packages"{
+                        extPackages.each{
+                            "package" it
+                        }
+                    }
+                    externalJarFiles.each{jarFile ->
+                        "class-path-extension"{
+                            "runtime-relative-path" "ext/${jarFile.name}"
+                            "binary-origin" "release/modules/ext/${jarFile.name}"
+                        }
+                    }
+                }
+            }
+        }
+        // write XML file
+        File librariesProjectFile = file("jme3-core-libraries/nbproject/project.xml");
+        librariesProjectFile.write(extWriter.toString())
+    }
+}
+createBaseXml.inputs.files configurations.corelibs.resolve()
+createBaseXml.outputs.file "jme3-core-baselibs/nbproject/project.xml"
+createBaseXml.outputs.file "jme3-core-libraries/nbproject/project.xml"
+
+task copyProjectLibs(dependsOn: [configurations.corelibs, configurations.testdatalibs]) {
+    doLast {
+        description "Copies the jar files needed to supply the J2SE Libraries in the "+
+                    "SDK to jme3-project-baselibs and jme3-project-libraries"
+
+        // for each dependency in corelibs and optlibs..
+        def deps = []
+        deps.addAll(project.configurations.corelibs.files)
+        deps.addAll(project.configurations.optlibs.files)
+        deps.each {dep ->
+            // copy jme3 jar files, sources and javadocs to jme3-project-baselibs
+
+            if(isSource(dep.name)){
+                copy {
+                    from dep
+                    into "jme3-project-baselibs/release/libs/"
+                }
+            } else if(isJavadoc(dep.name)){
+                copy {
+                    from dep
+                    into "jme3-project-baselibs/release/libs/"
+                }
+            } else if(isJmeDep(dep.name)){
+                copy {
+                    from dep
+                    into "jme3-project-baselibs/release/libs/"
+                }
+            } else{
+                copy {
+                    from dep
+                    into "jme3-project-libraries/release/libs/"
+                }
+            }
+
+        }
+
+        project.configurations.testdatalibs.files.each {dep ->
+            // copy jme3 test data to jme3-project-testdata
+            if(isJmeDep(dep.name)){
+                copy {
+                    from dep
+                    into "jme3-project-testdata/release/modules/ext/"
+                    rename ("jme3-testdata(.*)", "jme3-testdata.jar")
+                }
+            }
+        }
+    }
+}
+copyProjectLibs.inputs.files configurations.corelibs.resolve()
+copyProjectLibs.inputs.files configurations.optlibs.resolve()
+copyProjectLibs.inputs.files configurations.testdatalibs.resolve()
+copyProjectLibs.outputs.dir "jme3-project-baselibs/release/libs/"
+copyProjectLibs.outputs.dir "jme3-project-libraries/release/libs/"
+copyProjectLibs.outputs.dir "jme3-project-testdata/release/modules/ext/"
+
+// workaround method to add a tag with the name "name" and "file" to an XML MarkupBuilder
+def makeName(builder, nameR) { builder.name nameR }
+def makeFile(builder, nameR) { builder.file(name:nameR, url:nameR) }
+
+task createProjectXml(dependsOn: configurations.corelibs) {
+    doLast {
+        description "Creates needed J2SE library and layer XML files in jme3-project-baselibs"
+
+        def eol = System.properties.'line.separator'
+        def j2seLibraries = [] // created J2SE library descriptors
+
+
+
+        // for each dependency in corelibs..
+        def deps = []
+        deps.addAll(project.configurations.corelibs.dependencies)
+        deps.addAll(project.configurations.optlibs.dependencies)
+        deps.each {dep ->
+            def jmeJarFiles = [] // jme3 jar files
+            def jmeSourceFiles = [] // jme3 sources
+            def jmeJavadocFiles = [] // jme3 javadoc
+            def externalJarFiles = [] // external jar files
+            if(j2seLibraries.contains(dep.name+".xml")){
+                return;
+            }
+
+            j2seLibraries.add(dep.name+".xml")
+            project.configurations.corelibs.files{ d -> return d.name == dep.name}.each{ file ->
+                if(isSource(file.name)){
+                    if(!jmeSourceFiles.contains(file.name)){
+                        jmeSourceFiles.add(file.name)
+                    }
+                } else if(isJavadoc(file.name)){
+                    if(!jmeJavadocFiles.contains(file.name)){
+                        jmeJavadocFiles.add(file.name)
+                    }
+                } else if(isJmeDep(file.name)){
+                    if(!jmeJarFiles.contains(file.name)){
+                        jmeJarFiles.add(file.name)
+                    }
+                } else{
+                    if(!externalJarFiles.contains(file.name)){
+                        externalJarFiles.add(file.name)
+                    }
+                }
+            }
+
+            project.configurations.optlibs.files{ d -> return d.name == dep.name}.each{ file ->
+
+                if(isSource(file.name)){
+                    if(!jmeSourceFiles.contains(file.name)){
+                        jmeSourceFiles.add(file.name)
+                    }
+                } else if(isJavadoc(file.name)){
+                    if(!jmeJavadocFiles.contains(file.name)){
+                        jmeJavadocFiles.add(file.name)
+                    }
+                } else if(isJmeDep(file.name)){
+                    if(!jmeJarFiles.contains(file.name)){
+                        jmeJarFiles.add(file.name)
+                    }
+                } else {
+                    if(!externalJarFiles.contains(file.name)){
+                        externalJarFiles.add(file.name)
+                    }
+                }
+            }
+
+            // Workarounds where the automatic dependency detection did not work. This is mainly when there are runtime dependencies which are not available as artifacts
+            if (dep.name.equals("jme3-jbullet")) {
+                externalJarFiles.add("jbullet.jar")
+                externalJarFiles.add("stack-alloc.jar")
+            }
+
+
+
+            // create J2SE library descriptor xml file
+            def libraryWriter = new StringWriter()
+            def libraryXml = new MarkupBuilder(libraryWriter)
+    //        xml.mkp.xmlDeclaration(version:'1.0')
+            libraryWriter << '<?xml version="1.0" encoding="UTF-8"?>' << eol
+            libraryWriter << '<!DOCTYPE library PUBLIC "-//NetBeans//DTD Library Declaration 1.0//EN" "http://www.netbeans.org/dtds/library-declaration-1_0.dtd">' << eol
+            libraryXml.library(version:"1.0", encoding: "UTF-8"){
+                makeName(libraryXml, "${dep.name}")
+                type "j2se"
+                "localizing-bundle" "com.jme3.gde.project.baselibs.Bundle"
+                volume{
+                    type "classpath"
+
+                    resource "jar:nbinst://com.jme3.gde.project.baselibs/libs/${jmeJarFiles[0]}!/"
+
+                    /* Usually we don't add all the jmeJarFiles, this is because e.g. each library depends on core,
+                     * some depend on jme3-terrain etc, but it's the users duty to add the correct libraries.
+                     * If we would add all those each library would have it's one jme3-core, which might even lead
+                     * to build errors then.
+                     */
+                    if (dep.name.equals("jme3_xbuf")) {
+                        jmeJarFiles.each{jar ->
+                            if (jar.startsWith("jme3_xbuf")) {
+                                /* Technically you would only need the loaders, not the spatial viewer,
+                                 * but users can edit the library if they want to strip off
+                                 * the last few possible kilobytes */
+                                resource "jar:nbinst://com.jme3.gde.project.baselibs/libs/$jar!/"
+                            }
+                        }
+                    }
+
+                    externalJarFiles.each{jar ->
+                        resource "jar:nbinst://com.jme3.gde.project.libraries/libs/${jar}!/"
+                    }
+                }
+                volume{
+                    type "src"
+                    jmeSourceFiles.each{jar ->
+                        resource "jar:nbinst://com.jme3.gde.project.baselibs/libs/${jar}!/"
+                    }
+                }
+                volume{
+                    type "javadoc"
+                    jmeJavadocFiles.each{jar ->
+                        resource "jar:nbinst://com.jme3.gde.project.baselibs/libs/${jar}!/"
+                    }
+                }
+            }
+            // write XML file
+            File libraryXmlFile = file("jme3-project-baselibs/src/com/jme3/gde/project/baselibs/${dep.name}.xml");
+            libraryXmlFile.write(libraryWriter.toString())
+        }
+
+        // create layer.xml file with entries of library xml files
+        def layerWriter = new StringWriter()
+        def layerXml = new MarkupBuilder(layerWriter)
+    //    layerXml.mkp.xmlDeclaration(version:'1.0')
+        layerWriter << '<?xml version="1.0" encoding="UTF-8"?>' << eol
+        layerWriter << '<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">' << eol
+        layerXml.filesystem{
+            folder(name:"org-netbeans-api-project-libraries"){
+                folder(name:"Libraries"){
+                    j2seLibraries.each{lib ->
+                        makeFile(layerXml, lib)
+                    }
+                }
+            }
+        }
+        File layerXmlFile = file("jme3-project-baselibs/src/com/jme3/gde/project/baselibs/layer.xml");
+        layerXmlFile.write(layerWriter.toString())
+    }
+}
+createProjectXml.inputs.files configurations.corelibs.resolve()
+createProjectXml.inputs.files configurations.optlibs.resolve()
+createProjectXml.outputs.dir "jme3-project-baselibs/src/com/jme3/gde/project/baselibs/"
+
+task copyTestSources {
+    doLast {
+        project.configurations.examplelibs.files.each{dep ->
+            if(isSource(dep.name)){
+                copy{
+                    from {
+                        zipTree(dep)
+                    }
+                    into "JME3TestsTemplate/src/"
+                }
+                copy{
+                    from {
+                        zipTree(dep)
+                    }
+                    into "JME3TestsTemplateAndroid/src/"
+                }
+            }
+        }
+    }
+}
+copyTestSources.inputs.files project.configurations.examplelibs
+copyTestSources.outputs.dir "JME3TestsTemplate/src/"
+copyTestSources.outputs.dir "JME3TestsTemplateAndroid/src/"
+
+ant.properties['plugins.version'] = jmeVersion
+ant.properties['app.version']= jmePomVersion
+ant.properties['nbm.revision']= jmeNbmRevision
+
+task overrideHarness(dependsOn: ['checkPlatformConfig', 'updateNetbeans']) {
+    doLast {
+        def props = new Properties()
+        props.load(new FileInputStream("$rootDir/harness-override/override.properties"))
+
+        def patch_file = { f ->
+            def g = file("harness-override/" + f.getName())
+            if (!f.exists()) {
+                throw new GradleException('Cannot find targetFile: ' +  f.getAbsolutePath());
+            }
+
+            if (!g.exists()) {
+                throw new GradleException('Cannot find sourceFile: ' +  g.getAbsolutePath());
+            }
+
+            if (getSHA256Hash(f) == props[f.getName() + ".hashAfter"]) {
+                println "> Harness file \"" + f.getName() + "\" is already patched!"
+                return; /* Already patched */
+            }
+            if (getSHA256Hash(f) == props[f.getName() + ".hashBefore"]) {
+                println "> Will patch harness file \"" + f.getName() + "\"!"
+
+                if (getSHA256Hash(g) != props[g.getName() + ".hashAfter"]) {
+                    throw new GradleException("Dangerous Checksum Mismatch: sourceFile \"" + g.getName() + "\" doesn't equal to its hashAfter hash. This probably means someone changed this file but forgot to update said hash or someone tried to invade the SDK by spreading his exe.")
+                }
+
+                copy {
+                    from g
+                    into f.getParent()
+                }
+
+            } else {
+                throw new GradleException('Checksum Mismatch: targetFile ' + f.getName() + ' has invalid hash ' + getSHA256Hash(f) +  '. Did you update Netbeans without changing harness-override/override.properties?');
+            }
+        }
+
+        patch_file(file("netbeans/harness/launchers/app.exe"));
+        patch_file(file("netbeans/harness/launchers/app64.exe"));
+        patch_file(file("netbeans/harness/launchers/pre7_app.exe"));
+    }
+}
+overrideHarness.outputs.files([ 'netbeans/harness/launchers/app.exe', 'netbeans/harness/launchers/app64.exe', 'netbeans/harness/launchers/pre7_app.exe'])
+overrideHarness.inputs.files([ 'netbeans/harness/launchers/app.exe', 'netbeans/harness/launchers/app64.exe', 'netbeans/harness/launchers/pre7_app.exe', 'harness-override/override.properties'])
+
+task updateNetbeans(type: Exec, dependsOn: checkPlatformConfig) {
+    ignoreExitValue true // We make netbeans fail by specifying "exit" which is no java file to open (this command would open the whole IDE)
+    if (org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem.isWindows()) {
+        commandLine 'netbeans/bin/netbeans.exe', '--update-all', '--modules', '--refresh', '--nosplash', '--nogui', 'exit'
+    } else {
+        commandLine 'netbeans/bin/netbeans', '--update-all', '--modules', '--refresh', '--nosplash', '--nogui', 'exit'
+    }
+}
+
+task buildSdk(dependsOn: [copyBaseLibs, copyProjectLibs, createProjectXml, createBaseXml, copyTestSources]) {
+    doLast {
+        ant.propertyfile(file: "nbproject/project.properties") {
+            entry( key: "plugins.version", value: "${jmeVersion}")
+            entry( key: "app.version", value: "${jmePomVersion}")
+            entry( key: "nbm.revision", value: "${jmeNbmRevision}")
+        }
+        ant.ant(dir: ".", antfile: "build.xml", target: "build")
+    }
+}
+buildSdk.inputs.files configurations.corelibs.resolve()
+buildSdk.inputs.files configurations.optlibs.resolve()
+file('.').eachDir{
+    if(it.name.startsWith("jme3-") && it.isDirectory()){
+        buildSdk.inputs.dir it
+    }
+}
+//buildSdk.outputs.dir "build"
+
+task run(dependsOn: buildSdk) {
+    doLast {
+        ant.ant(dir: ".", antfile: "build.xml", target: "run")
+    }
+}
+
+task cleanSdk() {
+    doLast {
+        ant.ant(dir: ".", antfile: "build.xml", target: "clean")
+        file("jme3-core-baselibs/release/").deleteDir()
+        file("jme3-core-libraries/release/").deleteDir()
+        file("jme3-core-baselibs/nbproject/project.xml").delete()
+        file("jme3-core-libraries/nbproject/project.xml").delete()
+        file("jme3-project-baselibs/release/").deleteDir()
+        file("jme3-project-libraries/release/").deleteDir()
+        file("jme3-project-testdata/release/").deleteDir()
+        file("JME3TestsTemplate/src/jme3test/").deleteDir()
+        file("JME3TestsTemplateAndroid/src/jme3test/").deleteDir()
+    }
+}
+
+task extractPlatformIndependent(type: Copy) {
+    from zipTree('dist/jmonkeyplatform.zip')
+    into "dist/temp/"
+
+    exclude("jmonkeyplatform/etc/jmonkeyplatform.conf")
+}
+
+task patchPlatformIndependent(type: Copy, dependsOn: extractPlatformIndependent) {
+    from zipTree('dist/jmonkeyplatform.zip')
+    into "dist/temp/"
+
+    include("jmonkeyplatform/etc/jmonkeyplatform.conf")
+
+    filter { String line ->
+        line.startsWith('jdkhome=') ? '#jdkhome="/path/to/jdk"': line
+    }
+
+    doLast {
+        delete(file('dist/jmonkeyplatform.zip'))
+    }
+}
+
+task fixPlatformIndependent(dependsOn: patchPlatformIndependent, type: Zip) {
+    description = "We compile our installers with the bundled jdk, but the platform independent zip doesn't have the jdk. For this we need to change the jmonkeyplatform.zip after building the installers to not have a jdk bundled"
+
+    from 'dist/temp'
+    archiveFileName = 'jmonkeyplatform.zip'
+    destinationDirectory = file('dist')
+
+    doLast {
+        delete("dist/temp")
+    }
+}
+
+wrapper {
+    gradleVersion = '8.6'
+}
+
+//jar.dependsOn(buildSdk)
+//clean.dependsOn(cleanSdk)
