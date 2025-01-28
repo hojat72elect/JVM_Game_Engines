@@ -1,0 +1,57 @@
+package com.badlogic.gdx.backends.iosrobovm;
+
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.net.*;
+import org.robovm.apple.foundation.NSURL;
+import org.robovm.apple.uikit.UIApplication;
+
+public class IOSNet implements Net {
+
+    final UIApplication uiApp;
+    NetJavaImpl netJavaImpl;
+
+    public IOSNet(IOSApplication app, IOSApplicationConfiguration configuration) {
+        uiApp = app.uiApp;
+        netJavaImpl = new NetJavaImpl(configuration.maxNetThreads);
+    }
+
+    @Override
+    public void sendHttpRequest(HttpRequest httpRequest, HttpResponseListener httpResponseListener) {
+        netJavaImpl.sendHttpRequest(httpRequest, httpResponseListener);
+    }
+
+    @Override
+    public void cancelHttpRequest(HttpRequest httpRequest) {
+        netJavaImpl.cancelHttpRequest(httpRequest);
+    }
+
+    @Override
+    public boolean isHttpRequestPending(HttpRequest httpRequest) {
+        return netJavaImpl.isHttpRequestPending(httpRequest);
+    }
+
+    @Override
+    public ServerSocket newServerSocket(Protocol protocol, String hostname, int port, ServerSocketHints hints) {
+        return new NetJavaServerSocketImpl(protocol, hostname, port, hints);
+    }
+
+    @Override
+    public ServerSocket newServerSocket(Protocol protocol, int port, ServerSocketHints hints) {
+        return new NetJavaServerSocketImpl(protocol, port, hints);
+    }
+
+    @Override
+    public Socket newClientSocket(Protocol protocol, String host, int port, SocketHints hints) {
+        return new NetJavaSocketImpl(protocol, host, port, hints);
+    }
+
+    @Override
+    public boolean openURI(String URI) {
+        NSURL url = new NSURL(URI);
+        if (uiApp.canOpenURL(url)) {
+            uiApp.openURL(url);
+            return true;
+        }
+        return false;
+    }
+}

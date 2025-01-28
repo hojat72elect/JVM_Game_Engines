@@ -1,0 +1,95 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+dependencies {
+    api project(":backends:gdx-backend-lwjgl")
+    api project(":extensions:gdx-freetype")
+    api project(":backends:gdx-backend-headless")
+    api testnatives.desktop
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+sourceSets.main.resources.srcDirs = ["assets"]
+
+ext {
+    particles3DMainClass = "com.badlogic.gdx.tools.flame.FlameMain"
+    hieroMainClass = "com.badlogic.gdx.tools.hiero.Hiero"
+    texturePackerMainClass = "com.badlogic.gdx.tools.texturepacker.TexturePacker"
+
+    toolsAssetsDir = ["assets"]
+}
+
+tasks.register('dist3DParticles', Jar) {
+    dependsOn("build")
+
+    dependsOn configurations.runtimeClasspath
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
+    from files(sourceSets.main.java.classesDirectory)
+    from files(sourceSets.main.output.resourcesDir)
+    from { configurations.runtimeClasspath.collect { zipTree(it) } }
+    from files(toolsAssetsDir)
+
+    archiveFileName = "runnable-3D-particles.jar"
+
+    manifest {
+        attributes 'Main-Class': particles3DMainClass
+    }
+}
+
+tasks.register('distHiero', Jar) {
+    dependsOn("build")
+
+    dependsOn configurations.runtimeClasspath
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
+    from files(sourceSets.main.java.classesDirectory)
+    from files(sourceSets.main.output.resourcesDir)
+    from { configurations.runtimeClasspath.collect { zipTree(it) } }
+    from files(toolsAssetsDir)
+
+    archiveFileName = "runnable-hiero.jar"
+
+    manifest {
+        attributes 'Main-Class': hieroMainClass
+    }
+}
+
+tasks.register('distTexturePacker', Jar) {
+    dependsOn("build")
+
+    dependsOn configurations.runtimeClasspath
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
+    from files(sourceSets.main.java.classesDirectory)
+    from files(sourceSets.main.output.resourcesDir)
+    from { configurations.runtimeClasspath.collect { zipTree(it) } }
+    from files(toolsAssetsDir)
+
+    archiveFileName = "runnable-texturepacker.jar"
+
+    manifest {
+        attributes 'Main-Class': texturePackerMainClass
+    }
+}
+
+tasks.register('buildRunnables') {
+    dependsOn("build")
+    dependsOn dist3DParticles, distHiero, distTexturePacker
+    doLast {
+        println "Building ye runnables"
+    }
+}
+repositories {
+    mavenCentral()
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
