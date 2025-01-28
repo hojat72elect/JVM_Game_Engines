@@ -1,0 +1,11 @@
+*.log
+*.dmp
+*.iml
+.idea/
+logo/rlj_old.png
+out/
+src/tests/
+META-INF/
+*.txt
+.gradle/
+build/
