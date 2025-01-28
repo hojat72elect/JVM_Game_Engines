@@ -1,0 +1,58 @@
+apply plugin: "java"
+apply plugin: "kotlin"
+
+sourceSets.main.java.srcDirs = ["src/main"]
+sourceSets.main.resources.srcDirs = ["src/main", "assets"]
+sourceSets.test.java.srcDirs = ["src/test/java", "src/test/kotlin"]
+
+project.ext.mainClassName = "com.mbrlabs.mundus.editor.Main"
+project.ext.assetsDir = new File("assets");
+
+
+task run(dependsOn: classes, type: JavaExec) {
+    main(project.mainClassName)
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = project.assetsDir
+    ignoreExitValue = true
+    if (System.properties['os.name'].toLowerCase().contains('mac')) {
+        jvmArgs "-XstartOnFirstThread"
+        jvmArgs "-Djava.awt.headless=true"
+    }
+}
+
+task distEditor(type: Jar) {
+    archivesBaseName = 'Mundus'
+    archiveVersion.set('0.5.1')
+
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+distEditor.dependsOn classes
+
+eclipse {
+    project {
+        name = appName + "-desktop"
+        linkedResource name: 'assets', type: '2', location: 'PARENT-1-PROJECT_LOC/editor/assets'
+    }
+}
+
+task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
+    doLast {
+        def classpath = new XmlParser().parse(file(".classpath"))
+        new Node(classpath, "classpathentry", [kind: 'src', path: 'assets']);
+        def writer = new FileWriter(file(".classpath"))
+        def printer = new XmlNodePrinter(new PrintWriter(writer))
+        printer.setPreserveWhitespace(true)
+        printer.print(classpath)
+    }
+}

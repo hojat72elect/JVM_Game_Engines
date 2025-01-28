@@ -1,0 +1,272 @@
+[0.6.0] ~
+- [BREAKING CHANGE] Migrated from Kryo to JSON for .registry and .pro files. Migration handled automatically.
+- Add dirty transform flag optimization for caching GameObject/SimpleNode world transform
+- Add OrientedBoundingBox to cullable components, update debug renderer to use it
+- Add "Align Camera to Object" and "Align Object to Camera" actions
+- Add Quaternion and Matrix4 pools
+- Fix Child terrain objects not updating on translation
+- Fix getRotation() in SimpleNode to always normalize axes
+- Refactor outline drag and drop world to local conversion code when moving game objects
+- Updated kotlin to 1.9.0
+- Updated KTX to 1.12.0-rc1
+- Updated VisUI to 1.5.2
+- Adjustable line (selection, wireframe, helper lines) width
+- Changed UV slider to SimpleFloatSpinner in PI/16 (11.25 degree) increments
+- Counter for helper lines
+- Updated current name when renamed
+- Add DirtyObservable and DirtyListener to SimpleNode
+- Show mouse position on statusbar if using terrain brush tool
+- Optimize AssetUsage system by using DTO objects instead of loading scene
+- Use BufferedInputStream for faster loading of terrains
+- Fix activated/deactivated terrain at helper lines
+- Sort children action command in Outline
+- Fix add water and terrain as child
+- Thumbnail view for model asset in Asset Dock
+- Add checkShadowDuringFrustumCulling setting into CullableComponent to disable/enable shadow checking during frustum culling
+- Add editor plugin support
+- Removed helper lines (moved into plugin, see https://github.com/Dgzt/mundus-helper-lines-plugin)
+- Update gdx-gltf version to 2.2.1
+
+[0.5.1] ~ 08/08/2023
+- Added FPS launcher argument, always call setForegroundFPS
+- Fix mouse picking by not rendering inactive game objects to picker
+- Fix removed terrain in helper lines
+- Fix undo removed light component on selected game object
+- Fix Material culling value being reset to GL_NONE by editor
+- Fix crash on Asset Usage tool when Light Component in scene
+- Updated libGDX to 1.12.0
+- Fix Previous project's inspector data persists after switching project
+- Fix transform tools scale with camera distance
+- Added forward facing arrow to selected game object (enable in debug menu)
+
+[0.5.0] ~ 06/28/2023
+- [Breaking Change] Lighting systems updated, visibly different. See PR#184
+- Convert Water Shader to an Uber Shader
+- Water Shader Enhancements (visible depth, toggle reflection/refraction)
+- Skybox rendering performance tweak
+- Added Triplanar Shader options for Terrains
+- Added scene delete button
+- Added scene rename button
+- Added dialog for adding water
+- Added args4j for command line parsing
+- Added command line option to enable GL30
+- Added command line option to enable fullscreen
+- Added Pools.java class to manage object pools
+- Update gradle to 7.5.1
+- Updated editor to use MSAA by default, disable by command line
+- Terrain Assets can now be reused in the same scene and other scenes
+- Update gdx-gltf to 2.1.0
+- Fix import of models with spaces in dependencies name
+- Fix selection after model delete
+- Fix temporary files not deleted on model import
+- Fix reset import model dialog on close
+- Fix Gizmos not adding and removing on Project/Scene changes
+- Change scene camera to be base camera class
+- Duplicate materials from inspector
+- Show brush selection
+- Object picker can use with left mouse button. Switchable in the settings
+- Water creation dialog
+- Helper lines
+- Show renamed game object's new name after rename in Inspector
+- Fix terrain brush tools for rotated and scaled terrain
+- Refactor tool selection
+- Custom properties component addable to game objects
+- Fix transparent layer in texture splatting for the terrain texture
+- Improved Terrain normal calculations
+- Terrain UV Scale is no longer changed under Settings, it is changed on the terrain material
+- New CLI argument to disable shader preprocessor caching for development purposes
+- Materials are no longer editable from Model Component Inspector, edit them directly
+- Terrains now have materials, uses same PBR material as models but does not use texture fields.
+
+[0.4.2] ~ 10/24/2022
+- Fix shader compilation error for Terrain when using normal maps
+
+[0.4.1] ~ 10/21/2022
+- Fix incorrect bone counts causing 1024 shader register error
+
+[0.4.0] ~ 10/12/2022
+- [BREAKING CHANGE] The ModelShader was replaced with custom PBR shader.
+- [BREAKING CHANGE] Models from older versions may be invisible as first and will need their opacity updated on materials.
+- [BREAKING CHANGE] Fog now has new parameters and more closely aligns with libGDX and PBR shaders. You may need to adjust fog.
+- Lighting overhaul for Directional and Ambient lighting.
+- Added asynchronous loading of projects with loading screen
+- Added new Light Component and accompanying Light Shader which prefixes shaders with additional shader lighting code.
+- Added new Add Component Dialog which only supports Light Components for now.
+- Added new Gizmo feature for displaying decal Icons over objects like Light sources.
+- Added normal mapping for terrains and models
+- Added Frustum Culling which can be toggled in Window -> Settings -> Performance
+- Added multi-texture importing with drag and drop
+- Added new profiling bar with GL profiler statistics
+- Added experimental basic directional light shadows
+- Added tracking per project for Last Open Directory on File Choosers
+- Added terrain smoothing brush
+- Added configurable camera settings Window -> Settings -> Camera
+- Added Keyboard Shortcuts dialog
+- Added Basic debug and wireframe render modes
+- Added Utility to clean up unused assets under new Tools menu item
+- Added Move Up/Down/Bottom/Top menu options for outline pane
+- Added Uber Shader for terrains, deprecated legacy terrain shader
+- Update water shader to fade out water foam over distance, to minimize ugly 1 pixel white lines from a distance.
+- Fix broken checkbox to set game objects to active or inactive
+- Fix File Choosers stored favorites under the wrong key name
+- Fix bug with not being able to paint on terrains != 0 height.
+- Fix toast messages not displaying
+- Updated libGDX to 1.11.0
+
+[0.3.1] ~ 07/06/2022
+- Added functionality to the editor to generate the assets.txt file, PR #45
+- Added Ambient Light and Directional Light to Environment menu
+- Fix NPE in editor when creating new terrain
+- Fix NPE on model placement
+- Fix Wave speed increasing exponentially based on water tile count
+- Fix Fog now applies to water
+- Add StartOnFirstThread helper to resolve launching on Mac
+
+[0.3.0] ~ 17/05/2022
+- Added GLB support, PR #21
+- Added Water Components, PR #24
+- Added Water foam and Depth Shader, PR #38
+- Added Full Screen preview (F8) and a toolbar icon
+- Added asset deletion functionality, PR #2
+- Added double click on game object to focus camera on it
+- Added mouse scroll wheel zoom
+- Added a Log bar and dock to bottom of editor
+- Added SkyboxAsset and completed static Skybox feature, PR #33
+- Updated terrains for modifiable UV scale
+- Updated assets bar to include thumbnails of texture assets
+- Fixed NPE crash on GLTF model loading
+- Fixed rotation of models on import preview
+
+[0.2.0]
+- [BREAKING CHANGE] Project saves scene, model component and terrain as json instead of binary format.
+- [BREAKING CHANGE] Kryo updated to 5.2.0. The previous projects won't work.
+- Updated libGdX to 1.10.0
+- Updated VisUI to 1.5.0
+- Updated Kotlin to 1.5.21
+- Updated ktx to 1.10.0-b2
+- Updated min java version to 1.7
+- Added GLTF support
+
+[0.1.0] ~ 12/8/2021
+- Updated VisUI to 1.3.0
+- Updated libGDX to 1.9.6
+- Updated Kotlin to 1.1.1
+- Updated ktx to 1.9.6-b1
+- Added application icon
+- Parts of the editor are now written in Kotlin
+- New zero-runtime-cost dependency injection (https://github.com/czyzby/ktx/tree/master/inject)
+- Changed meta file serialization format to json
+- Performance improvements
+- Implemented a async project exporter
+- Improved terrain brush rendering
+- Fixed height sampling of the terrain flatten brush
+
+[0.0.9] ~ 18/10/2016
+- Updated libGDX to 1.9.4
+- Updated VisUI to 1.2.3
+- Updated Kryo to 4.0.0
+- Updated the editor module to Java 8
+- Fixed window size bug on mac: https://github.com/mbrlabs/Mundus/issues/11
+- Darker ui colors
+- Added the IntelliJ-like "docker bar" at the bottom
+- Removed the models tab on the left and put it into the docker bar
+- Improved logging
+- Fixed expanding of the game object tree in the outline if the scene graph has been modified (https://github.com/mbrlabs/Mundus/issues/8)
+- Implemented game object renaming in the outline
+- Implemented duplicate game object (deep copy), terrainAsset can not be duplicated
+- Implemented delete game object undo/redo command
+- Fixed parenting in outline. Now local position is correctly calculated
+- Implemented Scale Tool (with undo/redo)
+- Implemented a brand-new, super awesome asset management system based on meta files
+- Implemented a material system for models
+- Added standard assets to each new project
+- Added a "save and exit" option to the exit dialog
+
+[0.0.8] ~ 23/06/2016
+- Updated libGDX to 1.9.3
+- Updated VisUI to 1.1.1
+- Added an option to the settings dialog to change the keyboard layout
+- Added a height map loader to the terrainAsset component widget in the inspector
+- Implemented a Blender-like rotation tool
+- Toast messages at top right corner of the screen
+- Huge internal refactoring
+- Ctrl+S shortcut for saving the project
+- Fixed crash on MacOS: https://github.com/mbrlabs/Mundus/commit/fdd193caa7b75e5a1607f448c1f81d1faeec86dd
+- Added a confirm dialog when exiting the editor
+- Reimplemented the scene graph
+- Added perlin noise for terrains
+
+[0.0.7] ~ 28/02/2016
+- Implemented a undo/redo system for most operations
+- Implemented a shortcut system
+- The 3D viewport is now a UI widget and scales correctly with the window size
+- The inspector now spans the whole right side as sidebar
+- New lighting system for the terrainAsset & entity shader
+- Child objects of a selected parent object will be highlighted now as well
+- Changed internal save file format to allow a better precision for game object transformation
+- Improved the translate tool
+- Implemented game object rotation & scaling
+- Implemented a highly accurate game object picking system (see: http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-an-opengl-hack/)
+- Drag'n Drop for game objects in the outline
+- In the inspector, all transformations are now displayed as relative transformations with the parent object as origin
+- Improved game object parenting
+- Updated VisUI to version 1.0.1
+
+[0.0.6] ~ 07/02/2016
+- Updated libGDX to 1.9.2
+- Implemented texture splatting for terrainAsset textures
+- Implemented terrainAsset painting with up to 5 textures per terrainAsset
+- Moved SelectionTool & TranslateTool to the toolbar
+- Moved the terrainAsset tools to the component widget in the inspector
+- Removed the tools tab in the left sidebar
+- Changed input handling for terrainAsset brushes: the mouse has to be moved constantly in order to draw
+- Added camera speed control buttons to the status bar
+- Added a terrainAsset component widget for the inspector
+- Arbitrary images can now internally be used as terrainAsset brushes (like Gimp & Blender do). The r channel determines the strength of the brush.
+- Added 4 brushes (circle, smooth circle, star, confetti)
+- Implemented height sampling for the flatten mode of the terrainAsset brush
+
+[0.0.5] ~ 26/01/2016
+- Implemented a basic component based 3D scene graph
+- Changed overall architecture based on the scene graph
+- Added scene graph nodes (game objects) to the outline tab as tree structure
+- Implemented creation/deletion of game objects
+- Added a ModelComponent
+- Added a TerrainComponent
+- Added a flexible component inspector widget for game objects
+- Added some basic component-widgets to the inspector
+- Fixed rendering of terrainAsset texture tiles
+- Improved UI
+- Added import of projects
+- Updated LibGDX to 1.9.0
+- Updated libGDX backend from lwjgl to lwjgl3
+- Changed internal persistence of scenes: every scene has now it's own save file (scenes/scene_name.mundus)
+
+[0.0.4] ~ 10/01/2016
+- Added Font Awesome as icon font
+- Implemented adding & switching between scenes
+- Improved Translate tool
+- Added new terrainAsset brush: Flatten
+- Added Customizable Fog
+- Added a basic skybox (editable, but not savable/exportable)
+
+[0.0.3] ~ 02/01/2016
+- Moved Model/asset selection to sidebar
+- Improved overall UI/UX
+- Added Selection tool
+- Added Translate tool
+- Added project export to JSON + assets (loadable by runtime)
+- Improved error handling
+
+[0.0.2] ~ 25/12/2015
+- Added a generic Tool system
+- Added support for scenes in one project
+- Added support for placement of models inside the world
+- Added terrainAsset brush support for multiple terrains
+- Updated LibGDX to version 1.7.2
+
+[0.0.1] 22/11/2015
+- First version ever pushed to Github
+
+22/11/2015
+- Started development

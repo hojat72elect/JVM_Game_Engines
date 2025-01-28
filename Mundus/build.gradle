@@ -1,0 +1,139 @@
+buildscript {
+    ext.kotlinVersion = '1.9.0'
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+
+    tasks.withType(Test) {
+        testLogging {
+            exceptionFormat "full"
+            showCauses true
+            showExceptions true
+            showStackTraces true
+            showStandardStreams true
+            events = ["passed", "skipped", "failed"]
+        }
+    }
+
+    ext {
+        appName = "Mundus"
+        gdxVersion = '1.13.0'
+        visuiVersion = '1.5.2'
+        kryoVersion = '5.2.0'
+        junitVersion = '4.13.2'
+        mockitoVersion = '1.10.19'
+        commonsIoVersion = '2.5'
+        commonsLangVersion = '3.12.0'
+        gltfVersion = '2.2.1'
+        args4jVersion = '2.33'
+        pf4jVersion = '3.11.0'
+
+        ktxVersion = '1.12.0-rc1'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+project(":commons") {
+    apply plugin: "java"
+    apply plugin: "java-library"
+
+    dependencies {
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        api "com.github.mgsx-dev.gdx-gltf:gltf:$gltfVersion"
+
+        testImplementation "junit:junit:$junitVersion"
+
+        testImplementation "org.mockito:mockito-all:$mockitoVersion"
+
+    }
+}
+
+project(":editor-commons") {
+    apply plugin: "java"
+    apply plugin: "java-library"
+
+    dependencies {
+        api project(":commons")
+    }
+}
+
+project(":editor") {
+    apply plugin: "java"
+    apply plugin: "kotlin"
+
+    dependencies {
+        api project(":commons")
+        api project(":editor-commons")
+
+        // Kotlin libs
+        implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        implementation "io.github.libktx:ktx-inject:$ktxVersion"
+
+        // libGDX
+        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
+        // gdx-freetype
+        implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+
+        // commons
+        implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
+        implementation "commons-io:commons-io:$commonsIoVersion"
+
+        // Plugin framework
+        implementation "org.pf4j:pf4j:$pf4jVersion"
+        api project(":plugin-api")
+
+        // other
+        implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
+        implementation "com.esotericsoftware:kryo:$kryoVersion"
+        implementation "args4j:args4j:$args4jVersion"
+
+        // tests
+        testImplementation "junit:junit:$junitVersion"
+        testImplementation "org.mockito:mockito-all:$mockitoVersion"
+    }
+}
+
+project(":gdx-runtime") {
+    apply plugin: "java"
+    apply plugin: "java-library"
+
+
+    dependencies {
+        api project(":commons")
+    }
+}
+
+project(":plugin-api") {
+    apply plugin: "java"
+    apply plugin: "java-library"
+
+    dependencies {
+        api project(":editor-commons")
+
+        // Plugin framework
+        api "org.pf4j:pf4j:$pf4jVersion"
+    }
+}
+
+tasks.eclipse.doLast {
+    delete ".project"
+}

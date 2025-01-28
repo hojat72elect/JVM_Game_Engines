@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="com.mbrlabs.mundus">
+
+    <source path="mundus" />
+
+    <!-- glsl shaders -->
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/skybox.frag.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/skybox.vert.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/terrain.uber.frag.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/terrain.uber.vert.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/water.uber.frag.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/water.uber.vert.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/depth.frag.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/depth.vert.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/shadowmap.frag.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/shadowmap.vert.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/light.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/utils.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/compat.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/pbr/pbr.fs.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/pbr/pbr.vs.glsl" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/mbrlabs/mundus/commons/shaders/pbr/material.glsl" />
+
+</module>

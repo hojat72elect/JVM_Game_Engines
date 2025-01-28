@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
+<module>
+    <source path="com/mbrlabs/mundus/commons" />
+    <inherits name='GLTF' />
+
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.SceneDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.GameObjectDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.WaterComponentDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.TerrainComponentDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.BaseLightDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.LightComponentDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.CustomPropertiesComponentDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.CustomComponentDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.DirectionalLightDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.ShadowSettingsDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.FogDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.dto.ModelComponentDTO" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.water.WaterResolution" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.shadows.ShadowResolution" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.mbrlabs.mundus.commons.env.lights.LightType" />
+
+</module>
