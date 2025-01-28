@@ -1,0 +1,222 @@
+//
+// This file is to be applied to every subproject.
+//
+
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'eclipse'
+apply plugin: 'checkstyle'
+
+eclipse.jdt.file.withProperties { props ->
+    props.setProperty "org.eclipse.jdt.core.circularClasspath", "warning"
+}
+group = 'org.jmonkeyengine'
+version = jmeFullVersion
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(JavaCompile) { // compile-time options:
+    //options.compilerArgs << '-Xlint:deprecation' // to show deprecation warnings
+    options.compilerArgs << '-Xlint:unchecked'
+    options.encoding = 'UTF-8'
+    if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_1_10)) {
+        options.release = 8
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs rootProject.file('lib')
+    }
+}
+
+dependencies {
+    // Adding dependencies here will add the dependencies to each subproject.
+    testImplementation libs.junit4
+    testImplementation libs.mokito.core
+    testImplementation libs.groovy.test
+}
+
+// Uncomment if you want to see the status of every test that is run and
+// the test output.
+/*
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+*/
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'jMonkeyEngine',
+                   'Implementation-Version': jmeFullVersion,
+                   'Automatic-Module-Name': "${project.name.replace("-", ".")}",
+                   'Created-By': "${JavaVersion.current()} (${System.getProperty("java.vendor")})"
+    }
+}
+
+javadoc {
+    failOnError = false
+    options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
+    options.docTitle = "jMonkeyEngine ${jmeFullVersion} ${project.name} Javadoc"
+    options.windowTitle = "jMonkeyEngine ${jmeFullVersion} ${project.name} Javadoc"
+    options.header = "<b>jMonkeyEngine ${jmeFullVersion} ${project.name}</b>"
+    options.author = "true"
+    options.use = "true"
+    options.charSet = "UTF-8"
+    options.encoding = "UTF-8"
+    source = sourceSets.main.allJava // main only, exclude tests
+}
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+    archiveClassifier = 'sources'
+    from sourceSets*.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc, description: 'Creates a jar from the javadoc files.') {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+ext.pomConfig = {
+    name POM_NAME
+    description POM_DESCRIPTION
+    url POM_URL
+    inceptionYear POM_INCEPTION_YEAR
+    scm {
+        url POM_SCM_URL
+        connection POM_SCM_CONNECTION
+        developerConnection POM_SCM_DEVELOPER_CONNECTION
+    }
+    licenses {
+        license {
+            name POM_LICENSE_NAME
+            url POM_LICENSE_URL
+            distribution POM_LICENSE_DISTRIBUTION
+        }
+    }
+    developers {
+        developer {
+            name 'jMonkeyEngine Team'
+            id 'jMonkeyEngine'
+        }
+    }
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    if (buildJavaDoc == "true") {
+        archives javadocJar
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact javadocJar
+            artifact sourcesJar
+            from components.java
+            pom {
+                description = POM_DESCRIPTION
+                developers {
+                    developer {
+                        id = 'jMonkeyEngine'
+                        name = 'jMonkeyEngine Team'
+                    }
+                }
+                inceptionYear = POM_INCEPTION_YEAR
+                licenses {
+                    license {
+                        distribution = POM_LICENSE_DISTRIBUTION
+                        name = POM_LICENSE_NAME
+                        url = POM_LICENSE_URL
+                    }
+                }
+                name = POM_NAME
+                scm {
+                    connection = POM_SCM_CONNECTION
+                    developerConnection = POM_SCM_DEVELOPER_CONNECTION
+                    url = POM_SCM_URL
+                }
+                url = POM_URL
+            }
+            version project.version
+        }
+    }
+    repositories {
+        maven {
+            name = 'Dist'
+            url = gradle.rootProject.projectDir.absolutePath + '/dist/maven'
+        }
+        maven {
+            credentials {
+                username = gradle.rootProject.hasProperty('ossrhUsername') ? ossrhUsername : 'Unknown user'
+                password = gradle.rootProject.hasProperty('ossrhPassword') ? ossrhPassword : 'Unknown password'
+            }
+            name = 'OSSRH'
+            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2'
+        }
+	maven {
+	    credentials {
+                username = gradle.rootProject.hasProperty('ossrhUsername') ? ossrhUsername : 'Unknown user'
+                password = gradle.rootProject.hasProperty('ossrhPassword') ? ossrhPassword : 'Unknown password'
+	    }
+	    name = 'SNAPSHOT'
+	    url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+	}
+    }
+}
+
+publishToMavenLocal.doLast {
+    println 'published ' + project.getName() + "-${jmeFullVersion} to mavenLocal"
+}
+task('install') {
+    dependsOn 'publishToMavenLocal'
+}
+
+signing {
+    def signingKey = gradle.rootProject.findProperty('signingKey')
+    def signingPassword = gradle.rootProject.findProperty('signingPassword')
+    useInMemoryPgpKeys(signingKey, signingPassword)
+
+    sign configurations.archives
+    sign publishing.publications.maven
+}
+tasks.withType(Sign) {
+    onlyIf { gradle.rootProject.hasProperty('signingKey') }
+}
+
+checkstyle {
+    toolVersion libs.versions.checkstyle.get()
+    configFile file("${gradle.rootProject.rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+checkstyleMain {
+    source ='src/main/java'
+}
+
+checkstyleTest {
+    source ='src/test/java'
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+    }
+    include("**/com/jme3/renderer/**/*.java")
+}

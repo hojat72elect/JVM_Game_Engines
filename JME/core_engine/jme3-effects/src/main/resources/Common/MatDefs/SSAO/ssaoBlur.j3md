@@ -1,0 +1,33 @@
+MaterialDef SSAOBlur {
+
+    MaterialParameters {     
+        Int BoundDrawBuffer  
+        Int NumSamples
+        Int NumSamplesDepth
+        Texture2D Texture
+        Texture2D SSAOMap
+        Texture2D DepthTexture
+        Vector2 FrustumNearFar
+        Boolean UseAo
+        Boolean UseOnlyAo        
+        Float XScale
+        Float YScale
+    }
+
+    Technique {
+        VertexShader GLSL300 GLSL150 GLSL120:   Common/MatDefs/Post/Post.vert
+        FragmentShader GLSL300 GLSL150 GLSL120: Common/MatDefs/SSAO/ssaoBlur.frag
+
+        WorldParameters {
+            WorldViewMatrix
+        }
+
+        Defines {
+            BOUND_DRAW_BUFFER: BoundDrawBuffer
+            USE_AO : UseAo
+            USE_ONLY_AO : UseOnlyAo
+            RESOLVE_MS : NumSamples
+            RESOLVE_DEPTH_MS : NumSamplesDepth
+        }
+    }
+}

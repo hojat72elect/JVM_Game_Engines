@@ -1,0 +1,45 @@
+/**
+ * This is the global settings file used by all subprojects.
+ **/
+rootProject.name = 'jmonkeyengine'
+
+// Core classes, should work on all java platforms
+include 'jme3-core'
+include 'jme3-effects'
+include 'jme3-networking'
+include 'jme3-plugins'
+include 'jme3-plugins-json'
+include 'jme3-plugins-json-gson'
+
+include 'jme3-terrain'
+
+// Desktop dependent java classes
+include 'jme3-desktop'
+include 'jme3-lwjgl'
+if (JavaVersion.current().isJava8Compatible()) {
+    include 'jme3-lwjgl3'
+    include 'jme3-vr'
+}
+
+// Other external dependencies
+include 'jme3-jbullet'
+include 'jme3-niftygui'
+include 'jme3-jogg'
+include 'jme3-android'
+include 'jme3-ios'
+
+//native builds
+include 'jme3-android-native' //cpp
+
+// Test Data project
+include 'jme3-testdata'
+
+// Example projects
+include 'jme3-examples'
+include 'jme3-awt-dialogs'
+
+if(buildAndroidExamples == "true"){
+    include 'jme3-android-examples'
+}
+include 'jme3-screenshot-tests'
+

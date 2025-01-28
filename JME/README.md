@@ -1,0 +1,1 @@
+This directory contains both the core engine and the editor of the JmonkeyEngine.

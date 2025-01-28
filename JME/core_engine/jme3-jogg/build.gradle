@@ -1,0 +1,4 @@
+dependencies {
+    api project(':jme3-core')
+    api libs.j.ogg.vorbis
+}

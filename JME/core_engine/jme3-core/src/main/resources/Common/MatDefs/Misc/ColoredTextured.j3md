@@ -1,0 +1,23 @@
+Exception This material definition is deprecated. Please use Unshaded.j3md instead.
+MaterialDef Colored Textured {
+
+    MaterialParameters {
+        Int BoundDrawBuffer
+        Texture2D ColorMap
+        Color Color (Color)
+    }
+
+    Technique {
+        VertexShader   GLSL300 GLSL150 GLSL100:   Common/MatDefs/Misc/ColoredTextured.vert
+        FragmentShader GLSL300 GLSL150 GLSL100: Common/MatDefs/Misc/ColoredTextured.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+        Defines {
+            BOUND_DRAW_BUFFER: BoundDrawBuffer
+        }
+    }
+
+ 
+}

@@ -1,0 +1,27 @@
+MaterialDef Bloom {
+
+    MaterialParameters {
+        Int BoundDrawBuffer
+        Int NumSamples
+        Texture2D Texture
+        Float ExposurePow
+        Float ExposureCutoff
+        Boolean Extract
+        Texture2D GlowMap
+    }
+
+    Technique {
+        VertexShader   GLSL300 GLSL150 GLSL100:   Common/MatDefs/Post/Post.vert
+        FragmentShader GLSL300 GLSL150 GLSL100: Common/MatDefs/Post/bloomExtract.frag
+
+        WorldParameters {
+        }
+
+        Defines {
+            BOUND_DRAW_BUFFER: BoundDrawBuffer
+            HAS_GLOWMAP : GlowMap
+            DO_EXTRACT : Extract
+            RESOLVE_MS : NumSamples
+        }
+    }
+}
