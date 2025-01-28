@@ -1,0 +1,2 @@
+include 'desktop', 'api', 'core' , 'test-contentpackage'
+
