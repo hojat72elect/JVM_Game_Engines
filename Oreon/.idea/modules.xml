@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Oreon.iml" filepath="$PROJECT_DIR$/.idea/Oreon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/examples-opengl/examples-opengl.iml" filepath="$PROJECT_DIR$/oreonengine/examples-opengl/examples-opengl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/examples-vulkan/examples-vulkan.iml" filepath="$PROJECT_DIR$/oreonengine/examples-vulkan/examples-vulkan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-common-ui/oe-common-ui.iml" filepath="$PROJECT_DIR$/oreonengine/oe-common-ui/oe-common-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-common-world/oe-common-world.iml" filepath="$PROJECT_DIR$/oreonengine/oe-common-world/oe-common-world.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-core/oe-core.iml" filepath="$PROJECT_DIR$/oreonengine/oe-core/oe-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-gl-api/oe-gl-api.iml" filepath="$PROJECT_DIR$/oreonengine/oe-gl-api/oe-gl-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-gl-components/oe-gl-components.iml" filepath="$PROJECT_DIR$/oreonengine/oe-gl-components/oe-gl-components.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-gl-deferred/oe-gl-deferred.iml" filepath="$PROJECT_DIR$/oreonengine/oe-gl-deferred/oe-gl-deferred.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-vk-api/oe-vk-api.iml" filepath="$PROJECT_DIR$/oreonengine/oe-vk-api/oe-vk-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-vk-components/oe-vk-components.iml" filepath="$PROJECT_DIR$/oreonengine/oe-vk-components/oe-vk-components.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oreonengine/oe-vk-deferred/oe-vk-deferred.iml" filepath="$PROJECT_DIR$/oreonengine/oe-vk-deferred/oe-vk-deferred.iml" />
+    </modules>
+  </component>
+</project>
