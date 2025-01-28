@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="thelema-classes" pattern="src[thelema-engine.thelema-jvm.main]:*..*||src[thelema-engine.thelema-core.main]:*..*||src[thelema-engine.thelema-teavm.main]:*..*||src[thelema-engine.thelema-lwjgl3.main]:*..*||src[thelema-engine.thelema-core-tests.main]:*..*||test[thelema-engine.thelema-lwjgl3.test]:*..*||test[thelema-engine.thelema-teavm.test]:*..*" />
+</component>
