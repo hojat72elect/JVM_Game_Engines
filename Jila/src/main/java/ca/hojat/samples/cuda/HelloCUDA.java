@@ -14,7 +14,7 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.*;
 
 /**
- * Before being able to run this example, you need to properly install and configure
+ * WARNING : Before being able to run this example, you need to properly install and configure
  * CUDA toolkit on your machine.
  * <p>
  * Simple CUDA demo.
