@@ -1,0 +1,67 @@
+package org.oreon.examples.gl.oreonworlds.shaders.plants;
+
+import org.oreon.core.context.BaseContext;
+import org.oreon.core.gl.pipeline.GLShaderProgram;
+import org.oreon.core.instanced.InstancedObject;
+import org.oreon.core.model.Material;
+import org.oreon.core.scenegraph.NodeComponentType;
+import org.oreon.core.scenegraph.Renderable;
+import org.oreon.core.util.Constants;
+import org.oreon.core.util.ResourceLoader;
+
+import java.util.List;
+
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+
+public class TreeShadowShader extends GLShaderProgram {
+
+    private static TreeShadowShader instance;
+
+    protected TreeShadowShader() {
+        super();
+
+        addVertexShader(ResourceLoader.loadShader("oreonworlds/shaders/assets/Tree_Shader/TreeShadow_VS.glsl"));
+        addGeometryShader(ResourceLoader.loadShader("oreonworlds/shaders/assets/Tree_Shader/TreeShadow_GS.glsl"));
+        addFragmentShader(ResourceLoader.loadShader("oreonworlds/shaders/assets/Tree_Shader/TreeShadow_FS.glsl"));
+        compileShader();
+
+        addUniform("clipplane");
+        addUniformBlock("worldMatrices");
+        addUniformBlock("Camera");
+        addUniformBlock("LightViewProjections");
+        addUniform("material.diffusemap");
+
+        for (int i = 0; i < 100; i++) {
+            addUniform("matrixIndices[" + i + "]");
+        }
+    }
+
+    public static TreeShadowShader getInstance() {
+        if (instance == null) {
+            instance = new TreeShadowShader();
+        }
+        return instance;
+    }
+
+    public void updateUniforms(Renderable object) {
+
+        setUniform("clipplane", BaseContext.getConfig().getClipplane());
+        bindUniformBlock("Camera", Constants.CameraUniformBlockBinding);
+        bindUniformBlock("LightViewProjections", Constants.LightMatricesUniformBlockBinding);
+        bindUniformBlock("worldMatrices", 0);
+
+        Material material = object.getComponent(NodeComponentType.MATERIAL0);
+
+        glActiveTexture(GL_TEXTURE0);
+        material.getDiffusemap().bind();
+        setUniformi("material.diffusemap", 0);
+
+        InstancedObject vParentNode = object.getParentObject();
+        List<Integer> indices = vParentNode.getHighPolyIndices();
+
+        for (int i = 0; i < indices.size(); i++) {
+            setUniformi("matrixIndices[" + i + "]", indices.get(i));
+        }
+    }
+}
