@@ -4,8 +4,6 @@ configure([
         project(":backends:gdx-backend-headless"),
         project(":backends:gdx-backend-lwjgl"),
         project(":backends:gdx-backend-lwjgl3"),
-        project(":backends:gdx-backend-robovm"),
-        project(":backends:gdx-backend-robovm-metalangle"),
         project(":extensions:gdx-box2d-parent"),
         project(":extensions:gdx-box2d-parent:gdx-box2d"),
         project(":extensions:gdx-bullet"),
