@@ -46,7 +46,6 @@ public class TiledMapAnimationLoadingTest extends GdxTest {
         MapObjects mapObjects = layer.getObjects();
 
         mapObjects.add(new CircleMapObject(280, 400, 50));
-
     }
 
     @Override

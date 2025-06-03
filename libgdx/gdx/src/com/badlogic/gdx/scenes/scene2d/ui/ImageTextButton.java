@@ -52,7 +52,7 @@ public class ImageTextButton extends Button {
     }
 
     protected Image newImage() {
-        return new Image((Drawable) null, Scaling.fit);
+        return new Image(null, Scaling.fit);
     }
 
     protected Label newLabel(String text, LabelStyle style) {

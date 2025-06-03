@@ -2,10 +2,14 @@ package com.badlogic.gdx.tools.flame;
 
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 public class PointSpriteBatchPanel extends EditorPanel<PointSpriteParticleBatch> {
 
@@ -68,5 +72,4 @@ public class PointSpriteBatchPanel extends EditorPanel<PointSpriteParticleBatch>
         contentPanel.add(destBlendFunction,
                 new GridBagConstraints(1, i++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, insets, 0, 0));
     }
-
 }

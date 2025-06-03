@@ -1,6 +1,7 @@
 package com.badlogic.gdx.backends.android;
 
 import android.opengl.GLES20;
+
 import com.badlogic.gdx.graphics.GL20;
 
 import java.nio.Buffer;
@@ -8,8 +9,10 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 public class AndroidGL20 implements GL20 {
-    private int[] ints = new int[1], ints2 = new int[1], ints3 = new int[1];
-    private byte[] buffer = new byte[512];
+    private final int[] ints = new int[1];
+    private final int[] ints2 = new int[1];
+    private final int[] ints3 = new int[1];
+    private final byte[] buffer = new byte[512];
 
     public void glActiveTexture(int texture) {
         GLES20.glActiveTexture(texture);

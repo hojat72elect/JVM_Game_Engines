@@ -1,6 +1,5 @@
 package com.badlogic.gdx.graphics.g3d.utils
 
-import com.badlogic.gdx.utils.Array as GdxArray
 import com.badlogic.gdx.graphics.g3d.Model
 import com.badlogic.gdx.graphics.g3d.ModelInstance
 import com.badlogic.gdx.graphics.g3d.model.Animation
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController.AnimationDesc
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import com.badlogic.gdx.utils.Array as GdxArray
 
 class AnimationControllerTest {
 

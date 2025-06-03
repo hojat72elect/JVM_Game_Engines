@@ -1,5 +1,8 @@
 package com.badlogic.gdx.tools.hiero.unicodefont.effects;
 
+import com.badlogic.gdx.tools.hiero.unicodefont.Glyph;
+import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,9 +11,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import com.badlogic.gdx.tools.hiero.unicodefont.Glyph;
-import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont;
 
 /**
  * Strokes glyphs with an outline.

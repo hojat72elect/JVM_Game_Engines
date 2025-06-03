@@ -9,7 +9,8 @@ import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
 
-import java.awt.*;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 public class LwjglApplicationConfiguration {

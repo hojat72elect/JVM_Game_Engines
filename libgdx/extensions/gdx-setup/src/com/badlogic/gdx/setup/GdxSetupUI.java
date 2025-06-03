@@ -1,18 +1,40 @@
 package com.badlogic.gdx.setup;
 
+import static java.awt.GridBagConstraints.BOTH;
+import static java.awt.GridBagConstraints.CENTER;
+import static java.awt.GridBagConstraints.EAST;
+import static java.awt.GridBagConstraints.HORIZONTAL;
+import static java.awt.GridBagConstraints.NONE;
+import static java.awt.GridBagConstraints.NORTH;
+import static java.awt.GridBagConstraints.NORTHEAST;
+import static java.awt.GridBagConstraints.NORTHWEST;
+import static java.awt.GridBagConstraints.VERTICAL;
+import static java.awt.GridBagConstraints.WEST;
+
 import com.badlogic.gdx.setup.DependencyBank.ProjectDependency;
 import com.badlogic.gdx.setup.DependencyBank.ProjectType;
 import com.badlogic.gdx.setup.Executor.CharCallback;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FileDialog;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +45,30 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.awt.GridBagConstraints.*;
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 @SuppressWarnings("serial")
 public class GdxSetupUI extends JFrame {
@@ -323,14 +368,13 @@ public class GdxSetupUI extends JFrame {
             else
                 return super.getPressedIcon();
         }
-
     }
 
     public static class SetupButton extends JButton {
-        private Color textColor = Color.WHITE;
-        private Color backgroundColor = new Color(18, 18, 18);
-        private Color overColor = new Color(120, 20, 20);
-        private Color pressedColor = new Color(240, 40, 40);
+        private final Color textColor = Color.WHITE;
+        private final Color backgroundColor = new Color(18, 18, 18);
+        private final Color overColor = new Color(120, 20, 20);
+        private final Color pressedColor = new Color(240, 40, 40);
 
         SetupButton(String buttonTag) {
             super(buttonTag);
@@ -617,9 +661,7 @@ public class GdxSetupUI extends JFrame {
                         if (box.isSelected()) {
                             modules.add(projectType);
                         } else {
-                            if (modules.contains(projectType)) {
-                                modules.remove(projectType);
-                            }
+                            modules.remove(projectType);
                         }
                     }
                 });
@@ -640,7 +682,7 @@ public class GdxSetupUI extends JFrame {
                             continue;
                         }
                         SetupCheckBox depCheckBox = new SetupCheckBox(
-                                projDep.name().substring(0, 1) + projDep.name().substring(1, projDep.name().length()).toLowerCase());
+                                projDep.name().charAt(0) + projDep.name().substring(1).toLowerCase());
                         depCheckBox.setToolTipText(projDep.getDescription());
                         extensionPanel.add(depCheckBox);
                         depCheckBox.addItemListener(new ItemListener() {
@@ -650,9 +692,7 @@ public class GdxSetupUI extends JFrame {
                                 if (box.isSelected()) {
                                     dependencies.add(builder.bank.getDependency(projDep));
                                 } else {
-                                    if (dependencies.contains(builder.bank.getDependency(projDep))) {
-                                        dependencies.remove(builder.bank.getDependency(projDep));
-                                    }
+                                    dependencies.remove(builder.bank.getDependency(projDep));
                                 }
                             }
                         });

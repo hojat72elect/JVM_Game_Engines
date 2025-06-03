@@ -40,13 +40,13 @@ public class SuperKoalio extends GdxTest {
     private Animation<TextureRegion> walk;
     private Animation<TextureRegion> jump;
     private Koala koala;
-    private Pool<Rectangle> rectPool = new Pool<Rectangle>() {
+    private final Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
         protected Rectangle newObject() {
             return new Rectangle();
         }
     };
-    private Array<Rectangle> tiles = new Array<Rectangle>();
+    private final Array<Rectangle> tiles = new Array<Rectangle>();
     private boolean debug = false;
     private ShapeRenderer debugRenderer;
 
@@ -313,6 +313,7 @@ public class SuperKoalio extends GdxTest {
         float stateTime = 0;
         boolean facesRight = true;
         boolean grounded = false;
+
         enum State {
             Standing, Walking, Jumping
         }

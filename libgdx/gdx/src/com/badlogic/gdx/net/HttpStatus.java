@@ -229,6 +229,7 @@ public class HttpStatus {
      */
     public static final int SC_INSUFFICIENT_STORAGE = 507;
     int statusCode;
+
     public HttpStatus(int statusCode) {
         this.statusCode = statusCode;
     }
@@ -241,5 +242,4 @@ public class HttpStatus {
     public int getStatusCode() {
         return statusCode;
     }
-
 }

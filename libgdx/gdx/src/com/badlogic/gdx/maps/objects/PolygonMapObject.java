@@ -7,34 +7,45 @@ package com.badlogic.gdx.maps.objects;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Polygon;
 
-/** @brief Represents {@link Polygon} map objects */
+/**
+ * @brief Represents {@link Polygon} map objects
+ */
 public class PolygonMapObject extends MapObject {
 
     private Polygon polygon;
 
-    /** Creates empty polygon map object */
+    /**
+     * Creates empty polygon map object
+     */
     public PolygonMapObject() {
         this(new float[0]);
     }
 
-    /** @param vertices polygon defining vertices (at least 3) */
+    /**
+     * @param vertices polygon defining vertices (at least 3)
+     */
     public PolygonMapObject(float[] vertices) {
         polygon = new Polygon(vertices);
     }
 
-    /** @param polygon the polygon */
+    /**
+     * @param polygon the polygon
+     */
     public PolygonMapObject(Polygon polygon) {
         this.polygon = polygon;
     }
 
-    /** @return polygon shape */
+    /**
+     * @return polygon shape
+     */
     public Polygon getPolygon() {
         return polygon;
     }
 
-    /** @param polygon new object's polygon shape */
+    /**
+     * @param polygon new object's polygon shape
+     */
     public void setPolygon(Polygon polygon) {
         this.polygon = polygon;
     }
-
 }

@@ -18,5 +18,4 @@ public final class Box2D {
     public static void init() {
         new SharedLibraryLoader().load("gdx-box2d");
     }
-
 }

@@ -76,5 +76,4 @@ public class InternationalFontsTest extends GdxTest {
     public void resize(int width, int height) {
         cam.setToOrtho(false, width, height);
     }
-
 }

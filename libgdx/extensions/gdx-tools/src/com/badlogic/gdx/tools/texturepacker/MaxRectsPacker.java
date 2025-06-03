@@ -1,7 +1,11 @@
 package com.badlogic.gdx.tools.texturepacker;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.tools.texturepacker.TexturePacker.*;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Packer;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Page;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.ProgressListener;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Rect;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
 
@@ -73,7 +77,6 @@ public class MaxRectsPacker implements Packer {
             inputRects = result.remainingRects;
         }
         return pages;
-
     }
 
     private Page packPage(Array<Rect> inputRects) {
@@ -232,7 +235,7 @@ public class MaxRectsPacker implements Packer {
         return result1.occupancy > result2.occupancy ? result1 : result2;
     }
 
-    static public enum FreeRectChoiceHeuristic {
+    public enum FreeRectChoiceHeuristic {
         /**
          * BSSF: Positions the rectangle against the short side of a free rectangle into which it fits the best.
          */
@@ -764,6 +767,4 @@ public class MaxRectsPacker implements Packer {
             return a.x >= b.x && a.y >= b.y && a.x + a.width <= b.x + b.width && a.y + a.height <= b.y + b.height;
         }
     }
-
-    ;
 }

@@ -57,7 +57,7 @@ public class OutlineWobbleEffect extends OutlineEffect {
             GeneralPath result = new GeneralPath();
             shape = new BasicStroke(getWidth(), BasicStroke.CAP_SQUARE, getJoin()).createStrokedShape(shape);
             PathIterator it = new FlatteningPathIterator(shape.getPathIterator(null), FLATNESS);
-            float points[] = new float[6];
+            float[] points = new float[6];
             float moveX = 0, moveY = 0;
             float lastX = 0, lastY = 0;
             float thisX = 0, thisY = 0;

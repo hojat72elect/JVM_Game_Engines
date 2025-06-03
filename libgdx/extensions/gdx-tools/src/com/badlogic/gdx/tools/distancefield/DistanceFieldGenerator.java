@@ -1,10 +1,11 @@
 package com.badlogic.gdx.tools.distancefield;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * Generates a signed distance field image from a binary (black/white) source image.

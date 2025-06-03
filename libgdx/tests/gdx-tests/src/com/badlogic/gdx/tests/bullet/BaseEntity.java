@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
- *  Base class specifying only a renderable entity
+ * Base class specifying only a renderable entity
  */
 public abstract class BaseEntity implements Disposable {
     public Matrix4 transform;
     public ModelInstance modelInstance;
-    private Color color = new Color(1f, 1f, 1f, 1f);
+    private final Color color = new Color(1f, 1f, 1f, 1f);
 
     public Color getColor() {
         return color;

@@ -143,5 +143,4 @@ public class TextureArray extends GLTexture {
         glHandle = Gdx.gl.glGenTexture();
         load(data);
     }
-
 }

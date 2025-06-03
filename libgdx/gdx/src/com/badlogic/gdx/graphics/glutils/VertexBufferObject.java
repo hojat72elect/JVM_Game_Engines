@@ -1,15 +1,15 @@
 package com.badlogic.gdx.graphics.glutils;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 
 /**
  * <p>
@@ -199,7 +199,6 @@ public class VertexBufferObject implements VertexData {
                 shader.setVertexAttribute(location, attribute.numComponents, attribute.type, attribute.normalized,
                         attributes.vertexSize, attribute.offset);
             }
-
         } else {
             for (int i = 0; i < numAttributes; i++) {
                 final VertexAttribute attribute = attributes.get(i);

@@ -1,10 +1,24 @@
 package com.badlogic.gdx.backends.headless;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.ApplicationLogger;
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.LifecycleListener;
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.headless.mock.audio.MockAudio;
 import com.badlogic.gdx.backends.headless.mock.graphics.MockGraphics;
 import com.badlogic.gdx.backends.headless.mock.input.MockInput;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Clipboard;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * a headless implementation of a GDX Application primarily intended to be used in servers.
@@ -24,7 +38,7 @@ public class HeadlessApplication implements Application {
     protected int logLevel = LOG_INFO;
     protected ApplicationLogger applicationLogger;
     ObjectMap<String, Preferences> preferences = new ObjectMap<String, Preferences>();
-    private String preferencesdir;
+    private final String preferencesdir;
 
     public HeadlessApplication(ApplicationListener listener) {
         this(listener, null);

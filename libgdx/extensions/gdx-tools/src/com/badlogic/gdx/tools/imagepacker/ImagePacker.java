@@ -1,11 +1,18 @@
 package com.badlogic.gdx.tools.imagepacker;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 /**
  * <p>
@@ -45,6 +52,7 @@ public class ImagePacker {
     boolean duplicateBorder;
     Node root;
     Map<String, Rectangle> rects;
+
     /**
      * <p>
      * Creates a new ImagePacker which will insert all supplied images into a <code>width</code> by <code>height</code> image.

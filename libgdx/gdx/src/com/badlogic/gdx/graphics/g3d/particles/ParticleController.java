@@ -294,7 +294,7 @@ public class ParticleController implements Json.Serializable, ResourceData.Confi
         for (Influencer influencer : this.influencers) {
             influencers[i++] = (Influencer) influencer.copy();
         }
-        return new ParticleController(new String(this.name), emitter, (ParticleControllerRenderer<?, ?>) renderer.copy(),
+        return new ParticleController(this.name, emitter, (ParticleControllerRenderer<?, ?>) renderer.copy(),
                 influencers);
     }
 

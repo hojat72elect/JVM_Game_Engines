@@ -8,5 +8,4 @@ public class Collections {
      * false.
      */
     public static boolean allocateIterators;
-
 }

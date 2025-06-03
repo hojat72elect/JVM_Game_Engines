@@ -162,7 +162,6 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
 
             stage.addActor(btnOpenUri);
         }
-
     }
 
     @Override
@@ -192,7 +191,6 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
                     texture = new Texture(pixmap);
                 }
             });
-
         } else if (clickedButton == btnDownloadLarge) {
             Gdx.app.postRunnable(new Runnable() {
                 public void run() {
@@ -205,7 +203,6 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
                     text = "Retrieved large file: " + rawFileBytes.length;
                 }
             });
-
         } else {
             setText(httpResponse);
         }
@@ -276,5 +273,4 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
             }
         });
     }
-
 }

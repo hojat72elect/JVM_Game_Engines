@@ -1,8 +1,12 @@
 package com.badlogic.gdx.tools.flame;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
 
 /**
  *

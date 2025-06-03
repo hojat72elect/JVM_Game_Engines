@@ -3,7 +3,8 @@ package com.badlogic.gdx.backends.lwjgl;
 import com.badlogic.gdx.ApplicationListener;
 
 import java.applet.Applet;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Canvas;
 
 /**
  * An OpenGL surface in an applet.
@@ -16,12 +17,12 @@ public class LwjglApplet extends Applet {
     public LwjglApplet(final ApplicationListener listener, final LwjglApplicationConfiguration config) {
         LwjglNativesLoader.load = false;
         canvas = new Canvas() {
-            public final void addNotify() {
+            public void addNotify() {
                 super.addNotify();
                 app = new LwjglAppletApplication(listener, canvas, config);
             }
 
-            public final void removeNotify() {
+            public void removeNotify() {
                 app.stop();
                 super.removeNotify();
             }
@@ -36,12 +37,12 @@ public class LwjglApplet extends Applet {
     public LwjglApplet(final ApplicationListener listener) {
         LwjglNativesLoader.load = false;
         canvas = new Canvas() {
-            public final void addNotify() {
+            public void addNotify() {
                 super.addNotify();
                 app = new LwjglAppletApplication(listener, canvas);
             }
 
-            public final void removeNotify() {
+            public void removeNotify() {
                 app.stop();
                 super.removeNotify();
             }

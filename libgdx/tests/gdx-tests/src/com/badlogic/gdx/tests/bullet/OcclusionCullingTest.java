@@ -195,7 +195,6 @@ public class OcclusionCullingTest extends BaseBulletTest {
             public void onObjectVisible(btCollisionObject object) {
                 visibleEntities.add(world.entities.get(object.getUserValue()));
             }
-
         };
         disposables.add(occlusionCuller);
 
@@ -434,11 +433,10 @@ public class OcclusionCullingTest extends BaseBulletTest {
          */
         KDOP;
 
-        private static CullingPolicy[] val = values();
+        private static final CullingPolicy[] val = values();
 
         public CullingPolicy next() {
             return val[(this.ordinal() + 1) % val.length];
         }
     }
-
 }

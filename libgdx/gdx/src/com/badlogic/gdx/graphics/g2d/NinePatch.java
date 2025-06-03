@@ -289,12 +289,12 @@ public class NinePatch {
         float u = region.u, v = region.v2, u2 = region.u2, v2 = region.v;
         if (texture.getMagFilter() == TextureFilter.Linear || texture.getMinFilter() == TextureFilter.Linear) {
             if (isStretchW) {
-                float halfTexelWidth = 0.5f * 1f / texture.getWidth();
+                float halfTexelWidth = 0.5f / texture.getWidth();
                 u += halfTexelWidth;
                 u2 -= halfTexelWidth;
             }
             if (isStretchH) {
-                float halfTexelHeight = 0.5f * 1f / texture.getHeight();
+                float halfTexelHeight = 0.5f / texture.getHeight();
                 v -= halfTexelHeight;
                 v2 += halfTexelHeight;
             }

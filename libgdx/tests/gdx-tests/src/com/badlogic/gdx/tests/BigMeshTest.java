@@ -107,7 +107,7 @@ public class BigMeshTest extends GdxTest {
         System.out.println("- renderables: " + renderables.size);
         for (Renderable r : renderables) {
             Mesh mesh = r.meshPart.mesh;
-            System.out.println("-- renderable [" + String.valueOf(r.meshPart.id) + "]: ");
+            System.out.println("-- renderable [" + r.meshPart.id + "]: ");
             System.out.println("-- mesh part offset: " + r.meshPart.offset);
             System.out.println("-- mesh part size: " + r.meshPart.size);
             System.out.println("-- mesh num vertices: " + mesh.getNumVertices());
@@ -148,5 +148,4 @@ public class BigMeshTest extends GdxTest {
             return renderable;
         }
     }
-
 }

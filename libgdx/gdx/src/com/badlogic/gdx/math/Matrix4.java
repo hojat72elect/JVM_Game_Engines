@@ -98,7 +98,7 @@ public class Matrix4 implements Serializable {
     static final Vector3 tmpForward = new Vector3();
     static final Vector3 tmpUp = new Vector3();
     private static final long serialVersionUID = -2717655254359579617L;
-    public final float val[] = new float[16];
+    public final float[] val = new float[16];
 
     /**
      * Constructs an identity matrix
@@ -408,7 +408,6 @@ public class Matrix4 implements Serializable {
                 - values[M20] * values[M11] * values[M02] * values[M33] + values[M10] * values[M21] * values[M02] * values[M33]
                 + values[M20] * values[M01] * values[M12] * values[M33] - values[M00] * values[M21] * values[M12] * values[M33]
                 - values[M10] * values[M01] * values[M22] * values[M33] + values[M00] * values[M11] * values[M22] * values[M33];
-
     }
 
     /**

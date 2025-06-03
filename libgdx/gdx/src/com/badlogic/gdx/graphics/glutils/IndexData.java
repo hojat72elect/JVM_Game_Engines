@@ -1,8 +1,8 @@
 package com.badlogic.gdx.graphics.glutils;
 
-import java.nio.ShortBuffer;
-
 import com.badlogic.gdx.utils.Disposable;
+
+import java.nio.ShortBuffer;
 
 /**
  * An IndexData instance holds index data. Can be either a plain short buffer or an OpenGL buffer object.
@@ -11,12 +11,12 @@ public interface IndexData extends Disposable {
     /**
      * @return the number of indices currently stored in this buffer
      */
-    public int getNumIndices();
+    int getNumIndices();
 
     /**
      * @return the maximum number of indices this IndexBufferObject can store.
      */
-    public int getNumMaxIndices();
+    int getNumMaxIndices();
 
     /**
      * <p>
@@ -32,7 +32,7 @@ public interface IndexData extends Disposable {
      * @param offset  the offset to start copying the data from
      * @param count   the number of shorts to copy
      */
-    public void setIndices(short[] indices, int offset, int count);
+    void setIndices(short[] indices, int offset, int count);
 
     /**
      * Copies the specified indices to the indices of this IndexBufferObject, discarding the old indices. Copying start at the
@@ -42,7 +42,7 @@ public interface IndexData extends Disposable {
      *
      * @param indices the index data to copy
      */
-    public void setIndices(ShortBuffer indices);
+    void setIndices(ShortBuffer indices);
 
     /**
      * Update (a portion of) the indices.
@@ -52,7 +52,7 @@ public interface IndexData extends Disposable {
      * @param offset       the offset to start copying the data from
      * @param count        the number of shorts to copy
      */
-    public void updateIndices(int targetOffset, short[] indices, int offset, int count);
+    void updateIndices(int targetOffset, short[] indices, int offset, int count);
 
     /**
      * <p>
@@ -64,7 +64,7 @@ public interface IndexData extends Disposable {
      * @deprecated use {@link #getBuffer(boolean)} instead
      */
     @Deprecated
-    public ShortBuffer getBuffer();
+    ShortBuffer getBuffer();
 
     /**
      * Returns the underlying ShortBuffer for reading or writing.
@@ -73,25 +73,25 @@ public interface IndexData extends Disposable {
      *                   immediate uploading use {@link #setIndices(short[], int, int)}.
      * @return the underlying short buffer.
      */
-    public ShortBuffer getBuffer(boolean forWriting);
+    ShortBuffer getBuffer(boolean forWriting);
 
     /**
      * Binds this IndexBufferObject for rendering with glDrawElements.
      */
-    public void bind();
+    void bind();
 
     /**
      * Unbinds this IndexBufferObject.
      */
-    public void unbind();
+    void unbind();
 
     /**
      * Invalidates the IndexBufferObject so a new OpenGL buffer handle is created. Use this in case of a context loss.
      */
-    public void invalidate();
+    void invalidate();
 
     /**
      * Disposes this IndexDatat and all its associated OpenGL resources.
      */
-    public void dispose();
+    void dispose();
 }

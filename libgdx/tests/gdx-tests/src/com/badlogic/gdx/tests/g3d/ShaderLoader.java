@@ -1,19 +1,19 @@
 package com.badlogic.gdx.tests.g3d;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 public class ShaderLoader {
     final static StringBuilder stringBuilder = new StringBuilder();
     public FileHandle root;
     public ObjectMap<String, ObjectMap<String, String>> snippets = new ObjectMap<String, ObjectMap<String, String>>();
-    private Array<String> includes = new Array<String>();
+    private final Array<String> includes = new Array<String>();
 
     public ShaderLoader(FileHandle root) {
         this.root = root;

@@ -15,6 +15,7 @@ public final class HttpParametersUtils {
     public static String defaultEncoding = "UTF-8";
     public static String nameValueSeparator = "=";
     public static String parameterSeparator = "&";
+
     private HttpParametersUtils() {
     }
 

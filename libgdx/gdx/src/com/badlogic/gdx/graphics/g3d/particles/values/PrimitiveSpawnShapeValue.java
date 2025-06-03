@@ -14,6 +14,7 @@ public abstract class PrimitiveSpawnShapeValue extends SpawnShapeValue {
     protected float spawnHeight, spawnHeightDiff;
     protected float spawnDepth, spawnDepthDiff;
     boolean edges = false;
+
     public PrimitiveSpawnShapeValue() {
         spawnWidthValue = new ScaledNumericValue();
         spawnHeightValue = new ScaledNumericValue();
@@ -104,8 +105,7 @@ public abstract class PrimitiveSpawnShapeValue extends SpawnShapeValue {
         edges = json.readValue("edges", boolean.class, jsonData);
     }
 
-    static public enum SpawnSide {
+    public enum SpawnSide {
         both, top, bottom
     }
-
 }

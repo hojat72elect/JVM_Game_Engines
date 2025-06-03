@@ -179,5 +179,4 @@ public class DebugDrawer extends btIDebugDraw implements Disposable {
             font.dispose();
         }
     }
-
 }

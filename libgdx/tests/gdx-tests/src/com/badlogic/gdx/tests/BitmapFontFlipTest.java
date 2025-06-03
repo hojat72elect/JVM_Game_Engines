@@ -19,7 +19,7 @@ public class BitmapFontFlipTest extends GdxTest {
     private Texture texture;
     private BitmapFont font;
     private Sprite logoSprite;
-    private Color red = new Color(1, 0, 0, 0);
+    private final Color red = new Color(1, 0, 0, 0);
     private BitmapFontCache cache1, cache2, cache3, cache4, cache5;
     private BitmapFontCache cacheScaled1, cacheScaled2, cacheScaled3, cacheScaled4, cacheScaled5;
 

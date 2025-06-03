@@ -113,5 +113,4 @@ public class MotorJoint extends Joint {
 		b2MotorJoint* joint = (b2MotorJoint*)addr;
 		joint->SetCorrectionFactor(correctionFactor);
 	*/
-
 }

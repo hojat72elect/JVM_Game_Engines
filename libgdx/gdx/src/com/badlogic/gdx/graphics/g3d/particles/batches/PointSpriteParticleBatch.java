@@ -47,6 +47,7 @@ public class PointSpriteParticleBatch extends BufferedParticleBatch<PointSpriteC
     protected DepthTestAttribute depthTestAttribute;
     Renderable renderable;
     private float[] vertices;
+
     public PointSpriteParticleBatch() {
         this(1000);
     }

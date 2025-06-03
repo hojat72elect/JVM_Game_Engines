@@ -1,7 +1,5 @@
 package com.badlogic.gdx.graphics.glutils;
 
-import java.nio.FloatBuffer;
-
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +9,8 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.nio.FloatBuffer;
 
 /**
  * A {@link TextureData} implementation which should be used to create float textures.
@@ -75,7 +75,6 @@ public class FloatTextureData implements TextureData {
             // GLES and WebGL defines texture format by 3rd and 8th argument,
             // so to get a float texture one needs to supply GL_RGBA and GL_FLOAT there.
             Gdx.gl.glTexImage2D(target, 0, GL20.GL_RGBA, width, height, 0, GL20.GL_RGBA, GL20.GL_FLOAT, buffer);
-
         } else {
             if (!Gdx.graphics.isGL30Available()) {
                 if (!Gdx.graphics.supportsExtension("GL_ARB_texture_float"))

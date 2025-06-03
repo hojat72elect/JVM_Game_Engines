@@ -162,16 +162,15 @@ public class ReflectionCorrectnessTest extends GdxTest {
 
         Class componentType = ClassReflection.getComponentType(c);
         expectResult(e.componentType, componentType, "component type of Array");
-
     }
 
-    public static enum StaticEnum {
+    public enum StaticEnum {
     }
 
-    public static abstract interface AbstractInterfaceStatic {
+    public interface AbstractInterfaceStatic {
     }
 
-    public static abstract @interface AbstractAnnotationStatic {
+    public @interface AbstractAnnotationStatic {
     }
 
     public static class Expectation {
@@ -221,5 +220,4 @@ public class ReflectionCorrectnessTest extends GdxTest {
             return this;
         }
     }
-
 }

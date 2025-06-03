@@ -53,5 +53,4 @@ public final class Constructor {
             throw new ReflectionException("Exception occurred in constructor for class: " + getDeclaringClass().getName(), e);
         }
     }
-
 }

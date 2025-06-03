@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * A NodeAnimation defines keyframes for a {@link Node} in a {@link Model}. The keyframes are given as a translation vector, a
  * rotation quaternion and a scale vector. Keyframes are interpolated linearly for now. Keytimes are given in seconds.
- *
+ * <p>
  * , Xoppa
  */
 public class NodeAnimation {

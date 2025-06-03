@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.math.Vector2;
@@ -33,7 +30,7 @@ public class VaryingRestitution extends Box2DTest {
             fd.shape = shape;
             fd.density = 1.0f;
 
-            float restitution[] = {0, 0.1f, 0.3f, 0.5f, 0.75f, 0.9f, 1.0f};
+            float[] restitution = {0, 0.1f, 0.3f, 0.5f, 0.75f, 0.9f, 1.0f};
 
             for (int i = 0; i < restitution.length; i++) {
                 BodyDef bd = new BodyDef();

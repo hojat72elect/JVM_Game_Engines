@@ -1,13 +1,5 @@
 package com.badlogic.gdx.graphics.glutils;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-import java.util.zip.GZIPInputStream;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cubemap;
@@ -21,6 +13,14 @@ import com.badlogic.gdx.graphics.glutils.ETC1.ETC1Data;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
+
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
+import java.util.zip.GZIPInputStream;
 
 /**
  * A KTXTextureData holds the data from a KTX (or zipped KTX file, aka ZKTX). That is to say an OpenGL ready texture data. The
@@ -36,7 +36,7 @@ public class KTXTextureData implements TextureData, CubemapData {
     private static final int GL_TEXTURE_1D_ARRAY_EXT = 0x1234;
     private static final int GL_TEXTURE_2D_ARRAY_EXT = 0x1234;
     // The file we are loading
-    private FileHandle file;
+    private final FileHandle file;
     // KTX header (only available after preparing)
     private int glType;
     private int glTypeSize;
@@ -353,5 +353,4 @@ public class KTXTextureData implements TextureData, CubemapData {
     public boolean isManaged() {
         return true;
     }
-
 }

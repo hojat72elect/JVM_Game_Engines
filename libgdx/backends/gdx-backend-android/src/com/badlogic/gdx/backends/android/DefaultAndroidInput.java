@@ -14,23 +14,42 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Handler;
-import android.text.*;
+import android.text.InputFilter;
 import android.text.InputFilter.LengthFilter;
+import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
-import android.view.*;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.Surface;
+import android.view.View;
 import android.view.View.OnGenericMotionListener;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.window.OnBackInvokedCallback;
 import android.window.OnBackInvokedDispatcher;
-import com.badlogic.gdx.*;
+
+import com.badlogic.gdx.AbstractInput;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.backends.android.keyboardheight.KeyboardHeightObserver;
 import com.badlogic.gdx.backends.android.keyboardheight.KeyboardHeightProvider;
 import com.badlogic.gdx.backends.android.keyboardheight.StandardKeyboardHeightProvider;
@@ -92,9 +111,9 @@ public class DefaultAndroidInput extends AbstractInput implements AndroidInput, 
     // Due to the lots of threads in android, we need to use this as a lock to wait with openTextInputField until close has
     // finished
     boolean closeTriggered = false;
-    private boolean[] justPressedButtons = new boolean[NUM_TOUCHES];
+    private final boolean[] justPressedButtons = new boolean[NUM_TOUCHES];
     private SensorManager manager;
-    private Handler handle;
+    private final Handler handle;
     private int sleepTime = 0;
     private boolean compassAvailable = false;
     private boolean rotationVectorAvailable = false;
@@ -970,7 +989,7 @@ public class DefaultAndroidInput extends AbstractInput implements AndroidInput, 
                 final String text = editText.getText().toString();
                 final int selection = editText.getSelectionStart();
                 Gdx.app.postRunnable(new Runnable() {
-                    TextInputWrapper wrapper = textInputWrapper;
+                    final TextInputWrapper wrapper = textInputWrapper;
 
                     @Override
                     public void run() {
@@ -996,7 +1015,6 @@ public class DefaultAndroidInput extends AbstractInput implements AndroidInput, 
                                     });
                                 }
                             }
-
                         });
                     }
                 });
@@ -1213,8 +1231,7 @@ public class DefaultAndroidInput extends AbstractInput implements AndroidInput, 
         if (peripheral == Peripheral.HapticFeedback) return haptics.hasHapticsSupport();
         if (peripheral == Peripheral.MultitouchScreen) return hasMultitouch;
         if (peripheral == Peripheral.RotationVector) return rotationVectorAvailable;
-        if (peripheral == Peripheral.Pressure) return true;
-        return false;
+        return peripheral == Peripheral.Pressure;
     }
 
     public int getFreePointerIndex() {
@@ -1263,7 +1280,7 @@ public class DefaultAndroidInput extends AbstractInput implements AndroidInput, 
         for (int i = 0; i < len; i++) {
             sb.append(i + ":" + realId[i] + " ");
         }
-        Gdx.app.log("AndroidInput", "Pointer ID lookup failed: " + pointerId + ", " + sb.toString());
+        Gdx.app.log("AndroidInput", "Pointer ID lookup failed: " + pointerId + ", " + sb);
         return -1;
     }
 
@@ -1439,7 +1456,6 @@ public class DefaultAndroidInput extends AbstractInput implements AndroidInput, 
         private void unregister() {
             dispatcher.unregisterOnBackInvokedCallback(callback);
         }
-
     }
 
     /**

@@ -41,5 +41,4 @@ public class BillboardRenderer extends ParticleControllerRenderer<BillboardContr
     public boolean isCompatible(ParticleBatch<?> batch) {
         return batch instanceof BillboardParticleBatch;
     }
-
 }

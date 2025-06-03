@@ -17,8 +17,8 @@ public class GearJoint extends Joint {
 #include <Box2D/Box2D.h> 
 	 */
 
-    private Joint joint1;
-    private Joint joint2;
+    private final Joint joint1;
+    private final Joint joint2;
 
     public GearJoint(World world, long addr, Joint joint1, Joint joint2) {
         super(world, addr);
@@ -75,5 +75,4 @@ public class GearJoint extends Joint {
 		b2GearJoint* joint =  (b2GearJoint*)addr;
 		return joint->GetRatio();
 	*/
-
 }

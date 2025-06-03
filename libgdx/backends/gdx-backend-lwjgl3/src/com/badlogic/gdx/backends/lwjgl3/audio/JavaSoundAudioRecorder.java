@@ -12,7 +12,7 @@ import javax.sound.sampled.TargetDataLine;
  *
  */
 public class JavaSoundAudioRecorder implements AudioRecorder {
-    private TargetDataLine line;
+    private final TargetDataLine line;
     private byte[] buffer = new byte[1024 * 4];
 
     public JavaSoundAudioRecorder(int samplingRate, boolean isMono) {

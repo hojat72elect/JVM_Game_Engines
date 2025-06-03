@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Circle;
  */
 public class CircleMapObject extends MapObject {
 
-    private Circle circle;
+    private final Circle circle;
 
     /**
      * Creates a circle map object at (0,0) with r=1.0

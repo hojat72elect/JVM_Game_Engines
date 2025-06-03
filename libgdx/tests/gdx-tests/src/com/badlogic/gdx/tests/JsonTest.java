@@ -1,8 +1,17 @@
 package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.tests.utils.GdxTest;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ArrayMap;
+import com.badlogic.gdx.utils.IntIntMap;
+import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonSkimmer;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
+import com.badlogic.gdx.utils.LongMap;
+import com.badlogic.gdx.utils.Null;
+import com.badlogic.gdx.utils.ObjectFloatMap;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.reflect.ArrayReflection;
 
 import java.util.ArrayList;
@@ -42,7 +51,7 @@ public class JsonTest extends GdxTest {
         test.CharacterField = 'X';
         test.ShortField = -12345;
         test.IntegerField = -123456;
-        test.LongField = -123456789l;
+        test.LongField = -123456789L;
         test.FloatField = -123.3f;
         test.DoubleField = -0.121231d;
         test.stringField = "stringvalue";
@@ -329,7 +338,7 @@ public class JsonTest extends GdxTest {
     }
 
     public enum SomeEnum {
-        a, b, c;
+        a, b, c
     }
 
     static public class Test1 {
@@ -452,8 +461,7 @@ public class JsonTest extends GdxTest {
             if (Float.floatToIntBits(floatField) != Float.floatToIntBits(other.floatField)) return false;
             if (intField != other.intField) return false;
             if (longField != other.longField) return false;
-            if (shortField != other.shortField) return false;
-            return true;
+            return shortField == other.shortField;
         }
     }
 

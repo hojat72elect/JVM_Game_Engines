@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class EventManager {
     private static EventManager mInstance;
-    private ObjectMap<Integer, Array<Listener>> mListeners;
+    private final ObjectMap<Integer, Array<Listener>> mListeners;
 
     private EventManager() {
         mListeners = new ObjectMap<Integer, Array<Listener>>();
@@ -31,7 +31,6 @@ public class EventManager {
         if (isNew || !listeners.contains(aListener, true)) {
             listeners.add(aListener);
         }
-
     }
 
     public void detach(int aEventType, Listener aListener) {
@@ -54,7 +53,6 @@ public class EventManager {
     }
 
     public interface Listener {
-        public void handle(int aEventType, Object aEventData);
+        void handle(int aEventType, Object aEventData);
     }
-
 }

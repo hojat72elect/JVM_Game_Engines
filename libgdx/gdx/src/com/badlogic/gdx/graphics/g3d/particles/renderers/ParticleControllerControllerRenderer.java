@@ -37,5 +37,4 @@ public class ParticleControllerControllerRenderer extends ParticleControllerRend
     public boolean isCompatible(ParticleBatch batch) {
         return false;
     }
-
 }

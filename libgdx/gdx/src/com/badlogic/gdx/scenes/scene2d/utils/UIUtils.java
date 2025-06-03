@@ -12,6 +12,7 @@ public final class UIUtils {
     static public boolean isWindows = SharedLibraryLoader.os == Os.Windows;
     static public boolean isLinux = SharedLibraryLoader.os == Os.Linux;
     static public boolean isIos = SharedLibraryLoader.os == Os.IOS;
+
     private UIUtils() {
     }
 

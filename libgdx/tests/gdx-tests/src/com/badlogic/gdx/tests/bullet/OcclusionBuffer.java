@@ -4,7 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -62,7 +65,8 @@ public class OcclusionBuffer implements Disposable {
     private Pixmap debugPixmap;
     private Texture debugTexture;
     private TextureRegion debugTextureRegion;
-    private Matrix4 projectionMatrix = new Matrix4();
+    private final Matrix4 projectionMatrix = new Matrix4();
+
     /**
      * Creates a new {@link OcclusionBuffer}
      *
@@ -129,7 +133,6 @@ public class OcclusionBuffer implements Disposable {
         if (numVertsBehind == numVerts) {
             // All vertices outside frustum
             return 0;
-
         } else if (numVertsBehind > 0) {
             // Some vertices are behind the camera, so perform clipping.
             int newNumVerts = 0;
@@ -141,7 +144,6 @@ public class OcclusionBuffer implements Disposable {
                 if (s[j] > 0) verticesOut[newNumVerts++].set(verticesIn[j]);
             }
             return newNumVerts;
-
         } else {
             // No clipping needed.
             for (int i = 0; i < numVerts; i++)
@@ -462,5 +464,4 @@ public class OcclusionBuffer implements Disposable {
             return this;
         }
     }
-
 }

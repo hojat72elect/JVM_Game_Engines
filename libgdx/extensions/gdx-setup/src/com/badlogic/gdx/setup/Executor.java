@@ -24,9 +24,7 @@ public class Executor {
         String[] params = parameters.split(" ");
         String[] commands = new String[params.length + 1];
         commands[0] = exec;
-        for (int i = 0; i < params.length; i++) {
-            commands[i + 1] = params[i];
-        }
+        System.arraycopy(params, 0, commands, 1, params.length);
 
         return startProcess(commands, workingDir, callback);
     }
@@ -61,6 +59,6 @@ public class Executor {
     }
 
     public interface CharCallback {
-        public void character(char c);
+        void character(char c);
     }
 }

@@ -6,7 +6,7 @@ package com.badlogic.gdx.math;
  * in case a new sample is added.
  */
 public final class WindowedMean {
-    float values[];
+    float[] values;
     int added_values = 0;
     int last_value;
     float mean = 0;

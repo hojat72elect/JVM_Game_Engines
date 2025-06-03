@@ -25,7 +25,7 @@ public class GdxEglConfigChooser implements GLSurfaceView.EGLConfigChooser {
     protected int mDepthSize;
     protected int mStencilSize;
     protected int mNumSamples;
-    private int[] mValue = new int[1];
+    private final int[] mValue = new int[1];
 
     public GdxEglConfigChooser(int r, int g, int b, int a, int depth, int stencil, int numSamples) {
         mRedSize = r;

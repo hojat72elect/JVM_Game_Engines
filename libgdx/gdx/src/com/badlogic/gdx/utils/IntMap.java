@@ -1,10 +1,10 @@
 package com.badlogic.gdx.utils;
 
+import static com.badlogic.gdx.utils.ObjectSet.tableSize;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import static com.badlogic.gdx.utils.ObjectSet.tableSize;
 
 /**
  * An unordered map where the keys are unboxed ints and values are objects. No allocation is done except when growing the table
@@ -21,8 +21,6 @@ import static com.badlogic.gdx.utils.ObjectSet.tableSize;
  * hashing, instead of the more common power-of-two mask, to better distribute poor hashCodes (see <a href=
  * "https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/">Malte
  * Skarupke's blog post</a>). Linear probing continues to work even when all hashCodes collide, just more slowly.
- *
- * 
  */
 public class IntMap<V> implements Iterable<IntMap.Entry<V>> {
     private final float loadFactor;
@@ -301,7 +299,6 @@ public class IntMap<V> implements Iterable<IntMap.Entry<V>> {
                 if (value.equals(valueTable[i])) return true;
         }
         return false;
-
     }
 
     public boolean containsKey(int key) {

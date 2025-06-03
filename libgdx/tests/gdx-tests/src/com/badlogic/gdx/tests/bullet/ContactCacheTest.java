@@ -58,7 +58,7 @@ public class ContactCacheTest extends BaseBulletTest {
         for (int x = 0; x < SPHERECOUNT_X; x++) {
             for (int y = 0; y < SPHERECOUNT_Y; y++) {
                 for (int z = 0; z < SPHERECOUNT_Z; z++) {
-                    final BulletEntity e = (BulletEntity) world.add("sphere", SPHEREOFFSET_X + x * 3f, SPHEREOFFSET_Y + y * 3f,
+                    final BulletEntity e = world.add("sphere", SPHEREOFFSET_X + x * 3f, SPHEREOFFSET_Y + y * 3f,
                             SPHEREOFFSET_Z + z * 3f);
                     e.setColor(0.5f + 0.5f * (float) Math.random(), 0.5f + 0.5f * (float) Math.random(),
                             0.5f + 0.5f * (float) Math.random(), 1f);
@@ -110,12 +110,12 @@ public class ContactCacheTest extends BaseBulletTest {
         @Override
         public void onContactStarted(int userValue0, boolean match0, int userValue1, boolean match1) {
             if (match0) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue0));
+                final BulletEntity e = entities.get(userValue0);
                 e.setColor(Color.RED);
                 Gdx.app.log(Float.toString(time), "Contact started " + userValue0);
             }
             if (match1) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue1));
+                final BulletEntity e = entities.get(userValue1);
                 e.setColor(Color.RED);
                 Gdx.app.log(Float.toString(time), "Contact started " + userValue1);
             }
@@ -124,12 +124,12 @@ public class ContactCacheTest extends BaseBulletTest {
         @Override
         public void onContactEnded(int userValue0, boolean match0, int userValue1, boolean match1) {
             if (match0) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue0));
+                final BulletEntity e = entities.get(userValue0);
                 e.setColor(Color.BLUE);
                 Gdx.app.log(Float.toString(time), "Contact ended " + userValue0);
             }
             if (match1) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue1));
+                final BulletEntity e = entities.get(userValue1);
                 e.setColor(Color.BLUE);
                 Gdx.app.log(Float.toString(time), "Contact ended " + userValue1);
             }
@@ -144,12 +144,12 @@ public class ContactCacheTest extends BaseBulletTest {
             final int userValue0 = manifold.getBody0().getUserValue();
             final int userValue1 = manifold.getBody1().getUserValue();
             if (match0) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue0));
+                final BulletEntity e = entities.get(userValue0);
                 e.setColor(Color.RED);
                 Gdx.app.log(Float.toString(time), "Contact started " + userValue0);
             }
             if (match1) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue1));
+                final BulletEntity e = entities.get(userValue1);
                 e.setColor(Color.RED);
                 Gdx.app.log(Float.toString(time), "Contact started " + userValue1);
             }
@@ -160,12 +160,12 @@ public class ContactCacheTest extends BaseBulletTest {
             final int userValue0 = colObj0.getUserValue();
             final int userValue1 = colObj1.getUserValue();
             if (match0) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue0));
+                final BulletEntity e = entities.get(userValue0);
                 e.setColor(Color.BLUE);
                 Gdx.app.log(Float.toString(time), "Contact ended " + userValue0);
             }
             if (match1) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue1));
+                final BulletEntity e = entities.get(userValue1);
                 e.setColor(Color.BLUE);
                 Gdx.app.log(Float.toString(time), "Contact ended " + userValue1);
             }

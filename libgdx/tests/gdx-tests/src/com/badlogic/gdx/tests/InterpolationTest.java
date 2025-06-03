@@ -27,7 +27,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class InterpolationTest extends GdxTest {
     Stage stage;
     List<String> list;
-    String interpolationNames[], selectedInterpolation;
+    String[] interpolationNames;
+    String selectedInterpolation;
     float graphSize, steps, time = 0, duration = 2.5f;
     Vector2 startPosition = new Vector2(), targetPosition = new Vector2(), position = new Vector2();
     private Skin skin;
@@ -115,7 +116,6 @@ public class InterpolationTest extends GdxTest {
                 duration = MathUtils.clamp(duration, 0, Float.POSITIVE_INFINITY);
                 return true;
             }
-
         }, stage, new InputAdapter() {
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (!Float.isNaN(time)) // if "walking" was interrupted by this touch down event
@@ -124,7 +124,6 @@ public class InterpolationTest extends GdxTest {
                 time = 0;
                 return true;
             }
-
         }));
     }
 

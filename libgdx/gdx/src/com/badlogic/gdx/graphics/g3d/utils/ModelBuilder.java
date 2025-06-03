@@ -22,7 +22,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
  * {@link #node()} method to start a new node. Use one of the #part(...) methods to add a part within a node. The
  * {@link #part(String, int, VertexAttributes, Material)} method will return a {@link MeshPartBuilder} which can be used to build
  * the node part.
- *
  */
 public class ModelBuilder {
     /**
@@ -36,9 +35,9 @@ public class ModelBuilder {
     /**
      * The mesh builders created between begin and end
      */
-    private Array<MeshBuilder> builders = new Array<MeshBuilder>();
+    private final Array<MeshBuilder> builders = new Array<MeshBuilder>();
 
-    private Matrix4 tmpTransform = new Matrix4();
+    private final Matrix4 tmpTransform = new Matrix4();
 
     /**
      * Resets the references to {@link Material}s, {@link Mesh}es and {@link MeshPart}s within the model to the ones used within
@@ -546,5 +545,4 @@ public class ModelBuilder {
 
         return end();
     }
-
 }

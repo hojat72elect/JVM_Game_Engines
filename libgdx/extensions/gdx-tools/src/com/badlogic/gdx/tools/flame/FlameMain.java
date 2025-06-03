@@ -19,7 +19,11 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.*;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
@@ -34,7 +38,15 @@ import com.badlogic.gdx.graphics.g3d.particles.batches.ParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.Emitter;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.RegularEmitter;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.*;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.Influencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ModelInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ParticleControllerFinalizerInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ParticleControllerInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ScaleInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.SpawnInfluencer;
 import com.badlogic.gdx.graphics.g3d.particles.renderers.BillboardRenderer;
 import com.badlogic.gdx.graphics.g3d.particles.renderers.ModelInstanceRenderer;
 import com.badlogic.gdx.graphics.g3d.particles.renderers.ParticleControllerControllerRenderer;
@@ -57,17 +69,35 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.StreamUtils;
 import com.badlogic.gdx.utils.StringBuilder;
 
-import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.CompoundBorder;
-import javax.swing.plaf.basic.BasicSplitPaneUI;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.FileDialog;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.Writer;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.CompoundBorder;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 public class FlameMain extends JFrame implements AssetErrorListener {
     public static final String DEFAULT_FONT = "default.fnt", DEFAULT_BILLBOARD_PARTICLE = "pre_particle.png",
@@ -97,6 +127,7 @@ public class FlameMain extends JFrame implements AssetErrorListener {
     ParticleSystem particleSystem;
     String lastDir;
     private ParticleEffect effect;
+
     public FlameMain() {
         super("Flame");
         MathUtils.random = new RandomXS128();
@@ -191,7 +222,7 @@ public class FlameMain extends JFrame implements AssetErrorListener {
                     JPanel panel = null;
                     addRow(controllerPropertiesPanel, getPanel(controller.emitter));
                     for (int i = 0, c = controller.influencers.size; i < c; ++i) {
-                        Influencer influencer = (Influencer) controller.influencers.get(i);
+                        Influencer influencer = controller.influencers.get(i);
                         panel = getPanel(influencer);
                         if (panel != null) addRow(controllerPropertiesPanel, panel, 1, i == c - 1 ? 1 : 0);
                     }
@@ -279,7 +310,7 @@ public class FlameMain extends JFrame implements AssetErrorListener {
 
     public void setVisible(String name, boolean visible) {
         for (Component component : controllerPropertiesPanel.getComponents())
-            if (component instanceof EditorPanel && ((EditorPanel) component).getName().equals(name))
+            if (component instanceof EditorPanel && component.getName().equals(name))
                 component.setVisible(visible);
     }
 
@@ -384,7 +415,6 @@ public class FlameMain extends JFrame implements AssetErrorListener {
                                 InfluencerWrapper wrapper = (InfluencerWrapper) influencerBox.getSelectedItem();
                                 ParticleController controller = getEmitter();
                                 if (controller != null) addInfluencer(wrapper.type, controller);
-
                             }
                         });
                         influencersPanel.add(influencerBox, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.NORTHWEST,
@@ -414,7 +444,6 @@ public class FlameMain extends JFrame implements AssetErrorListener {
             }
 
             rightSplit.setDividerLocation(250);
-
         }
         {
             JSplitPane leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -459,14 +488,14 @@ public class FlameMain extends JFrame implements AssetErrorListener {
                 replaced = controller.replaceInfluencer(RegionInfluencer.class, (RegionInfluencer) newInfluencer);
             } else if (ModelInfluencer.class.isAssignableFrom(type)) {
                 ModelInfluencer newModelInfluencer = (ModelInfluencer) newInfluencer;
-                ModelInfluencer currentInfluencer = (ModelInfluencer) controller.findInfluencer(ModelInfluencer.class);
+                ModelInfluencer currentInfluencer = controller.findInfluencer(ModelInfluencer.class);
                 if (currentInfluencer != null) {
                     newModelInfluencer.models.add(currentInfluencer.models.first());
                 }
                 replaced = controller.replaceInfluencer(ModelInfluencer.class, (ModelInfluencer) newInfluencer);
             } else if (ParticleControllerInfluencer.class.isAssignableFrom(type)) {
                 ParticleControllerInfluencer newModelInfluencer = (ParticleControllerInfluencer) newInfluencer;
-                ParticleControllerInfluencer currentInfluencer = (ParticleControllerInfluencer) controller
+                ParticleControllerInfluencer currentInfluencer = controller
                         .findInfluencer(ParticleControllerInfluencer.class);
                 if (currentInfluencer != null) {
                     newModelInfluencer.templates.add(currentInfluencer.templates.first());
@@ -731,7 +760,7 @@ public class FlameMain extends JFrame implements AssetErrorListener {
         public String desc;
         public InfluencerWrapper[] wrappers;
 
-        private ControllerType(String desc, InfluencerWrapper[] wrappers) {
+        ControllerType(String desc, InfluencerWrapper[] wrappers) {
             this.desc = desc;
             this.wrappers = wrappers;
         }
@@ -881,7 +910,7 @@ public class FlameMain extends JFrame implements AssetErrorListener {
             table.add(playPauseButton).expand().bottom().left().row();
             ui.addActor(table);
 
-            setTexture((Texture) assetManager.get(DEFAULT_BILLBOARD_PARTICLE));
+            setTexture(assetManager.get(DEFAULT_BILLBOARD_PARTICLE));
             effectPanel.createDefaultEmitter(ControllerType.Billboard, true, true);
         }
 

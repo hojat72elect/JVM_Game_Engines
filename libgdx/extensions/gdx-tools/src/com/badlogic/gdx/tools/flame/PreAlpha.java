@@ -1,9 +1,7 @@
 package com.badlogic.gdx.tools.flame;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-import java.awt.*;
+import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,6 +10,15 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  *
@@ -100,7 +107,6 @@ public class PreAlpha extends JFrame {
             JOptionPane.showMessageDialog(this, "Conversion complete!");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error saving image.");
-            return;
         }
     }
 
@@ -120,7 +126,6 @@ public class PreAlpha extends JFrame {
             pack();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error opening image.");
-            return;
         }
     }
 

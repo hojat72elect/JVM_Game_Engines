@@ -1,11 +1,5 @@
 package com.badlogic.gdx.graphics;
 
-import java.nio.Buffer;
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
@@ -29,6 +23,12 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.nio.Buffer;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -1370,7 +1370,10 @@ public class Mesh implements Disposable {
                             final int idx2 = j * newVertexSize;
                             boolean found = true;
                             for (int k = 0; k < checks.length && found; k++) {
-                                if (tmp[idx2 + k] != vertices[idx1 + checks[k]]) found = false;
+                                if (tmp[idx2 + k] != vertices[idx1 + checks[k]]) {
+                                    found = false;
+                                    break;
+                                }
                             }
                             if (found) newIndex = j;
                         }

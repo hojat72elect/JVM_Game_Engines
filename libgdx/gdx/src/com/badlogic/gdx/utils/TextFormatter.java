@@ -9,7 +9,7 @@ import java.util.Locale;
 class TextFormatter {
 
     private MessageFormat messageFormat;
-    private StringBuilder buffer;
+    private final StringBuilder buffer;
 
     public TextFormatter(Locale locale, boolean useMessageFormat) {
         buffer = new StringBuilder();

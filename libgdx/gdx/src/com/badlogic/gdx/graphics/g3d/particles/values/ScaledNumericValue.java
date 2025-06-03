@@ -116,5 +116,4 @@ public class ScaledNumericValue extends RangedNumericValue {
         scaling = json.readValue("scaling", float[].class, jsonData);
         timeline = json.readValue("timeline", float[].class, jsonData);
     }
-
 }

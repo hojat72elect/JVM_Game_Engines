@@ -1,10 +1,10 @@
 package com.badlogic.gdx.utils;
 
+import static com.badlogic.gdx.utils.ObjectSet.tableSize;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import static com.badlogic.gdx.utils.ObjectSet.tableSize;
 
 /**
  * An unordered map where the keys are objects and the values are unboxed longs. Null keys are not allowed. No allocation is done
@@ -21,8 +21,6 @@ import static com.badlogic.gdx.utils.ObjectSet.tableSize;
  * hashing, instead of the more common power-of-two mask, to better distribute poor hashCodes (see <a href=
  * "https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/">Malte
  * Skarupke's blog post</a>). Linear probing continues to work even when all hashCodes collide, just more slowly.
- *
- * 
  */
 public class ObjectLongMap<K> implements Iterable<ObjectLongMap.Entry<K>> {
     public int size;

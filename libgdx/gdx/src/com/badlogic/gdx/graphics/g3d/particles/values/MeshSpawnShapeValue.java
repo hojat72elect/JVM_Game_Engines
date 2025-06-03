@@ -20,6 +20,7 @@ public abstract class MeshSpawnShapeValue extends SpawnShapeValue {
      * the model this mesh belongs to. It can be null, but this means the mesh will not be able to be serialized correctly.
      */
     protected Model model;
+
     public MeshSpawnShapeValue(MeshSpawnShapeValue value) {
         super(value);
     }
@@ -60,7 +61,7 @@ public abstract class MeshSpawnShapeValue extends SpawnShapeValue {
         AssetDescriptor descriptor = saveData.loadAsset();
         if (descriptor != null) {
             Model model = (Model) manager.get(descriptor);
-            setMesh(model.meshes.get((Integer) saveData.load("index")), model);
+            setMesh(model.meshes.get(saveData.load("index")), model);
         }
     }
 
@@ -92,5 +93,4 @@ public abstract class MeshSpawnShapeValue extends SpawnShapeValue {
                     z1 + a * (z2 - z1) + b * (z3 - z1));
         }
     }
-
 }

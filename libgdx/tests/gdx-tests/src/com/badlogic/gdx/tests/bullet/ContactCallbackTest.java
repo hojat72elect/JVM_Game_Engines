@@ -26,7 +26,7 @@ public class ContactCallbackTest extends BaseBulletTest {
         for (int x = 0; x < BOXCOUNT_X; x++) {
             for (int y = 0; y < BOXCOUNT_Y; y++) {
                 for (int z = 0; z < BOXCOUNT_Z; z++) {
-                    final BulletEntity e = (BulletEntity) world.add("box", BOXOFFSET_X + x * 2f, BOXOFFSET_Y + y * 2f,
+                    final BulletEntity e = world.add("box", BOXOFFSET_X + x * 2f, BOXOFFSET_Y + y * 2f,
                             BOXOFFSET_Z + z * 2f);
                     e.setColor(0.5f + 0.5f * (float) Math.random(), 0.5f + 0.5f * (float) Math.random(),
                             0.5f + 0.5f * (float) Math.random(), 1f);
@@ -66,14 +66,14 @@ public class ContactCallbackTest extends BaseBulletTest {
         @Override
         public void onContactProcessed(int userValue0, boolean match0, int userValue1, boolean match1) {
             if (match0) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue0));
+                final BulletEntity e = entities.get(userValue0);
                 // Disable future callbacks for this entity
                 e.body.setContactCallbackFilter(0);
                 e.setColor(Color.RED);
                 Gdx.app.log("ContactCallbackTest", "Contact processed " + (++c));
             }
             if (match1) {
-                final BulletEntity e = (BulletEntity) (entities.get(userValue1));
+                final BulletEntity e = entities.get(userValue1);
                 // Disable future callbacks for this entity
                 e.body.setContactCallbackFilter(0);
                 e.setColor(Color.RED);

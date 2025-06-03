@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody.btRigidBodyConstruct
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 
 /**
- *  Renderable BaseEntity with a bullet physics body.
+ * Renderable BaseEntity with a bullet physics body.
  */
 public class BulletEntity extends BaseEntity {
     private final static Matrix4 tmpM = new Matrix4();

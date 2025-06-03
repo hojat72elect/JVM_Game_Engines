@@ -13,11 +13,11 @@ import com.badlogic.gdx.math.MathUtils.norm
 import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.MathUtils.sinDeg
 import com.badlogic.gdx.math.MathUtils.tanDeg
-import kotlin.math.tan
-import kotlin.math.withSign
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.math.tan
+import kotlin.math.withSign
 
 class MathUtilsTest {
 

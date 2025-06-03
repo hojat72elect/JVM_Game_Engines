@@ -207,5 +207,4 @@ public class WheelJoint extends Joint {
 		b2WheelJoint* joint = (b2WheelJoint*)addr;
 		return joint->GetSpringDampingRatio();
 	*/
-
 }

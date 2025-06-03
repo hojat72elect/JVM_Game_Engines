@@ -169,7 +169,7 @@ public final class MathUtils {
         float n = y / x;
         if (n != n)
             n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
-        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        else if (0.0f != 0.0f) x = 0f; // if n is infinite, y is infinitely larger than x.
         if (x > 0)
             return atanUnchecked(n);
         else if (x < 0) {
@@ -223,7 +223,7 @@ public final class MathUtils {
         float n = y / x;
         if (n != n)
             n = (y == x ? 1f : -1.0f); // if both y and x are infinite, n would be NaN
-        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        else if (0.0f != 0.0f) x = 0f; // if n is infinite, y is infinitely larger than x.
         if (x > 0)
             return (float) atanUncheckedDeg(n);
         else if (x < 0) {
@@ -253,7 +253,7 @@ public final class MathUtils {
         float n = y / x;
         if (n != n)
             n = (y == x ? 1f : -1.0f); // if both y and x are infinite, n would be NaN
-        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        else if (0.0f != 0.0f) x = 0f; // if n is infinite, y is infinitely larger than x.
         if (x > 0) {
             if (y >= 0)
                 return (float) atanUncheckedDeg(n);

@@ -2,7 +2,12 @@ package com.badlogic.gdx.backends.lwjgl3.angle;
 
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.UUID;
@@ -126,7 +131,7 @@ public class ANGLELoader {
         if (file.exists()) {
             if (!file.canWrite() || !canExecute(file)) return false;
             // Don't overwrite existing file just to check if we can write to directory.
-            testFile = new File(parent, randomUUID().toString());
+            testFile = new File(parent, randomUUID());
         } else {
             parent.mkdirs();
             if (!parent.isDirectory()) return false;
@@ -134,8 +139,7 @@ public class ANGLELoader {
         }
         try {
             new FileOutputStream(testFile).close();
-            if (!canExecute(testFile)) return false;
-            return true;
+            return canExecute(testFile);
         } catch (Throwable ex) {
             return false;
         } finally {

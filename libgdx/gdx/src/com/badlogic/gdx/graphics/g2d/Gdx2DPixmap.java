@@ -1,13 +1,13 @@
 package com.badlogic.gdx.graphics.g2d;
 
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
  *
@@ -31,6 +31,7 @@ public class Gdx2DPixmap implements Disposable {
     int format;
     ByteBuffer pixelPtr;
     long[] nativeData = new long[4];
+
     public Gdx2DPixmap(byte[] encodedData, int offset, int len, int requestedFormat) throws IOException {
         pixelPtr = load(nativeData, encodedData, offset, len);
         if (pixelPtr == null) throw new IOException("Error loading pixmap: " + getFailureReason());
@@ -44,6 +45,7 @@ public class Gdx2DPixmap implements Disposable {
             convert(requestedFormat);
         }
     }
+
     public Gdx2DPixmap(ByteBuffer encodedData, int offset, int len, int requestedFormat) throws IOException {
         if (!encodedData.isDirect()) throw new IOException("Couldn't load pixmap from non-direct ByteBuffer");
         pixelPtr = loadByteBuffer(nativeData, encodedData, offset, len);

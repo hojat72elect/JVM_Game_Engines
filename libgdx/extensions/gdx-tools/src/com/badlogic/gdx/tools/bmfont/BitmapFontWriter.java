@@ -295,7 +295,7 @@ public class BitmapFontWriter {
     /**
      * The output format.
      */
-    public static enum OutputFormat {
+    public enum OutputFormat {
 
         /**
          * AngelCodeFont text format
@@ -304,7 +304,7 @@ public class BitmapFontWriter {
         /**
          * AngelCodeFont XML format
          */
-        XML;
+        XML
     }
 
     /**
@@ -412,6 +412,5 @@ public class BitmapFontWriter {
             spaceXAdvance = data.spaceXadvance;
             xHeight = data.xHeight;
         }
-
     }
 }

@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.physics.box2d.Body;

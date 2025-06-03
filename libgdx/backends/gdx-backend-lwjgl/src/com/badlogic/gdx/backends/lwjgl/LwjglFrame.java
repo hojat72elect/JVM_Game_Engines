@@ -1,15 +1,21 @@
 package com.badlogic.gdx.backends.lwjgl;
 
 import com.badlogic.gdx.ApplicationListener;
+
 import org.lwjgl.opengl.Display;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.GraphicsConfiguration;
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import javax.swing.JFrame;
 
 /**
  * Wraps an {@link LwjglCanvas} in a resizable {@link JFrame}.

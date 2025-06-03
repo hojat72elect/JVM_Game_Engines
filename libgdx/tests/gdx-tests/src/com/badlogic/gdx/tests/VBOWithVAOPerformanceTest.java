@@ -63,7 +63,7 @@ public class VBOWithVAOPerformanceTest extends GdxTest {
                 + "}";
 
         shader = new ShaderProgram(vertexShader, fragmentShader);
-        if (shader.isCompiled() == false) {
+        if (!shader.isCompiled()) {
             Gdx.app.log("ShaderTest", shader.getLog());
             Gdx.app.exit();
         }
@@ -387,7 +387,6 @@ public class VBOWithVAOPerformanceTest extends GdxTest {
                 vaoHandle = tmpHandle.get(0);
                 gl.glBindVertexArray(vaoHandle);
                 vaoDirty = false;
-
             } else {
                 // else simply bind the VAO.
                 gl.glBindVertexArray(vaoHandle);
@@ -415,7 +414,6 @@ public class VBOWithVAOPerformanceTest extends GdxTest {
                     shader.setVertexAttribute(location, attribute.numComponents, attribute.type, attribute.normalized,
                             attributes.vertexSize, attribute.offset);
                 }
-
             } else {
                 for (int i = 0; i < numAttributes; i++) {
                     final VertexAttribute attribute = attributes.get(i);

@@ -8,9 +8,9 @@ import java.util.List;
 
 public class Dependency {
 
-    private HashMap<ProjectType, String[]> subDependencyMap = new HashMap<ProjectType, String[]>();
-    private String[] gwtInherits;
-    private String name;
+    private final HashMap<ProjectType, String[]> subDependencyMap = new HashMap<ProjectType, String[]>();
+    private final String[] gwtInherits;
+    private final String name;
 
     public Dependency(String name, String[] gwtInherits, String[]... subDependencies) {
         this.name = name;
@@ -44,9 +44,7 @@ public class Dependency {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Dependency) {
-            if (((Dependency) obj).getName().equals(getName())) {
-                return true;
-            }
+            return ((Dependency) obj).getName().equals(getName());
         }
         return false;
     }

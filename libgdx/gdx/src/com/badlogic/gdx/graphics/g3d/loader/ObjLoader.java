@@ -1,9 +1,5 @@
 package com.badlogic.gdx.graphics.g3d.loader;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
@@ -28,6 +24,10 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * {@link ModelLoader} to load Wavefront OBJ files. Only intended for testing basic models/meshes and educational usage. The
@@ -61,6 +61,7 @@ public class ObjLoader extends ModelLoader<ObjLoader.ObjLoaderParameters> {
     final FloatArray norms = new FloatArray(300);
     final FloatArray uvs = new FloatArray(200);
     final Array<Group> groups = new Array<Group>(10);
+
     public ObjLoader() {
         this(null);
     }
@@ -390,8 +391,6 @@ class MtlLoader {
         // last material
         ModelMaterial mat = currentMaterial.build();
         materials.add(mat);
-
-        return;
     }
 
     private Color parseColor(String[] tokens) {

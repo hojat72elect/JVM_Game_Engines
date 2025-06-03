@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.BaseShaderProvider;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
- * 
+ *
  */
 public class Pass2ShaderProvider extends BaseShaderProvider {
     public final Pass2Shader.Config config;

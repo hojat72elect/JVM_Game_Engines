@@ -1,8 +1,5 @@
 package com.badlogic.gdx.tests.bullet;
 
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
@@ -18,16 +15,19 @@ import com.badlogic.gdx.physics.bullet.collision.btTriangleRaycastCallback;
 import com.badlogic.gdx.physics.bullet.collision.btTriangleRaycastCallback.EFlags;
 import com.badlogic.gdx.physics.bullet.linearmath.btVector3;
 
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+
 
 public class TriangleRaycastTest extends BaseBulletTest {
 
     private Model model;
     private btBvhTriangleMeshShape triangleShape;
     private MyTriangleRaycastCallback triangleRaycastCallback;
-    private Vector3[] selectedTriangleVertices = {new Vector3(), new Vector3(), new Vector3()};
+    private final Vector3[] selectedTriangleVertices = {new Vector3(), new Vector3(), new Vector3()};
     private ShapeRenderer shapeRenderer;
-    private Vector3 rayFrom = new Vector3();
-    private Vector3 rayTo = new Vector3();
+    private final Vector3 rayFrom = new Vector3();
+    private final Vector3 rayTo = new Vector3();
 
     @Override
     public void create() {
@@ -56,7 +56,6 @@ public class TriangleRaycastTest extends BaseBulletTest {
         disposables.add(triangleShape);
         disposables.add(vertexArray);
         disposables.add(shapeRenderer);
-
     }
 
     @Override
@@ -124,8 +123,8 @@ public class TriangleRaycastTest extends BaseBulletTest {
         public int partId = -1;
         public int triangleIndex = -1;
 
-        private btVector3 tmpSetFrom = new btVector3();
-        private btVector3 tmpSetTo = new btVector3();
+        private final btVector3 tmpSetFrom = new btVector3();
+        private final btVector3 tmpSetTo = new btVector3();
 
         public MyTriangleRaycastCallback(Vector3 from, Vector3 to) {
             super(from, to);
@@ -174,5 +173,4 @@ public class TriangleRaycastTest extends BaseBulletTest {
             super.dispose();
         }
     }
-
 }

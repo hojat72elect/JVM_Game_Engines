@@ -1,8 +1,5 @@
 package com.badlogic.gdx.utils;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +9,9 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 
 /**
  * Class with static helper methods related to currently bound OpenGL frame buffer, including access to the current OpenGL
@@ -159,6 +159,5 @@ public final class ScreenUtils {
             pixels.get(lines);
         }
         return lines;
-
     }
 }

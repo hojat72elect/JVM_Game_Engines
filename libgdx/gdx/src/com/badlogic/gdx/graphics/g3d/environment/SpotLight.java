@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Vector3;
 
 /**
  * Note that the default shader doesn't support spot lights, you'll have to supply your own shader to use this class.
- *
- * 
  */
 public class SpotLight extends BaseLight<SpotLight> {
     public final Vector3 position = new Vector3();

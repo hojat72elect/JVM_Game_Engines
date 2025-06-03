@@ -18,9 +18,9 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btDefaultVehicleRaycaster;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRaycastVehicle;
+import com.badlogic.gdx.physics.bullet.dynamics.btRaycastVehicle.btVehicleTuning;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btVehicleRaycaster;
-import com.badlogic.gdx.physics.bullet.dynamics.btRaycastVehicle.btVehicleTuning;
 import com.badlogic.gdx.physics.bullet.dynamics.btWheelInfo;
 
 
@@ -29,7 +29,7 @@ public class VehicleTest extends BaseBulletTest {
     public btRaycastVehicle vehicle;
     public btVehicleTuning tuning;
     BulletEntity chassis;
-    BulletEntity wheels[] = new BulletEntity[4];
+    BulletEntity[] wheels = new BulletEntity[4];
 
     boolean downPressed;
     boolean upPressed;

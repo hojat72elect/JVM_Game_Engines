@@ -187,6 +187,4 @@ public abstract class Joint {
 		b2Joint* joint = (b2Joint*)addr;
 		return joint->IsActive();
 	*/
-
-
 }

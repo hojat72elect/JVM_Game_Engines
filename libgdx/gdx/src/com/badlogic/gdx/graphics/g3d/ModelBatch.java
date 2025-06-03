@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.Pool;
  * The OpenGL context between the {@link #begin(Camera)} and {@link #end()} call is maintained by the {@link RenderContext}.
  * <p>
  * To provide multiple {@link Renderable}s at once a {@link RenderableProvider} can be used, e.g. a {@link ModelInstance}.
- *
+ * <p>
  * , badlogic
  */
 public class ModelBatch implements Disposable {
@@ -46,6 +46,7 @@ public class ModelBatch implements Disposable {
     protected final RenderableSorter sorter;
     private final boolean ownContext;
     protected Camera camera;
+
     /**
      * Construct a ModelBatch, using this constructor makes you responsible for calling context.begin() and context.end()
      * yourself.

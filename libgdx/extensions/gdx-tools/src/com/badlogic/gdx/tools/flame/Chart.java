@@ -1,11 +1,18 @@
 package com.badlogic.gdx.tools.flame;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+
+import javax.swing.JPanel;
 
 public class Chart extends JPanel {
     static private final int POINT_SIZE = 6;

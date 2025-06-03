@@ -148,7 +148,7 @@ public class BulletTestCollection extends GdxTest implements InputProcessor, Ges
     @Override
     public boolean keyUp(int keycode) {
         boolean result = tests[testIndex].keyUp(keycode);
-        if ((result == false) && (keycode == Keys.SPACE || keycode == Keys.MENU)) {
+        if ((!result) && (keycode == Keys.SPACE || keycode == Keys.MENU)) {
             next();
             result = true;
         }
@@ -197,7 +197,7 @@ public class BulletTestCollection extends GdxTest implements InputProcessor, Ges
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
-        if (tests[testIndex].fling(velocityX, velocityY, button) == false) next();
+        if (!tests[testIndex].fling(velocityX, velocityY, button)) next();
         return true;
     }
 

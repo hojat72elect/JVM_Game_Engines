@@ -22,8 +22,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
  * 2 - It's easy to use in custom shader.
  * 3 - There is no constraint about shader varying.
  * </pre>
- *
- * 
  */
 public class ClassicalShadowSystem extends FirstPassBaseShadowSystem {
 
@@ -75,8 +73,6 @@ public class ClassicalShadowSystem extends FirstPassBaseShadowSystem {
         super.beginPass(n);
         if (n == SECOND_PASS) beginPass2();
     }
-
-    ;
 
     protected void beginPass2() {
         ScreenUtils.clear(0, 0, 0, 0, true);

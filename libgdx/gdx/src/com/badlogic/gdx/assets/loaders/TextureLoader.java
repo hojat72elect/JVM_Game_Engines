@@ -20,8 +20,6 @@ import com.badlogic.gdx.utils.Array;
 public class TextureLoader extends AsynchronousAssetLoader<Texture, TextureLoader.TextureParameter> {
     TextureLoaderInfo info = new TextureLoaderInfo();
 
-    ;
-
     public TextureLoader(FileHandleResolver resolver) {
         super(resolver);
     }

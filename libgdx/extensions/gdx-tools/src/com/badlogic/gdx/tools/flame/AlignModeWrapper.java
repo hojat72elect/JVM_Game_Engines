@@ -7,6 +7,7 @@ enum AlignModeWrapper {
 
     public String desc;
     public AlignMode mode;
+
     AlignModeWrapper(AlignMode mode, String desc) {
         this.mode = mode;
         this.desc = desc;

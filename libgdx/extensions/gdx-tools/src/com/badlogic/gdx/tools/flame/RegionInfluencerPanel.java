@@ -5,10 +5,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
 import com.badlogic.gdx.utils.Array;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -67,9 +71,8 @@ public class RegionInfluencerPanel extends InfluencerPanel<RegionInfluencer> imp
         if (regions.size == 0) return;
         value.clear();
         value.setAtlasName(atlasName);
-        value.add((TextureRegion[]) regions.toArray(TextureRegion.class));
+        value.add(regions.toArray(TextureRegion.class));
         editor.setTexture(regions.get(0).getTexture());
         editor.restart();
     }
-
 }

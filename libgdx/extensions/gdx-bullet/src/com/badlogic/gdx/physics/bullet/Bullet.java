@@ -1,7 +1,5 @@
 package com.badlogic.gdx.physics.bullet;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.graphics.g3d.model.MeshPart;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
@@ -14,6 +12,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
+
+import java.util.Arrays;
 
 public class Bullet {
     /**

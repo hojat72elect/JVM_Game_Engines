@@ -8,7 +8,7 @@ public class PolygonShape extends Shape {
      #include <Box2D/Box2D.h>
 	 */
 
-    private static float[] verts = new float[2];
+    private static final float[] verts = new float[2];
 
     /**
      * Constructs a new polygon

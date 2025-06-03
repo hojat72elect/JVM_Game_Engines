@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.BufferUtils;
+
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
@@ -94,7 +95,6 @@ public class GlTexImage2D extends GdxTest {
         Gdx.gl20.glVertexAttribPointer(shader.getAttributeLocation("vPosition"), 2, GL20.GL_FLOAT, false, 0, 0);
         shader.setUniformi("uTex2d", 2);
         Gdx.gl20.glDrawArrays(GL20.GL_TRIANGLE_FAN, 0, 4);
-
     }
 
     private void reload() {

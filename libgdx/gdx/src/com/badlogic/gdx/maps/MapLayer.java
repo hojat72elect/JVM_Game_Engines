@@ -17,8 +17,8 @@ public class MapLayer {
     private float parallaxY = 1;
     private boolean renderOffsetDirty = true;
     private MapLayer parent;
-    private MapObjects objects = new MapObjects();
-    private MapProperties properties = new MapProperties();
+    private final MapObjects objects = new MapObjects();
+    private final MapProperties properties = new MapProperties();
 
     /**
      * @return layer's name

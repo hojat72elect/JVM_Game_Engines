@@ -6,13 +6,13 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class AmbientCubemap {
     private static final int NUM_VALUES = 6 * 3;
-    public final float data[];
+    public final float[] data;
 
     public AmbientCubemap() {
         data = new float[NUM_VALUES];
     }
 
-    public AmbientCubemap(final float copyFrom[]) {
+    public AmbientCubemap(final float[] copyFrom) {
         if (copyFrom.length != (NUM_VALUES)) throw new GdxRuntimeException("Incorrect array size");
         data = new float[copyFrom.length];
         System.arraycopy(copyFrom, 0, data, 0, data.length);
@@ -26,9 +26,8 @@ public class AmbientCubemap {
         return v < 0f ? 0f : (v > 1f ? 1f : v);
     }
 
-    public AmbientCubemap set(final float values[]) {
-        for (int i = 0; i < data.length; i++)
-            data[i] = values[i];
+    public AmbientCubemap set(final float[] values) {
+        System.arraycopy(values, 0, data, 0, data.length);
         return this;
     }
 
@@ -126,7 +125,7 @@ public class AmbientCubemap {
     public String toString() {
         String result = "";
         for (int i = 0; i < data.length; i += 3) {
-            result += Float.toString(data[i]) + ", " + Float.toString(data[i + 1]) + ", " + Float.toString(data[i + 2]) + "\n";
+            result += data[i] + ", " + data[i + 1] + ", " + data[i + 2] + "\n";
         }
         return result;
     }

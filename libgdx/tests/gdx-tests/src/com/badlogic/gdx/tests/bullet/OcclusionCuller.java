@@ -4,7 +4,13 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.*;
+import com.badlogic.gdx.physics.bullet.collision.ICollide;
+import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.physics.bullet.collision.btDbvt;
+import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
+import com.badlogic.gdx.physics.bullet.collision.btDbvtNode;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -169,7 +175,6 @@ public abstract class OcclusionCuller implements Disposable {
             if (shape instanceof btBoxShape && isOccluder(object)) {
                 oclBuffer.drawBB(object.getWorldTransform(), ((btBoxShape) shape).getHalfExtentsWithMargin());
             }
-
         }
     }
 }

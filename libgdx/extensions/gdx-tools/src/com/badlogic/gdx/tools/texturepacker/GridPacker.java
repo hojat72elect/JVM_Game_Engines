@@ -1,6 +1,10 @@
 package com.badlogic.gdx.tools.texturepacker;
 
-import com.badlogic.gdx.tools.texturepacker.TexturePacker.*;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Packer;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Page;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.ProgressListener;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Rect;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.badlogic.gdx.utils.Array;
 
 /**

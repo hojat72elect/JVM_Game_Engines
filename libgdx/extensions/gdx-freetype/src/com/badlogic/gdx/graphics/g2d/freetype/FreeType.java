@@ -1,10 +1,5 @@
 package com.badlogic.gdx.graphics.g2d.freetype;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -16,6 +11,11 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.LongMap;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.badlogic.gdx.utils.StreamUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 public class FreeType {
     // @off
@@ -425,7 +425,6 @@ public class FreeType {
         public int getCharIndex(int charCode) {
             return getCharIndex(address, charCode);
         }
-
     }
 
     public static class Size extends Pointer {
@@ -695,7 +694,6 @@ public class FreeType {
             }
             return getTop(address);
         }
-
     }
 
     public static class Bitmap extends Pointer {

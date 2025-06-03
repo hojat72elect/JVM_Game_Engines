@@ -1,18 +1,16 @@
 package com.badlogic.gdx.graphics.g3d.utils;
 
-import java.nio.IntBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GLTexture;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import java.nio.IntBuffer;
+
 /**
  * Class that you assign a range of texture units and binds textures for you within that range. It does some basic usage tracking
  * to avoid unnecessary bind calls.
- *
- * 
  */
 public final class DefaultTextureBinder implements TextureBinder {
     public final static int ROUNDROBIN = 0;
@@ -41,7 +39,7 @@ public final class DefaultTextureBinder implements TextureBinder {
     /**
      * Texture units ordered from most to least recently used
      */
-    private int[] unitsLRU;
+    private final int[] unitsLRU;
     /**
      * Flag to indicate the current texture is reused
      */
@@ -100,17 +98,17 @@ public final class DefaultTextureBinder implements TextureBinder {
     }
 
     @Override
-    public final int bind(final TextureDescriptor textureDesc) {
+    public int bind(final TextureDescriptor textureDesc) {
         return bindTexture(textureDesc, false);
     }
 
     @Override
-    public final int bind(final GLTexture texture) {
+    public int bind(final GLTexture texture) {
         tempDesc.set(texture, null, null, null, null);
         return bindTexture(tempDesc, false);
     }
 
-    private final int bindTexture(final TextureDescriptor textureDesc, final boolean rebind) {
+    private int bindTexture(final TextureDescriptor textureDesc, final boolean rebind) {
         final int idx, result;
         final GLTexture texture = textureDesc.texture;
         reused = false;
@@ -139,7 +137,7 @@ public final class DefaultTextureBinder implements TextureBinder {
         return result;
     }
 
-    private final int bindTextureRoundRobin(final GLTexture texture) {
+    private int bindTextureRoundRobin(final GLTexture texture) {
         for (int i = 0; i < count; i++) {
             final int idx = (currentTexture + i) % count;
             if (textures[idx] == texture) {
@@ -153,7 +151,7 @@ public final class DefaultTextureBinder implements TextureBinder {
         return currentTexture;
     }
 
-    private final int bindTextureLRU(final GLTexture texture) {
+    private int bindTextureLRU(final GLTexture texture) {
         int i;
         for (i = 0; i < count; i++) {
             final int idx = unitsLRU[i];
@@ -180,17 +178,17 @@ public final class DefaultTextureBinder implements TextureBinder {
     }
 
     @Override
-    public final int getBindCount() {
+    public int getBindCount() {
         return bindCount;
     }
 
     @Override
-    public final int getReuseCount() {
+    public int getReuseCount() {
         return reuseCount;
     }
 
     @Override
-    public final void resetCounts() {
+    public void resetCounts() {
         bindCount = reuseCount = 0;
     }
 }

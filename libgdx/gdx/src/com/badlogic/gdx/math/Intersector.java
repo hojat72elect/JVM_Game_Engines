@@ -38,6 +38,7 @@ public final class Intersector {
     static Vector3 tmp2 = new Vector3();
     static Vector3 tmp3 = new Vector3();
     static Vector3 intersection = new Vector3();
+
     private Intersector() {
     }
 
@@ -80,8 +81,7 @@ public final class Intersector {
         float py1 = py - ay;
         boolean side12 = (bx - ax) * py1 - (by - ay) * px1 > 0;
         if ((cx - ax) * py1 - (cy - ay) * px1 > 0 == side12) return false;
-        if ((cx - bx) * (py - by) - (cy - by) * (px - bx) > 0 != side12) return false;
-        return true;
+        return (cx - bx) * (py - by) - (cy - by) * (px - bx) > 0 == side12;
     }
 
     public static boolean intersectSegmentPlane(Vector3 start, Vector3 end, Plane plane, Vector3 intersection) {
@@ -861,7 +861,6 @@ public final class Intersector {
             if (tMin > tMax) {
                 return false;
             }
-
         } else if (-e + bounds.min.y > 0.0f || -e + bounds.max.y < 0.0f) {
             return false;
         }
@@ -1447,8 +1446,8 @@ public final class Intersector {
     public static void splitTriangle(float[] triangle, Plane plane, SplitTriangle split) {
         int stride = triangle.length / 3;
         boolean r1 = plane.testPoint(triangle[0], triangle[1], triangle[2]) == PlaneSide.Back;
-        boolean r2 = plane.testPoint(triangle[0 + stride], triangle[1 + stride], triangle[2 + stride]) == PlaneSide.Back;
-        boolean r3 = plane.testPoint(triangle[0 + stride * 2], triangle[1 + stride * 2],
+        boolean r2 = plane.testPoint(triangle[stride], triangle[1 + stride], triangle[2 + stride]) == PlaneSide.Back;
+        boolean r3 = plane.testPoint(triangle[stride * 2], triangle[1 + stride * 2],
                 triangle[2 + stride * 2]) == PlaneSide.Back;
 
         split.reset();
@@ -1546,7 +1545,7 @@ public final class Intersector {
     private static void splitEdge(float[] vertices, int s, int e, int stride, Plane plane, float[] split, int offset) {
         float t = Intersector.intersectLinePlane(vertices[s], vertices[s + 1], vertices[s + 2], vertices[e], vertices[e + 1],
                 vertices[e + 2], plane, intersection);
-        split[offset + 0] = intersection.x;
+        split[offset] = intersection.x;
         split[offset + 1] = intersection.y;
         split[offset + 2] = intersection.z;
         for (int i = 3; i < stride; i++) {

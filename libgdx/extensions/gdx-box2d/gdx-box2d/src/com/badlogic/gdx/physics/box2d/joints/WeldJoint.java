@@ -90,5 +90,4 @@ public class WeldJoint extends Joint {
 		b2WeldJoint* joint = (b2WeldJoint*)addr;
 		joint->SetDampingRatio(ratio);
 	*/
-
 }

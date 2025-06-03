@@ -2,14 +2,25 @@ package com.badlogic.gdx.tools.flame;
 
 import com.badlogic.gdx.graphics.g3d.particles.values.GradientColorValue;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.JColorChooser;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -152,7 +163,7 @@ class GradientPanel extends ParticleValuePanel<GradientColorValue> {
     static public class ColorSlider extends JPanel {
         Color[] paletteColors;
         JSlider slider;
-        private ColorPicker colorPicker;
+        private final ColorPicker colorPicker;
 
         public ColorSlider(Color[] paletteColors) {
             this.paletteColors = paletteColors;

@@ -11,12 +11,14 @@ import com.jcraft.jorbis.Block;
 import com.jcraft.jorbis.Comment;
 import com.jcraft.jorbis.DspState;
 import com.jcraft.jorbis.Info;
+
+import org.lwjgl.BufferUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import org.lwjgl.BufferUtils;
 
 /**
  * An input stream to read Ogg Vorbis.
@@ -50,15 +52,15 @@ public class OggInputStream extends InputStream {
     /**
      * The buffer used to read OGG file
      */
-    private byte[] convbuffer;
+    private final byte[] convbuffer;
     /**
      * The stream we're reading the OGG file from
      */
-    private InputStream input;
+    private final InputStream input;
     /**
      * The audio information from the OGG header
      */
-    private Info oggInfo = new Info(); // struct that stores all the static vorbis bitstream settings
+    private final Info oggInfo = new Info(); // struct that stores all the static vorbis bitstream settings
     /**
      * True if we're at the end of the available data
      */
@@ -66,31 +68,31 @@ public class OggInputStream extends InputStream {
     /**
      * The Vorbis SyncState used to decode the OGG
      */
-    private SyncState syncState = new SyncState(); // sync and verify incoming physical bitstream
+    private final SyncState syncState = new SyncState(); // sync and verify incoming physical bitstream
     /**
      * The Vorbis Stream State used to decode the OGG
      */
-    private StreamState streamState = new StreamState(); // take physical pages, weld into a logical stream of packets
+    private final StreamState streamState = new StreamState(); // take physical pages, weld into a logical stream of packets
     /**
      * The current OGG page
      */
-    private Page page = new Page(); // one Ogg bitstream page. Vorbis packets are inside
+    private final Page page = new Page(); // one Ogg bitstream page. Vorbis packets are inside
     /**
      * The current packet page
      */
-    private Packet packet = new Packet(); // one raw packet of data for decode
+    private final Packet packet = new Packet(); // one raw packet of data for decode
     /**
      * The comment read from the OGG file
      */
-    private Comment comment = new Comment(); // struct that stores all the bitstream user comments
+    private final Comment comment = new Comment(); // struct that stores all the bitstream user comments
     /**
      * The Vorbis DSP stat eused to decode the OGG
      */
-    private DspState dspState = new DspState(); // central working state for the packet->PCM decoder
+    private final DspState dspState = new DspState(); // central working state for the packet->PCM decoder
     /**
      * The OGG block we're currently working with to convert PCM
      */
-    private Block vorbisBlock = new Block(dspState); // local working space for packet->PCM decode
+    private final Block vorbisBlock = new Block(dspState); // local working space for packet->PCM decode
     /**
      * The index into the byte array we currently read from
      */
@@ -98,11 +100,11 @@ public class OggInputStream extends InputStream {
     /**
      * The byte array store used to hold the data read from the ogg
      */
-    private ByteBuffer pcmBuffer;
+    private final ByteBuffer pcmBuffer;
     /**
      * The total number of bytes
      */
-    private int total;
+    private final int total;
 
     /**
      * Create a new stream to decode OGG data

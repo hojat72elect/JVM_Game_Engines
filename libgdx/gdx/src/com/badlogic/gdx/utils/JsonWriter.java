@@ -140,7 +140,7 @@ public class JsonWriter extends Writer {
         writer.close();
     }
 
-    static public enum OutputType {
+    public enum OutputType {
         /**
          * Normal JSON, with all its double quotes.
          */
@@ -163,9 +163,9 @@ public class JsonWriter extends Writer {
          */
         minimal;
 
-        static private Pattern javascriptPattern = Pattern.compile("^[a-zA-Z_$][a-zA-Z_$0-9]*$");
-        static private Pattern minimalNamePattern = Pattern.compile("^[^\":,}/ ][^:]*$");
-        static private Pattern minimalValuePattern = Pattern.compile("^[^\":,{\\[\\]/ ][^}\\],]*$");
+        static private final Pattern javascriptPattern = Pattern.compile("^[a-zA-Z_$][a-zA-Z_$0-9]*$");
+        static private final Pattern minimalNamePattern = Pattern.compile("^[^\":,}/ ][^:]*$");
+        static private final Pattern minimalValuePattern = Pattern.compile("^[^\":,{\\[\\]/ ][^}\\],]*$");
 
         public String quoteValue(@Null Object value) {
             if (value == null) return "null";

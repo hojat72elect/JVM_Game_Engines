@@ -1,6 +1,9 @@
 package com.badlogic.gdx.tests;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.forever;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -30,7 +33,7 @@ import com.badlogic.gdx.tests.utils.GdxTest;
 
 public class Scene2dTest extends GdxTest {
     Stage stage;
-    private FloatAction meow = new FloatAction(10, 5);
+    private final FloatAction meow = new FloatAction(10, 5);
     private TiledDrawable patch;
 
     public void create() {

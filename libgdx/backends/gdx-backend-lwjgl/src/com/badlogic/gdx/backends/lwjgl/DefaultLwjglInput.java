@@ -1,20 +1,33 @@
 package com.badlogic.gdx.backends.lwjgl;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.AbstractInput;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputEventQueue;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.NativeInputConfiguration;
 import com.badlogic.gdx.utils.IntSet;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.OverlayLayout;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 
 /**
  * An implementation of the {@link LwjglInput} interface hooking a LWJGL panel for input.
@@ -86,8 +99,6 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
                     public boolean isOptimizedDrawingEnabled() {
                         return false;
                     }
-
-                    ;
                 };
 
                 textPanel.setLayout(new OverlayLayout(textPanel));
@@ -121,10 +132,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
                     }
 
                     private void updated() {
-                        if (textField.getText().length() == 0)
-                            placeholderLabel.setVisible(true);
-                        else
-                            placeholderLabel.setVisible(false);
+                        placeholderLabel.setVisible(textField.getText().length() == 0);
                     }
                 });
 
@@ -165,7 +173,6 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
                 } else {
                     listener.canceled();
                 }
-
             }
         });
     }

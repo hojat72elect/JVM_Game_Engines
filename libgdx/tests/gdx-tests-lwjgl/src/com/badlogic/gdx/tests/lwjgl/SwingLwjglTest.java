@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.tests.MusicTest;
 import com.badlogic.gdx.tests.UITest;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 

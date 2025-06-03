@@ -172,7 +172,7 @@ public class GroupTest extends GdxTest {
         Vector2 localToParentCoordinates = new Vector2();
         float testX = 25;
         float testY = 25;
-        private String name;
+        private final String name;
 
         public TestGroup(String name) {
             this.name = name;

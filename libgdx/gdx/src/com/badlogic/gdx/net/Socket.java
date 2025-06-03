@@ -23,20 +23,20 @@ public interface Socket extends Disposable {
     /**
      * @return whether the socket is connected
      */
-    public boolean isConnected();
+    boolean isConnected();
 
     /**
      * @return the {@link InputStream} used to read data from the other end of the connection.
      */
-    public InputStream getInputStream();
+    InputStream getInputStream();
 
     /**
      * @return the {@link OutputStream} used to write data to the other end of the connection.
      */
-    public OutputStream getOutputStream();
+    OutputStream getOutputStream();
 
     /**
      * @return the RemoteAddress of the Socket as String
      */
-    public String getRemoteAddress();
+    String getRemoteAddress();
 }

@@ -6,8 +6,6 @@ import com.badlogic.gdx.ApplicationListener;
  * Receives notifications of various window events, such as iconification, focus loss and gain, and window close events. Can be
  * set per window via {@link Lwjgl3ApplicationConfiguration} and {@link Lwjgl3WindowConfiguration}. Close events can be canceled
  * by returning false.
- *
- * 
  */
 public interface Lwjgl3WindowListener {
 
@@ -69,5 +67,4 @@ public interface Lwjgl3WindowListener {
      * {@link Lwjgl3Graphics#requestRendering()} is automatically called.
      */
     void refreshRequested();
-
 }

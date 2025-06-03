@@ -24,10 +24,6 @@ public class FrustumLightFilter implements LightFilter {
             bb.ext(f2.planePoints[i]);
         }
 
-        if (f1.boundsInFrustum(bb)) {
-            return true;
-        }
-
-        return false;
+        return f1.boundsInFrustum(bb);
     }
 }

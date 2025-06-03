@@ -41,7 +41,7 @@ public class FullscreenTest extends GdxTest {
                 || Gdx.input.getX() + tex.getWidth() > Gdx.graphics.getWidth() - Gdx.graphics.getSafeInsetRight() ? Color.RED
                 : Color.WHITE);
         batch.draw(tex, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
-        font.draw(batch, "" + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight(), 0, 20);
+        font.draw(batch, Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight(), 0, 20);
         batch.end();
 
         if (Gdx.input.justTouched()) {

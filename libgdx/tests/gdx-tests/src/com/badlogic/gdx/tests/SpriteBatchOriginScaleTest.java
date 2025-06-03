@@ -39,5 +39,4 @@ public class SpriteBatchOriginScaleTest extends GdxTest {
         batch.draw(region, 100, 100, 0, 0, 32, 32, 2, 2, 20);
         batch.end();
     }
-
 }

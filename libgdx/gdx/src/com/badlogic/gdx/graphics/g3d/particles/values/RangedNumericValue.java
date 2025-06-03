@@ -59,5 +59,4 @@ public class RangedNumericValue extends ParticleValue {
         lowMin = json.readValue("lowMin", float.class, jsonData);
         lowMax = json.readValue("lowMax", float.class, jsonData);
     }
-
 }

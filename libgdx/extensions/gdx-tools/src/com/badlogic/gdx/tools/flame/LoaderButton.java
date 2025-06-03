@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +36,7 @@ public abstract class LoaderButton<T> extends JButton {
             }
         });
     }
+
     public LoaderButton(FlameMain editor, String text) {
         this(editor, text, null);
     }
@@ -67,7 +70,6 @@ public abstract class LoaderButton<T> extends JButton {
                     System.out.println("Error loading effect: " + file.getAbsolutePath());
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(getParent(), "Error opening effect.");
-                    return;
                 }
             }
         }
@@ -97,15 +99,12 @@ public abstract class LoaderButton<T> extends JButton {
                     } else
                         throw new Exception();
                     listener.onResourceLoaded(editor.load(resource, Model.class, modelLoader, null));
-
                 } catch (Exception ex) {
                     System.out.println("Error loading model: " + file.getAbsolutePath());
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(getParent(), "Error opening effect.");
-                    return;
                 }
             }
         }
     }
-
 }

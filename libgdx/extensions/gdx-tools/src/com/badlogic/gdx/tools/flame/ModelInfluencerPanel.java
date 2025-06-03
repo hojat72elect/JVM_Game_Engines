@@ -3,7 +3,8 @@ package com.badlogic.gdx.tools.flame;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ModelInfluencer;
 
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 /**
  *
@@ -53,5 +54,4 @@ public class ModelInfluencerPanel extends InfluencerPanel<ModelInfluencer>
             }
         }
     }
-
 }

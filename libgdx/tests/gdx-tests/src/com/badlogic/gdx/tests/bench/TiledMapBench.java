@@ -66,7 +66,6 @@ public class TiledMapBench extends GdxTest {
         }
 
         renderer = new OrthogonalTiledMapRenderer(map);
-
     }
 
     @Override

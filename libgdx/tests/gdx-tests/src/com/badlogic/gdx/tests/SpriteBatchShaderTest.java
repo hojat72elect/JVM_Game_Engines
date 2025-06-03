@@ -21,13 +21,13 @@ public class SpriteBatchShaderTest extends GdxTest {
     Texture texture2;
     // Font font;
     SpriteBatch spriteBatch;
-    int coords[] = new int[SPRITES * 2];
-    int coords2[] = new int[SPRITES * 2];
+    int[] coords = new int[SPRITES * 2];
+    int[] coords2 = new int[SPRITES * 2];
 
     Color col = new Color(1, 1, 1, 0.6f);
 
     Mesh mesh;
-    float vertices[] = new float[SPRITES * 6 * (2 + 2 + 4)];
+    float[] vertices = new float[SPRITES * 6 * (2 + 2 + 4)];
 
     @Override
     public void render() {

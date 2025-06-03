@@ -12,9 +12,9 @@ public class TiledMapTileSet implements Iterable<TiledMapTile> {
 
     private String name;
 
-    private IntMap<TiledMapTile> tiles;
+    private final IntMap<TiledMapTile> tiles;
 
-    private MapProperties properties;
+    private final MapProperties properties;
 
     /**
      * Creates empty tileset

@@ -1,6 +1,7 @@
 package com.badlogic.gdx.backends.android;
 
 import android.util.Log;
+
 import com.badlogic.gdx.ApplicationLogger;
 
 /**

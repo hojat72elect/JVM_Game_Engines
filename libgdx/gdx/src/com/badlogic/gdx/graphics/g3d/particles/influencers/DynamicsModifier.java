@@ -500,5 +500,4 @@ public abstract class DynamicsModifier extends Influencer {
             return new BrownianAcceleration(this);
         }
     }
-
 }

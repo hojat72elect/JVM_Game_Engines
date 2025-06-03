@@ -1,14 +1,27 @@
 package com.badlogic.gdx.tools.flame;
 
-import javax.swing.*;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JToggleButton;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -248,8 +261,7 @@ public abstract class EditorPanel<T> extends JPanel {
 
     public void setValue(T value) {
         this.value = value;
-        activeButton.setVisible(value == null ? false : !isAlwaysActive);
+        activeButton.setVisible(value != null && !isAlwaysActive);
         removeButton.setVisible(isRemovable);
     }
-
 }

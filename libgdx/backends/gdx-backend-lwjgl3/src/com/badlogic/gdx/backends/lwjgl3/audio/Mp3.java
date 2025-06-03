@@ -2,9 +2,14 @@ package com.badlogic.gdx.backends.lwjgl3.audio;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import javazoom.jl.decoder.*;
 
 import java.io.ByteArrayOutputStream;
+
+import javazoom.jl.decoder.Bitstream;
+import javazoom.jl.decoder.BitstreamException;
+import javazoom.jl.decoder.Header;
+import javazoom.jl.decoder.MP3Decoder;
+import javazoom.jl.decoder.OutputBuffer;
 
 public class Mp3 {
     static public class Music extends OpenALMusic {

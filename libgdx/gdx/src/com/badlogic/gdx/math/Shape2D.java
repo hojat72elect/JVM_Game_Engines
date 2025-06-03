@@ -11,5 +11,4 @@ public interface Shape2D {
      * Returns whether a point with the given coordinates is contained within the shape.
      */
     boolean contains(float x, float y);
-
 }

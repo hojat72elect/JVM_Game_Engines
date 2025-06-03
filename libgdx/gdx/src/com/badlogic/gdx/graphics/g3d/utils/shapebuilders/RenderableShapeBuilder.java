@@ -11,8 +11,6 @@ import com.badlogic.gdx.utils.FlushablePool;
 
 /**
  * RenderableShapeBuilder builds various properties of a renderable.
- *
- * 
  */
 public class RenderableShapeBuilder extends BaseShapeBuilder {
 

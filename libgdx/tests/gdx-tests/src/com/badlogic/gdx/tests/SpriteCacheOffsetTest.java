@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.tests.utils.GdxTest;
 
 public class SpriteCacheOffsetTest extends GdxTest implements InputProcessor {
-    private int tileMapWidth = 10;
-    private int tileMapHeight = 5;
-    private int tileSize = 32;
+    private final int tileMapWidth = 10;
+    private final int tileMapHeight = 5;
+    private final int tileSize = 32;
     private SpriteCache cache;
     private Texture texture;
 

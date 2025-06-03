@@ -1,20 +1,27 @@
 package com.badlogic.gdx.setup;
 
+import static java.awt.GridBagConstraints.BOTH;
+import static java.awt.GridBagConstraints.CENTER;
+import static java.awt.GridBagConstraints.HORIZONTAL;
+import static java.awt.GridBagConstraints.NONE;
+import static java.awt.GridBagConstraints.NORTH;
+import static java.awt.GridBagConstraints.SOUTH;
+import static java.awt.GridBagConstraints.SOUTHEAST;
+
 import com.badlogic.gdx.setup.GdxSetupUI.SetupButton;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -27,13 +34,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.awt.GridBagConstraints.*;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class ExternalExtensionsDialog extends JDialog implements TableModelListener {
 
     JTable table;
     List<Dependency> mainDependencies;
-    private JPanel contentPane;
+    private final JPanel contentPane;
     private SetupButton buttonOK;
     private SetupButton buttonCancel;
     private JPanel topPanel;
@@ -43,7 +62,7 @@ public class ExternalExtensionsDialog extends JDialog implements TableModelListe
     private JScrollPane scrollPane;
     private JLabel warningNotice;
     private JLabel warningNotice2;
-    private List<Dependency> mainDependenciesSnapshot = new ArrayList<Dependency>();
+    private final List<Dependency> mainDependenciesSnapshot = new ArrayList<Dependency>();
 
     public ExternalExtensionsDialog(List<Dependency> mainDependencies) {
         this.mainDependencies = mainDependencies;
@@ -153,7 +172,6 @@ public class ExternalExtensionsDialog extends JDialog implements TableModelListe
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void initData() throws ParserConfigurationException, IOException, SAXException {
@@ -279,7 +297,6 @@ public class ExternalExtensionsDialog extends JDialog implements TableModelListe
                         boolean external = Boolean.parseBoolean(dependencyNode.getAttribute("external"));
                         deps.add(new ExternalExtensionDependency(dependencyNode.getTextContent(), external));
                     }
-
                 }
             }
 
@@ -308,7 +325,7 @@ public class ExternalExtensionsDialog extends JDialog implements TableModelListe
 
     class ExtensionTableModel extends DefaultTableModel {
 
-        private HashMap<Integer, ExternalExtension> extensions = new HashMap<Integer, ExternalExtension>();
+        private final HashMap<Integer, ExternalExtension> extensions = new HashMap<Integer, ExternalExtension>();
         private int rowCount = 0;
 
         public ExtensionTableModel() {
@@ -383,7 +400,5 @@ public class ExternalExtensionsDialog extends JDialog implements TableModelListe
             addRow(new Object[]{checkbox, name, description, version, compatibility, support});
             extensions.put(rowCount++, extension);
         }
-
     }
-
 }

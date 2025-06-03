@@ -197,7 +197,6 @@ public class InstanceBufferObject implements InstanceData {
                         attributes.vertexSize, attribute.offset);
                 Gdx.gl30.glVertexAttribDivisor(location + unitOffset, 1);
             }
-
         } else {
             for (int i = 0; i < numAttributes; i++) {
                 final VertexAttribute attribute = attributes.get(i);

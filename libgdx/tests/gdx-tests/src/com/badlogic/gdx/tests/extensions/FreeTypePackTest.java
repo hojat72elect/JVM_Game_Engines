@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests.extensions;
 
-import java.util.EnumMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -15,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.util.EnumMap;
 
 /**
  * An advanced example of packing many glyphs into a single texture atlas, using FreeTypeFontGenerator.
@@ -48,7 +48,6 @@ public class FreeTypePackTest extends GdxTest {
         int glyphCount = createFonts();
         long time = System.currentTimeMillis() - start;
         text = glyphCount + " glyphs packed in " + regions.size + " page(s) in " + time + " ms";
-
     }
 
     @Override
@@ -176,7 +175,7 @@ public class FreeTypePackTest extends GdxTest {
     }
 
     // Define font sizes here...
-    static enum FontSize {
+    enum FontSize {
         Tiny(10), Small(12), Medium(16), Large(20), Huge(24), ReallyHuge(28), JustTooBig(64);
 
         public final int size;
@@ -187,7 +186,7 @@ public class FreeTypePackTest extends GdxTest {
     }
 
     // Define font styles here...
-    static enum FontStyle {
+    enum FontStyle {
         Regular("data/lsans.ttf"), Italic("data/lsans-italic.ttf");
 
         public final String path;

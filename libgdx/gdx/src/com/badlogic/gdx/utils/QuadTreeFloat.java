@@ -1,9 +1,9 @@
 package com.badlogic.gdx.utils;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool.Poolable;
+
+import java.util.Arrays;
 
 /**
  * A quad tree that stores a float for each point.

@@ -1,8 +1,5 @@
 package com.badlogic.gdx.tests;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
@@ -32,25 +29,28 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Constructor;
 import com.badlogic.gdx.utils.reflect.Method;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 /**
  * Tests for the collection classes. Currently, only equals() and hashCode() methods are tested.
  */
 public class CollectionsTest extends GdxTest {
     // Objects to use for test keys/values; no duplicates may exist. All arrays are 10 elements.
-    private Object[] values = {"just", "some", "random", "values", true, false, 50, "nope", "yeah", 53};
-    private Object[] valuesWithNulls = {"just", "some", null, "values", true, false, 50, "nope", "yeah", 53};
-    private Integer[] intValues = {42, 13, 0, -44, 56, 561, 61, -532, -1, 32};
-    private Float[] floatValues = {4f, 3.14f, 0f, 5f, 2f, -5f, 43f, 643f, 3525f, 32f};
-    private Long[] longValues = {5L, 3L, 41432L, 0L, -4312L, -532L, 1L, 4L, 1362L};
-    private Byte[] byteValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    private Short[] shortValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    private Character[] charValues = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    private final Object[] values = {"just", "some", "random", "values", true, false, 50, "nope", "yeah", 53};
+    private final Object[] valuesWithNulls = {"just", "some", null, "values", true, false, 50, "nope", "yeah", 53};
+    private final Integer[] intValues = {42, 13, 0, -44, 56, 561, 61, -532, -1, 32};
+    private final Float[] floatValues = {4f, 3.14f, 0f, 5f, 2f, -5f, 43f, 643f, 3525f, 32f};
+    private final Long[] longValues = {5L, 3L, 41432L, 0L, -4312L, -532L, 1L, 4L, 1362L};
+    private final Byte[] byteValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    private final Short[] shortValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    private final Character[] charValues = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
     // 49 String keys that all have the same two hashCode() results
     // It is extremely easy to generate String keys that have colliding hashCode()s, so we check to make
     // sure ObjectSet and OrderedSet can tolerate them in case of low-complexity malicious use.
     // If they can tolerate these problem values, then ObjectMap and others should too.
-    private String[] problemValues = ("21oo 0oq1 0opP 0ooo 0pPo 21pP 21q1 1Poo 1Pq1 1PpP 0q31 0pR1 0q2P 0q1o 232P 231o 2331 0pQP 22QP"
+    private final String[] problemValues = ("21oo 0oq1 0opP 0ooo 0pPo 21pP 21q1 1Poo 1Pq1 1PpP 0q31 0pR1 0q2P 0q1o 232P 231o 2331 0pQP 22QP"
             + " 22Po 22R1 1QQP 1R1o 1QR1 1R2P 1R31 1QPo 1Qup 1S7p 0r8Q 0r7p 0r92 23X2 2492 248Q 247p 22vQ"
             + " 22up 1S92 1S8Q 23WQ 23Vp 22w2 1QvQ 1Qw2 1RVp 1RWQ 1RX2 0qX2").split(" ");
 

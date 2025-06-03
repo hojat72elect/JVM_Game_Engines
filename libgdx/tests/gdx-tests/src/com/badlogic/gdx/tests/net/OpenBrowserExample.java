@@ -5,8 +5,6 @@ import com.badlogic.gdx.tests.utils.GdxTest;
 
 /**
  * Demonstrates how to open a browser and load a specific URL.
- *
- * 
  */
 public class OpenBrowserExample extends GdxTest {
     @Override

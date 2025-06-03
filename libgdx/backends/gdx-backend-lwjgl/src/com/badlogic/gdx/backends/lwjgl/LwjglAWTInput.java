@@ -7,16 +7,43 @@ import com.badlogic.gdx.input.NativeInputConfiguration;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.Pool;
 
-import javax.swing.*;
+import java.awt.AWTException;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.OverlayLayout;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LwjglAWTInput extends AbstractInput implements MouseMotionListener, MouseListener, MouseWheelListener, KeyListener {
     private final LwjglAWTCanvas lwjglAwtCanvas;
@@ -45,6 +72,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
     boolean catched = false;
     Robot robot = null;
     long currentEventTimeStamp;
+
     public LwjglAWTInput(LwjglAWTCanvas lwjglAwtCanvas) {
         this.lwjglAwtCanvas = lwjglAwtCanvas;
         setListeners(lwjglAwtCanvas.getCanvas());
@@ -114,8 +142,6 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
                     public boolean isOptimizedDrawingEnabled() {
                         return false;
                     }
-
-                    ;
                 };
 
                 textPanel.setLayout(new OverlayLayout(textPanel));
@@ -149,10 +175,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
                     }
 
                     private void updated() {
-                        if (textField.getText().length() == 0)
-                            placeholderLabel.setVisible(true);
-                        else
-                            placeholderLabel.setVisible(false);
+                        placeholderLabel.setVisible(textField.getText().length() == 0);
                     }
                 });
 
@@ -191,7 +214,6 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
                 } else {
                     listener.canceled();
                 }
-
             }
         });
     }
@@ -849,8 +871,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 
     @Override
     public boolean isPeripheralAvailable(Peripheral peripheral) {
-        if (peripheral == Peripheral.HardwareKeyboard) return true;
-        return false;
+        return peripheral == Peripheral.HardwareKeyboard;
     }
 
     @Override

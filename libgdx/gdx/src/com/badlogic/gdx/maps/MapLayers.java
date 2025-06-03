@@ -9,7 +9,7 @@ import java.util.Iterator;
  * Ordered list of {@link MapLayer} instances owned by a {@link Map}
  */
 public class MapLayers implements Iterable<MapLayer> {
-    private Array<MapLayer> layers = new Array<MapLayer>();
+    private final Array<MapLayer> layers = new Array<MapLayer>();
 
     /**
      * @param index
@@ -113,5 +113,4 @@ public class MapLayers implements Iterable<MapLayer> {
     public Iterator<MapLayer> iterator() {
         return layers.iterator();
     }
-
 }

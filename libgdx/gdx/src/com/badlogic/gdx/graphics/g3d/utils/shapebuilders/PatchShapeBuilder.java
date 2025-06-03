@@ -7,8 +7,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
  * Helper class with static methods to build patch shapes using {@link MeshPartBuilder}.
- *
- * 
  */
 public class PatchShapeBuilder extends BaseShapeBuilder {
     /**

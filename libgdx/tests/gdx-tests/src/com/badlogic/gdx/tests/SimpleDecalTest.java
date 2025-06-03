@@ -1,11 +1,11 @@
 package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
@@ -24,7 +24,7 @@ public class SimpleDecalTest extends GdxTest {
     PerspectiveCamController controller;
     FPSLogger logger = new FPSLogger();
     Vector3 dir = new Vector3();
-    private boolean billboard = true;
+    private final boolean billboard = true;
 
     public void create() {
         float width = Gdx.graphics.getWidth();

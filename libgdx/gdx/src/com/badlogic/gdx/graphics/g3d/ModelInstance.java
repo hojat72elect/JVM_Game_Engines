@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.Pool;
  * </p>
  * <p>
  * The ModelInstance creates a full copy of all materials, nodes and animations.
- *
+ * <p>
  * , xoppa
  */
 public class ModelInstance implements RenderableProvider {

@@ -52,7 +52,7 @@ import com.badlogic.gdx.utils.Pool;
  * use that shader instead of the default shader. Therefor, to assure the default shader is used, the {@link #shader} member must
  * be set to null.
  * </p>
- *
+ * <p>
  * , xoppa
  */
 public class Renderable {
@@ -84,7 +84,7 @@ public class Renderable {
      * combine multiple bones into a single transformation matrix, which is used to transform the vertex to model space. In other
      * words: the bone transformation is applied prior to the {@link #worldTransform}.
      */
-    public Matrix4 bones[];
+    public Matrix4[] bones;
     /**
      * The {@link Shader} to be used to render this Renderable using a {@link ModelBatch}, may be null. It is not guaranteed that
      * the shader will be used, the used {@link ShaderProvider} is responsible for actually choosing the correct shader to use.

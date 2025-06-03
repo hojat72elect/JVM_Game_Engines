@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests;
 
-import java.util.Random;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -20,6 +18,8 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.tests.utils.GdxTest;
+
+import java.util.Random;
 
 public class CullTest extends GdxTest implements ApplicationListener {
 

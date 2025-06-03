@@ -1,9 +1,21 @@
 package com.badlogic.gdx.backends.lwjgl3;
 
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import org.lwjgl.opengl.*;
 
-import java.nio.*;
+import org.lwjgl.opengl.EXTFramebufferObject;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 class Lwjgl3GL20 implements com.badlogic.gdx.graphics.GL20 {
     private ByteBuffer buffer = null;
@@ -18,7 +30,7 @@ class Lwjgl3GL20 implements com.badlogic.gdx.graphics.GL20 {
         }
     }
 
-    private FloatBuffer toFloatBuffer(float v[], int offset, int count) {
+    private FloatBuffer toFloatBuffer(float[] v, int offset, int count) {
         ensureBufferCapacity(count << 2);
         ((Buffer) floatBuffer).clear();
         ((Buffer) floatBuffer).limit(count);
@@ -27,7 +39,7 @@ class Lwjgl3GL20 implements com.badlogic.gdx.graphics.GL20 {
         return floatBuffer;
     }
 
-    private IntBuffer toIntBuffer(int v[], int offset, int count) {
+    private IntBuffer toIntBuffer(int[] v, int offset, int count) {
         ensureBufferCapacity(count << 2);
         ((Buffer) intBuffer).clear();
         ((Buffer) intBuffer).limit(count);

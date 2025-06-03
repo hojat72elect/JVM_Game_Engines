@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+
 import com.badlogic.gdx.Input.OnscreenKeyboardType;
 import com.badlogic.gdx.backends.android.DefaultAndroidInput;
 
@@ -53,7 +54,6 @@ public class GLSurfaceView20 extends GLSurfaceView {
         super(context);
         this.resolutionStrategy = resolutionStrategy;
         init(translucent, depth, stencil);
-
     }
 
     static boolean checkEglError(String prompt, EGL10 egl) {
@@ -138,7 +138,7 @@ public class GLSurfaceView20 extends GLSurfaceView {
     }
 
     static class ContextFactory implements GLSurfaceView.EGLContextFactory {
-        private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
+        private static final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
         public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
             Log.w(TAG, "creating OpenGL ES " + GLSurfaceView20.targetGLESVersion + ".0 context");
@@ -167,8 +167,8 @@ public class GLSurfaceView20 extends GLSurfaceView {
          * This EGL config specification is used to specify 2.0 rendering. We use a minimum size of 4 bits for red/green/blue, but
          * will perform actual matching in chooseConfig() below.
          */
-        private static int EGL_OPENGL_ES2_BIT = 4;
-        private static int[] s_configAttribs2 = {EGL10.EGL_RED_SIZE, 4, EGL10.EGL_GREEN_SIZE, 4, EGL10.EGL_BLUE_SIZE, 4,
+        private static final int EGL_OPENGL_ES2_BIT = 4;
+        private static final int[] s_configAttribs2 = {EGL10.EGL_RED_SIZE, 4, EGL10.EGL_GREEN_SIZE, 4, EGL10.EGL_BLUE_SIZE, 4,
                 EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL10.EGL_NONE};
         // Subclasses can adjust these values:
         protected int mRedSize;
@@ -177,7 +177,8 @@ public class GLSurfaceView20 extends GLSurfaceView {
         protected int mAlphaSize;
         protected int mDepthSize;
         protected int mStencilSize;
-        private int[] mValue = new int[1];
+        private final int[] mValue = new int[1];
+
         public ConfigChooser(int r, int g, int b, int a, int depth, int stencil) {
             mRedSize = r;
             mGreenSize = g;

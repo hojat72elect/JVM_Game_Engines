@@ -1,18 +1,18 @@
 package com.badlogic.gdx.backends.lwjgl3;
 
+import com.badlogic.gdx.AbstractInput;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputEventQueue;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.glutils.HdpiMode;
 import com.badlogic.gdx.input.NativeInputConfiguration;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCharCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWScrollCallback;
-
-import com.badlogic.gdx.AbstractInput;
-import com.badlogic.gdx.graphics.glutils.HdpiMode;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputEventQueue;
-import com.badlogic.gdx.InputProcessor;
 
 public class DefaultLwjgl3Input extends AbstractInput implements Lwjgl3Input {
     final Lwjgl3Window window;
@@ -32,14 +32,14 @@ public class DefaultLwjgl3Input extends AbstractInput implements Lwjgl3Input {
             eventQueue.keyTyped((char) codepoint, System.nanoTime());
         }
     };
-    private GLFWKeyCallback keyCallback = new GLFWKeyCallback() {
+    private final GLFWKeyCallback keyCallback = new GLFWKeyCallback() {
         @Override
         public void invoke(long window, int key, int scancode, int action, int mods) {
             keyCallback(window, key, scancode, action, mods);
         }
     };
     private InputProcessor inputProcessor;
-    private GLFWScrollCallback scrollCallback = new GLFWScrollCallback() {
+    private final GLFWScrollCallback scrollCallback = new GLFWScrollCallback() {
         @Override
         public void invoke(long window, double scrollX, double scrollY) {
             DefaultLwjgl3Input.this.window.getGraphics().requestRendering();
@@ -47,7 +47,7 @@ public class DefaultLwjgl3Input extends AbstractInput implements Lwjgl3Input {
         }
     };
 
-    private GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
+    private final GLFWCursorPosCallback cursorPosCallback = new GLFWCursorPosCallback() {
         private int logicalMouseY;
         private int logicalMouseX;
 
@@ -77,7 +77,7 @@ public class DefaultLwjgl3Input extends AbstractInput implements Lwjgl3Input {
         }
     };
 
-    private GLFWMouseButtonCallback mouseButtonCallback = new GLFWMouseButtonCallback() {
+    private final GLFWMouseButtonCallback mouseButtonCallback = new GLFWMouseButtonCallback() {
         @Override
         public void invoke(long window, int button, int action, int mods) {
             int gdxButton = toGdxButton(button);
@@ -250,7 +250,7 @@ public class DefaultLwjgl3Input extends AbstractInput implements Lwjgl3Input {
 
     @Override
     public boolean isTouched(int pointer) {
-        return pointer == 0 ? isTouched() : false;
+        return pointer == 0 && isTouched();
     }
 
     @Override

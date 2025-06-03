@@ -16,13 +16,12 @@
 
 package com.badlogic.gdx.graphics.profiling;
 
+import com.badlogic.gdx.graphics.GL32;
+
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-
-import com.badlogic.gdx.graphics.GL32;
-import com.badlogic.gdx.graphics.GL32.DebugProc;
 
 public class GL32Interceptor extends GL31Interceptor implements GL32 {
 
@@ -304,5 +303,4 @@ public class GL32Interceptor extends GL31Interceptor implements GL32 {
         gl32.glTexStorage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations);
         check();
     }
-
 }

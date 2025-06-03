@@ -25,11 +25,13 @@ import static org.lwjgl.openal.AL10.alSourcei;
 import com.badlogic.gdx.audio.AudioDevice;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.openal.AL11;
+
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.openal.AL11;
 
 public class OpenALAudioDevice implements AudioDevice {
     static private final int bytesPerSample = 2;
@@ -41,10 +43,12 @@ public class OpenALAudioDevice implements AudioDevice {
     private final ByteBuffer tempBuffer;
     private IntBuffer buffers;
     private int sourceID = -1;
-    private int format, sampleRate;
+    private final int format;
+    private final int sampleRate;
     private boolean isPlaying;
     private float volume = 1;
-    private float renderedSeconds, secondsPerBuffer;
+    private float renderedSeconds;
+    private final float secondsPerBuffer;
     private byte[] bytes;
 
     public OpenALAudioDevice(OpenALLwjgl3Audio audio, int sampleRate, boolean isMono, int bufferSize, int bufferCount) {

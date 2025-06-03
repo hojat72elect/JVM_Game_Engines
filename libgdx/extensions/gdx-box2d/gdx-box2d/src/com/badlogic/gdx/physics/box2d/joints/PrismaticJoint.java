@@ -239,5 +239,4 @@ public class PrismaticJoint extends Joint {
 		b2PrismaticJoint* joint = (b2PrismaticJoint*)addr;
 		return joint->GetReferenceAngle();
 	*/
-
 }

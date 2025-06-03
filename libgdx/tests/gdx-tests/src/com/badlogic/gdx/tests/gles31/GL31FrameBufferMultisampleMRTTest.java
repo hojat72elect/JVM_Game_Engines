@@ -56,7 +56,6 @@ public class GL31FrameBufferMultisampleMRTTest extends GdxTest {
         );
 
         shapes = new ShapeRenderer(3, shader);
-
     }
 
     @Override

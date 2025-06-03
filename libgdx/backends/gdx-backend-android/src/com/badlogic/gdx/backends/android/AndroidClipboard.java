@@ -2,6 +2,7 @@ package com.badlogic.gdx.backends.android;
 
 import android.content.ClipData;
 import android.content.Context;
+
 import com.badlogic.gdx.utils.Clipboard;
 
 public class AndroidClipboard implements Clipboard {

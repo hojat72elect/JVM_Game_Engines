@@ -1,9 +1,5 @@
 package com.badlogic.gdx.tests.gles32;
 
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.nio.charset.Charset;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,15 +12,19 @@ import com.badlogic.gdx.tests.utils.GdxTestConfig;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * see https://www.khronos.org/opengl/wiki/Debug_Output
- *
  */
 @GdxTestConfig(requireGL32 = true)
 public class GL32DebugControlTest extends GdxTest {
     private SpriteBatch batch;
     private Texture texture;
-    private boolean useCallback = true;
+    private final boolean useCallback = true;
     private boolean enableNotifications = false;
 
     public void create() {
@@ -252,12 +252,12 @@ public class GL32DebugControlTest extends GdxTest {
         private static class DebugReader {
 
             int n = 1024;
-            private IntBuffer sources;
-            private IntBuffer types;
-            private IntBuffer ids;
-            private IntBuffer severities;
-            private IntBuffer lengths;
-            private ByteBuffer messageLog;
+            private final IntBuffer sources;
+            private final IntBuffer types;
+            private final IntBuffer ids;
+            private final IntBuffer severities;
+            private final IntBuffer lengths;
+            private final ByteBuffer messageLog;
 
             public DebugReader() {
                 sources = BufferUtils.newIntBuffer(n);
@@ -281,7 +281,7 @@ public class GL32DebugControlTest extends GdxTest {
                         byte[] bytes = new byte[length];
                         messageLog.get(bytes);
                         messageLog.rewind();
-                        String message = new String(bytes, Charset.forName("UTF8"));
+                        String message = new String(bytes, StandardCharsets.UTF_8);
                         log(source, type, id, severity, message);
                     }
                     sources.rewind();
@@ -291,7 +291,6 @@ public class GL32DebugControlTest extends GdxTest {
                     lengths.rewind();
                     if (count < n) break;
                 }
-
             }
         }
     }

@@ -12,12 +12,26 @@ import android.view.Display;
 import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
-import com.badlogic.gdx.*;
+
+import com.badlogic.gdx.AbstractGraphics;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.backends.android.surfaceview.GLSurfaceView20;
 import com.badlogic.gdx.backends.android.surfaceview.GdxEglConfigChooser;
 import com.badlogic.gdx.backends.android.surfaceview.ResolutionStrategy;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Cubemap;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.GL31;
+import com.badlogic.gdx.graphics.GL32;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureArray;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -305,7 +319,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
         updatePpi();
         updateSafeAreaInsets();
         gl.glViewport(0, 0, this.width, this.height);
-        if (created == false) {
+        if (!created) {
             app.getApplicationListener().create();
             created = true;
             synchronized (this) {

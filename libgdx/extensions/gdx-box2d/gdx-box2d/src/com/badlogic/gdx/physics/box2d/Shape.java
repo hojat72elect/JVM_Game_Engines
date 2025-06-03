@@ -19,8 +19,6 @@ public abstract class Shape implements Disposable {
      **/
     protected long addr;
 
-    ;
-
     protected static native int jniGetType(long addr); /*
 		b2Shape* shape = (b2Shape*)addr;
 		switch(shape->m_type) {

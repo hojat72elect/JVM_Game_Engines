@@ -15,5 +15,5 @@ public interface LightFilter {
      * @param mainCamera Main scene camera
      * @return boolean
      */
-    public boolean filter(BaseLight light, Camera camera, Camera mainCamera);
+    boolean filter(BaseLight light, Camera camera, Camera mainCamera);
 }

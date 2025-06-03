@@ -1,5 +1,9 @@
 package com.badlogic.gdx.tools.hiero.unicodefont.effects;
 
+import com.badlogic.gdx.tools.distancefield.DistanceFieldGenerator;
+import com.badlogic.gdx.tools.hiero.unicodefont.Glyph;
+import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -9,16 +13,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.badlogic.gdx.tools.distancefield.DistanceFieldGenerator;
-import com.badlogic.gdx.tools.hiero.unicodefont.Glyph;
-import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont;
-
 /**
  * A filter to create a distance field. The resulting font can be rendered with a simple custom shader to draw bitmap fonts that
  * remain crisp even under high magnification.
  *
  * <p>
  * An example of the use of such a font is included in the libgdx test suite under the name {@code BitmapFontDistanceFieldTest}.
+ *
  * @see DistanceFieldGenerator
  */
 public class DistanceFieldEffect implements ConfigurableEffect {
@@ -87,6 +88,5 @@ public class DistanceFieldEffect implements ConfigurableEffect {
                 spread = Math.max(0, (Float) value.getObject());
             }
         }
-
     }
 }

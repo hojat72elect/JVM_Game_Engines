@@ -5,8 +5,6 @@ import com.badlogic.gdx.utils.Pool;
 
 /**
  * Returns a list of {@link Renderable} instances to be rendered by a {@link ModelBatch}.
- *
- * 
  */
 public interface RenderableProvider {
     /**
@@ -17,5 +15,5 @@ public interface RenderableProvider {
      * @param renderables the output array
      * @param pool        the pool to obtain Renderables from
      */
-    public void getRenderables(Array<Renderable> renderables, Pool<Renderable> pool);
+    void getRenderables(Array<Renderable> renderables, Pool<Renderable> pool);
 }

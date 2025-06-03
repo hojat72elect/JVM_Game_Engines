@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
  * Implementation of the Bezier curve.
- *
  */
 public class Bezier<T extends Vector<T>> implements Path<T> {
     // TODO implement Serializable
@@ -25,6 +24,7 @@ public class Bezier<T extends Vector<T>> implements Path<T> {
     public Bezier(final T[] points, final int offset, final int length) {
         set(points, offset, length);
     }
+
     public Bezier(final Array<T> points, final int offset, final int length) {
         set(points, offset, length);
     }

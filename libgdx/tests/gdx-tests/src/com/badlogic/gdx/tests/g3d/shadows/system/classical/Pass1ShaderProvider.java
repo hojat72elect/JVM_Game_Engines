@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 
 /**
- * 
+ *
  */
 public class Pass1ShaderProvider extends DefaultShaderProvider {
     @Override

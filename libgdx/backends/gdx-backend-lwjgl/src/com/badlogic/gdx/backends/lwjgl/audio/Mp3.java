@@ -2,9 +2,14 @@ package com.badlogic.gdx.backends.lwjgl.audio;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import javazoom.jl.decoder.*;
 
 import java.io.ByteArrayOutputStream;
+
+import javazoom.jl.decoder.Bitstream;
+import javazoom.jl.decoder.BitstreamException;
+import javazoom.jl.decoder.Header;
+import javazoom.jl.decoder.MP3Decoder;
+import javazoom.jl.decoder.OutputBuffer;
 
 /**
  *

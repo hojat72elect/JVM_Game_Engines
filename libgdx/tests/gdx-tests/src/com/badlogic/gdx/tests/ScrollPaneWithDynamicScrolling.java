@@ -51,7 +51,6 @@ public class ScrollPaneWithDynamicScrolling extends GdxTest {
                 scrollPane.scrollTo(0, 0, 0, 0);
             }
         });
-
     }
 
     public void render() {

@@ -1,14 +1,14 @@
 package com.badlogic.gdx.backends.lwjgl;
 
+import static com.badlogic.gdx.utils.SharedLibraryLoader.bitness;
+import static com.badlogic.gdx.utils.SharedLibraryLoader.os;
+
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 
 import java.io.File;
 import java.lang.reflect.Method;
-
-import static com.badlogic.gdx.utils.SharedLibraryLoader.bitness;
-import static com.badlogic.gdx.utils.SharedLibraryLoader.os;
 
 public final class LwjglNativesLoader {
     static public boolean load = true;
@@ -18,7 +18,7 @@ public final class LwjglNativesLoader {
 
         // Don't extract natives if using JWS.
         try {
-            Method method = Class.forName("javax.jnlp.ServiceManager").getDeclaredMethod("lookup", new Class[]{String.class});
+            Method method = Class.forName("javax.jnlp.ServiceManager").getDeclaredMethod("lookup", String.class);
             method.invoke(null, "javax.jnlp.PersistenceService");
             load = false;
         } catch (Throwable ex) {

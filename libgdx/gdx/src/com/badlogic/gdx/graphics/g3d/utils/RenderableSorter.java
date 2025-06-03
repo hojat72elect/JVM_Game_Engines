@@ -6,8 +6,6 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Responsible for sorting {@link Renderable} lists by whatever criteria (material, distance to camera, etc.)
- *
- * 
  */
 public interface RenderableSorter {
     /**
@@ -15,5 +13,5 @@ public interface RenderableSorter {
      *
      * @param renderables the array of renderables to be sorted
      */
-    public void sort(Camera camera, Array<Renderable> renderables);
+    void sort(Camera camera, Array<Renderable> renderables);
 }

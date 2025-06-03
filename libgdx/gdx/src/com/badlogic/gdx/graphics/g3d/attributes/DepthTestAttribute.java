@@ -27,6 +27,7 @@ public class DepthTestAttribute extends Attribute {
      * Whether to write to the depth buffer (default: true)
      */
     public boolean depthMask;
+
     public DepthTestAttribute() {
         this(GL20.GL_LEQUAL);
     }

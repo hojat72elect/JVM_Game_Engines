@@ -12,7 +12,6 @@ public class BodyDef {
      **/
     public final Vector2 position = new Vector2();
 
-    ;
     /**
      * The linear velocity of the body's origin in world co-ordinates.
      **/
@@ -74,9 +73,9 @@ public class BodyDef {
     public enum BodyType {
         StaticBody(0), KinematicBody(1), DynamicBody(2);
 
-        private int value;
+        private final int value;
 
-        private BodyType(int value) {
+        BodyType(int value) {
             this.value = value;
         }
 

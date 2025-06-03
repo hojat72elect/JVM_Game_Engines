@@ -33,7 +33,7 @@ public class SelectTest extends GdxTest {
         }
     };
     private static boolean quiet;
-    private static PerformanceCounter allPerf = new PerformanceCounter("all");
+    private static final PerformanceCounter allPerf = new PerformanceCounter("all");
 
     public static void correctnessTest(int runs, int k) {
         String msg = String.format("[%d runs with %dx%d dummy game units] - ", runs, player.size, enemy.size);
@@ -84,7 +84,6 @@ public class SelectTest extends GdxTest {
                 throw new GdxRuntimeException("results of selectRankedIndex and selectRanked do not return the same object\n"
                         + "selectRankedIndex -> " + indexDummy + "\n" + "selectRanked      -> " + valueDummy);
             }
-
         }
     }
 
@@ -215,9 +214,7 @@ public class SelectTest extends GdxTest {
             // we only care about position/distance
             float epsilon = 0.0001f;
             float diff = Math.abs(d.pos.x - this.pos.x) + Math.abs(d.pos.y - this.pos.y);
-            if (diff > epsilon) return false;
-            return true;
-
+            return !(diff > epsilon);
         }
 
         public Dummy getKthNearestEnemy(int k) {

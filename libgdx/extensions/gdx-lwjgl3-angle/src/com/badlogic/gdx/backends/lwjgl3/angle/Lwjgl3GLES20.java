@@ -2,9 +2,15 @@ package com.badlogic.gdx.backends.lwjgl3.angle;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import org.lwjgl.opengles.GLES20;
 
-import java.nio.*;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 public class Lwjgl3GLES20 implements GL20 {
     private ByteBuffer buffer = null;
@@ -19,7 +25,7 @@ public class Lwjgl3GLES20 implements GL20 {
         }
     }
 
-    private FloatBuffer toFloatBuffer(float v[], int offset, int count) {
+    private FloatBuffer toFloatBuffer(float[] v, int offset, int count) {
         ensureBufferCapacity(count << 2);
         ((Buffer) floatBuffer).clear();
         ((Buffer) floatBuffer).limit(count);
@@ -28,7 +34,7 @@ public class Lwjgl3GLES20 implements GL20 {
         return floatBuffer;
     }
 
-    private IntBuffer toIntBuffer(int v[], int offset, int count) {
+    private IntBuffer toIntBuffer(int[] v, int offset, int count) {
         ensureBufferCapacity(count << 2);
         ((Buffer) intBuffer).clear();
         ((Buffer) intBuffer).limit(count);

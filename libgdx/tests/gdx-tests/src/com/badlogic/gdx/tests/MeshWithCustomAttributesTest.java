@@ -61,5 +61,4 @@ public class MeshWithCustomAttributesTest extends GdxTest {
         shader = new ShaderProgram(vertexShader, fragmentShader);
         mesh.setVertices(vertices);
     }
-
 }

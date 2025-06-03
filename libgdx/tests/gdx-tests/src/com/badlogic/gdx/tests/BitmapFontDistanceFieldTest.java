@@ -27,7 +27,7 @@ public class BitmapFontDistanceFieldTest extends GdxTest {
     private BitmapFont regularFont;
     private BitmapFont distanceFieldFont;
     private DistanceFieldShader distanceFieldShader;
-    private GlyphLayout layout = new GlyphLayout();
+    private final GlyphLayout layout = new GlyphLayout();
 
     @Override
     public void create() {

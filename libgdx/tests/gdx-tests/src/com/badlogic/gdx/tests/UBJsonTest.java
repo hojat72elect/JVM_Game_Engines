@@ -32,7 +32,7 @@ public class UBJsonTest extends GdxTest {
             uw.set("3bytes", new byte[]{(byte) 1, (byte) 2, (byte) 3});
             uw.set("3shorts", new short[]{(short) 1, (short) 2, (short) 3});
             uw.set("3ints", new int[]{1, 2, 3});
-            uw.set("3long", new long[]{1l, 2l, 3l});
+            uw.set("3long", new long[]{1L, 2L, 3L});
             uw.set("3double", new double[]{1, 2, 3.456789});
             uw.set("3char", new char[]{'a', 'b', 'c'});
             uw.set("3strings", new String[]{"", "a", "abc"});
@@ -42,8 +42,8 @@ public class UBJsonTest extends GdxTest {
             uw.value((byte) 254);
             uw.value((byte) (-2));
             uw.value((short) -32000);
-            uw.value((int) -123456);
-            uw.value((long) (-((1 << 63) - 1)));
+            uw.value(-123456);
+            uw.value((long) (-((1L << 63) - 1)));
             uw.pop();
             uw.pop();
             uw.close();
@@ -75,8 +75,8 @@ public class UBJsonTest extends GdxTest {
             uw.value((byte) 254);
             uw.value((byte) (-2));
             uw.value((short) -32000);
-            uw.value((int) -123456);
-            uw.value((long) (-((1 << 63) - 1)));
+            uw.value(-123456);
+            uw.value((long) (-((1L << 63) - 1)));
             uw.value(longString);
         }
         uw.pop();

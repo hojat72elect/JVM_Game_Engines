@@ -24,8 +24,9 @@ public class DragScrollListener extends DragListener {
     float minSpeed = 15, maxSpeed = 75, tickSecs = 0.05f;
     long startTime, rampTime = 1750;
     float padTop, padBottom;
-    private ScrollPane scroll;
-    private Task scrollUp, scrollDown;
+    private final ScrollPane scroll;
+    private final Task scrollUp;
+    private final Task scrollDown;
 
     public DragScrollListener(final ScrollPane scroll) {
         this.scroll = scroll;

@@ -98,7 +98,7 @@ public class BulletBase implements Disposable {
     @Override
     public void dispose() {
         if (refCount > 0 && Bullet.useRefCounting && Bullet.enableLogging)
-            Gdx.app.error("Bullet", "Disposing " + toString() + " while it still has " + refCount + " references.");
+            Gdx.app.error("Bullet", "Disposing " + this + " while it still has " + refCount + " references.");
         disposed = true;
         delete();
     }
@@ -117,16 +117,16 @@ public class BulletBase implements Disposable {
 
     protected void destroy() {
         try {
-            if (destroyed && Bullet.enableLogging) Gdx.app.error("Bullet", "Already destroyed " + toString());
+            if (destroyed && Bullet.enableLogging) Gdx.app.error("Bullet", "Already destroyed " + this);
             destroyed = true;
 
             if (swigCMemOwn && !disposed) {
                 if (Bullet.enableLogging)
-                    Gdx.app.error("Bullet", "Disposing " + toString() + " due to garbage collection.");
+                    Gdx.app.error("Bullet", "Disposing " + this + " due to garbage collection.");
                 dispose();
             }
         } catch (Throwable e) {
-            Gdx.app.error("Bullet", "Exception while destroying " + toString(), e);
+            Gdx.app.error("Bullet", "Exception while destroying " + this, e);
         }
     }
 

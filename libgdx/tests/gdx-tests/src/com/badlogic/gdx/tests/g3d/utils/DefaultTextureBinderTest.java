@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests.g3d.utils;
 
-import java.nio.IntBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -11,6 +9,8 @@ import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.IntIntMap;
+
+import java.nio.IntBuffer;
 
 public class DefaultTextureBinderTest extends GdxTest {
 
@@ -100,5 +100,4 @@ public class DefaultTextureBinderTest extends GdxTest {
             System.err.println("bad resuse count: " + binderLRU.getReuseCount() + " expected" + expectedRC);
         binderLRU.resetCounts();
     }
-
 }

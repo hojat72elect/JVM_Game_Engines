@@ -3,9 +3,6 @@ package com.badlogic.gdx.graphics.g2d;
 import static com.badlogic.gdx.graphics.g2d.Sprite.SPRITE_SIZE;
 import static com.badlogic.gdx.graphics.g2d.Sprite.VERTEX_SIZE;
 
-import java.nio.Buffer;
-import java.nio.FloatBuffer;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -21,6 +18,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.IntArray;
+
+import java.nio.Buffer;
+import java.nio.FloatBuffer;
 
 /**
  * Draws 2D images, optimized for geometry that does not change. Sprites and/or textures are cached and given an ID, which can
@@ -71,7 +71,7 @@ public class SpriteCache implements Disposable {
      **/
     public int totalRenderCalls = 0;
     private boolean drawing;
-    private Array<Cache> caches = new Array();
+    private final Array<Cache> caches = new Array();
     private Cache currentCache;
     private float colorPacked = Color.WHITE_FLOAT_BITS;
     private ShaderProgram customShader = null;
@@ -118,7 +118,7 @@ public class SpriteCache implements Disposable {
             short[] indices = new short[length];
             short j = 0;
             for (int i = 0; i < length; i += 6, j += 4) {
-                indices[i + 0] = j;
+                indices[i] = j;
                 indices[i + 1] = (short) (j + 1);
                 indices[i + 2] = (short) (j + 2);
                 indices[i + 3] = (short) (j + 2);
@@ -216,7 +216,7 @@ public class SpriteCache implements Disposable {
     public void beginCache(int cacheID) {
         if (drawing) throw new IllegalStateException("end must be called before beginCache");
         if (currentCache != null) throw new IllegalStateException("endCache must be called before begin.");
-        Buffer verticesBuffer = (Buffer) mesh.getVerticesBuffer(true);
+        Buffer verticesBuffer = mesh.getVerticesBuffer(true);
         if (cacheID == caches.size - 1) {
             Cache oldCache = caches.removeIndex(cacheID);
             verticesBuffer.limit(oldCache.offset);

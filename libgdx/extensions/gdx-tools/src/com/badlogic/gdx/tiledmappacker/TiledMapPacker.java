@@ -21,6 +21,14 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.ObjectMap;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,6 +36,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -37,12 +46,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Given one or more TMX tilemaps, packs all tileset resources used across the maps, or the resources used per map, into a
@@ -62,8 +65,8 @@ public class TiledMapPacker {
     static File outputDir;
     private TexturePacker packer;
     private TiledMap map;
-    private TmxMapLoader mapLoader = new TmxMapLoader(new AbsoluteFileHandleResolver());
-    private TiledMapPackerSettings settings;
+    private final TmxMapLoader mapLoader = new TmxMapLoader(new AbsoluteFileHandleResolver());
+    private final TiledMapPackerSettings settings;
     private HashMap<String, IntArray> tilesetUsedIds = new HashMap<String, IntArray>();
     private ObjectMap<String, TiledMapTileSet> tilesetsToPack;
     private FileHandle currentDir;
@@ -237,13 +240,10 @@ public class TiledMapPacker {
         for (String string : argsNotDir) {
             if (stripUnused.equals(string)) {
                 packerSettings.stripUnusedTiles = true;
-
             } else if (combineTilesets.equals(string)) {
                 packerSettings.combineTilesets = true;
-
             } else if (verbose.equals(string)) {
                 packerSettings.verbose = true;
-
             } else {
                 System.out.println("\nOption \"" + string + "\" not recognized.\n");
                 printUsage();
@@ -303,7 +303,7 @@ public class TiledMapPacker {
         processSubdirectories(inputDirHandle, texturePackerSettings);
 
         boolean combineTilesets = this.settings.combineTilesets;
-        if (combineTilesets == true) {
+        if (combineTilesets) {
             packTilesets(inputDirHandle, texturePackerSettings);
         }
     }
@@ -332,7 +332,7 @@ public class TiledMapPacker {
 
     private void processSingleMap(File mapFile, FileHandle dirHandle, Settings texturePackerSettings) throws IOException {
         boolean combineTilesets = this.settings.combineTilesets;
-        if (combineTilesets == false) {
+        if (!combineTilesets) {
             tilesetUsedIds = new HashMap<String, IntArray>();
             tilesetsToPack = new ObjectMap<String, TiledMapTileSet>();
         }
@@ -352,7 +352,7 @@ public class TiledMapPacker {
             }
         }
 
-        if (combineTilesets == false) {
+        if (!combineTilesets) {
             FileHandle tmpHandle = new FileHandle(mapFile.getName());
             this.settings.atlasOutputName = tmpHandle.nameWithoutExtension();
 
@@ -536,7 +536,6 @@ public class TiledMapPacker {
             outputDir.mkdirs();
             StreamResult result = new StreamResult(new File(outputDir, tmxFileHandle.name()));
             transformer.transform(source, result);
-
         } catch (ParserConfigurationException e) {
             throw new RuntimeException("ParserConfigurationException: " + e.getMessage());
         } catch (SAXException e) {

@@ -18,18 +18,18 @@ public class IntersectorOverlapConvexPolygonsTest extends GdxTest {
     private OrthographicCamera camera;
     private ShapeRenderer shapeRenderer;
 
-    private float shapeWidth = 1f;
-    private float shapeHeight = 1f;
+    private final float shapeWidth = 1f;
+    private final float shapeHeight = 1f;
     // the vertices of the 2 shapes. Feel free to play with the values. It must be a convex Polygon.
-    private float[] vertsShape1 = {0f, 0f, shapeWidth, 0f, shapeWidth, shapeHeight};
-    private float[] vertsShape2 = {0f, 0f, shapeWidth * 2, 0f, shapeWidth * 2, shapeHeight * 2, 0, shapeHeight};
+    private final float[] vertsShape1 = {0f, 0f, shapeWidth, 0f, shapeWidth, shapeHeight};
+    private final float[] vertsShape2 = {0f, 0f, shapeWidth * 2, 0f, shapeWidth * 2, shapeHeight * 2, 0, shapeHeight};
 
-    private Polygon shape1 = new Polygon();
-    private Polygon shape2 = new Polygon();
+    private final Polygon shape1 = new Polygon();
+    private final Polygon shape2 = new Polygon();
 
-    private Intersector.MinimumTranslationVector mtv = new Intersector.MinimumTranslationVector();
+    private final Intersector.MinimumTranslationVector mtv = new Intersector.MinimumTranslationVector();
 
-    private Vector3 mouseCoords = new Vector3();
+    private final Vector3 mouseCoords = new Vector3();
 
     @Override
     public void create() {

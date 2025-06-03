@@ -2,6 +2,7 @@ package com.badlogic.gdx.backends.android;
 
 import android.view.InputDevice;
 import android.view.MotionEvent;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.DefaultAndroidInput.TouchEvent;
 
@@ -38,7 +39,6 @@ public class AndroidMouseHandler {
                     scrollAmountY = (int) -Math.signum(event.getAxisValue(MotionEvent.AXIS_VSCROLL));
                     scrollAmountX = (int) -Math.signum(event.getAxisValue(MotionEvent.AXIS_HSCROLL));
                     postTouchEvent(input, TouchEvent.TOUCH_SCROLLED, 0, 0, scrollAmountX, scrollAmountY, timeStamp);
-
             }
         }
         Gdx.app.getGraphics().requestRendering();
@@ -71,5 +71,4 @@ public class AndroidMouseHandler {
         event.scrollAmountY = scrollAmountY;
         input.touchEvents.add(event);
     }
-
 }

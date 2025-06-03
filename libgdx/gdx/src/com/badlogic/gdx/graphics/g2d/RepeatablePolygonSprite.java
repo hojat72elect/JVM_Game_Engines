@@ -1,7 +1,11 @@
 package com.badlogic.gdx.graphics.g2d;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.EarClippingTriangulator;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ShortArray;
 
@@ -16,13 +20,13 @@ public class RepeatablePolygonSprite {
     private TextureRegion region;
     private float density;
     private boolean dirty = true;
-    private Array<float[]> parts = new Array<>();
-    private Array<float[]> vertices = new Array<>();
-    private Array<short[]> indices = new Array<>();
+    private final Array<float[]> parts = new Array<>();
+    private final Array<float[]> vertices = new Array<>();
+    private final Array<short[]> indices = new Array<>();
     private int cols, rows;
     private float gridWidth, gridHeight;
     private Color color = Color.WHITE;
-    private Vector2 offset = new Vector2();
+    private final Vector2 offset = new Vector2();
 
     /**
      * Sets polygon with repeating texture region, the size of repeating grid is equal to region size
@@ -145,7 +149,7 @@ public class RepeatablePolygonSprite {
     private void buildVertices() {
         vertices.clear();
         for (int i = 0; i < parts.size; i++) {
-            float verts[] = parts.get(i);
+            float[] verts = parts.get(i);
             if (verts == null) continue;
 
             float[] fullVerts = new float[5 * verts.length / 2];
@@ -198,5 +202,4 @@ public class RepeatablePolygonSprite {
         this.y = y;
         dirty = true;
     }
-
 }

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
  * Manages OpenGL state and tries to reduce state changes. Uses a {@link TextureBinder} to reduce texture binds as well. Call
  * {@link #begin()} to setup the context, call {@link #end()} to undo all state changes. Use the setters to change state, use
  * {@link #textureBinder} to bind textures.
- *
+ * <p>
  * , Xoppa
  */
 public class RenderContext {

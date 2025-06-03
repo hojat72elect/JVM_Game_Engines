@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.Pool.Poolable;
  * Base class for applying one or more {@link Animation}s to a {@link ModelInstance}. This class only applies the actual
  * {@link Node} transformations, it does not manage animations or keep track of animation states. See {@link AnimationController}
  * for an implementation of this class which does manage animations.
- *
  */
 public class BaseAnimationController {
     private final static ObjectMap<Node, Transform> transforms = new ObjectMap<>();
@@ -303,7 +302,7 @@ public class BaseAnimationController {
 
         @Override
         public String toString() {
-            return translation.toString() + " - " + rotation.toString() + " - " + scale.toString();
+            return translation + " - " + rotation + " - " + scale;
         }
     }
 }

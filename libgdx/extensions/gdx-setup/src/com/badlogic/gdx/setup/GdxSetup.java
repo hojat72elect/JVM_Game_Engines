@@ -4,9 +4,24 @@ import com.badlogic.gdx.setup.DependencyBank.ProjectDependency;
 import com.badlogic.gdx.setup.DependencyBank.ProjectType;
 import com.badlogic.gdx.setup.Executor.CharCallback;
 
-import javax.swing.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.swing.JOptionPane;
 
 /**
  * Command line tool to generate libgdx projects.
@@ -116,7 +131,6 @@ public class GdxSetup {
             String versionString = properties.getProperty("AndroidVersion.ApiLevel");
 
             return Integer.parseInt(versionString);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -554,19 +568,11 @@ public class GdxSetup {
     }
 
     private String readResourceAsString(String resource, String path) {
-        try {
-            return new String(readResource(resource, path), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        return new String(readResource(resource, path), StandardCharsets.UTF_8);
     }
 
     private String readResourceAsString(File file) {
-        try {
-            return new String(readResource(file), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        return new String(readResource(file), StandardCharsets.UTF_8);
     }
 
     private void writeFile(File outFile, byte[] bytes) {
@@ -586,11 +592,7 @@ public class GdxSetup {
     }
 
     private void writeFile(File outFile, String text) {
-        try {
-            writeFile(outFile, text.getBytes("UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        writeFile(outFile, text.getBytes(StandardCharsets.UTF_8));
     }
 
     private void copyFile(ProjectFile file, File out, Map<String, String> values) {

@@ -73,5 +73,4 @@ public abstract class SpawnShapeValue extends ParticleValue implements ResourceD
     @Override
     public void load(AssetManager manager, ResourceData data) {
     }
-
 }

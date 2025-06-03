@@ -56,8 +56,8 @@ public class Decal {
     /**
      * Temporary vector for various calculations.
      */
-    private static Vector3 tmp = new Vector3();
-    private static Vector3 tmp2 = new Vector3();
+    private static final Vector3 tmp = new Vector3();
+    private static final Vector3 tmp2 = new Vector3();
     /**
      * Set a multipurpose value which can be queried and used for things like group identification.
      */
@@ -799,5 +799,4 @@ public class Decal {
         dir.set(position).sub(this.position).nor();
         setRotation(dir, up);
     }
-
 }

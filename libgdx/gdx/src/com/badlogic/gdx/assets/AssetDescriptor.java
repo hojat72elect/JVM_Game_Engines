@@ -44,10 +44,9 @@ public class AssetDescriptor<T> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(fileName);
-        sb.append(", ");
-        sb.append(type.getName());
-        return sb.toString();
+        String sb = fileName +
+                ", " +
+                type.getName();
+        return sb;
     }
 }

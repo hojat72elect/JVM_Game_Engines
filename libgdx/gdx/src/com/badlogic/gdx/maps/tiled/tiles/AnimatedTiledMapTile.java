@@ -20,7 +20,7 @@ public class AnimatedTiledMapTile implements TiledMapTile {
     private BlendMode blendMode = BlendMode.ALPHA;
     private MapProperties properties;
     private MapObjects objects;
-    private StaticTiledMapTile[] frameTiles;
+    private final StaticTiledMapTile[] frameTiles;
     private int[] animationIntervals;
     private int loopDuration;
 
@@ -146,7 +146,6 @@ public class AnimatedTiledMapTile implements TiledMapTile {
             for (int i = 0; i < intervals.length; i++) {
                 loopDuration += intervals[i];
             }
-
         } else {
             throw new GdxRuntimeException("Cannot set " + intervals.length + " frame intervals. The given int[] must have a size of "
                     + animationIntervals.length + ".");

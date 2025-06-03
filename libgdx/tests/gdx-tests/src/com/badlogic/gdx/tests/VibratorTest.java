@@ -68,7 +68,6 @@ public class VibratorTest extends GdxTest {
         table.add(buttonVibrateType).size(120f);
         table.row();
         table.add(fallbackCheckbox).colspan(3).height(120f);
-
     }
 
     private Button getButton(String text) {

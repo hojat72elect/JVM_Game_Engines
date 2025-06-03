@@ -97,5 +97,4 @@ public final class Colors {
         map.put("VIOLET", Color.VIOLET);
         map.put("MAROON", Color.MAROON);
     }
-
 }

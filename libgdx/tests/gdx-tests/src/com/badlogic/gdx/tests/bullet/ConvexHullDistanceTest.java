@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
+import com.badlogic.gdx.physics.bullet.collision.ContactResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObjectWrapper;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
-import com.badlogic.gdx.physics.bullet.collision.ContactResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btConvexHullShape;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
@@ -98,10 +98,10 @@ public class ConvexHullDistanceTest extends BaseBulletTest {
 
     private class ConvexHullDistance {
         Vector3[] vectors = new Vector3[]{new Vector3(), new Vector3()};
-        private btDefaultCollisionConfiguration collisionConfiguration;
-        private btCollisionDispatcher dispatcher;
-        private btDbvtBroadphase pairCache;
-        private btCollisionWorld collisionWorld;
+        private final btDefaultCollisionConfiguration collisionConfiguration;
+        private final btCollisionDispatcher dispatcher;
+        private final btDbvtBroadphase pairCache;
+        private final btCollisionWorld collisionWorld;
 
         public ConvexHullDistance() {
             collisionConfiguration = new btDefaultCollisionConfiguration();

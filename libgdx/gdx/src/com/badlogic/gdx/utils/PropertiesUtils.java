@@ -17,13 +17,13 @@
 
 package com.badlogic.gdx.utils;
 
+import com.badlogic.gdx.utils.ObjectMap.Entry;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Date;
-
-import com.badlogic.gdx.utils.ObjectMap.Entry;
 
 /**
  * {@code PropertiesUtils} is a helper class that allows you to load and store key/value pairs of an
@@ -54,7 +54,8 @@ public final class PropertiesUtils {
         if (properties == null) throw new NullPointerException("properties cannot be null");
         if (reader == null) throw new NullPointerException("reader cannot be null");
         int mode = NONE, unicode = 0, count = 0;
-        char nextChar, buf[] = new char[40];
+        char nextChar;
+        char[] buf = new char[40];
         int offset = 0, keyLength = -1, intVal;
         boolean firstChar = true;
 

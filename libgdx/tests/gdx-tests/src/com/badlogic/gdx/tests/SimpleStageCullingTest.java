@@ -36,7 +36,6 @@ public class SimpleStageCullingTest extends GdxTest {
     public void create() {
         // create a stage and a camera controller so we can pan the view.
         stage = new Stage();
-        ;
         camController = new OrthoCamController((OrthographicCamera) stage.getCamera()); // we know it's an ortho cam at this point!
         Gdx.input.setInputProcessor(camController);
 

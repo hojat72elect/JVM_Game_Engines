@@ -1,5 +1,19 @@
 package com.badlogic.gdx.tools.hiero.unicodefont;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
+import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont.RenderType;
+import com.badlogic.gdx.tools.hiero.unicodefont.effects.ColorEffect;
+import com.badlogic.gdx.tools.hiero.unicodefont.effects.Effect;
+import com.badlogic.gdx.utils.Array;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -17,28 +31,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
-import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont.RenderType;
-import com.badlogic.gdx.tools.hiero.unicodefont.effects.ColorEffect;
-import com.badlogic.gdx.tools.hiero.unicodefont.effects.Effect;
-import com.badlogic.gdx.utils.Array;
-
 /**
  * Stores a number of glyphs on a single texture.
  */
 public class GlyphPage {
     static public final int MAX_GLYPH_SIZE = 256;
-    static private ByteBuffer scratchByteBuffer = ByteBuffer.allocateDirect(MAX_GLYPH_SIZE * MAX_GLYPH_SIZE * 4);
-    static private IntBuffer scratchIntBuffer = scratchByteBuffer.asIntBuffer();
-    static private BufferedImage scratchImage = new BufferedImage(MAX_GLYPH_SIZE, MAX_GLYPH_SIZE, BufferedImage.TYPE_INT_ARGB);
+    static private final ByteBuffer scratchByteBuffer = ByteBuffer.allocateDirect(MAX_GLYPH_SIZE * MAX_GLYPH_SIZE * 4);
+    static private final IntBuffer scratchIntBuffer = scratchByteBuffer.asIntBuffer();
+    static private final BufferedImage scratchImage = new BufferedImage(MAX_GLYPH_SIZE, MAX_GLYPH_SIZE, BufferedImage.TYPE_INT_ARGB);
     static Graphics2D scratchGraphics = (Graphics2D) scratchImage.getGraphics();
     static public FontRenderContext renderContext = scratchGraphics.getFontRenderContext();
 
@@ -126,7 +126,6 @@ public class GlyphPage {
             iter.remove();
             loadedCount++;
             if (loadedCount == maxGlyphsToLoad) break;
-
         }
 
         return loadedCount;

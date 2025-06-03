@@ -133,7 +133,6 @@ public class NoncontinuousRenderingTest extends GdxTest {
                         });
                     }
                 }).start();
-
             }
         });
         root.add(button1).row();
@@ -154,7 +153,6 @@ public class NoncontinuousRenderingTest extends GdxTest {
                         Gdx.app.log(str2, "Called Gdx.graphics.requestRendering()");
                     }
                 }).start();
-
             }
         });
         root.add(button2).row();
@@ -210,7 +208,6 @@ public class NoncontinuousRenderingTest extends GdxTest {
                         }
                     }
                 }).start();
-
             }
         });
         root.add(button5).row();

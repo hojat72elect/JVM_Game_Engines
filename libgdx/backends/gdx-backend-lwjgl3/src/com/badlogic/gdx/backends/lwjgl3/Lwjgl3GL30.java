@@ -1,9 +1,27 @@
 package com.badlogic.gdx.backends.lwjgl3;
 
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import org.lwjgl.opengl.*;
 
-import java.nio.*;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL21;
+import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GL31;
+import org.lwjgl.opengl.GL32;
+import org.lwjgl.opengl.GL33;
+import org.lwjgl.opengl.GL40;
+import org.lwjgl.opengl.GL41;
+import org.lwjgl.opengl.GL43;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
+import java.nio.ShortBuffer;
 
 class Lwjgl3GL30 extends Lwjgl3GL20 implements com.badlogic.gdx.graphics.GL30 {
     @Override
@@ -497,7 +515,6 @@ class Lwjgl3GL30 extends Lwjgl3GL20 implements com.badlogic.gdx.graphics.GL30 {
     @Override
     public void glDrawElementsInstanced(int mode, int count, int type, int indicesOffset, int instanceCount) {
         GL31.glDrawElementsInstanced(mode, count, type, indicesOffset, instanceCount);
-
     }
 
     @Override

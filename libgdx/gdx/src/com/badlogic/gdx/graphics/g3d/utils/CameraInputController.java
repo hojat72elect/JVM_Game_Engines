@@ -1,8 +1,8 @@
 package com.badlogic.gdx.graphics.g3d.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
@@ -92,7 +92,6 @@ public class CameraInputController extends GestureDetector {
     protected int button = -1;
     private float startX, startY;
 
-    ;
     private int touched;
     private boolean multiTouch;
 

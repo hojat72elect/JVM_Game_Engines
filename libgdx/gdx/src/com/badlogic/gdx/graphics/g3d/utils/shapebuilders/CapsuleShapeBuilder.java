@@ -1,13 +1,10 @@
 package com.badlogic.gdx.graphics.g3d.utils.shapebuilders;
 
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
-
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
  * Helper class with static methods to build capsule shapes using {@link MeshPartBuilder}.
- *
- * 
  */
 public class CapsuleShapeBuilder extends BaseShapeBuilder {
     public static void build(MeshPartBuilder builder, float radius, float height, int divisions) {

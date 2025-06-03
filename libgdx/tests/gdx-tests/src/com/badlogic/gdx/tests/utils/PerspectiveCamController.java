@@ -27,6 +27,7 @@ public class PerspectiveCamController extends InputAdapter {
     Vector3 xAxis = new Vector3(1, 0, 0);
     Vector3 yAxis = new Vector3(0, 1, 0);
     Vector3 point = new Vector3();
+
     public PerspectiveCamController(PerspectiveCamera cam) {
         this.cam = cam;
     }
@@ -88,5 +89,4 @@ public class PerspectiveCamController extends InputAdapter {
     enum TransformMode {
         Rotate, Translate, Zoom, None
     }
-
 }

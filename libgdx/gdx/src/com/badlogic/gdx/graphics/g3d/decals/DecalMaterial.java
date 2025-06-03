@@ -45,7 +45,6 @@ public class DecalMaterial {
 
         return dstBlendFactor == material.dstBlendFactor && srcBlendFactor == material.srcBlendFactor
                 && textureRegion.getTexture() == material.textureRegion.getTexture();
-
     }
 
     @Override

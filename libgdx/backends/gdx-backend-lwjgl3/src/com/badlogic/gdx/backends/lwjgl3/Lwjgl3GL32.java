@@ -2,11 +2,7 @@ package com.badlogic.gdx.backends.lwjgl3;
 
 import com.badlogic.gdx.graphics.GL32;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.nio.ShortBuffer;
+
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL31;
@@ -17,6 +13,12 @@ import org.lwjgl.opengl.GL45;
 import org.lwjgl.opengl.GLDebugMessageCallbackI;
 import org.lwjgl.opengl.KHRBlendEquationAdvanced;
 import org.lwjgl.system.MemoryUtil;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 public class Lwjgl3GL32 extends Lwjgl3GL31 implements GL32 {
 
@@ -342,5 +344,4 @@ public class Lwjgl3GL32 extends Lwjgl3GL31 implements GL32 {
     ) {
         GL43.glTexStorage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations);
     }
-
 }

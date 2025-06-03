@@ -28,5 +28,4 @@ public class ScaleInfluencerPanel extends InfluencerPanel<ScaleInfluencer> {
         addContent(0, 0, scalePanel = new ScaledNumericPanel(editor, null, "Life", "", ""));
         scalePanel.setIsAlwayShown(true);
     }
-
 }

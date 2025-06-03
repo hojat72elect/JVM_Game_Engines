@@ -28,7 +28,7 @@ public class TiledMapGroupLayerTest extends GdxTest {
     private AssetManager assetManager;
     private BitmapFont font;
     private SpriteBatch batch;
-    private String fileName = "data/maps/tiled-groups/test.tmx";
+    private final String fileName = "data/maps/tiled-groups/test.tmx";
 
     @Override
     public void create() {

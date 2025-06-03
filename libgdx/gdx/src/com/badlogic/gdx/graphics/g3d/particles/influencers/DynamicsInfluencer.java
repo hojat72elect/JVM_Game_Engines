@@ -1,7 +1,5 @@
 package com.badlogic.gdx.graphics.g3d.particles.influencers;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.graphics.g3d.particles.ParallelArray.FloatChannel;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleChannels;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleController;
@@ -9,6 +7,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+
+import java.util.Arrays;
 
 /**
  * It's an {@link Influencer} which controls the particles dynamics (movement, rotations).
@@ -30,7 +30,7 @@ public class DynamicsInfluencer extends Influencer {
     }
 
     public DynamicsInfluencer(DynamicsInfluencer velocityInfluencer) {
-        this((DynamicsModifier[]) velocityInfluencer.velocities.toArray(DynamicsModifier.class));
+        this(velocityInfluencer.velocities.toArray(DynamicsModifier.class));
     }
 
     @Override

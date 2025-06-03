@@ -2,7 +2,7 @@ package com.badlogic.gdx.backends.lwjgl;
 
 import com.badlogic.gdx.utils.Clipboard;
 
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;

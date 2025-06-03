@@ -1,8 +1,5 @@
 package com.badlogic.gdx.tests;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Gdx2DTest extends GdxTest {
     SpriteBatch batch;
@@ -55,7 +55,6 @@ public class Gdx2DTest extends GdxTest {
             case Gdx2DPixmap.GDX2D_FORMAT_RGBA8888:
                 clearColor = Color.rgba8888(1, 0, 0, 0.1f);
                 pixelColor = Color.rgba8888(0, 0, 1, 1);
-
         }
         if (pixmap.getPixel(15, 16) != clearColor)
             throw new RuntimeException("error clear: " + pixmap.getFormatString());

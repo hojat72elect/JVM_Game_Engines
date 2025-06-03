@@ -61,5 +61,4 @@ public class TimeUtilsTest extends GdxTest {
             System.out.println("TEST PASSED: " + testName);
         }
     }
-
 }

@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ParticleControllerInfluencer;
 import com.badlogic.gdx.utils.Array;
 
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 /**
  *
@@ -94,5 +95,4 @@ public class ParticleControllerInfluencerPanel extends InfluencerPanel<ParticleC
             }
         }
     }
-
 }

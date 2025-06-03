@@ -1,9 +1,10 @@
 package com.badlogic.gdx.utils;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class MixedPutRemoveTest {
     @Test

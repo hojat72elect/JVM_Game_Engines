@@ -3,19 +3,34 @@ package com.badlogic.gdx.tools.flame;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleController;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsInfluencer;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier.*;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier.BrownianAcceleration;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier.CentripetalAcceleration;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier.FaceDirection;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier.PolarAcceleration;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier.Rotational3D;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier.TangentialAcceleration;
 import com.badlogic.gdx.tools.flame.FlameMain.ControllerType;
 import com.badlogic.gdx.utils.Array;
 
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *
@@ -33,6 +48,7 @@ public class DynamicsInfluencerPanel extends InfluencerPanel<DynamicsInfluencer>
     StrengthVelocityPanel strengthVelocityPanel;
     ParticleValuePanel emptyPanel;
     Array<VelocityWrapper> velocities;
+
     public DynamicsInfluencerPanel(FlameMain editor, DynamicsInfluencer influencer) {
         super(editor, influencer, "Dynamics Influencer", "Defines how the particles dynamics (acceleration, angular velocity).");
         velocities = new Array<VelocityWrapper>();
@@ -49,7 +65,7 @@ public class DynamicsInfluencerPanel extends InfluencerPanel<DynamicsInfluencer>
 
         // Add
         for (int i = 0, c = influencer.velocities.size; i < c; ++i) {
-            velocities.add(new VelocityWrapper((DynamicsModifier) influencer.velocities.items[i], true));
+            velocities.add(new VelocityWrapper(influencer.velocities.items[i], true));
             velocityTableModel.addRow(new Object[]{"Velocity " + i, true});
         }
 
@@ -159,7 +175,7 @@ public class DynamicsInfluencerPanel extends InfluencerPanel<DynamicsInfluencer>
 
     protected void velocityChecked(int index, boolean isChecked) {
         ParticleController controller = editor.getEmitter();
-        DynamicsInfluencer influencer = (DynamicsInfluencer) controller.findInfluencer(DynamicsInfluencer.class);
+        DynamicsInfluencer influencer = controller.findInfluencer(DynamicsInfluencer.class);
         influencer.velocities.clear();
         velocities.get(index).isActive = isChecked;
         for (VelocityWrapper wrapper : velocities) {
@@ -255,7 +271,7 @@ public class DynamicsInfluencerPanel extends InfluencerPanel<DynamicsInfluencer>
 
         // Remove the velocity from the table
         ParticleController controller = editor.getEmitter();
-        DynamicsInfluencer influencer = (DynamicsInfluencer) controller.findInfluencer(DynamicsInfluencer.class);
+        DynamicsInfluencer influencer = controller.findInfluencer(DynamicsInfluencer.class);
         influencer.velocities.removeValue(velocities.removeIndex(row).velocityValue, true);
         velocityTableModel.removeRow(row);
 
@@ -269,7 +285,7 @@ public class DynamicsInfluencerPanel extends InfluencerPanel<DynamicsInfluencer>
     protected void createVelocity(Object selectedItem) {
         // Add the velocity to the table and to the influencer
         ParticleController controller = editor.getEmitter();
-        DynamicsInfluencer influencer = (DynamicsInfluencer) controller.findInfluencer(DynamicsInfluencer.class);
+        DynamicsInfluencer influencer = controller.findInfluencer(DynamicsInfluencer.class);
         VelocityWrapper wrapper = new VelocityWrapper(createVelocityValue(selectedItem), true);
         velocities.add(wrapper);
         influencer.velocities.add(wrapper.velocityValue);
@@ -294,5 +310,4 @@ public class DynamicsInfluencerPanel extends InfluencerPanel<DynamicsInfluencer>
             this.isActive = isActive;
         }
     }
-
 }

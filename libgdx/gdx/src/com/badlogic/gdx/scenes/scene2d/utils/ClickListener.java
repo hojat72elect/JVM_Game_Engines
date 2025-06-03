@@ -26,7 +26,7 @@ public class ClickListener extends InputListener {
     private int button;
     private boolean pressed, over, cancelled;
     private long visualPressedTime;
-    private long tapCountInterval = (long) (0.4f * 1000000000l);
+    private long tapCountInterval = (long) (0.4f * 1000000000L);
     private int tapCount;
     private long lastTapTime;
 
@@ -185,7 +185,7 @@ public class ClickListener extends InputListener {
      *                         taps.
      */
     public void setTapCountInterval(float tapCountInterval) {
-        this.tapCountInterval = (long) (tapCountInterval * 1000000000l);
+        this.tapCountInterval = (long) (tapCountInterval * 1000000000L);
     }
 
     /**

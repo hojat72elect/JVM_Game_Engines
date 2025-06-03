@@ -1,11 +1,5 @@
 package com.badlogic.gdx.graphics.glutils;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -22,6 +16,12 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectMap;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 /**
  * <p>
@@ -168,7 +168,7 @@ public class ShaderProgram implements Disposable {
     /**
      * reference count
      **/
-    private int refCount = 0;
+    private final int refCount = 0;
 
     /**
      * Constructs a new ShaderProgram and immediately compiles it.

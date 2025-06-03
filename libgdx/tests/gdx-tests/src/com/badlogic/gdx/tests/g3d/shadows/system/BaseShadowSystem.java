@@ -1,8 +1,5 @@
 package com.badlogic.gdx.tests.g3d.shadows.system;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Cubemap;
@@ -32,10 +29,11 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entries;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 /**
  * BaseShadowSystem allows to easily create custom shadow system.
- *
- * 
  */
 public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
     /**
@@ -103,6 +101,7 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
      */
     protected LightProperties currentLightProperties;
     protected BaseLight currentLight;
+
     /**
      * Construct the system with the needed params.
      *
@@ -118,6 +117,7 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
         this.directionalAnalyzer = directionalAnalyzer;
         this.lightFilter = lightFilter;
     }
+
     /**
      * Construct the system with default values
      */
@@ -150,8 +150,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
      */
     @Override
     public abstract int getPassQuantity();
-
-    ;
 
     @Override
     public ShaderProvider getPassShaderProvider(int n) {
@@ -228,20 +226,17 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
 
     @Override
     public boolean hasLight(SpotLight spot) {
-        if (spotCameras.containsKey(spot)) return true;
-        return false;
+        return spotCameras.containsKey(spot);
     }
 
     @Override
     public boolean hasLight(DirectionalLight dir) {
-        if (dirCameras.containsKey(dir)) return true;
-        return false;
+        return dirCameras.containsKey(dir);
     }
 
     @Override
     public boolean hasLight(PointLight point) {
-        if (pointCameras.containsKey(point)) return true;
-        return false;
+        return pointCameras.containsKey(point);
     }
 
     @Override
@@ -307,8 +302,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
         if (currentPass != n) throw new GdxRuntimeException("Begin " + n + " must be called before end " + n);
         endPass(n);
     }
-
-    ;
 
     /**
      * End pass n.
@@ -466,8 +459,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
 
     /**
      * This class handles camera and texture region.
-     *
-     * 
      */
     public static class LightProperties {
         public Camera camera;
@@ -480,8 +471,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
 
     /**
      * This class handles LightProperties for each side of PointLight.
-     *
-     * 
      */
     public static class PointLightProperties {
         public ObjectMap<CubemapSide, LightProperties> properties = new ObjectMap<CubemapSide, LightProperties>(6);

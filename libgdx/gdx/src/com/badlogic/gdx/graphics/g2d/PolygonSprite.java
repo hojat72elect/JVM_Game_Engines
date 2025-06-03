@@ -15,7 +15,7 @@ public class PolygonSprite {
     private float originX, originY;
     private float[] vertices;
     private boolean dirty;
-    private Rectangle bounds = new Rectangle();
+    private final Rectangle bounds = new Rectangle();
 
     public PolygonSprite(PolygonRegion region) {
         setRegion(region);

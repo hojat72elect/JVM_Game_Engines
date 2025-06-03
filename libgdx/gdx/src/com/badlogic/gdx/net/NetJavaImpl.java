@@ -15,9 +15,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -30,6 +36,7 @@ public class NetJavaImpl {
     final ObjectMap<HttpRequest, HttpResponseListener> listeners;
     final ObjectMap<HttpRequest, Future<?>> tasks;
     private final ThreadPoolExecutor executorService;
+
     public NetJavaImpl() {
         this(Integer.MAX_VALUE);
     }
@@ -38,7 +45,7 @@ public class NetJavaImpl {
         final boolean isCachedPool = maxThreads == Integer.MAX_VALUE;
         executorService = new ThreadPoolExecutor(isCachedPool ? 0 : maxThreads, maxThreads, 60L, TimeUnit.SECONDS,
                 isCachedPool ? new SynchronousQueue<Runnable>() : new LinkedBlockingQueue<Runnable>(), new ThreadFactory() {
-            AtomicInteger threadID = new AtomicInteger();
+            final AtomicInteger threadID = new AtomicInteger();
 
             @Override
             public Thread newThread(Runnable r) {
@@ -102,7 +109,7 @@ public class NetJavaImpl {
                             // we probably need to use the content as stream here instead of using it as a string.
                             String contentAsString = httpRequest.getContent();
                             if (contentAsString != null) {
-                                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF8");
+                                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), StandardCharsets.UTF_8);
                                 try {
                                     writer.write(contentAsString);
                                 } finally {
@@ -150,7 +157,6 @@ public class NetJavaImpl {
             } finally {
                 removeFromConnectionsAndListeners(httpRequest);
             }
-            return;
         }
     }
 

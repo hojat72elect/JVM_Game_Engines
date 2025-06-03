@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests.bullet;
 
-import java.nio.ShortBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -17,6 +15,8 @@ import com.badlogic.gdx.physics.bullet.softbody.btSoftBodyRigidBodyCollisionConf
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBodyWorldInfo;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftRigidDynamicsWorld;
 import com.badlogic.gdx.utils.BufferUtils;
+
+import java.nio.ShortBuffer;
 
 
 public class SoftMeshTest extends BaseBulletTest {

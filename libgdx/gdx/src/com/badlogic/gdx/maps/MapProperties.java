@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class MapProperties {
 
-    private ObjectMap<String, Object> properties;
+    private final ObjectMap<String, Object> properties;
 
     /**
      * Creates an empty properties set
@@ -103,5 +103,4 @@ public class MapProperties {
     public Iterator<Object> getValues() {
         return properties.values();
     }
-
 }

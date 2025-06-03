@@ -11,5 +11,4 @@ public class ZipFileHandleResolver implements FileHandleResolver {
     public FileHandle resolve(String fileName) {
         return new AndroidZipFileHandle(fileName);
     }
-
 }

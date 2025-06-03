@@ -5,10 +5,18 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 /**
  *
@@ -22,6 +30,7 @@ public class RegionPickerPanel extends JPanel {
     Slider rowSlider, columnSlider;
     JPanel generationPanel, content;
     Listener listener;
+
     public RegionPickerPanel(Listener listener) {
         initializeComponents();
         this.listener = listener;
@@ -126,7 +135,6 @@ public class RegionPickerPanel extends JPanel {
                 texturePanel.repaint();
             }
         });
-
     }
 
     void generateRegions(GenerationMode mode) {
@@ -186,7 +194,7 @@ public class RegionPickerPanel extends JPanel {
 
         String string;
 
-        private GenerationMode(String string) {
+        GenerationMode(String string) {
             this.string = string;
         }
 
@@ -199,5 +207,4 @@ public class RegionPickerPanel extends JPanel {
     public interface Listener {
         void onRegionsSelected(Array<TextureRegion> regions, String atlasFilename);
     }
-
 }

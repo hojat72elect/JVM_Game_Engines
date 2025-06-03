@@ -1,6 +1,9 @@
 package com.badlogic.gdx.scenes.scene2d.ui;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -51,7 +54,7 @@ public class SelectBox<T> extends Widget implements Disableable {
         }
     };
     private float prefWidth, prefHeight;
-    private ClickListener clickListener;
+    private final ClickListener clickListener;
     private int alignment = Align.left;
 
     public SelectBox(Skin skin) {
@@ -454,7 +457,7 @@ public class SelectBox<T> extends Widget implements Disableable {
         final List<T> list;
         private final Vector2 stagePosition = new Vector2();
         int maxListCount;
-        private InputListener hideListener;
+        private final InputListener hideListener;
         private Actor previousScrollFocus;
 
         public SelectBoxScrollPane(final SelectBox<T> selectBox) {

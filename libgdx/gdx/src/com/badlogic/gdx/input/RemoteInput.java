@@ -41,27 +41,31 @@ public class RemoteInput implements Runnable, Input {
     int[] deltaY = new int[MAX_TOUCHES];
     int[] touchX = new int[MAX_TOUCHES];
     int[] touchY = new int[MAX_TOUCHES];
-    boolean isTouched[] = new boolean[MAX_TOUCHES];
+    boolean[] isTouched = new boolean[MAX_TOUCHES];
     boolean justTouched = false;
     InputProcessor processor = null;
-    private ServerSocket serverSocket;
-    private float[] accel = new float[3];
-    private float[] gyrate = new float[3];
-    private float[] compass = new float[3];
+    private final ServerSocket serverSocket;
+    private final float[] accel = new float[3];
+    private final float[] gyrate = new float[3];
+    private final float[] compass = new float[3];
     private boolean multiTouch = false;
     private float remoteWidth = 0;
     private float remoteHeight = 0;
     private boolean connected = false;
-    private RemoteInputListener listener;
+    private final RemoteInputListener listener;
+
     public RemoteInput() {
         this(DEFAULT_PORT);
     }
+
     public RemoteInput(RemoteInputListener listener) {
         this(DEFAULT_PORT, listener);
     }
+
     public RemoteInput(int port) {
         this(port, null);
     }
+
     public RemoteInput(int port, RemoteInputListener listener) {
         this.listener = listener;
         try {

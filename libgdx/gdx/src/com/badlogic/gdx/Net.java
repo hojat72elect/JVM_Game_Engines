@@ -1,11 +1,5 @@
 package com.badlogic.gdx;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.net.HttpRequestHeader;
 import com.badlogic.gdx.net.HttpResponseHeader;
@@ -17,6 +11,12 @@ import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pool.Poolable;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides methods to perform networking operations, such as simple HTTP get and post requests, and TCP server/client socket
@@ -48,11 +48,11 @@ public interface Net {
      * @param httpResponseListener The {@link HttpResponseListener} to call once the HTTP response is ready to be processed. Could
      *                             be null, in that case no listener is called.
      */
-    public void sendHttpRequest(HttpRequest httpRequest, @Null HttpResponseListener httpResponseListener);
+    void sendHttpRequest(HttpRequest httpRequest, @Null HttpResponseListener httpResponseListener);
 
-    public void cancelHttpRequest(HttpRequest httpRequest);
+    void cancelHttpRequest(HttpRequest httpRequest);
 
-    public boolean isHttpRequestPending(HttpRequest httpRequest);
+    boolean isHttpRequestPending(HttpRequest httpRequest);
 
     /**
      * Creates a new server socket on the given address and port, using the given {@link Protocol}, waiting for incoming
@@ -65,7 +65,7 @@ public interface Net {
      * @return the {@link ServerSocket}
      * @throws GdxRuntimeException in case the socket couldn't be opened
      */
-    public ServerSocket newServerSocket(Protocol protocol, String hostname, int port, ServerSocketHints hints);
+    ServerSocket newServerSocket(Protocol protocol, String hostname, int port, ServerSocketHints hints);
 
     /**
      * Creates a new server socket on the given port, using the given {@link Protocol}, waiting for incoming connections.
@@ -76,7 +76,7 @@ public interface Net {
      * @return the {@link ServerSocket}
      * @throws GdxRuntimeException in case the socket couldn't be opened
      */
-    public ServerSocket newServerSocket(Protocol protocol, int port, ServerSocketHints hints);
+    ServerSocket newServerSocket(Protocol protocol, int port, ServerSocketHints hints);
 
     /**
      * Creates a new TCP client socket that connects to the given host and port.
@@ -87,7 +87,7 @@ public interface Net {
      *              system.
      * @throws GdxRuntimeException in case the socket couldn't be opened
      */
-    public Socket newClientSocket(Protocol protocol, String host, int port, SocketHints hints);
+    Socket newClientSocket(Protocol protocol, String host, int port, SocketHints hints);
 
     /**
      * Launches the default browser to display a URI. If the default browser is not able to handle the specified URI, the
@@ -99,20 +99,20 @@ public interface Net {
      * @param URI the URI to be opened.
      * @return false if it is known the uri was not opened, true otherwise.
      */
-    public boolean openURI(String URI);
+    boolean openURI(String URI);
 
     /**
      * Protocol used by {@link Net#newServerSocket(Protocol, int, ServerSocketHints)} and
      * {@link Net#newClientSocket(Protocol, String, int, SocketHints)}.
      */
-    public enum Protocol {
+    enum Protocol {
         TCP
     }
 
     /**
      * HTTP response interface with methods to get the response data as a byte[], a {@link String} or an {@link InputStream}.
      */
-    public static interface HttpResponse {
+    interface HttpResponse {
         /**
          * Returns the data of the HTTP response as a byte[].
          * <p>
@@ -175,44 +175,44 @@ public interface Net {
      * <li><b>DELETE</b> deletes the specified resource.</li>
      * </ul>
      */
-    public static interface HttpMethods {
+    interface HttpMethods {
         /**
          * The HEAD method asks for a response identical to that of a GET request, but without the response body.
          **/
-        public static final String HEAD = "HEAD";
+        String HEAD = "HEAD";
 
         /**
          * The GET method requests a representation of the specified resource. Requests using GET should only retrieve data.
          **/
-        public static final String GET = "GET";
+        String GET = "GET";
 
         /**
          * The POST method is used to submit an entity to the specified resource, often causing a change in state or side effects
          * on the server.
          **/
-        public static final String POST = "POST";
+        String POST = "POST";
 
         /**
          * The PUT method replaces all current representations of the target resource with the request payload.
          **/
-        public static final String PUT = "PUT";
+        String PUT = "PUT";
 
         /**
          * The PATCH method is used to apply partial modifications to a resource.
          **/
-        public static final String PATCH = "PATCH";
+        String PATCH = "PATCH";
 
         /**
          * The DELETE method deletes the specified resource.
          **/
-        public static final String DELETE = "DELETE";
+        String DELETE = "DELETE";
     }
 
     /**
      * Listener to be able to do custom logic once the {@link HttpResponse} is ready to be processed, register it with
      * {@link Net#sendHttpRequest(HttpRequest, HttpResponseListener)}.
      */
-    public static interface HttpResponseListener {
+    interface HttpResponseListener {
 
         /**
          * Called when the {@link HttpRequest} has been processed and there is a {@link HttpResponse} ready. Passing data to the
@@ -282,11 +282,11 @@ public interface Net {
      * });
      * </pre>
      */
-    public static class HttpRequest implements Poolable {
+    class HttpRequest implements Poolable {
 
         private String httpMethod;
         private String url;
-        private Map<String, String> headers;
+        private final Map<String, String> headers;
         private int timeOut = 0;
 
         private String content;
@@ -469,6 +469,5 @@ public interface Net {
 
             followRedirects = true;
         }
-
     }
 }

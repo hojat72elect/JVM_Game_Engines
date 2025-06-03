@@ -5,11 +5,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -101,6 +108,5 @@ public class TextureLoaderPanel extends EditorPanel {
                 new Insets(6, 0, 0, 0), 0, 0));
         contentPanel.add(defaultTextureButton, new GridBagConstraints(2, 3, 1, 1, 1, 0, GridBagConstraints.WEST,
                 GridBagConstraints.NONE, new Insets(6, 0, 0, 0), 0, 0));
-
     }
 }

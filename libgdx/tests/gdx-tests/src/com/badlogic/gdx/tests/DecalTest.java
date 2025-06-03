@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests;
 
-import java.util.LinkedList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,6 +11,8 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.WindowedMean;
 import com.badlogic.gdx.tests.utils.GdxTest;
+
+import java.util.LinkedList;
 
 public class DecalTest extends GdxTest {
     public static final int TARGET_FPS = 40;
@@ -28,7 +28,7 @@ public class DecalTest extends GdxTest {
     int idx = 0;
     float w;
     float h;
-    private boolean willItBlend_that_is_the_question = true;
+    private final boolean willItBlend_that_is_the_question = true;
 
     @Override
     public void create() {

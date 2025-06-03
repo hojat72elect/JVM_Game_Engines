@@ -16,5 +16,4 @@ public class TemporaryProjectFile extends ProjectFile {
         super(outputString, isTemplate);
         this.file = file;
     }
-
 }

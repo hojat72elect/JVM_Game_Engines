@@ -32,7 +32,6 @@ public class SpriteCacheTest extends GdxTest implements InputProcessor {
     @Override
     public void render() {
         if (renderMethod == 0) renderNormal();
-        ;
         if (renderMethod == 1) renderSprites();
     }
 

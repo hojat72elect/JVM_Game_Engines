@@ -18,8 +18,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 /**
  * This shader accumulates shadow with blending
- *
- * 
  */
 public class Pass2Shader extends DefaultShader {
     public static final int LIGHT_SPOT = 0;
@@ -34,14 +32,17 @@ public class Pass2Shader extends DefaultShader {
     public Pass2Shader(final Renderable renderable, final Config config) {
         this(renderable, config, createPrefix(renderable, config));
     }
+
     public Pass2Shader(final Renderable renderable, final Config config, final String prefix) {
         this(renderable, config, prefix, config.vertexShader != null ? config.vertexShader : getDefaultVertexShader(),
                 config.fragmentShader != null ? config.fragmentShader : getDefaultFragmentShader());
     }
+
     public Pass2Shader(final Renderable renderable, final Config config, final String prefix, final String vertexShader,
                        final String fragmentShader) {
         this(renderable, config, new ShaderProgram(prefix + vertexShader, prefix + fragmentShader));
     }
+
     public Pass2Shader(final Renderable renderable, final Config config, final ShaderProgram shaderProgram) {
         super(renderable, config, shaderProgram);
         shadowSystem = config.shadowSystem;
@@ -201,7 +202,6 @@ public class Pass2Shader extends DefaultShader {
                 if (!(shadowSystem.getCurrentLight() instanceof DirectionalLight)) {
                     shader.set(inputID, ((PerspectiveCamera) shadowSystem.getCurrentLightProperties().camera).fieldOfView);
                 }
-
             }
         };
         public final static Setter lightExponent = new GlobalSetter() {
@@ -217,5 +217,4 @@ public class Pass2Shader extends DefaultShader {
             }
         };
     }
-
 }

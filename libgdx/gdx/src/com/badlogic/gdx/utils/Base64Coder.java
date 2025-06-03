@@ -1,6 +1,7 @@
 package com.badlogic.gdx.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A Base64 encoder/decoder.
@@ -37,12 +38,7 @@ public class Base64Coder {
      * @return A String containing the Base64 encoded data.
      */
     public static String encodeString(String s, boolean useUrlsafeEncoding) {
-        try {
-            return new String(encode(s.getBytes("UTF-8"), useUrlsafeEncoding ? urlsafeMap.encodingMap : regularMap.encodingMap));
-        } catch (UnsupportedEncodingException e) {
-            // shouldn't ever happen; only needed because we specify an encoding with a String
-            return "";
-        }
+        return new String(encode(s.getBytes(StandardCharsets.UTF_8), useUrlsafeEncoding ? urlsafeMap.encodingMap : regularMap.encodingMap));
     }
 
     /**

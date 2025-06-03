@@ -21,7 +21,8 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntIntMap;
 
-/** A BaseShader is a wrapper around a ShaderProgram that keeps track of the uniform and attribute locations. It
+/**
+ * A BaseShader is a wrapper around a ShaderProgram that keeps track of the uniform and attribute locations. It
  * does not manage the ShaderPogram, you are still responsible for disposing the ShaderProgram.
  */
 public abstract class BaseShader implements Shader {
@@ -37,9 +38,9 @@ public abstract class BaseShader implements Shader {
     public ShaderProgram program;
     public RenderContext context;
     public Camera camera;
-    private int locations[];
+    private int[] locations;
     private Mesh currentMesh;
-    private Attributes combinedAttributes = new Attributes();
+    private final Attributes combinedAttributes = new Attributes();
 
     /**
      * Register an uniform which might be used by this shader. Only possible prior to the call to init().

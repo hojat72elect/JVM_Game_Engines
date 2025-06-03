@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+
 import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -14,7 +15,7 @@ public class AndroidAudioRecorder implements AudioRecorder {
     /**
      * the audio track we read samples from
      **/
-    private AudioRecord recorder;
+    private final AudioRecord recorder;
 
     @SuppressLint("MissingPermission")
     public AndroidAudioRecorder(int samplingRate, boolean isMono) {
@@ -40,5 +41,4 @@ public class AndroidAudioRecorder implements AudioRecorder {
             read += recorder.read(samples, offset + read, numSamples - read);
         }
     }
-
 }

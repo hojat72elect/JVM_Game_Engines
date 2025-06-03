@@ -82,7 +82,7 @@ abstract public class FocusListener implements EventListener {
         /**
          *
          */
-        static public enum Type {
+        public enum Type {
             keyboard, scroll
         }
     }

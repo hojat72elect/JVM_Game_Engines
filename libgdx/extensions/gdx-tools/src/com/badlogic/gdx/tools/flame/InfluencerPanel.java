@@ -25,5 +25,4 @@ public abstract class InfluencerPanel<T extends Influencer> extends EditorPanel<
         editor.getEmitter().start();
         editor.reloadRows();
     }
-
 }

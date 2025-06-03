@@ -48,7 +48,6 @@ public class FreeTypeAtlasTest extends GdxTest {
         int glyphCount = createFonts();
         long time = System.currentTimeMillis() - start;
         text = glyphCount + " glyphs packed in " + packer.getPages().size + " page(s) in " + time + " ms";
-
     }
 
     @Override
@@ -142,7 +141,7 @@ public class FreeTypeAtlasTest extends GdxTest {
     }
 
     // Define font sizes here...
-    static enum FontSize {
+    enum FontSize {
         Tiny(10), Small(12), Medium(16), Large(20), Huge(24), ReallyHuge(28), JustTooBig(64);
 
         public final int size;
@@ -153,7 +152,7 @@ public class FreeTypeAtlasTest extends GdxTest {
     }
 
     // Define font styles here...
-    static enum FontStyle {
+    enum FontStyle {
         Regular("data/lsans.ttf"), Italic("data/lsans-italic.ttf");
 
         public final String path;

@@ -74,7 +74,6 @@ public class Bresenham2Test extends GdxTest {
                 }
             }
         }
-
     }
 
     @Override

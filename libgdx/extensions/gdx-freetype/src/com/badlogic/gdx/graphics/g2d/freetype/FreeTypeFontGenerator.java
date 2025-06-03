@@ -1,7 +1,5 @@
 package com.badlogic.gdx.graphics.g2d.freetype;
 
-import java.nio.ByteBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -32,6 +30,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Null;
+
+import java.nio.ByteBuffer;
 
 /**
  * Generates {@link BitmapFont} and {@link BitmapFontData} instances from TrueType, OTF, and other FreeType supported fonts.
@@ -506,7 +506,7 @@ public class FreeTypeFontGenerator implements Disposable {
         if (spaceGlyph == null) {
             spaceGlyph = new Glyph();
             spaceGlyph.xadvance = (int) data.spaceXadvance + parameter.spaceX;
-            spaceGlyph.id = (int) ' ';
+            spaceGlyph.id = ' ';
             data.setGlyph(' ', spaceGlyph);
         }
         if (spaceGlyph.width == 0) spaceGlyph.width = (int) (spaceGlyph.xadvance + data.padRight);
@@ -680,7 +680,7 @@ public class FreeTypeFontGenerator implements Disposable {
     /**
      * Font smoothing algorithm.
      */
-    public static enum Hinting {
+    public enum Hinting {
         /**
          * Disable hinting. Generated glyphs will look blurry.
          */

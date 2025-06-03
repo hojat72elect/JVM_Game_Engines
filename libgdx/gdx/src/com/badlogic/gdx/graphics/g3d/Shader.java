@@ -41,7 +41,6 @@ import com.badlogic.gdx.utils.Disposable;
  * of the Shader. When the shader is no longer needed, it must disposed using the {@link Disposable#dispose()} method. This, for
  * example, disposed (unloads for memory) the used {@link ShaderProgram}.
  * </p>
- *
  */
 public interface Shader extends Disposable {
     /**

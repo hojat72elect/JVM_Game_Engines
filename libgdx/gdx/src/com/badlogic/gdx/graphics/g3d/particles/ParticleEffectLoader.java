@@ -1,7 +1,5 @@
 package com.badlogic.gdx.graphics.g3d.particles;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
@@ -16,6 +14,8 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+
+import java.io.IOException;
 
 /**
  * This class can save and load a {@link ParticleEffect}. It should be added as {@link AsynchronousAssetLoader} to the
@@ -65,7 +65,6 @@ public class ParticleEffectLoader
         }
 
         return descriptors;
-
     }
 
     /**
@@ -171,5 +170,4 @@ public class ParticleEffectLoader
             this.prettyPrint = prettyPrint;
         }
     }
-
 }

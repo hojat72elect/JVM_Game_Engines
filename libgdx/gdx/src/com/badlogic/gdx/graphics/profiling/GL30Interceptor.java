@@ -1,12 +1,12 @@
 package com.badlogic.gdx.graphics.profiling;
 
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
+
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
-
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
 
 
 public class GL30Interceptor extends GLInterceptor implements GL30 {

@@ -34,7 +34,6 @@ import com.badlogic.gdx.utils.ShortArray;
  * call {@link #begin(VertexAttributes)} or {@link #begin(VertexAttributes, int)}. To use mesh parts you must call
  * {@link #part(String, int)} before you start building the part. The MeshPart itself is only valid after the call to
  * {@link #end()}.
- *
  */
 public class MeshBuilder implements MeshPartBuilder {
     /**
@@ -70,11 +69,11 @@ public class MeshBuilder implements MeshPartBuilder {
     /**
      * The vertices to construct, no size checking is done
      */
-    private FloatArray vertices = new FloatArray();
+    private final FloatArray vertices = new FloatArray();
     /**
      * The indices to construct, no size checking is done
      */
-    private ShortArray indices = new ShortArray();
+    private final ShortArray indices = new ShortArray();
     /**
      * The size (in number of floats) of each vertex
      */
@@ -130,7 +129,7 @@ public class MeshBuilder implements MeshPartBuilder {
     /**
      * The parts created between begin and end
      */
-    private Array<MeshPart> parts = new Array<MeshPart>();
+    private final Array<MeshPart> parts = new Array<MeshPart>();
     private boolean hasColor = false;
     /**
      * The current primitiveType
@@ -161,7 +160,7 @@ public class MeshBuilder implements MeshPartBuilder {
             attrs.add(new VertexAttribute(Usage.Normal, 3, ShaderProgram.NORMAL_ATTRIBUTE));
         if ((usage & Usage.TextureCoordinates) == Usage.TextureCoordinates)
             attrs.add(new VertexAttribute(Usage.TextureCoordinates, 2, ShaderProgram.TEXCOORD_ATTRIBUTE + "0"));
-        final VertexAttribute attributes[] = new VertexAttribute[attrs.size];
+        final VertexAttribute[] attributes = new VertexAttribute[attrs.size];
         for (int i = 0; i < attributes.length; i++)
             attributes[i] = attrs.get(i);
         return new VertexAttributes(attributes);

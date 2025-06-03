@@ -161,5 +161,4 @@ public class EdgeShape extends Shape {
     public Type getType() {
         return Type.Edge;
     }
-
 }

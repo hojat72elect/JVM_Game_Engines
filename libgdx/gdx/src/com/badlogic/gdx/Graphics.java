@@ -319,7 +319,7 @@ public interface Graphics {
      *
      * @param fps the targeted fps; default differs by platform
      */
-    public void setForegroundFPS(int fps);
+    void setForegroundFPS(int fps);
 
     /**
      * @return the format of the color, depth and stencil buffer in a {@link BufferFormat} instance
@@ -436,8 +436,6 @@ public interface Graphics {
 
     /**
      * Describes a monitor
-     *
-     * 
      */
     class Monitor {
         public final int virtualX;

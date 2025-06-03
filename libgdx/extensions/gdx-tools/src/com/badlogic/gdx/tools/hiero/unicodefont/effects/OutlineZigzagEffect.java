@@ -56,7 +56,7 @@ public class OutlineZigzagEffect extends OutlineEffect {
         public Shape createStrokedShape(Shape shape) {
             GeneralPath result = new GeneralPath();
             PathIterator it = new FlatteningPathIterator(shape.getPathIterator(null), FLATNESS);
-            float points[] = new float[6];
+            float[] points = new float[6];
             float moveX = 0, moveY = 0;
             float lastX = 0, lastY = 0;
             float thisX = 0, thisY = 0;

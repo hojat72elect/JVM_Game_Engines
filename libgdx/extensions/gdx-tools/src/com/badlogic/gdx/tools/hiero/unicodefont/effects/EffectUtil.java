@@ -3,17 +3,37 @@ package com.badlogic.gdx.tools.hiero.unicodefont.effects;
 import com.badlogic.gdx.tools.hiero.unicodefont.GlyphPage;
 import com.badlogic.gdx.tools.hiero.unicodefont.effects.ConfigurableEffect.Value;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * Provides utility methods for effects.
  */
 public class EffectUtil {
-    static private BufferedImage scratchImage = new BufferedImage(GlyphPage.MAX_GLYPH_SIZE, GlyphPage.MAX_GLYPH_SIZE,
+    static private final BufferedImage scratchImage = new BufferedImage(GlyphPage.MAX_GLYPH_SIZE, GlyphPage.MAX_GLYPH_SIZE,
             BufferedImage.TYPE_INT_ARGB);
 
     /**
@@ -103,7 +123,7 @@ public class EffectUtil {
      *                value.
      */
     static public Value optionValue(String name, final String currentValue, final String[][] options, final String description) {
-        return new DefaultValue(name, currentValue.toString()) {
+        return new DefaultValue(name, currentValue) {
             public void showDialog() {
                 int selectedIndex = -1;
                 DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -123,7 +143,7 @@ public class EffectUtil {
 
             public String toString() {
                 for (int i = 0; i < options.length; i++)
-                    if (getValue(i).equals(value)) return options[i][0].toString();
+                    if (getValue(i).equals(value)) return options[i][0];
                 return "";
             }
 
@@ -182,7 +202,7 @@ public class EffectUtil {
 
         public String toString() {
             if (value == null) return "";
-            return value.toString();
+            return value;
         }
 
         public boolean showValueDialog(final JComponent component, String description) {
@@ -201,8 +221,6 @@ public class EffectUtil {
             return dialog.okPressed;
         }
     }
-
-    ;
 
     /**
      * Provides generic functionality for a dialog to configure a value.

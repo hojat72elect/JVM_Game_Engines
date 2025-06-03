@@ -82,7 +82,7 @@ public class MicroBenchmarks extends Activity {
     void toc(final String info) {
         final float time = (System.nanoTime() - start) / 1000000000.0f;
 
-        tv.post(() -> tv.setText(new StringBuilder().append(tv.getText()).append(info).append(", ").append(time).append(" secs\n").toString()));
+        tv.post(() -> tv.setText(tv.getText() + info + ", " + time + " secs\n"));
 
         Log.d("MicroBenchmarks", info + ", " + time);
     }

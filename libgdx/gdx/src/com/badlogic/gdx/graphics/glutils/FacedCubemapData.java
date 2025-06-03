@@ -24,7 +24,7 @@ public class FacedCubemapData implements CubemapData {
      * set before it can be used.
      */
     public FacedCubemapData() {
-        this((TextureData) null, (TextureData) null, (TextureData) null, (TextureData) null, (TextureData) null, (TextureData) null);
+        this(null, null, null, null, null, (TextureData) null);
     }
 
     /**
@@ -203,5 +203,4 @@ public class FacedCubemapData implements CubemapData {
             }
         }
     }
-
 }

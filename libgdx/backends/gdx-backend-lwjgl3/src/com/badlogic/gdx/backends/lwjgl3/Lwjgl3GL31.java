@@ -2,9 +2,7 @@ package com.badlogic.gdx.backends.lwjgl3;
 
 import com.badlogic.gdx.graphics.GL31;
 import com.badlogic.gdx.utils.BufferUtils;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.opengl.GL40;
@@ -12,6 +10,10 @@ import org.lwjgl.opengl.GL41;
 import org.lwjgl.opengl.GL42;
 import org.lwjgl.opengl.GL43;
 import org.lwjgl.opengl.GL46;
+
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class Lwjgl3GL31 extends Lwjgl3GL30 implements GL31 {
 
@@ -367,5 +369,4 @@ public class Lwjgl3GL31 extends Lwjgl3GL30 implements GL31 {
     public void glVertexBindingDivisor(int bindingindex, int divisor) {
         GL43.glVertexBindingDivisor(bindingindex, divisor);
     }
-
 }

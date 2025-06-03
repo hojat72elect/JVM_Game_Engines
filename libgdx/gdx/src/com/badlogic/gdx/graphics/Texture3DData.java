@@ -25,60 +25,59 @@ package com.badlogic.gdx.graphics;
  * <p>
  * Before a call to either {@link #consume3DData()}, Texture3D will bind the OpenGL ES texture.
  * </p>
- *
  */
 public interface Texture3DData {
 
     /**
      * @return whether the TextureData is prepared or not.
      */
-    public boolean isPrepared();
+    boolean isPrepared();
 
     /**
      * Prepares the TextureData for a call to {@link #consume3DData()}. This method can be called from a non OpenGL thread and
      * should thus not interact with OpenGL.
      */
-    public void prepare();
+    void prepare();
 
     /**
      * @return the width of this Texture3D
      */
-    public int getWidth();
+    int getWidth();
 
     /**
      * @return the height of this Texture3D
      */
-    public int getHeight();
+    int getHeight();
 
     /**
      * @return the depth of this Texture3D
      */
-    public int getDepth();
+    int getDepth();
 
     /**
      * @return the internal format of this Texture3D
      */
-    public int getInternalFormat();
+    int getInternalFormat();
 
     /**
      * @return the GL type of this Texture3D
      */
-    public int getGLType();
+    int getGLType();
 
     /**
      * @return whether to generate mipmaps or not.
      */
-    public boolean useMipMaps();
+    boolean useMipMaps();
 
     /**
      * Uploads the pixel data to the OpenGL ES texture. The caller must bind an OpenGL ES texture. A call to {@link #prepare()}
      * must preceed a call to this method. Any internal data structures created in {@link #prepare()} should be disposed of
      * here.
      */
-    public void consume3DData();
+    void consume3DData();
 
     /**
      * @return whether this implementation can cope with a EGL context loss.
      */
-    public boolean isManaged();
+    boolean isManaged();
 }

@@ -1,7 +1,5 @@
 package com.badlogic.gdx.graphics.g2d;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
@@ -11,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.NumberUtils;
 import com.badlogic.gdx.utils.Pools;
+
+import java.util.Arrays;
 
 /**
  * Caches glyph geometry for a BitmapFont, providing a fast way to render static text. This saves needing to compute the glyph

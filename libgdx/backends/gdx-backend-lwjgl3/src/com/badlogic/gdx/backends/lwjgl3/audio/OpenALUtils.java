@@ -1,13 +1,19 @@
 package com.badlogic.gdx.backends.lwjgl3.audio;
 
-import com.badlogic.gdx.utils.GdxRuntimeException;
-
-import static org.lwjgl.openal.AL10.*;
+import static org.lwjgl.openal.AL10.AL_FORMAT_MONO16;
+import static org.lwjgl.openal.AL10.AL_FORMAT_MONO8;
+import static org.lwjgl.openal.AL10.AL_FORMAT_STEREO16;
+import static org.lwjgl.openal.AL10.AL_FORMAT_STEREO8;
 import static org.lwjgl.openal.EXTDouble.AL_FORMAT_MONO_DOUBLE_EXT;
 import static org.lwjgl.openal.EXTDouble.AL_FORMAT_STEREO_DOUBLE_EXT;
 import static org.lwjgl.openal.EXTFloat32.AL_FORMAT_MONO_FLOAT32;
 import static org.lwjgl.openal.EXTFloat32.AL_FORMAT_STEREO_FLOAT32;
-import static org.lwjgl.openal.EXTMCFormats.*;
+import static org.lwjgl.openal.EXTMCFormats.AL_FORMAT_51CHN16;
+import static org.lwjgl.openal.EXTMCFormats.AL_FORMAT_61CHN16;
+import static org.lwjgl.openal.EXTMCFormats.AL_FORMAT_71CHN16;
+import static org.lwjgl.openal.EXTMCFormats.AL_FORMAT_QUAD16;
+
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class OpenALUtils {
 
@@ -79,5 +85,4 @@ public class OpenALUtils {
         }
         return format; // @on
     }
-
 }

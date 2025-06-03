@@ -1,14 +1,14 @@
 package com.badlogic.gdx.tests;
 
-import java.nio.ByteBuffer;
-
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.tests.utils.GdxTest;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.nio.ByteBuffer;
 
 public class PixmapTest extends GdxTest {
     Pixmap pixmap;

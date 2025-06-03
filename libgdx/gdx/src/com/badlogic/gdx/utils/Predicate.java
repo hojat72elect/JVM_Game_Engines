@@ -12,7 +12,7 @@ public interface Predicate<T> {
      */
     boolean evaluate(T arg0);
 
-    public class PredicateIterator<T> implements Iterator<T> {
+    class PredicateIterator<T> implements Iterator<T> {
         public Iterator<T> iterator;
         public Predicate<T> predicate;
         public boolean end = false;
@@ -70,7 +70,7 @@ public interface Predicate<T> {
         }
     }
 
-    public static class PredicateIterable<T> implements Iterable<T> {
+    class PredicateIterable<T> implements Iterable<T> {
         public Iterable<T> iterable;
         public Predicate<T> predicate;
         public PredicateIterator<T> iterator = null;

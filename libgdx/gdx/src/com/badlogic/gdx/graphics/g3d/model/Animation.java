@@ -7,8 +7,6 @@ import com.badlogic.gdx.utils.Array;
  * An Animation has an id and a list of {@link NodeAnimation} instances. Each NodeAnimation animates a single {@link Node} in the
  * {@link Model}. Every {@link NodeAnimation} is assumed to have the same amount of keyframes, at the same timestamps, as all
  * other node animations for faster keyframe searches.
- *
- * 
  */
 public class Animation {
     /**

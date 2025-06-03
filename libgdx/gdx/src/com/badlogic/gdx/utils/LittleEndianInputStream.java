@@ -11,7 +11,7 @@ import java.io.InputStream;
  */
 public class LittleEndianInputStream extends FilterInputStream implements DataInput {
 
-    private DataInputStream din;
+    private final DataInputStream din;
 
     public LittleEndianInputStream(InputStream in) {
         super(in);

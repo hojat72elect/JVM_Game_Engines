@@ -97,7 +97,7 @@ public class Box2DTest extends GdxTest implements InputProcessor {
     /**
      * our boxes
      **/
-    private ArrayList<Body> boxes = new ArrayList<Body>();
+    private final ArrayList<Body> boxes = new ArrayList<Body>();
     /**
      * our mouse joint
      **/

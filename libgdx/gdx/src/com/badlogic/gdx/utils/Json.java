@@ -1,5 +1,16 @@
 package com.badlogic.gdx.utils;
 
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.IntSet.IntSetIterator;
+import com.badlogic.gdx.utils.JsonValue.PrettyPrintSettings;
+import com.badlogic.gdx.utils.JsonWriter.OutputType;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
+import com.badlogic.gdx.utils.reflect.ArrayReflection;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.Constructor;
+import com.badlogic.gdx.utils.reflect.Field;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -11,17 +22,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.IntSet.IntSetIterator;
-import com.badlogic.gdx.utils.JsonValue.PrettyPrintSettings;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
-import com.badlogic.gdx.utils.ObjectMap.Entry;
-import com.badlogic.gdx.utils.reflect.ArrayReflection;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.Constructor;
-import com.badlogic.gdx.utils.reflect.Field;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 
 /**
  * Reads/writes Java objects to/from JSON, automatically. See the wiki for usage:
@@ -1373,16 +1373,16 @@ public class Json {
         return new JsonReader().parse(json).prettyPrint(settings);
     }
 
-    static public interface Serializer<T> {
-        public void write(Json json, T object, Class knownType);
+    public interface Serializer<T> {
+        void write(Json json, T object, Class knownType);
 
-        public T read(Json json, JsonValue jsonData, Class type);
+        T read(Json json, JsonValue jsonData, Class type);
     }
 
-    static public interface Serializable {
-        public void write(Json json);
+    public interface Serializable {
+        void write(Json json);
 
-        public void read(Json json, JsonValue jsonData);
+        void read(Json json, JsonValue jsonData);
     }
 
     static private class FieldMetadata {

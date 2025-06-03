@@ -1,7 +1,5 @@
 package com.badlogic.gdx.graphics.g3d.particles.influencers;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.particles.ParallelArray.ObjectChannel;
@@ -14,6 +12,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.Pool;
 
+import java.util.Iterator;
+
 /**
  * It's an {@link Influencer} which controls which {@link ParticleController} will be assigned to a particle.
  */
@@ -25,6 +25,7 @@ public abstract class ParticleControllerInfluencer extends Influencer {
     public ParticleControllerInfluencer() {
         this.templates = new Array<ParticleController>(true, 1, ParticleController.class);
     }
+
     public ParticleControllerInfluencer(ParticleController... templates) {
         this.templates = new Array<ParticleController>(templates);
     }

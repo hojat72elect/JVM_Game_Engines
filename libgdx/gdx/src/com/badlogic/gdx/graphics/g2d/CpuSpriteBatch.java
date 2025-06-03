@@ -403,7 +403,7 @@ public class CpuSpriteBatch extends SpriteBatch {
 
         Affine2 t = adjustAffine;
 
-        vertices[idx + 0] = t.m00 * x1 + t.m01 * y1 + t.m02;
+        vertices[idx] = t.m00 * x1 + t.m01 * y1 + t.m02;
         vertices[idx + 1] = t.m10 * x1 + t.m11 * y1 + t.m12;
         vertices[idx + 2] = colorPacked;
         vertices[idx + 3] = u;
@@ -535,7 +535,7 @@ public class CpuSpriteBatch extends SpriteBatch {
 
         Affine2 t = adjustAffine;
 
-        vertices[idx + 0] = t.m00 * x1 + t.m01 * y1 + t.m02;
+        vertices[idx] = t.m00 * x1 + t.m01 * y1 + t.m02;
         vertices[idx + 1] = t.m10 * x1 + t.m11 * y1 + t.m12;
         vertices[idx + 2] = colorPacked;
         vertices[idx + 3] = u1;
@@ -589,7 +589,7 @@ public class CpuSpriteBatch extends SpriteBatch {
 
         t = adjustAffine;
 
-        vertices[idx + 0] = t.m00 * x1 + t.m01 * y1 + t.m02;
+        vertices[idx] = t.m00 * x1 + t.m01 * y1 + t.m02;
         vertices[idx + 1] = t.m10 * x1 + t.m11 * y1 + t.m12;
         vertices[idx + 2] = colorPacked;
         vertices[idx + 3] = u;

@@ -27,8 +27,9 @@ import java.util.StringTokenizer;
 
 public class TideMapLoader extends SynchronousAssetLoader<TiledMap, TideMapLoader.Parameters> {
 
-    private XmlReader xml = new XmlReader();
+    private final XmlReader xml = new XmlReader();
     private Element root;
+
     public TideMapLoader() {
         super(new InternalFileHandleResolver());
     }
@@ -66,7 +67,6 @@ public class TideMapLoader extends SynchronousAssetLoader<TiledMap, TideMapLoade
         } catch (IOException e) {
             throw new GdxRuntimeException("Couldn't load tilemap '" + fileName + "'", e);
         }
-
     }
 
     @Override
@@ -293,5 +293,4 @@ public class TideMapLoader extends SynchronousAssetLoader<TiledMap, TideMapLoade
     public static class Parameters extends AssetLoaderParameters<TiledMap> {
 
     }
-
 }

@@ -106,7 +106,7 @@ public class ProjectiveTextureTest extends GdxTest {
             public void clicked(InputEvent event, float x, float y) {
                 ShaderProgram prog = new ShaderProgram(Gdx.files.internal("data/shaders/projtex-vert.glsl").readString(),
                         Gdx.files.internal("data/shaders/projtex-frag.glsl").readString());
-                if (prog.isCompiled() == false) {
+                if (!prog.isCompiled()) {
                     Gdx.app.log("GLSL ERROR", "Couldn't reload shaders:\n" + prog.getLog());
                 } else {
                     projTexShader.dispose();

@@ -55,7 +55,7 @@ import com.badlogic.gdx.utils.Sort;
 public class SimpleOrthoGroupStrategy implements GroupStrategy {
     private static final int GROUP_OPAQUE = 0;
     private static final int GROUP_BLEND = 1;
-    private Comparator comparator = new Comparator();
+    private final Comparator comparator = new Comparator();
 
     @Override
     public int decideGroup(Decal decal) {

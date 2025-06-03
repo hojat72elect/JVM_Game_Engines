@@ -7,20 +7,33 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Region;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Null;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 public class TexturePacker {
     private final Settings settings;
@@ -493,7 +506,7 @@ public class TexturePacker {
         }
 
         boolean appending = packFile.exists();
-        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(packFile, true), "UTF-8");
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(packFile, true), StandardCharsets.UTF_8);
         for (int i = 0, n = pages.size; i < n; i++) {
             Page page = pages.get(i);
 
@@ -645,7 +658,7 @@ public class TexturePacker {
         this.progress = progressListener;
     }
 
-    static public enum Resampling {
+    public enum Resampling {
         nearest(RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR), //
         bilinear(RenderingHints.VALUE_INTERPOLATION_BILINEAR), //
         bicubic(RenderingHints.VALUE_INTERPOLATION_BICUBIC);
@@ -657,10 +670,10 @@ public class TexturePacker {
         }
     }
 
-    static public interface Packer {
-        public Array<Page> pack(Array<Rect> inputRects);
+    public interface Packer {
+        Array<Page> pack(Array<Rect> inputRects);
 
-        public Array<Page> pack(ProgressListener progress, Array<Rect> inputRects);
+        Array<Page> pack(ProgressListener progress, Array<Rect> inputRects);
     }
 
     /**
@@ -814,9 +827,8 @@ public class TexturePacker {
             if (getClass() != obj.getClass()) return false;
             Rect other = (Rect) obj;
             if (name == null) {
-                if (other.name != null) return false;
-            } else if (!name.equals(other.name)) return false;
-            return true;
+                return other.name == null;
+            } else return name.equals(other.name);
         }
 
         @Override

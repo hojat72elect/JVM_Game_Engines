@@ -23,8 +23,6 @@ import com.badlogic.gdx.utils.Array;
 public class CubemapLoader extends AsynchronousAssetLoader<Cubemap, CubemapLoader.CubemapParameter> {
     CubemapLoaderInfo info = new CubemapLoaderInfo();
 
-    ;
-
     public CubemapLoader(FileHandleResolver resolver) {
         super(resolver);
     }

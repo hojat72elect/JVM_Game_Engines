@@ -1,7 +1,5 @@
 package com.badlogic.gdx.physics.box2d;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -14,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.joints.PulleyJoint;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
+import java.util.Iterator;
+
 public class Box2DDebugRenderer implements Disposable {
 
     /**
@@ -24,7 +24,7 @@ public class Box2DDebugRenderer implements Disposable {
     private final static Vector2 upper = new Vector2();
     private final static Array<Body> bodies = new Array<Body>();
     private final static Array<Joint> joints = new Array<Joint>();
-    private static Vector2 t = new Vector2();
+    private static final Vector2 t = new Vector2();
     private static Vector2 axis = new Vector2();
     public final Color SHAPE_NOT_ACTIVE = new Color(0.5f, 0.5f, 0.3f, 1);
     public final Color SHAPE_STATIC = new Color(0.5f, 0.9f, 0.5f, 1);
@@ -130,13 +130,13 @@ public class Box2DDebugRenderer implements Disposable {
     }
 
     private Color getColorByBody(Body body) {
-        if (body.isActive() == false)
+        if (!body.isActive())
             return SHAPE_NOT_ACTIVE;
         else if (body.getType() == BodyType.StaticBody)
             return SHAPE_STATIC;
         else if (body.getType() == BodyType.KinematicBody)
             return SHAPE_KINEMATIC;
-        else if (body.isAwake() == false)
+        else if (!body.isAwake())
             return SHAPE_NOT_AWAKE;
         else
             return SHAPE_AWAKE;

@@ -78,75 +78,75 @@ import com.badlogic.gdx.utils.Clipboard;
  * </p>
  */
 public interface Application {
-    public static final int LOG_NONE = 0;
-    public static final int LOG_DEBUG = 3;
-    public static final int LOG_INFO = 2;
-    public static final int LOG_ERROR = 1;
+    int LOG_NONE = 0;
+    int LOG_DEBUG = 3;
+    int LOG_INFO = 2;
+    int LOG_ERROR = 1;
 
     /**
      * @return the {@link ApplicationListener} instance
      */
-    public ApplicationListener getApplicationListener();
+    ApplicationListener getApplicationListener();
 
     /**
      * @return the {@link Graphics} instance
      */
-    public Graphics getGraphics();
+    Graphics getGraphics();
 
     /**
      * @return the {@link Audio} instance
      */
-    public Audio getAudio();
+    Audio getAudio();
 
     /**
      * @return the {@link Input} instance
      */
-    public Input getInput();
+    Input getInput();
 
     /**
      * @return the {@link Files} instance
      */
-    public Files getFiles();
+    Files getFiles();
 
     /**
      * @return the {@link Net} instance
      */
-    public Net getNet();
+    Net getNet();
 
     /**
      * Logs a message to the console or logcat
      */
-    public void log(String tag, String message);
+    void log(String tag, String message);
 
     /**
      * Logs a message to the console or logcat
      */
-    public void log(String tag, String message, Throwable exception);
+    void log(String tag, String message, Throwable exception);
 
     /**
      * Logs an error message to the console or logcat
      */
-    public void error(String tag, String message);
+    void error(String tag, String message);
 
     /**
      * Logs an error message to the console or logcat
      */
-    public void error(String tag, String message, Throwable exception);
+    void error(String tag, String message, Throwable exception);
 
     /**
      * Logs a debug message to the console or logcat
      */
-    public void debug(String tag, String message);
+    void debug(String tag, String message);
 
     /**
      * Logs a debug message to the console or logcat
      */
-    public void debug(String tag, String message, Throwable exception);
+    void debug(String tag, String message, Throwable exception);
 
     /**
      * Gets the log level.
      */
-    public int getLogLevel();
+    int getLogLevel();
 
     /**
      * Sets the log level. {@link #LOG_NONE} will mute all log output. {@link #LOG_ERROR} will only let error messages through.
@@ -154,38 +154,38 @@ public interface Application {
      *
      * @param logLevel {@link #LOG_NONE}, {@link #LOG_ERROR}, {@link #LOG_INFO}, {@link #LOG_DEBUG}.
      */
-    public void setLogLevel(int logLevel);
+    void setLogLevel(int logLevel);
 
     /**
      * @return the current {@link ApplicationLogger}
      */
-    public ApplicationLogger getApplicationLogger();
+    ApplicationLogger getApplicationLogger();
 
     /**
      * Sets the current Application logger. Calls to {@link #log(String, String)} are delegated to this
      * {@link ApplicationLogger}
      */
-    public void setApplicationLogger(ApplicationLogger applicationLogger);
+    void setApplicationLogger(ApplicationLogger applicationLogger);
 
     /**
      * @return what {@link ApplicationType} this application has, e.g. Android or Desktop
      */
-    public ApplicationType getType();
+    ApplicationType getType();
 
     /**
      * @return the Android API level on Android, the major OS version on iOS (5, 6, 7, ..), or 0 on the desktop.
      */
-    public int getVersion();
+    int getVersion();
 
     /**
      * @return the Java heap memory use in bytes
      */
-    public long getJavaHeap();
+    long getJavaHeap();
 
     /**
      * @return the Native heap memory use in bytes
      */
-    public long getNativeHeap();
+    long getNativeHeap();
 
     /**
      * Returns the {@link Preferences} instance of this Application. It can be used to store application settings across runs.
@@ -193,9 +193,9 @@ public interface Application {
      * @param name the name of the preferences, must be useable as a file name.
      * @return the preferences.
      */
-    public Preferences getPreferences(String name);
+    Preferences getPreferences(String name);
 
-    public Clipboard getClipboard();
+    Clipboard getClipboard();
 
     /**
      * Posts a {@link Runnable} on the main loop thread.
@@ -208,14 +208,14 @@ public interface Application {
      *
      * @param runnable the runnable.
      */
-    public void postRunnable(Runnable runnable);
+    void postRunnable(Runnable runnable);
 
     /**
      * Schedule an exit from the application. On android, this will cause a call to pause() and dispose() some time in the future,
      * it will not immediately finish your application. On iOS this should be avoided in production as it breaks Apples
      * guidelines
      */
-    public void exit();
+    void exit();
 
     /**
      * Adds a new {@link LifecycleListener} to the application. This can be used by extensions to hook into the lifecycle more
@@ -223,19 +223,19 @@ public interface Application {
      *
      * @param listener
      */
-    public void addLifecycleListener(LifecycleListener listener);
+    void addLifecycleListener(LifecycleListener listener);
 
     /**
      * Removes the {@link LifecycleListener}.
      *
      * @param listener
      */
-    public void removeLifecycleListener(LifecycleListener listener);
+    void removeLifecycleListener(LifecycleListener listener);
 
     /**
      * Enumeration of possible {@link Application} types
      */
-    public enum ApplicationType {
+    enum ApplicationType {
         Android, Desktop, HeadlessDesktop, Applet, WebGL, iOS
     }
 }

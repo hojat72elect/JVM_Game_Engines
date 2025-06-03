@@ -22,12 +22,6 @@
 
 package com.badlogic.gdx.graphics.g2d;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -40,6 +34,12 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Renders bitmap fonts. The font consists of 2 files: an image file or {@link TextureRegion} containing the glyphs and a file in
@@ -61,7 +61,7 @@ public class BitmapFont implements Disposable {
     private final BitmapFontCache cache;
     Array<TextureRegion> regions;
     boolean integer;
-    private boolean flipped;
+    private final boolean flipped;
     private boolean ownsTexture;
 
     /**
@@ -837,7 +837,6 @@ public class BitmapFont implements Disposable {
                     this.spaceXadvance = overrideSpaceXAdvance;
                     this.xHeight = overrideXHeight;
                 }
-
             } catch (Exception ex) {
                 throw new GdxRuntimeException("Error loading font file: " + fontFile, ex);
             } finally {

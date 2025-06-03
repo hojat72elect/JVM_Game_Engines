@@ -1,22 +1,5 @@
 package com.badlogic.gdx.tools.hiero.unicodefont;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.FontMetrics;
-import java.awt.Rectangle;
-import java.awt.font.GlyphVector;
-import java.awt.font.TextAttribute;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.lwjgl.opengl.GL11;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,6 +15,23 @@ import com.badlogic.gdx.tools.hiero.HieroSettings;
 import com.badlogic.gdx.tools.hiero.unicodefont.effects.Effect;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import org.lwjgl.opengl.GL11;
+
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.FontMetrics;
+import java.awt.Rectangle;
+import java.awt.font.GlyphVector;
+import java.awt.font.TextAttribute;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 // BOZO - Look at actual pixels to determine glyph size, current size sometimes selects blank pixels (eg Calibri, 45, 'o').
 
@@ -747,11 +747,11 @@ public class UnicodeFont {
                 Object font2D;
                 try {
                     // Java 7+.
-                    font2D = Class.forName("sun.font.FontUtilities").getDeclaredMethod("getFont2D", new Class[]{Font.class})
-                            .invoke(null, new Object[]{font});
+                    font2D = Class.forName("sun.font.FontUtilities").getDeclaredMethod("getFont2D", Font.class)
+                            .invoke(null, font);
                 } catch (Throwable ignored) {
-                    font2D = Class.forName("sun.font.FontManager").getDeclaredMethod("getFont2D", new Class[]{Font.class})
-                            .invoke(null, new Object[]{font});
+                    font2D = Class.forName("sun.font.FontManager").getDeclaredMethod("getFont2D", Font.class)
+                            .invoke(null, font);
                 }
                 Field platNameField = Class.forName("sun.font.PhysicalFont").getDeclaredField("platName");
                 platNameField.setAccessible(true);
@@ -764,7 +764,7 @@ public class UnicodeFont {
         return ttfFileRef;
     }
 
-    static public enum RenderType {
+    public enum RenderType {
         Java, Native, FreeType
     }
 }

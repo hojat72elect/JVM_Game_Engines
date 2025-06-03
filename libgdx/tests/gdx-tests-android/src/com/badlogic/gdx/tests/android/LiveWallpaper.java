@@ -1,6 +1,7 @@
 package com.badlogic.gdx.tests.android;
 
 import android.util.Log;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidLiveWallpaperService;
@@ -39,6 +40,5 @@ public class LiveWallpaper extends AndroidLiveWallpaperService {
         public void iconDropped(int x, int y) {
             Log.i("LiveWallpaper test", "iconDropped (" + x + ", " + y + ")");
         }
-
     }
 }

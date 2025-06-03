@@ -1,8 +1,5 @@
 package com.badlogic.gdx.tests;
 
-import java.util.Date;
-import java.util.Locale;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.I18NBundle;
+
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Performs some tests with {@link I18NBundle} and prints the results on the screen.
@@ -59,7 +59,6 @@ public class I18NSimpleMessageTest extends GdxTest {
             println(getParametricMessage("unsupported", rb_unsupported));
 
             Gdx.app.log("", message);
-
         } catch (Throwable t) {
             message = "FAILED: " + t.getMessage() + "\n";
             message += t.getClass();

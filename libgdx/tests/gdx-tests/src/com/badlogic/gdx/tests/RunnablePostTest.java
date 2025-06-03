@@ -11,7 +11,7 @@ public class RunnablePostTest extends GdxTest {
     private static final String TAG = "RunnablePostTest";
     static boolean expectIt = false;
 
-    static private Thread.UncaughtExceptionHandler exHandler = new Thread.UncaughtExceptionHandler() {
+    static private final Thread.UncaughtExceptionHandler exHandler = new Thread.UncaughtExceptionHandler() {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             if (expectIt) {

@@ -15,8 +15,8 @@ public class SpriteBatchPerformanceTest extends GdxTest {
 
     private Texture texture;
     private SpriteBatch spriteBatch;
-    private WindowedMean counter = new WindowedMean(10000);
-    private StringBuilder stringBuilder = new StringBuilder();
+    private final WindowedMean counter = new WindowedMean(10000);
+    private final StringBuilder stringBuilder = new StringBuilder();
 
     private BitmapFont bitmapFont;
 
@@ -50,7 +50,6 @@ public class SpriteBatchPerformanceTest extends GdxTest {
             long afterFlush = System.nanoTime();
 
             counter.addValue(afterFlush - beforeFlush);
-
         }
 
         spriteBatch.end();
@@ -74,5 +73,4 @@ public class SpriteBatchPerformanceTest extends GdxTest {
         texture.dispose();
         spriteBatch.dispose();
     }
-
 }

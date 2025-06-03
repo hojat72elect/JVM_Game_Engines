@@ -7,6 +7,7 @@ enum SortMode {
 
     public String desc;
     public ParticleSorter sorter;
+
     SortMode(String desc, ParticleSorter sorter) {
         this.sorter = sorter;
         this.desc = desc;

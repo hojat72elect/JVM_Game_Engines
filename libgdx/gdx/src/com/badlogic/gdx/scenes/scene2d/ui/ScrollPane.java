@@ -50,7 +50,7 @@ public class ScrollPane extends WidgetGroup {
     int draggingPointer = -1;
     private ScrollPaneStyle style;
     private Actor actor;
-    private ActorGestureListener flickScrollListener;
+    private final ActorGestureListener flickScrollListener;
     private boolean overscrollX = true, overscrollY = true;
     private float overscrollDistance = 50, overscrollSpeedMin = 30, overscrollSpeedMax = 200;
     private boolean forceScrollX, forceScrollY;

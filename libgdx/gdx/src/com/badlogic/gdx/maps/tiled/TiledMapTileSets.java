@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class TiledMapTileSets implements Iterable<TiledMapTileSet> {
 
-    private Array<TiledMapTileSet> tilesets;
+    private final Array<TiledMapTileSet> tilesets;
 
     /**
      * Creates an empty collection of tilesets.
@@ -90,5 +90,4 @@ public class TiledMapTileSets implements Iterable<TiledMapTileSet> {
     public Iterator<TiledMapTileSet> iterator() {
         return tilesets.iterator();
     }
-
 }

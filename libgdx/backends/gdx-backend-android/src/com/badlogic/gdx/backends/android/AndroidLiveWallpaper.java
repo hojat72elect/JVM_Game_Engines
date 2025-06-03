@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.ApplicationLogger;
@@ -155,7 +156,6 @@ public class AndroidLiveWallpaper implements AndroidApplicationBase {
 
             // kill the GLThread managed by GLSurfaceView
             graphics.onDestroyGLSurfaceView();
-
         }
 
         if (audio != null) {

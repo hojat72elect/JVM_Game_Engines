@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
+
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.audio.AudioDevice;
@@ -116,7 +117,6 @@ public class DefaultAndroidAudio implements AndroidAudio {
                 throw new GdxRuntimeException("Error loading audio file: " + file, ex);
             }
         }
-
     }
 
     @Override

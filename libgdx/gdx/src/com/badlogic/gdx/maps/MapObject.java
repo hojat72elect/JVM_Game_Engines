@@ -9,7 +9,7 @@ public class MapObject {
     private String name = "";
     private float opacity = 1.0f;
     private boolean visible = true;
-    private MapProperties properties = new MapProperties();
+    private final MapProperties properties = new MapProperties();
     private Color color = Color.WHITE.cpy();
 
     /**

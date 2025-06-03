@@ -28,7 +28,6 @@ public class ImageScaleTest extends GdxTest {
         image2.setOrigin(200, 100);
         image2.setScale(0.5f);
         stage.addActor(image2);
-
     }
 
     public void render() {

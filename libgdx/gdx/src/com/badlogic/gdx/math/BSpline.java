@@ -16,6 +16,7 @@ public class BSpline<T extends Vector<T>> implements Path<T> {
 
     public BSpline() {
     }
+
     public BSpline(final T[] controlPoints, final int degree, final boolean continuous) {
         set(controlPoints, degree, continuous);
     }

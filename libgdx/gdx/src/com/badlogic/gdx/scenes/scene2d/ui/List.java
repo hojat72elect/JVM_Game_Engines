@@ -38,7 +38,7 @@ public class List<T> extends Widget implements Cullable {
     private Rectangle cullingArea;
     private float prefWidth, prefHeight;
     private int alignment = Align.left;
-    private InputListener keyListener;
+    private final InputListener keyListener;
 
     public List(Skin skin) {
         this(skin.get(ListStyle.class));

@@ -1,11 +1,13 @@
 package com.badlogic.gdx.tests.android;
 
 import android.opengl.Matrix;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.tests.utils.GdxTest;
+
 import javax.microedition.khronos.opengles.GL10;
 
 public class MatrixTest extends GdxTest {

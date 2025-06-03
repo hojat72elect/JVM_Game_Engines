@@ -1,10 +1,5 @@
 package com.badlogic.gdx.tests;
 
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.util.Arrays;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,6 +9,11 @@ import com.badlogic.gdx.utils.reflect.Annotation;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.Method;
+
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.Arrays;
 
 /**
  * Performs some tests with {@link Annotation} and prints the results on the screen.
@@ -109,7 +109,7 @@ public class AnnotationTest extends GdxTest {
      * available to the {@link ClassReflection} package.
      */
     @Retention(RetentionPolicy.RUNTIME)
-    static public @interface TestAnnotation {
+    public @interface TestAnnotation {
         // String parameter, no default
         String name();
 
@@ -122,7 +122,7 @@ public class AnnotationTest extends GdxTest {
 
     @Retention(RetentionPolicy.RUNTIME)
     @Inherited
-    static public @interface TestInheritAnnotation {
+    public @interface TestInheritAnnotation {
     }
 
     /**
@@ -142,8 +142,6 @@ public class AnnotationTest extends GdxTest {
         public int annotatedMethod() {
             return 0;
         }
-
-        ;
     }
 
     @TestInheritAnnotation
@@ -153,5 +151,4 @@ public class AnnotationTest extends GdxTest {
     @TestAnnotation(name = "MyInheritClassB")
     static public class InheritClassB extends InheritClassA {
     }
-
 }

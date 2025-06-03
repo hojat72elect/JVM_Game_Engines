@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 /**
  * A simple quaternion class.
- * 
+ *
  * @see <a href="http://en.wikipedia.org/wiki/Quaternion">http://en.wikipedia.org/wiki/Quaternion</a>
  */
 public class Quaternion implements Serializable {
     private static final long serialVersionUID = -7661875440774897168L;
-    private static Quaternion tmp1 = new Quaternion(0, 0, 0, 0);
-    private static Quaternion tmp2 = new Quaternion(0, 0, 0, 0);
+    private static final Quaternion tmp1 = new Quaternion(0, 0, 0, 0);
+    private static final Quaternion tmp2 = new Quaternion(0, 0, 0, 0);
 
     public float x;
     public float y;

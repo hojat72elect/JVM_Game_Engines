@@ -1,10 +1,10 @@
 package com.badlogic.gdx.graphics;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import com.badlogic.gdx.utils.Collections;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Instances of this class specify the vertex attributes of a mesh. VertexAttributes are used by {@link Mesh} instances to define
@@ -42,8 +42,7 @@ public final class VertexAttributes implements Iterable<VertexAttribute>, Compar
         if (attributes.length == 0) throw new IllegalArgumentException("attributes must be >= 1");
 
         VertexAttribute[] list = new VertexAttribute[attributes.length];
-        for (int i = 0; i < attributes.length; i++)
-            list[i] = attributes[i];
+        System.arraycopy(attributes, 0, list, 0, attributes.length);
 
         this.attributes = list;
         vertexSize = calculateOffsets();
@@ -140,7 +139,7 @@ public final class VertexAttributes implements Iterable<VertexAttribute>, Compar
 
     @Override
     public int hashCode() {
-        long result = 61 * attributes.length;
+        long result = 61L * attributes.length;
         for (int i = 0; i < attributes.length; i++)
             result = result * 61 + attributes[i].hashCode();
         return (int) (result ^ (result >> 32));

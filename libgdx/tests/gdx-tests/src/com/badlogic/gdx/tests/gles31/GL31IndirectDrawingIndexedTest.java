@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests.gles31;
 
-import java.nio.IntBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,12 +15,13 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.nio.IntBuffer;
+
 /**
  * see https://www.khronos.org/opengl/wiki/Vertex_Rendering#Indirect_rendering
  * <p>
  * Example of indirect commands. Note that commands could be defined directly in GPU via a comput shader. Also note that multi
  * draw (glMultiDrawElementsIndirect) requires an extension to GLES 3.1
- *
  */
 @GdxTestConfig(requireGL31 = true)
 public class GL31IndirectDrawingIndexedTest extends GdxTest {
@@ -44,7 +43,7 @@ public class GL31IndirectDrawingIndexedTest extends GdxTest {
     private int drawCommands;
     private Mesh mesh;
     private ShaderProgram shader;
-    private Matrix4 transform = new Matrix4();
+    private final Matrix4 transform = new Matrix4();
     private float time;
 
     @Override
@@ -109,7 +108,7 @@ public class GL31IndirectDrawingIndexedTest extends GdxTest {
         mesh.bind(shader);
 
         Gdx.gl.glBindBuffer(GL31.GL_DRAW_INDIRECT_BUFFER, drawCommands);
-        Gdx.gl31.glDrawElementsIndirect(GL20.GL_TRIANGLES, GL20.GL_UNSIGNED_SHORT, commandStride * commandIndex);
+        Gdx.gl31.glDrawElementsIndirect(GL20.GL_TRIANGLES, GL20.GL_UNSIGNED_SHORT, (long) commandStride * commandIndex);
         mesh.unbind(shader);
     }
 }

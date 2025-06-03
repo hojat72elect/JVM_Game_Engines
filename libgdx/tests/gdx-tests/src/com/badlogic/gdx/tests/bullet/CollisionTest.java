@@ -1,9 +1,9 @@
 package com.badlogic.gdx.tests.bullet;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.physics.bullet.collision.ContactResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObjectWrapper;
-import com.badlogic.gdx.physics.bullet.collision.ContactResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btManifoldPoint;
 import com.badlogic.gdx.physics.bullet.collision.btPersistentManifold;
 import com.badlogic.gdx.utils.Array;
@@ -16,7 +16,7 @@ public class CollisionTest extends ShootTest {
     Array<BulletEntity> contacts = new Array<BulletEntity>();
     Array<Color> colors = new Array<Color>();
     TestContactResultCallback contactCB;
-    private Pool<Color> colorPool = new Pool<Color>() {
+    private final Pool<Color> colorPool = new Pool<Color>() {
         @Override
         protected Color newObject() {
             return new Color();

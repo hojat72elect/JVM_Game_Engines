@@ -1,10 +1,5 @@
 package com.badlogic.gdx.tests.gles3;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
@@ -14,6 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.tests.utils.GdxTestConfig;
 import com.badlogic.gdx.utils.BufferUtils;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @GdxTestConfig(requireGL30 = true)
 public class PixelBufferObjectTest extends GdxTest {
@@ -29,7 +29,6 @@ public class PixelBufferObjectTest extends GdxTest {
         demo1.start();
         demo2 = new PBOUpload(true);
         demo2.start();
-
     }
 
     @Override

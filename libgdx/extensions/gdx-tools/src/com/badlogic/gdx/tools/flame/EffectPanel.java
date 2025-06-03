@@ -5,7 +5,15 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleController;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.RegularEmitter;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.*;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ModelInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ParticleControllerFinalizerInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ParticleControllerInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ScaleInfluencer;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.SpawnInfluencer;
 import com.badlogic.gdx.graphics.g3d.particles.renderers.BillboardRenderer;
 import com.badlogic.gdx.graphics.g3d.particles.renderers.ModelInstanceRenderer;
 import com.badlogic.gdx.graphics.g3d.particles.renderers.ParticleControllerControllerRenderer;
@@ -16,16 +24,27 @@ import com.badlogic.gdx.graphics.g3d.particles.values.PrimitiveSpawnShapeValue.S
 import com.badlogic.gdx.tools.flame.FlameMain.ControllerData;
 import com.badlogic.gdx.tools.flame.FlameMain.ControllerType;
 
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 
 /**
  *
@@ -467,5 +486,4 @@ class EffectPanel extends JPanel {
              */
         }
     }
-
 }

@@ -20,7 +20,7 @@ public class NinePatchTest extends GdxTest {
     private final Color oldColor = new Color();
     private OrthographicCamera camera;
     private SpriteBatch b;
-    private Array<TestPatch> ninePatches = new Array<TestPatch>(10);
+    private final Array<TestPatch> ninePatches = new Array<TestPatch>(10);
     private float timePassed = 0;
 
     // Make a new 'pixmapSize' square texture region with 'patchSize' patches in it. Each patch is a different color.

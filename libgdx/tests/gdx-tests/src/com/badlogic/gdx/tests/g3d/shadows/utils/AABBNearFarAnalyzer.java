@@ -12,8 +12,6 @@ import com.badlogic.gdx.utils.Pool;
 /**
  * Compute near and far plane based on renderable providers passed in constructor. Renderable providers array should contains
  * only renderable in camera frustum.
- *
- * 
  */
 public class AABBNearFarAnalyzer implements NearFarAnalyzer {
     /**

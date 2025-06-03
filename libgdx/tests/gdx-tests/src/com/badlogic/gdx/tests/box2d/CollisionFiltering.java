@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.math.Vector2;
@@ -151,5 +148,4 @@ public class CollisionFiltering extends Box2DTest {
         Body body6 = world.createBody(circleBodyDef);
         body6.createFixture(circleShapeDef);
     }
-
 }

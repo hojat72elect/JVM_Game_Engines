@@ -179,7 +179,7 @@ public class ShaderTest extends GdxTest {
         protected final int u_color = register(new Uniform("u_color"));
 
         protected final ShaderProgram program;
-        private boolean withColor;
+        private final boolean withColor;
 
         public TestShader(Renderable renderable) {
             super();

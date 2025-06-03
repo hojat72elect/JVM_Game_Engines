@@ -33,5 +33,4 @@ public class NumericValue extends ParticleValue {
         super.read(json, jsonData);
         value = json.readValue("value", float.class, jsonData);
     }
-
 }

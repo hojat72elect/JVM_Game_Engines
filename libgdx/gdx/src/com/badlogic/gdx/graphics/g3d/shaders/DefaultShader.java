@@ -113,9 +113,9 @@ public class DefaultShader extends BaseShader {
     protected final boolean shadowMap;
     // FIXME Cache vertex attribute locations...
     protected final AmbientCubemap ambientCubemap = new AmbientCubemap();
-    protected final DirectionalLight directionalLights[];
-    protected final PointLight pointLights[];
-    protected final SpotLight spotLights[];
+    protected final DirectionalLight[] directionalLights;
+    protected final PointLight[] pointLights;
+    protected final SpotLight[] spotLights;
     /**
      * The attributes that this shader supports
      */
@@ -488,7 +488,7 @@ public class DefaultShader extends BaseShader {
                 depthRangeFar = dta.depthRangeFar;
                 depthMask = dta.depthMask;
             } else if (!config.ignoreUnimplemented)
-                throw new GdxRuntimeException("Unknown material attribute: " + attr.toString());
+                throw new GdxRuntimeException("Unknown material attribute: " + attr);
         }
 
         context.setCullFace(cullFace);
@@ -903,7 +903,7 @@ public class DefaultShader extends BaseShader {
 
         public static class Bones extends LocalSetter {
             private final static Matrix4 idtMatrix = new Matrix4();
-            public final float bones[];
+            public final float[] bones;
 
             public Bones(final int numBones) {
                 this.bones = new float[numBones * 16];
@@ -923,7 +923,7 @@ public class DefaultShader extends BaseShader {
         }
 
         public static class ACubemap extends LocalSetter {
-            private final static float ones[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+            private final static float[] ones = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
             private final static Vector3 tmpV1 = new Vector3();
             public final int dirLightsOffset;
             public final int pointLightsOffset;

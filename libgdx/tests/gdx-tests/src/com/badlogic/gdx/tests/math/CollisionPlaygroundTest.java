@@ -39,7 +39,7 @@ public class CollisionPlaygroundTest extends GdxTest implements ApplicationListe
     private static final Color COLOR_STANDARD = Color.BLUE;
     private static final Color COLOR_MOUSE_OVER = Color.GREEN;
     private static final Color COLOR_INTERSECTION = Color.GOLD;
-    private int PRIMITIVE_TYPE = GL20.GL_LINES;
+    private final int PRIMITIVE_TYPE = GL20.GL_LINES;
     private PerspectiveCamera camera;
     private CameraInputController cameraController;
     private PerspectiveCamera collisionCamera;
@@ -50,7 +50,7 @@ public class CollisionPlaygroundTest extends GdxTest implements ApplicationListe
     private BitmapFont font;
 
     private ModelInstance frustum;
-    private List<Shape> shapes = new ArrayList<>();
+    private final List<Shape> shapes = new ArrayList<>();
 
     private long seed;
 
@@ -174,7 +174,6 @@ public class CollisionPlaygroundTest extends GdxTest implements ApplicationListe
             default:
                 shapes.add(new AABB());
         }
-
     }
 
     private ModelInstance createFrustum(PerspectiveCamera camera) {
@@ -321,5 +320,4 @@ public class CollisionPlaygroundTest extends GdxTest implements ApplicationListe
             return Intersector.intersectRayOrientedBoundsFast(ray, obb);
         }
     }
-
 }

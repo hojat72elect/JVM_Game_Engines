@@ -1,9 +1,9 @@
 package com.badlogic.gdx.utils.compression.lzma;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.utils.compression.lz.OutWindow;
 import com.badlogic.gdx.utils.compression.rangecoder.BitTreeDecoder;
+
+import java.io.IOException;
 
 public class Decoder {
     OutWindow m_OutWindow = new OutWindow();
@@ -23,6 +23,7 @@ public class Decoder {
     int m_DictionarySize = -1;
     int m_DictionarySizeCheck = -1;
     int m_PosStateMask;
+
     public Decoder() {
         for (int i = 0; i < Base.kNumLenToPosStates; i++)
             m_PosSlotDecoder[i] = new BitTreeDecoder(Base.kNumPosSlotBits);

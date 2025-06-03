@@ -49,5 +49,4 @@ public abstract class AbstractInput implements Input {
     public boolean isCatchKey(int keycode) {
         return keysToCatch.contains(keycode);
     }
-
 }

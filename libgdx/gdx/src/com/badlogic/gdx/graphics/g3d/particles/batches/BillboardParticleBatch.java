@@ -73,18 +73,20 @@ public class BillboardParticleBatch extends BufferedParticleBatch<BillboardContr
             CPU_UV_OFFSET = (short) (CPU_ATTRIBUTES.findByUsage(Usage.TextureCoordinates).offset / 4),
             CPU_COLOR_OFFSET = (short) (CPU_ATTRIBUTES.findByUsage(Usage.ColorUnpacked).offset / 4),
             CPU_VERTEX_SIZE = CPU_ATTRIBUTES.vertexSize / 4;
-    protected boolean useGPU = false;    private final static int MAX_PARTICLES_PER_MESH = Short.MAX_VALUE / 4, MAX_VERTICES_PER_MESH = MAX_PARTICLES_PER_MESH * 4;
+    protected boolean useGPU = false;
+    private final static int MAX_PARTICLES_PER_MESH = Short.MAX_VALUE / 4, MAX_VERTICES_PER_MESH = MAX_PARTICLES_PER_MESH * 4;
     protected AlignMode mode = AlignMode.Screen;
     protected Texture texture;
     protected BlendingAttribute blendingAttribute;
     protected DepthTestAttribute depthTestAttribute;
     Shader shader;
-    private RenderablePool renderablePool;
-    private Array<Renderable> renderables;
+    private final RenderablePool renderablePool;
+    private final Array<Renderable> renderables;
     private float[] vertices;
     private short[] indices;
     private int currentVertexSize = 0;
     private VertexAttributes currentAttributes;
+
     /**
      * Create a new BillboardParticleBatch
      *
@@ -112,9 +114,11 @@ public class BillboardParticleBatch extends BufferedParticleBatch<BillboardContr
         setUseGpu(useGPU);
         setAlignMode(mode);
     }
+
     public BillboardParticleBatch(AlignMode mode, boolean useGPU, int capacity) {
         this(mode, useGPU, capacity, null, null);
     }
+
     public BillboardParticleBatch() {
         this(AlignMode.Screen, false, 100);
     }
@@ -630,7 +634,7 @@ public class BillboardParticleBatch extends BufferedParticleBatch<BillboardContr
         SaveData data = resources.getSaveData("billboardBatch");
         if (data != null) {
             setTexture((Texture) manager.get(data.loadAsset()));
-            Config cfg = (Config) data.load("cfg");
+            Config cfg = data.load("cfg");
             setUseGpu(cfg.useGPU);
             setAlignMode(cfg.mode);
         }
@@ -642,6 +646,7 @@ public class BillboardParticleBatch extends BufferedParticleBatch<BillboardContr
 
         public Config() {
         }
+
         public Config(boolean useGPU, AlignMode mode) {
             this.useGPU = useGPU;
             this.mode = mode;
@@ -657,6 +662,4 @@ public class BillboardParticleBatch extends BufferedParticleBatch<BillboardContr
             return allocRenderable();
         }
     }
-
-
 }

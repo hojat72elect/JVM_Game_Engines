@@ -79,9 +79,9 @@ public class GestureDetector extends InputAdapter {
         if (listener == null) throw new IllegalArgumentException("listener cannot be null.");
         this.tapRectangleWidth = halfTapRectangleWidth;
         this.tapRectangleHeight = halfTapRectangleHeight;
-        this.tapCountInterval = (long) (tapCountInterval * 1000000000l);
+        this.tapCountInterval = (long) (tapCountInterval * 1000000000L);
         this.longPressSeconds = longPressDuration;
-        this.maxFlingDelay = (long) (maxFlingDelay * 1000000000l);
+        this.maxFlingDelay = (long) (maxFlingDelay * 1000000000L);
         this.listener = listener;
     }
 
@@ -252,7 +252,7 @@ public class GestureDetector extends InputAdapter {
      */
     public boolean isLongPressed(float duration) {
         if (touchDownTime == 0) return false;
-        return TimeUtils.nanoTime() - touchDownTime > (long) (duration * 1000000000l);
+        return TimeUtils.nanoTime() - touchDownTime > (long) (duration * 1000000000L);
     }
 
     public boolean isPanning() {
@@ -292,7 +292,7 @@ public class GestureDetector extends InputAdapter {
      *                         taps.
      */
     public void setTapCountInterval(float tapCountInterval) {
-        this.tapCountInterval = (long) (tapCountInterval * 1000000000l);
+        this.tapCountInterval = (long) (tapCountInterval * 1000000000L);
     }
 
     public void setLongPressSeconds(float longPressSeconds) {
@@ -308,11 +308,11 @@ public class GestureDetector extends InputAdapter {
      * panning or pinch zooming. Each method returns a boolean indicating if the event should be handed to the next listener (false
      * to hand it to the next listener, true otherwise).
      */
-    public static interface GestureListener {
+    public interface GestureListener {
         /**
          * @see InputProcessor#touchDown(int, int, int, int)
          */
-        public boolean touchDown(float x, float y, int pointer, int button);
+        boolean touchDown(float x, float y, int pointer, int button);
 
         /**
          * Called when a tap occured. A tap happens if a touch went down on the screen and was lifted again without moving outside
@@ -321,9 +321,9 @@ public class GestureDetector extends InputAdapter {
          *
          * @param count the number of taps.
          */
-        public boolean tap(float x, float y, int count, int button);
+        boolean tap(float x, float y, int count, int button);
 
-        public boolean longPress(float x, float y);
+        boolean longPress(float x, float y);
 
         /**
          * Called when the user dragged a finger over the screen and lifted it. Reports the last known velocity of the finger in
@@ -332,7 +332,7 @@ public class GestureDetector extends InputAdapter {
          * @param velocityX velocity on x in seconds
          * @param velocityY velocity on y in seconds
          */
-        public boolean fling(float velocityX, float velocityY, int button);
+        boolean fling(float velocityX, float velocityY, int button);
 
         /**
          * Called when the user drags a finger over the screen.
@@ -340,12 +340,12 @@ public class GestureDetector extends InputAdapter {
          * @param deltaX the difference in pixels to the last drag event on x.
          * @param deltaY the difference in pixels to the last drag event on y.
          */
-        public boolean pan(float x, float y, float deltaX, float deltaY);
+        boolean pan(float x, float y, float deltaX, float deltaY);
 
         /**
          * Called when no longer panning.
          */
-        public boolean panStop(float x, float y, int pointer, int button);
+        boolean panStop(float x, float y, int pointer, int button);
 
         /**
          * Called when the user performs a pinch zoom gesture. The original distance is the distance in pixels when the gesture
@@ -354,7 +354,7 @@ public class GestureDetector extends InputAdapter {
          * @param initialDistance distance between fingers when the gesture started.
          * @param distance        current distance between fingers.
          */
-        public boolean zoom(float initialDistance, float distance);
+        boolean zoom(float initialDistance, float distance);
 
         /**
          * Called when a user performs a pinch zoom gesture. Reports the initial positions of the two involved fingers and their
@@ -365,12 +365,12 @@ public class GestureDetector extends InputAdapter {
          * @param pointer1
          * @param pointer2
          */
-        public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2);
+        boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2);
 
         /**
          * Called when no longer pinching.
          */
-        public void pinchStop();
+        void pinchStop();
     }
 
     /**

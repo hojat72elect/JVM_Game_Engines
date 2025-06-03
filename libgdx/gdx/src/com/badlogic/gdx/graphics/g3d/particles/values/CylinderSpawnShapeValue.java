@@ -55,5 +55,4 @@ public final class CylinderSpawnShapeValue extends PrimitiveSpawnShapeValue {
     public SpawnShapeValue copy() {
         return new CylinderSpawnShapeValue(this);
     }
-
 }

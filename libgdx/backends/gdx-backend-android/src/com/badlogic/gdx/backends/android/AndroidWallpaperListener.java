@@ -34,5 +34,4 @@ public interface AndroidWallpaperListener {
      * Called in response to an icon dropping on the home screen. Not all Android launcher apps are guaranteed to support this.
      */
     void iconDropped(int x, int y);
-
 }

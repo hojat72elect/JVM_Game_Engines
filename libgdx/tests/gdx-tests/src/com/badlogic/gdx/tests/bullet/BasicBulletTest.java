@@ -143,7 +143,7 @@ public class BasicBulletTest extends BulletTest {
 
         performanceCounter.tick();
         performanceCounter.start();
-        ((btDynamicsWorld) collisionWorld).stepSimulation(Gdx.graphics.getDeltaTime(), 5);
+        collisionWorld.stepSimulation(Gdx.graphics.getDeltaTime(), 5);
         performanceCounter.stop();
 
         int c = motionStates.size;

@@ -5,7 +5,11 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.GL31;
+import com.badlogic.gdx.graphics.GL32;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
@@ -13,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Os;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.ContextAttribs;
@@ -20,7 +25,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Toolkit;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
@@ -763,7 +769,7 @@ public class LwjglGraphics extends AbstractGraphics {
          * @return the configuration to be used for a second attempt at creating a display. A null value results in NOT attempting
          * to create the display a second time
          */
-        public LwjglApplicationConfiguration onFailure(LwjglApplicationConfiguration initialConfig);
+        LwjglApplicationConfiguration onFailure(LwjglApplicationConfiguration initialConfig);
     }
 
     private class LwjglDisplayMode extends DisplayMode {

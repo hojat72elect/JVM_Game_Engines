@@ -1,6 +1,7 @@
 package com.badlogic.gdx.backends.android;
 
 import android.media.MediaPlayer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
@@ -171,6 +172,4 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
             });
         }
     }
-
-    ;
 }

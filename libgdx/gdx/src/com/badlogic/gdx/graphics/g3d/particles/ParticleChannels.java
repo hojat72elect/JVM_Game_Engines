@@ -1,11 +1,11 @@
 package com.badlogic.gdx.graphics.g3d.particles;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.particles.ParallelArray.ChannelDescriptor;
 import com.badlogic.gdx.graphics.g3d.particles.ParallelArray.ChannelInitializer;
 import com.badlogic.gdx.graphics.g3d.particles.ParallelArray.FloatChannel;
+
+import java.util.Arrays;
 
 /**
  * This contains all the definitions of particle related channels and channel initializers. It is also used by the
@@ -48,6 +48,7 @@ public class ParticleChannels {
     // Offsets
     public static final ChannelDescriptor AngularVelocity3D = new ChannelDescriptor(newGlobalId(), float.class, 3);
     private int currentId;
+
     public ParticleChannels() {
         resetIds();
     }
@@ -148,5 +149,4 @@ public class ParticleChannels {
             }
         }
     }
-
 }

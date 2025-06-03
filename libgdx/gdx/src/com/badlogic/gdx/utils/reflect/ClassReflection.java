@@ -326,5 +326,4 @@ public final class ClassReflection {
     static public Class[] getInterfaces(Class c) {
         return c.getInterfaces();
     }
-
 }

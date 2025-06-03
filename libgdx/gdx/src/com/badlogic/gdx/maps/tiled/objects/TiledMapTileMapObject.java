@@ -52,5 +52,4 @@ public class TiledMapTileMapObject extends TextureMapObject {
     public void setTile(TiledMapTile tile) {
         this.tile = tile;
     }
-
 }

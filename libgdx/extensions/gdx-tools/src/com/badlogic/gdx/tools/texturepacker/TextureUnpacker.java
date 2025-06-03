@@ -5,13 +5,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Page;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Region;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * Unpacks a texture atlas into individual image files.
@@ -67,7 +69,7 @@ public class TextureUnpacker {
         // check if number of args is right
         if (numArgs < 1) return 0;
         // check if the input file's extension is right
-        boolean extension = args[0].substring(args[0].length() - ATLAS_FILE_EXTENSION.length()).equals(ATLAS_FILE_EXTENSION);
+        boolean extension = args[0].endsWith(ATLAS_FILE_EXTENSION);
         // check if the directory names are valid
         boolean directory = true;
         if (numArgs >= 2) directory &= checkDirectoryValidity(args[1]);
@@ -95,7 +97,7 @@ public class TextureUnpacker {
         File outputDirFile = new File(outputDir);
         if (!outputDirFile.exists()) {
             outputDirFile.mkdirs();
-            if (!quiet) System.out.println(String.format("Creating directory: %s", outputDirFile.getPath()));
+            if (!quiet) System.out.printf("Creating directory: %s%n", outputDirFile.getPath());
         }
 
         for (Page page : atlas.getPages()) {
@@ -110,8 +112,8 @@ public class TextureUnpacker {
             }
             for (Region region : atlas.getRegions()) {
                 if (!quiet)
-                    System.out.println(String.format("Processing image for %s: x[%s] y[%s] w[%s] h[%s], rotate[%s]",
-                            region.name, region.left, region.top, region.width, region.height, region.rotate));
+                    System.out.printf("Processing image for %s: x[%s] y[%s] w[%s] h[%s], rotate[%s]%n",
+                            region.name, region.left, region.top, region.width, region.height, region.rotate);
 
                 // check if the page this region is in is currently loaded in a Buffered Image
                 if (region.page == page) {
@@ -140,7 +142,7 @@ public class TextureUnpacker {
                             String.format("%s.%s", region.index == -1 ? region.name : region.name + "_" + region.index, extension));
                     File imgDir = imgOutput.getParentFile();
                     if (!imgDir.exists()) {
-                        if (!quiet) System.out.println(String.format("Creating directory: %s", imgDir.getPath()));
+                        if (!quiet) System.out.printf("Creating directory: %s%n", imgDir.getPath());
                         imgDir.mkdirs();
                     }
 

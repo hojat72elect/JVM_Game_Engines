@@ -19,13 +19,14 @@
 
 package com.badlogic.gdx.utils;
 
+import com.badlogic.gdx.files.FileHandle;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-
-import com.badlogic.gdx.files.FileHandle;
 
 /**
  * Lightweight event-based JSON parser. All values are provided as strings to reduce work when many values are ignored.
@@ -37,16 +38,16 @@ public class JsonSkimmer {
     static final int json_en_object = 5;
     static final int json_en_array = 23;
     static final int json_en_main = 1;
-    private static final byte _json_actions[] = init__json_actions_0();
-    private static final short _json_key_offsets[] = init__json_key_offsets_0();
-    private static final char _json_trans_keys[] = init__json_trans_keys_0();
-    private static final byte _json_single_lengths[] = init__json_single_lengths_0();
-    private static final byte _json_range_lengths[] = init__json_range_lengths_0();
-    private static final short _json_index_offsets[] = init__json_index_offsets_0();
-    private static final byte _json_indicies[] = init__json_indicies_0();
-    private static final byte _json_trans_targs[] = init__json_trans_targs_0();
-    private static final byte _json_trans_actions[] = init__json_trans_actions_0();
-    private static final byte _json_eof_actions[] = init__json_eof_actions_0();
+    private static final byte[] _json_actions = init__json_actions_0();
+    private static final short[] _json_key_offsets = init__json_key_offsets_0();
+    private static final char[] _json_trans_keys = init__json_trans_keys_0();
+    private static final byte[] _json_single_lengths = init__json_single_lengths_0();
+    private static final byte[] _json_range_lengths = init__json_range_lengths_0();
+    private static final short[] _json_index_offsets = init__json_index_offsets_0();
+    private static final byte[] _json_indicies = init__json_indicies_0();
+    private static final byte[] _json_trans_targs = init__json_trans_targs_0();
+    private static final byte[] _json_trans_actions = init__json_trans_actions_0();
+    private static final byte[] _json_eof_actions = init__json_eof_actions_0();
     private boolean stop;
 
     // line 413 "../../../../../src/com/badlogic/gdx/utils/JsonSkimmer.java"
@@ -141,7 +142,7 @@ public class JsonSkimmer {
     public void parse(InputStream input) {
         Reader reader;
         try {
-            reader = new InputStreamReader(input, "UTF-8");
+            reader = new InputStreamReader(input, StandardCharsets.UTF_8);
         } catch (Exception ex) {
             throw new SerializationException("Error reading stream.", ex);
         }
@@ -260,7 +261,7 @@ public class JsonSkimmer {
 
                             if (_json_trans_actions[_trans] != 0) {
                                 _acts = _json_trans_actions[_trans];
-                                _nacts = (int) _json_actions[_acts++];
+                                _nacts = _json_actions[_acts++];
                                 while (_nacts-- > 0) {
                                     switch (_json_actions[_acts++]) {
                                         case 0:
@@ -466,7 +467,7 @@ public class JsonSkimmer {
                         case 4:
                             if (p == eof) {
                                 int __acts = _json_eof_actions[cs];
-                                int __nacts = (int) _json_actions[__acts++];
+                                int __nacts = _json_actions[__acts++];
                                 while (__nacts-- > 0) {
                                     switch (_json_actions[__acts++]) {
                                         case 1:

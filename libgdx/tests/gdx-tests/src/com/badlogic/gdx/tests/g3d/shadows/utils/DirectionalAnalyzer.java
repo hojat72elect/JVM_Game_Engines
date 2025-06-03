@@ -16,5 +16,5 @@ public interface DirectionalAnalyzer {
      * @param mainCamera Main Scene camera
      * @return Camera Camera out for chaining
      */
-    public Camera analyze(DirectionalLight light, Camera out, Camera mainCamera);
+    Camera analyze(DirectionalLight light, Camera out, Camera mainCamera);
 }

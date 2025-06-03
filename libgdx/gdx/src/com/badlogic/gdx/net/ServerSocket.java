@@ -13,7 +13,7 @@ public interface ServerSocket extends Disposable {
     /**
      * @return the Protocol used by this socket
      */
-    public Protocol getProtocol();
+    Protocol getProtocol();
 
     /**
      * Accepts a new incoming connection from a client {@link Socket}. The given hints will be applied to the accepted socket.
@@ -24,5 +24,5 @@ public interface ServerSocket extends Disposable {
      * @return the accepted {@link Socket}
      * @throws GdxRuntimeException in case an error occurred
      */
-    public Socket accept(SocketHints hints);
+    Socket accept(SocketHints hints);
 }

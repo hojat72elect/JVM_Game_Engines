@@ -3,7 +3,12 @@ package com.badlogic.gdx.tools.hiero;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntIntMap;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Reads a TTF font file and provides access to kerning information.
@@ -16,7 +21,7 @@ public class Kerning {
     private int headOffset = -1;
     private int kernOffset = -1;
     private int gposOffset = -1;
-    private IntIntMap kernings = new IntIntMap();
+    private final IntIntMap kernings = new IntIntMap();
 
     /**
      * @param inputStream The data for the TTF font.
@@ -79,7 +84,7 @@ public class Kerning {
             int offset = (int) input.readUnsignedLong();
             input.skip(4);
 
-            String tag = new String(tagBytes, "ISO-8859-1");
+            String tag = new String(tagBytes, StandardCharsets.ISO_8859_1);
             if (tag.equals("head")) {
                 headOffset = offset;
             } else if (tag.equals("kern")) {
@@ -101,7 +106,7 @@ public class Kerning {
         for (int subTableCount = input.readUnsignedShort(); subTableCount > 0; subTableCount--) {
             input.skip(2 * 2);
             int tupleIndex = input.readUnsignedShort();
-            if (!((tupleIndex & 1) != 0) || (tupleIndex & 2) != 0 || (tupleIndex & 4) != 0) return;
+            if ((tupleIndex & 1) == 0 || (tupleIndex & 2) != 0 || (tupleIndex & 4) != 0) return;
             if (tupleIndex >> 8 != 0) continue;
 
             int kerningCount = input.readUnsignedShort();
@@ -109,7 +114,7 @@ public class Kerning {
             while (kerningCount-- > 0) {
                 int firstGlyphCode = input.readUnsignedShort();
                 int secondGlyphCode = input.readUnsignedShort();
-                int offset = (int) input.readShort();
+                int offset = input.readShort();
                 storeKerningOffset(firstGlyphCode, secondGlyphCode, offset);
             }
         }
@@ -209,7 +214,7 @@ public class Kerning {
 
         int position = input.getPosition();
 
-        input.seek((int) (subTablePosition + coverageOffset));
+        input.seek(subTablePosition + coverageOffset);
         int[] coverage = readCoverageTable();
 
         input.seek(position);
@@ -322,7 +327,7 @@ public class Kerning {
         int xAdvance = 0;
         for (int mask = 1; mask <= 0x8000 && mask <= valueFormat; mask <<= 1) {
             if ((valueFormat & mask) != 0) {
-                int value = (int) input.readShort();
+                int value = input.readShort();
                 if (mask == 0x0004) {
                     xAdvance = value;
                 }

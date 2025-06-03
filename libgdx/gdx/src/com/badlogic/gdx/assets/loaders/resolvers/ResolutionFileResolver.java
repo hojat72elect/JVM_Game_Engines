@@ -39,6 +39,7 @@ public class ResolutionFileResolver implements FileHandleResolver {
 
     protected final FileHandleResolver baseResolver;
     protected final Resolution[] descriptors;
+
     /**
      * Creates a {@code ResolutionFileResolver} based on a given {@link FileHandleResolver} and a list of {@link Resolution}s.
      *

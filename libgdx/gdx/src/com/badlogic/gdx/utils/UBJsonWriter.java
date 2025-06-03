@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Builder style API for emitting UBJSON.
@@ -79,7 +80,7 @@ public class UBJsonWriter implements Closeable {
      */
     public UBJsonWriter name(String name) throws IOException {
         if (current == null || current.array) throw new IllegalStateException("Current item must be an object.");
-        byte[] bytes = name.getBytes("UTF-8");
+        byte[] bytes = name.getBytes(StandardCharsets.UTF_8);
         if (bytes.length <= Byte.MAX_VALUE) {
             out.writeByte('i');
             out.writeByte(bytes.length);
@@ -202,7 +203,7 @@ public class UBJsonWriter implements Closeable {
      */
     public UBJsonWriter value(String value) throws IOException {
         checkName();
-        byte[] bytes = value.getBytes("UTF-8");
+        byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
         out.writeByte('S');
         if (bytes.length <= Byte.MAX_VALUE) {
             out.writeByte('i');
@@ -379,7 +380,7 @@ public class UBJsonWriter implements Closeable {
         out.writeByte('#');
         value(values.length);
         for (int i = 0, n = values.length; i < n; i++) {
-            byte[] bytes = values[i].getBytes("UTF-8");
+            byte[] bytes = values[i].getBytes(StandardCharsets.UTF_8);
             if (bytes.length <= Byte.MAX_VALUE) {
                 out.writeByte('i');
                 out.writeByte(bytes.length);
@@ -704,5 +705,4 @@ public class UBJsonWriter implements Closeable {
             out.writeByte(array ? ']' : '}');
         }
     }
-
 }

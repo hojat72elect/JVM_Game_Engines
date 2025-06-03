@@ -1,8 +1,5 @@
 package com.badlogic.gdx.graphics;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetLoaderParameters.LoadedCallback;
@@ -16,6 +13,9 @@ import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Wraps a standard OpenGL ES Cubemap. Must be disposed when it is no longer used.
@@ -330,5 +330,4 @@ public class Cubemap extends GLTexture {
             return out.set(direction);
         }
     }
-
 }

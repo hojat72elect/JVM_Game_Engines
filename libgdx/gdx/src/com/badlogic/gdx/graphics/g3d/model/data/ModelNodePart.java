@@ -7,5 +7,5 @@ public class ModelNodePart {
     public String materialId;
     public String meshPartId;
     public ArrayMap<String, Matrix4> bones;
-    public int uvMapping[][];
+    public int[][] uvMapping;
 }

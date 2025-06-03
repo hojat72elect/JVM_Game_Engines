@@ -1,10 +1,10 @@
 package com.badlogic.gdx.tests.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Shared class for desktop launchers.
@@ -53,7 +53,7 @@ public class CommandLineOptions {
             if (config.requireGL32() && !gl32) return false;
             if (config.requireGL31() && !(gl31 || gl32)) return false;
             if (config.requireGL30() && !(gl30 || gl31 || gl32)) return false;
-            if (config.OnlyGL20() && (gl30 || gl31 || gl32)) return false;
+            return !config.OnlyGL20() || (!gl30 && !gl31 && !gl32);
         }
         return true;
     }

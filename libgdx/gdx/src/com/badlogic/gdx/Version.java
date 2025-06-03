@@ -57,5 +57,4 @@ public class Version {
         if (MINOR != minor) return MINOR < minor;
         return REVISION <= revision;
     }
-
 }

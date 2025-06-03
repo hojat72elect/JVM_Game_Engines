@@ -219,5 +219,4 @@ public class RandomXS128 extends Random {
     public long getState(int seed) {
         return seed == 0 ? seed0 : seed1;
     }
-
 }

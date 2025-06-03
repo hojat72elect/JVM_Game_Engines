@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.Input.Keys;
@@ -66,7 +63,6 @@ public class Prismatic extends Box2DTest {
         if (keyCode == Keys.S) m_joint.setMotorSpeed(-m_joint.getMotorSpeed());
 
         return false;
-
     }
 
     public void render() {

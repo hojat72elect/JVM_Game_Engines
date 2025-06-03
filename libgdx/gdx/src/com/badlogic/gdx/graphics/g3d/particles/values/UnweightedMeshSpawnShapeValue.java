@@ -66,5 +66,4 @@ public final class UnweightedMeshSpawnShapeValue extends MeshSpawnShapeValue {
     public SpawnShapeValue copy() {
         return new UnweightedMeshSpawnShapeValue(this);
     }
-
 }

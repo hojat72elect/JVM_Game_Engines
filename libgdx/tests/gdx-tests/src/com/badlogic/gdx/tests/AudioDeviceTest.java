@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -54,7 +53,7 @@ public class AudioDeviceTest extends GdxTest {
                 @Override
                 public void run() {
                     final float waveFrequency = 440;
-                    float samples[] = new float[1024];
+                    float[] samples = new float[1024];
                     long playedFrames = 0;
                     while (!stop) {
                         for (int i = 0; i < samples.length; i += 2) {

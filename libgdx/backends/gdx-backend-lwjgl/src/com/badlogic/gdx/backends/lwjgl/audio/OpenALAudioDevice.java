@@ -1,16 +1,37 @@
 package com.badlogic.gdx.backends.lwjgl.audio;
 
+import static org.lwjgl.openal.AL10.AL_BUFFERS_PROCESSED;
+import static org.lwjgl.openal.AL10.AL_FALSE;
+import static org.lwjgl.openal.AL10.AL_FORMAT_MONO16;
+import static org.lwjgl.openal.AL10.AL_FORMAT_STEREO16;
+import static org.lwjgl.openal.AL10.AL_GAIN;
+import static org.lwjgl.openal.AL10.AL_INVALID_VALUE;
+import static org.lwjgl.openal.AL10.AL_LOOPING;
+import static org.lwjgl.openal.AL10.AL_NO_ERROR;
+import static org.lwjgl.openal.AL10.AL_PLAYING;
+import static org.lwjgl.openal.AL10.AL_SOURCE_STATE;
+import static org.lwjgl.openal.AL10.alBufferData;
+import static org.lwjgl.openal.AL10.alDeleteBuffers;
+import static org.lwjgl.openal.AL10.alGenBuffers;
+import static org.lwjgl.openal.AL10.alGetError;
+import static org.lwjgl.openal.AL10.alGetSourcef;
+import static org.lwjgl.openal.AL10.alGetSourcei;
+import static org.lwjgl.openal.AL10.alSourcePlay;
+import static org.lwjgl.openal.AL10.alSourceQueueBuffers;
+import static org.lwjgl.openal.AL10.alSourceUnqueueBuffers;
+import static org.lwjgl.openal.AL10.alSourcef;
+import static org.lwjgl.openal.AL10.alSourcei;
+
 import com.badlogic.gdx.audio.AudioDevice;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL11;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-
-import static org.lwjgl.openal.AL10.*;
 
 /**
  *
@@ -25,10 +46,12 @@ public class OpenALAudioDevice implements AudioDevice {
     private final ByteBuffer tempBuffer;
     private IntBuffer buffers;
     private int sourceID = -1;
-    private int format, sampleRate;
+    private final int format;
+    private final int sampleRate;
     private boolean isPlaying;
     private float volume = 1;
-    private float renderedSeconds, secondsPerBuffer;
+    private float renderedSeconds;
+    private final float secondsPerBuffer;
     private byte[] bytes;
 
     public OpenALAudioDevice(OpenALLwjglAudio audio, int sampleRate, boolean isMono, int bufferSize, int bufferCount) {

@@ -2,6 +2,7 @@ package com.badlogic.gdx.backends.android;
 
 import android.hardware.SensorManager;
 import android.media.SoundPool;
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.android.surfaceview.FillResolutionStrategy;

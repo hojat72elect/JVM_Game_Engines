@@ -22,12 +22,13 @@ public abstract class ModelInfluencer extends Influencer {
     public ModelInfluencer() {
         this.models = new Array<Model>(true, 1, Model.class);
     }
+
     public ModelInfluencer(Model... models) {
         this.models = new Array<Model>(models);
     }
 
     public ModelInfluencer(ModelInfluencer influencer) {
-        this((Model[]) influencer.models.toArray(Model.class));
+        this(influencer.models.toArray(Model.class));
     }
 
     @Override

@@ -352,7 +352,6 @@ public class TextArea extends TextField {
             super.moveCursor(forward, jump);
         }
         updateCurrentLine();
-
     }
 
     protected boolean continueCursor(int index, int offset) {
@@ -438,7 +437,6 @@ public class TextArea extends TextField {
                     }
                     moveCursorLine(cursorLine + 1);
                     repeat = true;
-
                 } else if (keycode == Input.Keys.UP) {
                     if (shift) {
                         if (!hasSelection) {
@@ -450,7 +448,6 @@ public class TextArea extends TextField {
                     }
                     moveCursorLine(cursorLine - 1);
                     repeat = true;
-
                 } else {
                     moveOffset = -1;
                 }

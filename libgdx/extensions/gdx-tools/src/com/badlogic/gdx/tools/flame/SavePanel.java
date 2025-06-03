@@ -2,10 +2,15 @@ package com.badlogic.gdx.tools.flame;
 
 import com.badlogic.gdx.utils.JsonWriter;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 public class SavePanel extends EditorPanel<Void> {
 

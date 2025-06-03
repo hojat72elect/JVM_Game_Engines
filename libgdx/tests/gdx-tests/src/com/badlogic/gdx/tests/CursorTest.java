@@ -32,7 +32,6 @@ public class CursorTest extends GdxTest {
         pixmap3.setColor(Color.BLUE);
         pixmap3.fillCircle(16, 16, 8);
         cursor3 = Gdx.graphics.newCursor(pixmap3, 16, 16);
-
     }
 
     public void render() {

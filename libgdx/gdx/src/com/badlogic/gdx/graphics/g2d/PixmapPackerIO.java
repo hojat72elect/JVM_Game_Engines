@@ -1,15 +1,15 @@
 package com.badlogic.gdx.graphics.g2d;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.regex.Matcher;
+import static com.badlogic.gdx.graphics.g2d.PixmapPacker.indexPattern;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker.Page;
 
-import static com.badlogic.gdx.graphics.g2d.PixmapPacker.indexPattern;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.regex.Matcher;
 
 /**
  * Saves PixmapPackers to files.
@@ -96,7 +96,7 @@ public class PixmapPackerIO {
     /**
      * Image formats which can be used when saving a PixmapPacker.
      */
-    public static enum ImageFormat {
+    public enum ImageFormat {
         /**
          * A simple compressed image format which is libgdx specific.
          */
@@ -129,5 +129,4 @@ public class PixmapPackerIO {
         public TextureFilter magFilter = TextureFilter.Nearest;
         public boolean useIndexes;
     }
-
 }

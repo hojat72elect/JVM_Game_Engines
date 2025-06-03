@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.utils.Array;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,8 +18,10 @@ public class TexturePanel extends ImagePanel {
     Array<TextureRegion> selectedRegions;
     Array<TextureRegion> unselectedRegions;
     Texture texture;
-    private Color selectedColor = Color.GREEN, unselectedColor = Color.BLUE, indexBackgroundColor = Color.BLACK,
-            indexColor = Color.WHITE;
+    private final Color selectedColor = Color.GREEN;
+    private final Color unselectedColor = Color.BLUE;
+    private final Color indexBackgroundColor = Color.BLACK;
+    private final Color indexColor = Color.WHITE;
 
     public TexturePanel() {
         selectedRegions = new Array<TextureRegion>();

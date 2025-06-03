@@ -219,5 +219,4 @@ public class GL32MultipleRenderTargetsBlendingTest extends GdxTest {
         batch.setShader(null);
         batch.end();
     }
-
 }

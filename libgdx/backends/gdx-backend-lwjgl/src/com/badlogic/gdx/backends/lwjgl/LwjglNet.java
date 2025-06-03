@@ -8,6 +8,7 @@ import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
+
 import org.lwjgl.Sys;
 
 /**
@@ -55,5 +56,4 @@ public class LwjglNet implements Net {
     public boolean openURI(String URI) {
         return Sys.openURL(URI);
     }
-
 }

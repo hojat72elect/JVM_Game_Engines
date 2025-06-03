@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 
 /**
  * Helper class with static methods to build box shapes using {@link MeshPartBuilder}.
- *
+ * <p>
  * , xoppa
  */
 public class BoxShapeBuilder extends BaseShapeBuilder {
@@ -119,5 +119,4 @@ public class BoxShapeBuilder extends BaseShapeBuilder {
                 obtainV3().set(x0, y0, z1), obtainV3().set(x0, y1, z1), obtainV3().set(x1, y0, z1), obtainV3().set(x1, y1, z1));
         freeAll();
     }
-
 }

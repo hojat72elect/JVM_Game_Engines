@@ -70,5 +70,4 @@ public class FloatFrameBuffer extends FrameBuffer {
                 throw new GdxRuntimeException("Extension EXT_color_buffer_float not supported!");
         }
     }
-
 }

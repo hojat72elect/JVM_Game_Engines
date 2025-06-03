@@ -170,9 +170,9 @@ public class AtlasTmxMapLoader extends BaseTmxMapLoader<AtlasTmxMapLoader.AtlasT
 
     protected interface AtlasResolver extends ImageResolver {
 
-        public TextureAtlas getAtlas();
+        TextureAtlas getAtlas();
 
-        public static class DirectAtlasResolver implements AtlasTmxMapLoader.AtlasResolver {
+        class DirectAtlasResolver implements AtlasTmxMapLoader.AtlasResolver {
             private final TextureAtlas atlas;
 
             public DirectAtlasResolver(TextureAtlas atlas) {
@@ -190,7 +190,7 @@ public class AtlasTmxMapLoader extends BaseTmxMapLoader<AtlasTmxMapLoader.AtlasT
             }
         }
 
-        public static class AssetManagerAtlasResolver implements AtlasTmxMapLoader.AtlasResolver {
+        class AssetManagerAtlasResolver implements AtlasTmxMapLoader.AtlasResolver {
             private final AssetManager assetManager;
             private final String atlasName;
 

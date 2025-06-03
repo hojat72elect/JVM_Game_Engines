@@ -55,7 +55,7 @@ import java.nio.ShortBuffer;
  * </p>
  * <p>
  * A model is created from {@link ModelData}, which in turn is loaded by a {@link ModelLoader}.
- *
+ * <p>
  * , xoppa
  */
 public class Model implements Disposable {
@@ -85,7 +85,7 @@ public class Model implements Disposable {
      * Array of disposable resources like textures or meshes the Model is responsible for disposing
      **/
     protected final Array<Disposable> disposables = new Array();
-    private ObjectMap<NodePart, ArrayMap<String, Matrix4>> nodePartBones = new ObjectMap<NodePart, ArrayMap<String, Matrix4>>();
+    private final ObjectMap<NodePart, ArrayMap<String, Matrix4>> nodePartBones = new ObjectMap<NodePart, ArrayMap<String, Matrix4>>();
 
     /**
      * Constructs an empty model. Manual created models do not manage their resources by default. Use

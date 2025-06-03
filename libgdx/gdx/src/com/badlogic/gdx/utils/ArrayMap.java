@@ -1,12 +1,12 @@
 package com.badlogic.gdx.utils;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.reflect.ArrayReflection;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * An ordered or unordered map of objects. This implementation uses arrays to store the keys and values, which means

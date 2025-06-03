@@ -8,9 +8,8 @@ public class Encoder {
     static final int kNumBitModelTotalBits = 11;
     static final int kBitModelTotal = (1 << kNumBitModelTotalBits);
     static final int kNumMoveReducingBits = 2;
-    private static int[] ProbPrices = new int[kBitModelTotal >>> kNumMoveReducingBits];
+    private static final int[] ProbPrices = new int[kBitModelTotal >>> kNumMoveReducingBits];
     static final int kNumMoveBits = 5;
-
 
     static {
         int kNumBits = (kNumBitModelTotalBits - kNumMoveReducingBits);

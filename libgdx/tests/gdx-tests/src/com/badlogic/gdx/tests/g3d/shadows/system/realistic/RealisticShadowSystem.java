@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests.g3d.shadows.system.realistic;
 
-import java.util.Set;
-
 import com.badlogic.gdx.graphics.Cubemap.CubemapSide;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
@@ -11,11 +9,11 @@ import com.badlogic.gdx.tests.g3d.shadows.utils.LightFilter;
 import com.badlogic.gdx.tests.g3d.shadows.utils.NearFarAnalyzer;
 import com.badlogic.gdx.tests.g3d.shadows.utils.ShadowMapAllocator;
 
+import java.util.Set;
+
 /**
  * The Realistic shadow system creates real shadows. Indeed, with this system, a shadow is the absence of light. This system
  * performs only one render pass for each light and then render the scene.
- *
- * 
  */
 public class RealisticShadowSystem extends FirstPassBaseShadowSystem {
 

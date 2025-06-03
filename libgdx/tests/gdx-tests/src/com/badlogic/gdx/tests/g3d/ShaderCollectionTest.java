@@ -46,10 +46,10 @@ public class ShaderCollectionTest extends BaseG3dHudTest {
     private final Vector3 tmpV = new Vector3();
     private final Quaternion tmpQ = new Quaternion();
     private final BoundingBox bounds = new BoundingBox();
-    protected String shaders[] = new String[]{"<default>", "depth", "gouraud", "phong", "normal", "fur", "cubemap", "reflect",
+    protected String[] shaders = new String[]{"<default>", "depth", "gouraud", "phong", "normal", "fur", "cubemap", "reflect",
             "test"};
-    protected String environments[] = new String[]{"<none>", "debug", "environment_01", "environment_02"};
-    protected String materials[] = new String[]{"diffuse_green", "badlogic_normal", "brick01", "brick02", "brick03",
+    protected String[] environments = new String[]{"<none>", "debug", "environment_01", "environment_02"};
+    protected String[] materials = new String[]{"diffuse_green", "badlogic_normal", "brick01", "brick02", "brick03",
             "chesterfield", "cloth01", "cloth02", "elephant01", "elephant02", "fur01", "grass01", "metal01", "metal02", "mirror01",
             "mirror02", "moon01", "plastic01", "stone01", "stone02", "wood01", "wood02"};
     protected Environment environment;

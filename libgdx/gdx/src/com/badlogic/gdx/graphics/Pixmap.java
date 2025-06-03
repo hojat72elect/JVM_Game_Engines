@@ -30,6 +30,7 @@ public class Pixmap implements Disposable {
     private Blending blending = Blending.SourceOver;
     private Filter filter = Filter.BiLinear;
     private boolean disposed;
+
     /**
      * Creates a new Pixmap instance with the given width, height and format.
      *
@@ -58,6 +59,7 @@ public class Pixmap implements Disposable {
             throw new GdxRuntimeException("Couldn't load pixmap from image data", e);
         }
     }
+
     /**
      * Creates a new Pixmap instance from the given encoded image data. The image can be encoded as JPEG, PNG or BMP. Not
      * available on GWT backend.

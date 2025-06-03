@@ -8,7 +8,7 @@ package com.badlogic.gdx.utils;
 public class SortedIntList<E> implements Iterable<SortedIntList.Node<E>> {
     int size = 0;
     Node<E> first;
-    private NodePool<E> nodePool = new NodePool<E>(); // avoid allocating nodes
+    private final NodePool<E> nodePool = new NodePool<E>(); // avoid allocating nodes
     private transient Iterator iterator;
 
     /**

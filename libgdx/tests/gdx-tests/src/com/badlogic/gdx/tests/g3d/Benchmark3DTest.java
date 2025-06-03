@@ -236,5 +236,4 @@ public class Benchmark3DTest extends BaseG3dHudTest {
         super.dispose();
         glProfiler.disable();
     }
-
 }

@@ -16,10 +16,10 @@
 
 package com.badlogic.gdx.utils;
 
+import com.badlogic.gdx.utils.JsonWriter.OutputType;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
 
 /**
  * Builder API for emitting JSON to a string.

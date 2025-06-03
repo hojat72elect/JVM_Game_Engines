@@ -109,7 +109,7 @@ public class BitmapFontWriterTest extends ApplicationAdapter {
         int viewHeight = Gdx.graphics.getHeight();
 
         font.setColor(Color.BLACK);
-        font.draw(spriteBatch, "draw position", 20, viewHeight - 0);
+        font.draw(spriteBatch, "draw position", 20, viewHeight);
         font.setColor(Color.BLUE);
         font.draw(spriteBatch, "bounds", 20, viewHeight - 20);
         font.setColor(Color.MAGENTA);
@@ -131,7 +131,6 @@ public class BitmapFontWriterTest extends ApplicationAdapter {
 
         renderFontWithMetrics(generatedFont, text, 100, 300);
         renderFontWithMetrics(loadedFont, text, 100, 200);
-
     }
 
     private void renderFontWithMetrics(BitmapFont font, String text, float x, float y) {

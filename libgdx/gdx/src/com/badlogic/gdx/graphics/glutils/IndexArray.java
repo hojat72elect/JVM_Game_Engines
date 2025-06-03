@@ -1,10 +1,10 @@
 package com.badlogic.gdx.graphics.glutils;
 
+import com.badlogic.gdx.utils.BufferUtils;
+
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
-
-import com.badlogic.gdx.utils.BufferUtils;
 
 public class IndexArray implements IndexData {
     final ShortBuffer buffer;

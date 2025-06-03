@@ -1,9 +1,5 @@
 package com.badlogic.gdx.tests.net;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
@@ -12,13 +8,15 @@ import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.tests.utils.GdxTest;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Demonstrates how to do very simple socket programming. Implements a classic PING-PONG sequence, client connects to server,
  * sends message, server sends message back to client. Both client and server run locally. We quit as soon as the client received
  * the PONG message from the server. This example won't work in HTML. Messages are delimited by the new line character, so we can
  * use a {@link BufferedReader}.
- *
- * 
  */
 public class PingPongSocketExample extends GdxTest {
     @Override

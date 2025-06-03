@@ -99,7 +99,6 @@ public class MultipleRenderTargetTest extends GdxTest {
             public int compare(Renderable o1, Renderable o2) {
                 return o1.shader.compareTo(o2.shader);
             }
-
         };
 
         mrtSceneShader = new ShaderProgram(
@@ -402,7 +401,6 @@ public class MultipleRenderTargetTest extends GdxTest {
             if (((MRTShader) other).attributes == attributes) return 0;
             if ((((MRTShader) other).attributes & TextureAttribute.Normal) == 1) return -1;
             return 1;
-
         }
 
         @Override
@@ -478,5 +476,4 @@ public class MultipleRenderTargetTest extends GdxTest {
             obtained.clear();
         }
     }
-
 }

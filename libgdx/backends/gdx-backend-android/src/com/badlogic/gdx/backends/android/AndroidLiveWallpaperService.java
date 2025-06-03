@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -240,7 +241,7 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
         public void onCreate(final SurfaceHolder surfaceHolder) {
             if (DEBUG)
                 Log.d(TAG, " > AndroidWallpaperEngine - onCreate() " + hashCode() + " running: " + engines + ", linked: "
-                        + (linkedEngine == this) + ", thread: " + Thread.currentThread().toString());
+                        + (linkedEngine == this) + ", thread: " + Thread.currentThread());
             super.onCreate(surfaceHolder);
         }
 
@@ -282,7 +283,7 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
                         "You must override 'AndroidLiveWallpaperService.onCreateApplication' method and call 'initialize' from its body.");
             }
 
-            view = (SurfaceHolder.Callback) app.graphics.view;
+            view = app.graphics.view;
             this.getSurfaceHolder().removeCallback(view); // we are going to call this events manually
 
             // inherit format from shared surface view
@@ -372,7 +373,7 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
 
             // Android WallpaperService sends fake visibility changed events to force some buggy live wallpapers to shut down after
 // onSurfaceChanged when they aren't visible, it can cause problems in current implementation and it is not necessary
-            if (reportedVisible == false && visible == true) {
+            if (!reportedVisible && visible) {
                 if (DEBUG) Log.d(TAG, " > fake visibilityChanged event! Android WallpaperService likes do that!");
                 return;
             }
@@ -624,6 +625,5 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
             }
             return super.onComputeColors();
         }
-
     }
 }

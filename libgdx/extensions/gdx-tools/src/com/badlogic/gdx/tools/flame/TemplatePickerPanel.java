@@ -2,11 +2,16 @@ package com.badlogic.gdx.tools.flame;
 
 import com.badlogic.gdx.utils.Array;
 
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 
 /**
  *
@@ -21,6 +26,7 @@ public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements Loa
     boolean isOneModelSelectedRequired = true, isMultipleSelectionAllowed = true;
     Listener listener;
     int lastSelected = -1;
+
     public TemplatePickerPanel(FlameMain editor, Array<T> value, Listener listener, Class<T> type) {
         this(editor, value, listener, type, null, true, true);
     }
@@ -174,5 +180,4 @@ public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements Loa
     public interface Listener<T> {
         void onTemplateChecked(T template, boolean isChecked);
     }
-
 }

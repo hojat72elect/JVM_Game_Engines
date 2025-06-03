@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
  */
 public class NetJavaServerSocketImpl implements ServerSocket {
 
-    private Protocol protocol;
+    private final Protocol protocol;
 
     /**
      * Our server or null for disposed, aka closed.

@@ -40,5 +40,4 @@ public class PointSpriteRenderer extends ParticleControllerRenderer<PointSpriteC
     public ParticleControllerComponent copy() {
         return new PointSpriteRenderer(batch);
     }
-
 }

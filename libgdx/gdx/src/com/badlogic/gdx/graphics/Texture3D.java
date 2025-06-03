@@ -16,9 +16,6 @@
 
 package com.badlogic.gdx.graphics;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
@@ -26,9 +23,11 @@ import com.badlogic.gdx.graphics.glutils.CustomTexture3DData;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Open GLES wrapper for Texture3D
- *
  */
 public class Texture3D extends GLTexture {
 
@@ -167,5 +166,4 @@ public class Texture3D extends GLTexture {
     public void unsafeSetWrap(TextureWrap u, TextureWrap v, TextureWrap r) {
         unsafeSetWrap(u, v, r, false);
     }
-
 }

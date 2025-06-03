@@ -1,8 +1,5 @@
 package com.badlogic.gdx.graphics.g2d;
 
-import java.io.BufferedReader;
-import java.util.Comparator;
-
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -19,6 +16,9 @@ import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.StreamUtils;
+
+import java.io.BufferedReader;
+import java.util.Comparator;
 
 /**
  * Loads images from texture atlases created by TexturePacker.<br>
@@ -502,8 +502,8 @@ public class TextureAtlas implements Disposable {
             return regions;
         }
 
-        static private interface Field<T> {
-            public void parse(T object);
+        private interface Field<T> {
+            void parse(T object);
         }
 
         static public class Page {

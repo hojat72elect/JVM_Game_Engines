@@ -28,7 +28,6 @@ public class RevoluteJointDef extends JointDef {
      * A flag to enable joint limits.
      */
     public boolean enableLimit = false;
-    ;
     /**
      * The lower angle for the joint limit (radians).
      */

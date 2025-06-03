@@ -44,5 +44,4 @@ public class ScaleInfluencer extends SimpleInfluencer {
     public ParticleControllerComponent copy() {
         return new ScaleInfluencer(this);
     }
-
 }

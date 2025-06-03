@@ -7,13 +7,13 @@ import com.badlogic.gdx.maps.MapLayer;
  */
 public class TiledMapTileLayer extends MapLayer {
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
-    private int tileWidth;
-    private int tileHeight;
+    private final int tileWidth;
+    private final int tileHeight;
 
-    private Cell[][] cells;
+    private final Cell[][] cells;
 
     /**
      * Creates TiledMap layer

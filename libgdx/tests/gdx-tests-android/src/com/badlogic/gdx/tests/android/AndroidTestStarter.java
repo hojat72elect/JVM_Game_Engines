@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.badlogic.gdx.tests.BackTest;
 import com.badlogic.gdx.tests.utils.GdxTests;
+
 import java.util.List;
 
 public class AndroidTestStarter extends ListActivity {
@@ -48,5 +50,4 @@ public class AndroidTestStarter extends ListActivity {
 
         startActivity(intent);
     }
-
 }

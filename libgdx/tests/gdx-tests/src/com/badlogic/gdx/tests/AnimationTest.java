@@ -41,7 +41,7 @@ public class AnimationTest extends GdxTest {
         cavemen = new Caveman[100];
         for (int i = 0; i < 100; i++) {
             cavemen[i] = new Caveman((float) Math.random() * Gdx.graphics.getWidth(), (float) Math.random() * Gdx.graphics.getHeight(),
-                    Math.random() > 0.5 ? true : false);
+                    Math.random() > 0.5);
         }
         batch = new SpriteBatch();
         fpsLog = new FPSLogger();

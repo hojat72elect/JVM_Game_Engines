@@ -1,13 +1,13 @@
 package com.badlogic.gdx.graphics.g3d.utils;
 
-import java.util.Comparator;
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.Comparator;
 
 public class DefaultRenderableSorter implements RenderableSorter, Comparator<Renderable> {
     private final Vector3 tmpV1 = new Vector3();

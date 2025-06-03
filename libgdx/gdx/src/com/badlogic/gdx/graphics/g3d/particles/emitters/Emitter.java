@@ -79,5 +79,4 @@ public abstract class Emitter extends ParticleControllerComponent implements Jso
         minParticleCount = json.readValue("minParticleCount", int.class, jsonData);
         maxParticleCount = json.readValue("maxParticleCount", int.class, jsonData);
     }
-
 }

@@ -24,7 +24,7 @@ public class JointDef {
 
         public static JointType[] valueTypes = new JointType[]{Unknown, RevoluteJoint, PrismaticJoint, DistanceJoint, PulleyJoint,
                 MouseJoint, GearJoint, WheelJoint, WeldJoint, FrictionJoint, RopeJoint, MotorJoint};
-        private int value;
+        private final int value;
 
         JointType(int value) {
             this.value = value;

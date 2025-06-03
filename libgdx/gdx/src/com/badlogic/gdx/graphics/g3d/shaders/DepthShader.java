@@ -26,6 +26,7 @@ public class DepthShader extends DefaultShader {
     public DepthShader(final Renderable renderable, final Config config) {
         this(renderable, config, createPrefix(renderable, config));
     }
+
     public DepthShader(final Renderable renderable, final Config config, final String prefix) {
         this(renderable, config, prefix, config.vertexShader != null ? config.vertexShader : getDefaultVertexShader(),
                 config.fragmentShader != null ? config.fragmentShader : getDefaultFragmentShader());

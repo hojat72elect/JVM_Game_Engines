@@ -367,6 +367,5 @@ public class KTXProcessor {
             }
             throw new GdxRuntimeException("Unsupported output format, try adding '-etc1' as argument");
         }
-
     }
 }

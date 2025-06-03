@@ -1,6 +1,9 @@
 package com.badlogic.gdx.tools.flame;
 
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 
 /**
  *
@@ -14,7 +17,7 @@ public class CustomCardLayout extends CardLayout {
     }
 
     public <K> K getCurrentCard(Container container) {
-        Component c[] = container.getComponents();
+        Component[] c = container.getComponents();
         int i = 0;
         int j = c.length;
         while (i < j) {
@@ -25,5 +28,4 @@ public class CustomCardLayout extends CardLayout {
         }
         return null;
     }
-
 }

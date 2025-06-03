@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture3DData;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import java.nio.ByteBuffer;
 
 /**
@@ -17,11 +18,13 @@ import java.nio.ByteBuffer;
  */
 public class CustomTexture3DData implements Texture3DData {
 
-    private int width, height, depth;
-    private int mipMapLevel;
-    private int glFormat;
-    private int glInternalFormat;
-    private int glType;
+    private final int width;
+    private final int height;
+    private final int depth;
+    private final int mipMapLevel;
+    private final int glFormat;
+    private final int glInternalFormat;
+    private final int glType;
     private ByteBuffer pixels;
 
     /**
@@ -128,5 +131,4 @@ public class CustomTexture3DData implements Texture3DData {
     public void consume3DData() {
         Gdx.gl30.glTexImage3D(GL30.GL_TEXTURE_3D, mipMapLevel, glInternalFormat, width, height, depth, 0, glFormat, glType, pixels);
     }
-
 }

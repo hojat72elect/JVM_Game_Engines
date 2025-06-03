@@ -11,7 +11,7 @@ public interface Clipboard {
      *
      * @return true, if the clipboard has contents
      */
-    public boolean hasContents();
+    boolean hasContents();
 
     /**
      * gets the current content of the clipboard if it contains text for WebGL app, getting the system clipboard is currently not
@@ -19,7 +19,7 @@ public interface Clipboard {
      *
      * @return the clipboard content or null
      */
-    public String getContents();
+    String getContents();
 
     /**
      * Sets the content of the system clipboard. for WebGL app, clipboard content might not be set if user denied permission,
@@ -27,5 +27,5 @@ public interface Clipboard {
      *
      * @param content the content
      */
-    public void setContents(String content);
+    void setContents(String content);
 }

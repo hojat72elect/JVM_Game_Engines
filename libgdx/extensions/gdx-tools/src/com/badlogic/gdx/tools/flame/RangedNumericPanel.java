@@ -2,12 +2,17 @@ package com.badlogic.gdx.tools.flame;
 
 import com.badlogic.gdx.graphics.g3d.particles.values.RangedNumericValue;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -55,14 +60,14 @@ class RangedNumericPanel extends ParticleValuePanel<RangedNumericValue> {
 
         minSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
-                RangedNumericPanel.this.value.setLowMin((Float) minSlider.getValue());
-                if (!maxSlider.isVisible()) RangedNumericPanel.this.value.setLowMax((Float) minSlider.getValue());
+                RangedNumericPanel.this.value.setLowMin(minSlider.getValue());
+                if (!maxSlider.isVisible()) RangedNumericPanel.this.value.setLowMax(minSlider.getValue());
             }
         });
 
         maxSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
-                RangedNumericPanel.this.value.setLowMax((Float) maxSlider.getValue());
+                RangedNumericPanel.this.value.setLowMax(maxSlider.getValue());
             }
         });
 
@@ -72,7 +77,7 @@ class RangedNumericPanel extends ParticleValuePanel<RangedNumericValue> {
                 maxSlider.setVisible(visible);
                 rangeButton.setText(visible ? "<" : ">");
                 Slider slider = visible ? maxSlider : minSlider;
-                RangedNumericPanel.this.value.setLowMax((Float) slider.getValue());
+                RangedNumericPanel.this.value.setLowMax(slider.getValue());
             }
         });
     }

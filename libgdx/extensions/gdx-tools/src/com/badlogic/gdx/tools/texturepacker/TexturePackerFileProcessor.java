@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,9 +27,9 @@ public class TexturePackerFileProcessor extends FileProcessor {
     ArrayList<File> ignoreDirs = new ArrayList();
     boolean countOnly;
     int packCount;
-    private ObjectMap<File, Settings> dirToSettings = new ObjectMap();
-    private Json json = new Json();
-    private String packFileName;
+    private final ObjectMap<File, Settings> dirToSettings = new ObjectMap();
+    private final Json json = new Json();
+    private final String packFileName;
     private File root;
 
     public TexturePackerFileProcessor() {

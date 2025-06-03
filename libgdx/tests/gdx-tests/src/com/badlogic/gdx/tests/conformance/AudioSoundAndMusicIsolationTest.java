@@ -1,15 +1,14 @@
 package com.badlogic.gdx.tests.conformance;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.tests.utils.GdxTest;
 
 /**
  * Test case to validate an issue where soundID is in dirty state and controls a source used by a music.
- *
  */
 public class AudioSoundAndMusicIsolationTest extends GdxTest {
     private Sound sound;

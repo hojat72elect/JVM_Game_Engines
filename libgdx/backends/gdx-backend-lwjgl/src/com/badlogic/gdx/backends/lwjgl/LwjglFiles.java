@@ -2,6 +2,7 @@ package com.badlogic.gdx.backends.lwjgl;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.files.FileHandle;
+
 import java.io.File;
 
 public final class LwjglFiles implements Files {

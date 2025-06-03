@@ -40,5 +40,4 @@ public class WeldJointDef extends JointDef {
         this.localAnchorB.set(body2.getLocalPoint(anchor));
         referenceAngle = body2.getAngle() - body1.getAngle();
     }
-
 }

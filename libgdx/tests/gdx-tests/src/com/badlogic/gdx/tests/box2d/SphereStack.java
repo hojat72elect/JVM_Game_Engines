@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.math.Vector2;
@@ -40,7 +37,5 @@ public class SphereStack extends Box2DTest {
 
             shape.dispose();
         }
-
     }
-
 }

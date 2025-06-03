@@ -16,7 +16,7 @@ import java.util.Comparator;
  */
 public class DelayedRemovalArray<T> extends Array<T> {
     private int iterating;
-    private IntArray remove = new IntArray(0);
+    private final IntArray remove = new IntArray(0);
     private int clear;
 
     public DelayedRemovalArray() {

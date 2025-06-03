@@ -49,7 +49,7 @@ public class FrustumCullingTest extends BaseBulletTest {
     final static float SPEED_Z = 360f / 13f;
     final static Vector3 tmpV = new Vector3();
     final static Matrix4 tmpM = new Matrix4();
-    final static int ptrs[] = new int[512];
+    final static int[] ptrs = new int[512];
     final static Array<btCollisionObject> visibleObjects = new Array<btCollisionObject>();
     private final Array<BulletEntity> visibleEntities = new Array<BulletEntity>();
     int state = 0; // 0 = No culling, look from above

@@ -56,8 +56,8 @@ public class KTXTest extends GdxTest {
 
         // Cubemap test
 
-        String cubemapVS = "" //
-                + "attribute vec3 a_position;\n"//
+        //
+        String cubemapVS = "attribute vec3 a_position;\n"//
                 + "uniform mat4 u_projViewTrans;\n"//
                 + "uniform mat4 u_worldTrans;\n"//
                 + "\n"//
@@ -69,8 +69,8 @@ public class KTXTest extends GdxTest {
                 + "   v_cubeMapUV = normalize(g_position.xyz);\n"//
                 + "   gl_Position = u_projViewTrans * g_position;\n"//
                 + "}";
-        String cubemapFS = ""//
-                + "#ifdef GL_ES\n"//
+        //
+        String cubemapFS = "#ifdef GL_ES\n"//
                 + "precision mediump float;\n"//
                 + "#endif\n"//
                 + "uniform samplerCube u_environmentCubemap;\n"//
@@ -103,8 +103,8 @@ public class KTXTest extends GdxTest {
         Gdx.input.setInputProcessor(new InputMultiplexer(this, inputController = new CameraInputController(perspectiveCamera)));
 
         // 2D texture test
-        String etc1aVS = "" //
-                + "uniform mat4 u_projTrans;\n"//
+        //
+        String etc1aVS = "uniform mat4 u_projTrans;\n"//
                 + "\n"//
                 + "attribute vec4 a_position;\n"//
                 + "attribute vec2 a_texCoord0;\n"//
@@ -118,8 +118,8 @@ public class KTXTest extends GdxTest {
                 + "   v_texCoord = a_texCoord0;\n"//
                 + "   v_color = a_color;\n"//
                 + "}\n";//
-        String etc1aFS = ""//
-                + "#ifdef GL_ES\n"//
+        //
+        String etc1aFS = "#ifdef GL_ES\n"//
                 + "precision mediump float;\n"//
                 + "#endif\n"//
                 + "uniform sampler2D u_texture;\n"//
@@ -136,7 +136,6 @@ public class KTXTest extends GdxTest {
         orthoCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         image = new Texture("data/egg.zktx");
         batch = new SpriteBatch(100, etc1aShader);
-
     }
 
     @Override
@@ -197,5 +196,4 @@ public class KTXTest extends GdxTest {
 
     public void pause() {
     }
-
 }

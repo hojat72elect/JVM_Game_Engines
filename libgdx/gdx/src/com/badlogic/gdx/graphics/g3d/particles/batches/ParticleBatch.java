@@ -13,16 +13,16 @@ public interface ParticleBatch<T extends ParticleControllerRenderData> extends R
     /**
      * Must be called once before any drawing operation
      */
-    public void begin();
+    void begin();
 
-    public void draw(T controller);
+    void draw(T controller);
 
     /**
      * Must be called after all the drawing operations
      */
-    public void end();
+    void end();
 
-    public void save(AssetManager manager, ResourceData assetDependencyData);
+    void save(AssetManager manager, ResourceData assetDependencyData);
 
-    public void load(AssetManager manager, ResourceData assetDependencyData);
+    void load(AssetManager manager, ResourceData assetDependencyData);
 }

@@ -21,8 +21,7 @@ public class Lzma {
      */
     static public void compress(InputStream in, OutputStream out) throws IOException {
         CommandLine params = new CommandLine();
-        boolean eos = false;
-        if (params.Eos) eos = true;
+        boolean eos = params.Eos;
         com.badlogic.gdx.utils.compression.lzma.Encoder encoder = new com.badlogic.gdx.utils.compression.lzma.Encoder();
         if (!encoder.SetAlgorithm(params.Algorithm)) throw new RuntimeException("Incorrect compression mode");
         if (!encoder.SetDictionarySize(params.DictionarySize)) throw new RuntimeException("Incorrect dictionary size");

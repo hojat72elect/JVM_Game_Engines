@@ -5,7 +5,7 @@ package com.badlogic.gdx.maps;
  */
 public class MapGroupLayer extends MapLayer {
 
-    private MapLayers layers = new MapLayers();
+    private final MapLayers layers = new MapLayers();
 
     /**
      * @return the {@link MapLayers} owned by this group

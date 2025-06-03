@@ -112,5 +112,4 @@ public class StaticTiledMapTile implements TiledMapTile {
     public void setOffsetY(float offsetY) {
         this.offsetY = offsetY;
     }
-
 }

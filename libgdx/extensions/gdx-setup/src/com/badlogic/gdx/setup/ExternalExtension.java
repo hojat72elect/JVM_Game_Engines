@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class ExternalExtension {
 
-    private String name;
-    private String[] gwtInherits;
-    private String description;
-    private String version;
+    private final String name;
+    private final String[] gwtInherits;
+    private final String description;
+    private final String version;
 
     private Map<String, List<ExternalExtensionDependency>> dependencies;
 

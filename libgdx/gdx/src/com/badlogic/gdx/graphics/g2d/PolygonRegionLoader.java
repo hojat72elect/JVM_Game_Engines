@@ -1,8 +1,5 @@
 package com.badlogic.gdx.graphics.g2d;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -17,13 +14,16 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 /**
  * loads {@link PolygonRegion PolygonRegions} using a {@link com.badlogic.gdx.graphics.g2d.PolygonRegionLoader}
  */
 public class PolygonRegionLoader extends SynchronousAssetLoader<PolygonRegion, PolygonRegionParameters> {
 
-    private PolygonRegionParameters defaultParameters = new PolygonRegionParameters();
-    private EarClippingTriangulator triangulator = new EarClippingTriangulator();
+    private final PolygonRegionParameters defaultParameters = new PolygonRegionParameters();
+    private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
 
     public PolygonRegionLoader() {
         this(new InternalFileHandleResolver());
@@ -130,7 +130,5 @@ public class PolygonRegionLoader extends SynchronousAssetLoader<PolygonRegion, P
          */
         public String[] textureExtensions = new String[]{"png", "PNG", "jpeg", "JPEG", "jpg", "JPG", "cim", "CIM", "etc1", "ETC1",
                 "ktx", "KTX", "zktx", "ZKTX"};
-
     }
-
 }

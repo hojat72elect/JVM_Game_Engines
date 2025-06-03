@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class MapObjects implements Iterable<MapObject> {
 
-    private Array<MapObject> objects;
+    private final Array<MapObject> objects;
 
     /**
      * Creates an empty set of MapObject instances
@@ -114,5 +114,4 @@ public class MapObjects implements Iterable<MapObject> {
     public Iterator<MapObject> iterator() {
         return objects.iterator();
     }
-
 }

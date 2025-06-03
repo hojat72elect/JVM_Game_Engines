@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Disposable;
  * the particles controllers.
  */
 public class ParticleEffect implements Disposable, ResourceData.Configurable {
-    private Array<ParticleController> controllers;
+    private final Array<ParticleController> controllers;
     private BoundingBox bounds;
 
     public ParticleEffect() {

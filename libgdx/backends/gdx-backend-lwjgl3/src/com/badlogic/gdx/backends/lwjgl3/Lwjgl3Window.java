@@ -1,9 +1,16 @@
 package com.badlogic.gdx.backends.lwjgl3;
 
-import java.nio.IntBuffer;
-
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.LifecycleListener;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Os;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWDropCallback;
@@ -14,10 +21,7 @@ import org.lwjgl.glfw.GLFWWindowIconifyCallback;
 import org.lwjgl.glfw.GLFWWindowMaximizeCallback;
 import org.lwjgl.glfw.GLFWWindowRefreshCallback;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.SharedLibraryLoader;
+import java.nio.IntBuffer;
 
 public class Lwjgl3Window implements Disposable {
     final ApplicationListener listener;
@@ -38,7 +42,6 @@ public class Lwjgl3Window implements Disposable {
                 }
             });
         }
-
     };
     private final GLFWWindowCloseCallback closeCallback = new GLFWWindowCloseCallback() {
         @Override
@@ -219,7 +222,6 @@ public class Lwjgl3Window implements Disposable {
                 pixmap.dispose();
             }
         }
-
     }
 
     static void setSizeLimits(long windowHandle, int minWidth, int minHeight, int maxWidth, int maxHeight) {
@@ -515,8 +517,7 @@ public class Lwjgl3Window implements Disposable {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         Lwjgl3Window other = (Lwjgl3Window) obj;
-        if (windowHandle != other.windowHandle) return false;
-        return true;
+        return windowHandle == other.windowHandle;
     }
 
     public void flash() {

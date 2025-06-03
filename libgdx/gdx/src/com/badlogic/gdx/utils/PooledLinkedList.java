@@ -185,5 +185,4 @@ public class PooledLinkedList<T> {
         public Item<T> next;
         public Item<T> prev;
     }
-
 }

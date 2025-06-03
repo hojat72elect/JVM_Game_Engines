@@ -6,7 +6,18 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.*;
+import com.badlogic.gdx.physics.bullet.collision.btBroadphasePair;
+import com.badlogic.gdx.physics.bullet.collision.btBroadphasePairArray;
+import com.badlogic.gdx.physics.bullet.collision.btBroadphaseProxy;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionAlgorithm;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
+import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
+import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
+import com.badlogic.gdx.physics.bullet.collision.btManifoldPoint;
+import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
+import com.badlogic.gdx.physics.bullet.collision.btPersistentManifold;
+import com.badlogic.gdx.physics.bullet.collision.btPersistentManifoldArray;
 
 
 public class PairCacheTest extends BaseBulletTest {
@@ -80,7 +91,6 @@ public class PairCacheTest extends BaseBulletTest {
 
         shapeRenderer = new ShapeRenderer();
         disposables.add(shapeRenderer);
-
     }
 
     @Override

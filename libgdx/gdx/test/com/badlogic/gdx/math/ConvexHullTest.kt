@@ -1,11 +1,11 @@
 package com.badlogic.gdx.math
 
-import com.badlogic.gdx.utils.FloatArray as GdxFloatArray
-import kotlin.FloatArray
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
+import kotlin.FloatArray
+import com.badlogic.gdx.utils.FloatArray as GdxFloatArray
 
 class ConvexHullTest {
 

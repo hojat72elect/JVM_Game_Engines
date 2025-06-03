@@ -65,5 +65,4 @@ public class BackTest extends GdxTest {
         viewport.update(width, height, true);
         batch.setProjectionMatrix(viewport.getCamera().combined);
     }
-
 }

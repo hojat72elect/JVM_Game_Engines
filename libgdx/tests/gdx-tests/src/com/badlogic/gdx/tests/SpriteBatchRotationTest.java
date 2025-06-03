@@ -1,12 +1,12 @@
 package com.badlogic.gdx.tests;
 
-import java.nio.IntBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.tests.utils.GdxTest;
+
+import java.nio.IntBuffer;
 
 public class SpriteBatchRotationTest extends GdxTest {
     SpriteBatch spriteBatch;
@@ -44,7 +44,6 @@ public class SpriteBatchRotationTest extends GdxTest {
             vScale = -vScale;
             scale = 0;
         }
-
     }
 
     @Override

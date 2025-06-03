@@ -3,8 +3,6 @@ package com.badlogic.gdx.backends.lwjgl3;
 /**
  * Convenience implementation of {@link Lwjgl3WindowListener}. Derive from this class and only overwrite the methods you are
  * interested in.
- *
- * 
  */
 public class Lwjgl3WindowAdapter implements Lwjgl3WindowListener {
     @Override

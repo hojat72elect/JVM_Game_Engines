@@ -13,8 +13,8 @@ public enum Language {
     public final String name, buildScript, buildScriptDependencies, dependencies;
     public final boolean gwtSupported;
 
-    private Language(String name, String buildScript, String buildScriptDependencies, String dependencies, String src,
-                     boolean gwtSupported) {
+    Language(String name, String buildScript, String buildScriptDependencies, String dependencies, String src,
+             boolean gwtSupported) {
         this.name = name;
         this.buildScript = buildScript;
         this.buildScriptDependencies = buildScriptDependencies;

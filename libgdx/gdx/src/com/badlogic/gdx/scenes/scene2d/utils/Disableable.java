@@ -1,7 +1,7 @@
 package com.badlogic.gdx.scenes.scene2d.utils;
 
 public interface Disableable {
-    public boolean isDisabled();
+    boolean isDisabled();
 
-    public void setDisabled(boolean isDisabled);
+    void setDisabled(boolean isDisabled);
 }

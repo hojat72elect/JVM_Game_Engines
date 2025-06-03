@@ -31,12 +31,10 @@ public class KinematicTest extends BaseBulletTest {
         kinematicBox2.setColor(Color.RED);
         kinematicBox2.body
                 .setCollisionFlags(kinematicBox2.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
-        ;
         kinematicBox3 = world.add("staticbox", position3.x, position3.y, position3.z);
         kinematicBox3.setColor(Color.RED);
         kinematicBox3.body
                 .setCollisionFlags(kinematicBox3.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
-        ;
         // This makes bullet call btMotionState#getWorldTransform on every update:
         kinematicBox3.body.setActivationState(Collision.DISABLE_DEACTIVATION);
         angle = 360f;

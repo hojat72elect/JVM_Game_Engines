@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.reflect.ArrayReflection;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * A resizable, ordered array of objects with efficient add and remove at the beginning and end. Values in the backing array may
@@ -445,7 +446,7 @@ public class Queue<T> implements Iterable<T> {
             T myValue = myValues[myIndex];
             Object itsValue = itsValues[itsIndex];
 
-            if (!(myValue == null ? itsValue == null : myValue.equals(itsValue))) return false;
+            if (!(Objects.equals(myValue, itsValue))) return false;
             myIndex++;
             itsIndex++;
             if (myIndex == myBackingLength) myIndex = 0;

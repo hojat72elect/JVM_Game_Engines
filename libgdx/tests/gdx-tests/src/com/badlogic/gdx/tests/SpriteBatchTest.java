@@ -22,8 +22,8 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
     Texture texture2;
     // Font font;
     SpriteBatch spriteBatch;
-    float sprites[] = new float[SPRITES * 6];
-    float sprites2[] = new float[SPRITES * 6];
+    float[] sprites = new float[SPRITES * 6];
+    float[] sprites2 = new float[SPRITES * 6];
     Sprite[] sprites3 = new Sprite[SPRITES * 2];
     float angle = 0;
     float ROTATION_SPEED = 20;
@@ -34,7 +34,6 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
     @Override
     public void render() {
         if (renderMethod == 0) renderNormal();
-        ;
         if (renderMethod == 1) renderSprites();
     }
 
@@ -91,7 +90,6 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
             startTime = TimeUtils.nanoTime();
         }
         frames++;
-
     }
 
     private void renderSprites() {
@@ -245,5 +243,4 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
-
 }

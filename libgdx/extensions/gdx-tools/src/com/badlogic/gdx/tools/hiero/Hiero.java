@@ -50,6 +50,9 @@ import com.badlogic.gdx.tools.hiero.unicodefont.effects.OutlineZigzagEffect;
 import com.badlogic.gdx.tools.hiero.unicodefont.effects.ShadowEffect;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StringBuilder;
+
+import org.lwjgl.opengl.GL11;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -79,6 +82,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.prefs.Preferences;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -113,7 +117,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import org.lwjgl.opengl.GL11;
 
 /**
  * A tool to visualize settings for {@link UnicodeFont} and to export BMFont files for use with {@link BitmapFont}.
@@ -381,7 +384,7 @@ public class Hiero extends JFrame {
     }
 
     void open(File file) {
-        EffectPanel[] panels = (EffectPanel[]) effectPanels.toArray(new EffectPanel[effectPanels.size()]);
+        EffectPanel[] panels = effectPanels.toArray(new EffectPanel[effectPanels.size()]);
         for (int i = 0; i < panels.length; i++)
             panels[i].remove();
 
@@ -1158,7 +1161,7 @@ public class Hiero extends JFrame {
         JButton upButton;
         JButton downButton;
         JButton deleteButton;
-        private JPanel valuesPanel;
+        private final JPanel valuesPanel;
         JLabel nameLabel;
 
         GridBagConstraints constrains = new GridBagConstraints(0, -1, 1, 1, 1.0, 0.0, GridBagConstraints.CENTER,
@@ -1297,17 +1300,9 @@ public class Hiero extends JFrame {
         public void updateUpDownButtons() {
             for (int index = 0; index < effectPanels.size(); index++) {
                 EffectPanel effectPanel = effectPanels.get(index);
-                if (index == 0) {
-                    effectPanel.upButton.setEnabled(false);
-                } else {
-                    effectPanel.upButton.setEnabled(true);
-                }
+                effectPanel.upButton.setEnabled(index != 0);
 
-                if (index == effectPanels.size() - 1) {
-                    effectPanel.downButton.setEnabled(false);
-                } else {
-                    effectPanel.downButton.setEnabled(true);
-                }
+                effectPanel.downButton.setEnabled(index != effectPanels.size() - 1);
             }
         }
 
@@ -1363,11 +1358,9 @@ public class Hiero extends JFrame {
             if (getClass() != obj.getClass()) return false;
             final EffectPanel other = (EffectPanel) obj;
             if (effect == null) {
-                if (other.effect != null) return false;
-            } else if (!effect.equals(other.effect)) return false;
-            return true;
+                return other.effect == null;
+            } else return effect.equals(other.effect);
         }
-
     }
 
     static private class Splash extends JWindow {
@@ -1536,7 +1529,6 @@ public class Hiero extends JFrame {
                 }
             }
         }
-
     }
 
     static final String NEHE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n" //

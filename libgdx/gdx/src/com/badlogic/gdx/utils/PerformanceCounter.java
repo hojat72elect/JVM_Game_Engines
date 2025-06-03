@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.MathUtils;
  * {@link #tick()} to update the values. The {@link #time} {@link FloatCounter} provides access to the minimum, maximum, average,
  * total and current time (in seconds) the task takes. Likewise for the {@link #load} value, which is the percentage of the total
  * time.
- *
- * 
  */
 public class PerformanceCounter {
     private final static float nano2seconds = MathUtils.nanoToSec;

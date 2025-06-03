@@ -44,7 +44,7 @@ public class Body {
     /**
      * Fixtures of this body
      **/
-    private Array<Fixture> fixtures = new Array<Fixture>(2);
+    private final Array<Fixture> fixtures = new Array<Fixture>(2);
     /**
      * user data
      **/

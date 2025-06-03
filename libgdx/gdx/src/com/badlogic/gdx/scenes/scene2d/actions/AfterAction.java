@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
  * Executes an action only after all other actions on the actor at the time this action's target was set have finished.
  */
 public class AfterAction extends DelegateAction {
-    private Array<Action> waitForActions = new Array(false, 4);
+    private final Array<Action> waitForActions = new Array(false, 4);
 
     public void setTarget(Actor target) {
         if (target != null) waitForActions.addAll(target.getActions());

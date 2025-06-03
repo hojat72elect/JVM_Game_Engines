@@ -176,7 +176,7 @@ public class ParticleControllerTest extends BaseG3dTest {
     private class RotationAction extends Action {
         Vector3 axis;
         float angle;
-        private ParticleController emitter;
+        private final ParticleController emitter;
 
         public RotationAction(ParticleController emitter, Vector3 axis, float angle) {
             this.emitter = emitter;

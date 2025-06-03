@@ -5,8 +5,6 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 /**
  * Track properties of a stream of float values. The properties (total value, minimum, etc) are updated as values are
  * {@link #put(float)} into the stream.
- *
- * 
  */
 public class FloatCounter implements Poolable {
     /**

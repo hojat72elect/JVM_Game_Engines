@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.math.Vector2;
@@ -67,19 +64,14 @@ public class OneSidedPlatform extends Box2DTest {
             public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
                 if ((fixtureA == m_platform && fixtureB == m_character) || (fixtureB == m_platform && fixtureA == m_character)) {
                     Vector2 position = m_character.getBody().getPosition();
-                    if (position.y < m_top + m_radius - 3.0f * 0.005f)
-                        return false;
-                    else
-                        return true;
+                    return !(position.y < m_top + m_radius - 3.0f * 0.005f);
                 } else
                     return true;
             }
-
         });
     }
 
     enum State {
         Unknown, Above, Below
     }
-
 }

@@ -487,7 +487,7 @@ public class TextField extends Widget implements Disableable {
 
     String insert(int position, CharSequence text, String to) {
         if (to.length() == 0) return text.toString();
-        return to.substring(0, position) + text + to.substring(position, to.length());
+        return to.substring(0, position) + text + to.substring(position);
     }
 
     int delete(boolean fireChangeEvent) {
@@ -496,7 +496,7 @@ public class TextField extends Widget implements Disableable {
         int minIndex = Math.min(from, to);
         int maxIndex = Math.max(from, to);
         String newText = (minIndex > 0 ? text.substring(0, minIndex) : "")
-                + (maxIndex < text.length() ? text.substring(maxIndex, text.length()) : "");
+                + (maxIndex < text.length() ? text.substring(maxIndex) : "");
         if (fireChangeEvent)
             changeText(text, newText);
         else
@@ -827,17 +827,17 @@ public class TextField extends Widget implements Disableable {
     /**
      * Interface for listening to typed characters.
      */
-    static public interface TextFieldListener {
-        public void keyTyped(TextField textField, char c);
+    public interface TextFieldListener {
+        void keyTyped(TextField textField, char c);
     }
 
     /**
      * Interface for filtering characters entered into the text field.
      */
-    static public interface TextFieldFilter {
-        public boolean acceptChar(TextField textField, char c);
+    public interface TextFieldFilter {
+        boolean acceptChar(TextField textField, char c);
 
-        static public class DigitsOnlyFilter implements TextFieldFilter {
+        class DigitsOnlyFilter implements TextFieldFilter {
             public boolean acceptChar(TextField textField, char c) {
                 return Character.isDigit(c);
             }
@@ -847,8 +847,8 @@ public class TextField extends Widget implements Disableable {
     /**
      * An interface for onscreen keyboards. Can invoke the default keyboard or render your own keyboard!
      */
-    static public interface OnscreenKeyboard {
-        public void show(boolean visible);
+    public interface OnscreenKeyboard {
+        void show(boolean visible);
     }
 
     /**

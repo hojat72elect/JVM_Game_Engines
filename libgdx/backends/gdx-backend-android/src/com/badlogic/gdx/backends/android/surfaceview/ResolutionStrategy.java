@@ -6,9 +6,9 @@ package com.badlogic.gdx.backends.android.surfaceview;
  */
 public interface ResolutionStrategy {
 
-    public MeasuredDimension calcMeasures(final int widthMeasureSpec, final int heightMeasureSpec);
+    MeasuredDimension calcMeasures(final int widthMeasureSpec, final int heightMeasureSpec);
 
-    public static class MeasuredDimension {
+    class MeasuredDimension {
         public final int width;
         public final int height;
 
@@ -16,7 +16,5 @@ public interface ResolutionStrategy {
             this.width = width;
             this.height = height;
         }
-
     }
-
 }

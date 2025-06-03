@@ -10,7 +10,7 @@ enum BlendFunction {
 
     public int blend;
 
-    private BlendFunction(int blend) {
+    BlendFunction(int blend) {
         this.blend = blend;
     }
 

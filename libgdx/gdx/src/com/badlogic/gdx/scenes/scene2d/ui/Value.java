@@ -38,7 +38,6 @@ abstract public class Value {
         public float get(@Null Actor context) {
             if (context instanceof Layout) return ((Layout) context).getPrefWidth();
             return context == null ? 0 : context.getWidth();
-
         }
     };
     /**

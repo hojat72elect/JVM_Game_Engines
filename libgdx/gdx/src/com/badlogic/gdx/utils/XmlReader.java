@@ -5,13 +5,14 @@
 
 package com.badlogic.gdx.utils;
 
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.ObjectMap.Entry;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Lightweight XML parser. Supports a subset of XML features: elements, attributes, text, predefined entities, CDATA, mixed
@@ -27,15 +28,15 @@ public class XmlReader {
     static final int xml_error = 0;
     static final int xml_en_elementBody = 15;
     static final int xml_en_main = 1;
-    private static final byte _xml_actions[] = init__xml_actions_0();
-    private static final byte _xml_key_offsets[] = init__xml_key_offsets_0();
-    private static final char _xml_trans_keys[] = init__xml_trans_keys_0();
-    private static final byte _xml_single_lengths[] = init__xml_single_lengths_0();
-    private static final byte _xml_range_lengths[] = init__xml_range_lengths_0();
-    private static final short _xml_index_offsets[] = init__xml_index_offsets_0();
-    private static final byte _xml_indicies[] = init__xml_indicies_0();
-    private static final byte _xml_trans_targs[] = init__xml_trans_targs_0();
-    private static final byte _xml_trans_actions[] = init__xml_trans_actions_0();
+    private static final byte[] _xml_actions = init__xml_actions_0();
+    private static final byte[] _xml_key_offsets = init__xml_key_offsets_0();
+    private static final char[] _xml_trans_keys = init__xml_trans_keys_0();
+    private static final byte[] _xml_single_lengths = init__xml_single_lengths_0();
+    private static final byte[] _xml_range_lengths = init__xml_range_lengths_0();
+    private static final short[] _xml_index_offsets = init__xml_index_offsets_0();
+    private static final byte[] _xml_indicies = init__xml_indicies_0();
+    private static final byte[] _xml_trans_targs = init__xml_trans_targs_0();
+    private static final byte[] _xml_trans_actions = init__xml_trans_actions_0();
     private final Array<Element> elements = new Array(8);
     private final StringBuilder textBuffer = new StringBuilder(64);
     private Element root, current;
@@ -121,9 +122,7 @@ public class XmlReader {
 
     public Element parse(InputStream input) {
         try {
-            return parse(new InputStreamReader(input, "UTF-8"));
-        } catch (IOException ex) {
-            throw new SerializationException(ex);
+            return parse(new InputStreamReader(input, StandardCharsets.UTF_8));
         } finally {
             StreamUtils.closeQuietly(input);
         }
@@ -224,7 +223,7 @@ public class XmlReader {
 
                         if (_xml_trans_actions[_trans] != 0) {
                             _acts = _xml_trans_actions[_trans];
-                            _nacts = (int) _xml_actions[_acts++];
+                            _nacts = _xml_actions[_acts++];
                             while (_nacts-- > 0) {
                                 switch (_xml_actions[_acts++]) {
                                     case 0:
@@ -438,7 +437,7 @@ public class XmlReader {
         private ObjectMap<String, String> attributes;
         private Array<Element> children;
         private String text;
-        private Element parent;
+        private final Element parent;
 
         public Element(String name, Element parent) {
             this.name = name;

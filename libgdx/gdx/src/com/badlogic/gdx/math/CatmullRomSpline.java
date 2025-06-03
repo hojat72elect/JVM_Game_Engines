@@ -8,8 +8,10 @@ public class CatmullRomSpline<T extends Vector<T>> implements Path<T> {
     private T tmp;
     private T tmp2;
     private T tmp3;
+
     public CatmullRomSpline() {
     }
+
     public CatmullRomSpline(final T[] controlPoints, final boolean continuous) {
         set(controlPoints, continuous);
     }

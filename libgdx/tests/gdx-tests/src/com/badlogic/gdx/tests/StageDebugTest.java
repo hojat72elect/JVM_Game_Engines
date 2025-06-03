@@ -1,6 +1,7 @@
 package com.badlogic.gdx.tests;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.forever;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateBy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -111,5 +112,4 @@ public class StageDebugTest extends GdxTest {
                     getRotation());
         }
     }
-
 }

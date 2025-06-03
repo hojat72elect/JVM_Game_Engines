@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class RectangleMapObject extends MapObject {
 
-    private Rectangle rectangle;
+    private final Rectangle rectangle;
 
     /**
      * Creates a rectangle object which lower left corner is at (0, 0) with width=1 and height=1
@@ -36,5 +36,4 @@ public class RectangleMapObject extends MapObject {
     public Rectangle getRectangle() {
         return rectangle;
     }
-
 }

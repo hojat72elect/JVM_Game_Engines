@@ -1,7 +1,5 @@
 package com.badlogic.gdx.physics.box2d;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
@@ -32,6 +30,8 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.LongMap;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
+
+import java.util.Iterator;
 
 /**
  * The world class manages all physics entities, dynamic simulation, and asynchronous queries. The world also contains efficient
@@ -176,7 +176,7 @@ b2ContactFilter defaultFilter;
     /**
      * pool for bodies
      **/
-    protected final Pool<Body> freeBodies = new Pool<Body>(100, 200) {
+    private final Pool<Body> freeBodies = new Pool<Body>(100, 200) {
         @Override
         protected Body newObject() {
             return new Body(World.this, 0);
@@ -186,7 +186,7 @@ b2ContactFilter defaultFilter;
     /**
      * pool for fixtures
      **/
-    protected final Pool<Fixture> freeFixtures = new Pool<Fixture>(100, 200) {
+    final Pool<Fixture> freeFixtures = new Pool<Fixture>(100, 200) {
         @Override
         protected Fixture newObject() {
             return new Fixture(null, 0);
@@ -196,22 +196,22 @@ b2ContactFilter defaultFilter;
     /**
      * the address of the world instance
      **/
-    protected final long addr;
+    private final long addr;
 
     /**
      * all known bodies
      **/
-    protected final LongMap<Body> bodies = new LongMap<Body>(100);
+    final LongMap<Body> bodies = new LongMap<Body>(100);
 
     /**
      * all known fixtures
      **/
-    protected final LongMap<Fixture> fixtures = new LongMap<Fixture>(100);
+    final LongMap<Fixture> fixtures = new LongMap<Fixture>(100);
 
     /**
      * all known joints
      **/
-    protected final LongMap<Joint> joints = new LongMap<Joint>(100);
+    private final LongMap<Joint> joints = new LongMap<Joint>(100);
     /**
      * Get the global gravity vector.
      */
@@ -225,16 +225,16 @@ b2ContactFilter defaultFilter;
     /**
      * Contact filter
      **/
-    protected ContactFilter contactFilter = null;
+    private ContactFilter contactFilter = null;
     /**
      * Contact listener
      **/
-    protected ContactListener contactListener = null;
+    private ContactListener contactListener = null;
     private QueryCallback queryCallback = null;
     private long[] contactAddrs = new long[200];
     private RayCastCallback rayCastCallback = null;
-    private Vector2 rayPoint = new Vector2();
-    private Vector2 rayNormal = new Vector2();
+    private final Vector2 rayPoint = new Vector2();
+    private final Vector2 rayNormal = new Vector2();
 
     /**
      * Construct a world object.
@@ -508,7 +508,6 @@ b2ContactFilter defaultFilter;
             return jniCreatePulleyJoint(addr, d.bodyA.addr, d.bodyB.addr, d.collideConnected, d.groundAnchorA.x, d.groundAnchorA.y,
                     d.groundAnchorB.x, d.groundAnchorB.y, d.localAnchorA.x, d.localAnchorA.y, d.localAnchorB.x, d.localAnchorB.y,
                     d.lengthA, d.lengthB, d.ratio);
-
         }
         if (def.type == JointType.RevoluteJoint) {
             RevoluteJointDef d = (RevoluteJointDef) def;
@@ -860,7 +859,6 @@ b2ContactFilter defaultFilter;
 		b2World* world = (b2World*)addr;
 		return world->GetContactCount();
 	*/
-    ;
 
     private native void jniSetGravity(long addr, float gravityX, float gravityY); /*
 		b2World* world = (b2World*)addr;

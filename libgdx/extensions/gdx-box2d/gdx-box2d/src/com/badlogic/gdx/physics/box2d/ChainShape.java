@@ -3,7 +3,7 @@ package com.badlogic.gdx.physics.box2d;
 import com.badlogic.gdx.math.Vector2;
 
 public class ChainShape extends Shape {
-    private static float[] verts = new float[2];
+    private static final float[] verts = new float[2];
     // @off
 	/*JNI
 #include <Box2D/Box2D.h>

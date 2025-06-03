@@ -6,8 +6,9 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.Resampling;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.badlogic.gdx.utils.Array;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
@@ -20,9 +21,11 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+
 public class ImageProcessor {
     static private final BufferedImage emptyImage = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
-    static private Pattern indexPattern = Pattern.compile("(.+)_(\\d+)$");
+    static private final Pattern indexPattern = Pattern.compile("(.+)_(\\d+)$");
 
     private final Settings settings;
     private final HashMap<String, Rect> crcs = new HashMap();
@@ -390,10 +393,10 @@ public class ImageProcessor {
         }
 
         if (scale != 1) {
-            startX = (int) Math.round(startX * scale);
-            endX = (int) Math.round(endX * scale);
-            startY = (int) Math.round(startY * scale);
-            endY = (int) Math.round(endY * scale);
+            startX = Math.round(startX * scale);
+            endX = Math.round(endX * scale);
+            startY = Math.round(startY * scale);
+            endY = Math.round(endY * scale);
         }
 
         return new int[]{startX, endX, startY, endY};
@@ -454,10 +457,10 @@ public class ImageProcessor {
         }
 
         if (scale != 1) {
-            startX = (int) Math.round(startX * scale);
-            endX = (int) Math.round(endX * scale);
-            startY = (int) Math.round(startY * scale);
-            endY = (int) Math.round(endY * scale);
+            startX = Math.round(startX * scale);
+            endX = Math.round(endX * scale);
+            startY = Math.round(startY * scale);
+            endY = Math.round(endY * scale);
         }
 
         int[] pads = new int[]{startX, endX, startY, endY};

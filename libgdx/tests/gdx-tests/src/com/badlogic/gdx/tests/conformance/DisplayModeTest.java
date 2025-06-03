@@ -1,10 +1,10 @@
 package com.badlogic.gdx.tests.conformance;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.tests.utils.GdxTest;
+
+import java.util.Arrays;
 
 public class DisplayModeTest extends GdxTest {
 
@@ -52,5 +52,4 @@ public class DisplayModeTest extends GdxTest {
                 && a.width == b.width;
         return equal;
     }
-
 }

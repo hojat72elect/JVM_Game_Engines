@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
  */
 public final class WeightMeshSpawnShapeValue extends MeshSpawnShapeValue {
 
-    private CumulativeDistribution<Triangle> distribution;
+    private final CumulativeDistribution<Triangle> distribution;
 
     public WeightMeshSpawnShapeValue(WeightMeshSpawnShapeValue value) {
         super(value);
@@ -84,5 +84,4 @@ public final class WeightMeshSpawnShapeValue extends MeshSpawnShapeValue {
     public SpawnShapeValue copy() {
         return new WeightMeshSpawnShapeValue(this);
     }
-
 }

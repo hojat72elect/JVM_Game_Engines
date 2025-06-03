@@ -39,17 +39,17 @@ public class StandardKeyboardHeightProvider extends PopupWindow implements Keybo
     /**
      * The view that is used to calculate the keyboard height
      */
-    private View popupView;
+    private final View popupView;
 
     /**
      * The parent view
      */
-    private View parentView;
+    private final View parentView;
 
     /**
      * The root activity that uses this KeyboardHeightProvider
      */
-    private Activity activity;
+    private final Activity activity;
 
     /**
      * Construct a new KeyboardHeightProvider

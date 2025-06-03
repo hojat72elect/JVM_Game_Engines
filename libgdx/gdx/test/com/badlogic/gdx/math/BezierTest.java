@@ -1,8 +1,7 @@
 package com.badlogic.gdx.math;
 
 import com.badlogic.gdx.utils.Array;
-import java.util.ArrayList;
-import java.util.Collection;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class BezierTest {
@@ -55,7 +57,6 @@ public class BezierTest {
             } else {
                 bezier = new Bezier<>(points);
             }
-
         }
     }
 

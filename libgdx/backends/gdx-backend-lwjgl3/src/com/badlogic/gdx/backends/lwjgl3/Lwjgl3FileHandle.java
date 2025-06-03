@@ -1,10 +1,10 @@
 package com.badlogic.gdx.backends.lwjgl3;
 
-import java.io.File;
-
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.io.File;
 
 /**
  *

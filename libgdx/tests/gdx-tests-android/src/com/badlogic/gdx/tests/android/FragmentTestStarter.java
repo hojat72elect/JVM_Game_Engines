@@ -13,14 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.ListFragment;
+
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.tests.BackTest;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.tests.utils.GdxTests;
+
 import java.util.List;
 
 public class FragmentTestStarter extends FragmentActivity implements AndroidFragmentApplication.Callbacks {
@@ -106,7 +109,6 @@ public class FragmentTestStarter extends FragmentActivity implements AndroidFrag
                 this.activity = (FragmentTestStarter) activity;
             }
         }
-
     }
 
     public static class TestViewFragment extends AndroidFragmentApplication {
@@ -133,7 +135,5 @@ public class FragmentTestStarter extends FragmentActivity implements AndroidFrag
             config.useImmersiveMode = true;
             return initializeForView(test, config);
         }
-
     }
-
 }

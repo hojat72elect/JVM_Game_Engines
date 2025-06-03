@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
  * <a href="http://en.wikipedia.org/wiki/Cumulative_distribution_function">Wikipedia</a> for a detailed explanation.
  */
 public class CumulativeDistribution<T> {
-    private Array<CumulativeValue> values;
+    private final Array<CumulativeValue> values;
 
     public CumulativeDistribution() {
         values = new Array<CumulativeValue>(false, 10, CumulativeValue.class);

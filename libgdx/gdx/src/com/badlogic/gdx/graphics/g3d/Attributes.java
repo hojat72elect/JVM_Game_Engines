@@ -1,9 +1,9 @@
 package com.badlogic.gdx.graphics.g3d;
 
+import com.badlogic.gdx.utils.Array;
+
 import java.util.Comparator;
 import java.util.Iterator;
-
-import com.badlogic.gdx.utils.Array;
 
 public class Attributes implements Iterable<Attribute>, Comparator<Attribute>, Comparable<Attributes> {
     protected final Array<Attribute> attributes = new Array<Attribute>();

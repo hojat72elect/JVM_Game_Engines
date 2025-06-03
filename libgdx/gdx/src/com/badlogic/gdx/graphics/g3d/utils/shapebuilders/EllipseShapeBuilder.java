@@ -9,8 +9,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
  * Helper class with static methods to build ellipse shapes using {@link MeshPartBuilder}.
- *
- * 
  */
 public class EllipseShapeBuilder extends BaseShapeBuilder {
     /**

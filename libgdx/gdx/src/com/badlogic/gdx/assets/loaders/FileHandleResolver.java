@@ -8,5 +8,5 @@ import com.badlogic.gdx.files.FileHandle;
  * resources from anywhere or implement caching strategies.
  */
 public interface FileHandleResolver {
-    public FileHandle resolve(String fileName);
+    FileHandle resolve(String fileName);
 }

@@ -68,7 +68,8 @@ public class ShapeRenderer implements Disposable {
     private boolean matrixDirty = false;
     private ShapeType shapeType;
     private boolean autoShapeType;
-    private float defaultRectLineWidth = 0.75f;
+    private final float defaultRectLineWidth = 0.75f;
+
     public ShapeRenderer() {
         this(5000);
     }
@@ -575,7 +576,6 @@ public class ShapeRenderer implements Disposable {
             renderer.color(col1.r, col1.g, col1.b, col1.a);
             renderer.vertex(x1, y1, 0);
         }
-
     }
 
     /**
@@ -844,7 +844,6 @@ public class ShapeRenderer implements Disposable {
             renderer.color(colorBits);
             renderer.vertex(x, y, z);
         }
-
     }
 
     /**

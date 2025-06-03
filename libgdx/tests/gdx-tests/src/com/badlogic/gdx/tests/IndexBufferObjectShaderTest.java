@@ -72,5 +72,4 @@ public class IndexBufferObjectShaderTest extends GdxTest {
         vbo.invalidate();
         ibo.invalidate();
     }
-
 }

@@ -9,6 +9,7 @@ public class Plane implements Serializable {
     private static final long serialVersionUID = -1240652082930747866L;
     public final Vector3 normal = new Vector3();
     public float d = 0;
+
     /**
      * Constructs a new plane with all values set to 0
      */
@@ -177,7 +178,7 @@ public class Plane implements Serializable {
     }
 
     public String toString() {
-        return normal.toString() + ", " + d;
+        return normal + ", " + d;
     }
 
     /**

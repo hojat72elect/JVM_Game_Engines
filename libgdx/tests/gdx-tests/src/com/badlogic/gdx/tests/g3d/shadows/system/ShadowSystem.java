@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests.g3d.shadows.system;
 
-import java.util.Set;
-
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Cubemap.CubemapSide;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
@@ -9,6 +7,8 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.environment.SpotLight;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
+
+import java.util.Set;
 
 /**
  * Shadow system provides functionalities to render shadows.
@@ -58,57 +58,55 @@ import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
  * environment, you should do it in shadow system too. <br />
  * If you have two different environments, when you switch, you should add and remove all lights in shadow system.
  * </p>
- *
- * 
  */
 public interface ShadowSystem {
 
     /**
      * Initialize system
      */
-    public void init();
+    void init();
 
     /**
      * Return number of pass
      *
      * @return int
      */
-    public int getPassQuantity();
+    int getPassQuantity();
 
     /**
      * Return shaderProvider of the pass n
      *
      * @return ShaderProvider
      */
-    public ShaderProvider getPassShaderProvider(int n);
+    ShaderProvider getPassShaderProvider(int n);
 
     /**
      * Return shaderProvider used for main rendering
      *
      * @return ShaderProvider
      */
-    public ShaderProvider getShaderProvider();
+    ShaderProvider getShaderProvider();
 
     /**
      * Add spot light in shadow system
      *
      * @param spot SpotLight to add in the ShadowSystem
      */
-    public void addLight(SpotLight spot);
+    void addLight(SpotLight spot);
 
     /**
      * Add directional light in shadow system
      *
      * @param dir DirectionalLight to add in the ShadowSystem
      */
-    public void addLight(DirectionalLight dir);
+    void addLight(DirectionalLight dir);
 
     /**
      * Add point light in shadow system
      *
      * @param point PointLight to add in the ShadowSystem
      */
-    public void addLight(PointLight point);
+    void addLight(PointLight point);
 
     /**
      * Add point light in shadow system
@@ -116,51 +114,51 @@ public interface ShadowSystem {
      * @param point PointLight to add in the ShadowSystem
      * @param sides Set of side
      */
-    public void addLight(PointLight point, Set<CubemapSide> sides);
+    void addLight(PointLight point, Set<CubemapSide> sides);
 
     /**
      * Remove light from the shadowSystem
      *
      * @param spot SpotLight to remove in the ShadowSystem
      */
-    public void removeLight(SpotLight spot);
+    void removeLight(SpotLight spot);
 
     /**
      * Remove light from the shadowSystem
      *
      * @param dir DirectionalLight to remove in the ShadowSystem
      */
-    public void removeLight(DirectionalLight dir);
+    void removeLight(DirectionalLight dir);
 
     /**
      * Remove light from the shadowSystem
      *
      * @param point PointLight to remove in the ShadowSystem
      */
-    public void removeLight(PointLight point);
+    void removeLight(PointLight point);
 
     /**
      * @param spot SpotLight to check
      * @return true if light analyzed
      */
-    public boolean hasLight(SpotLight spot);
+    boolean hasLight(SpotLight spot);
 
     /**
      * @param dir Directional Light to check
      * @return true if light analyzed
      */
-    public boolean hasLight(DirectionalLight dir);
+    boolean hasLight(DirectionalLight dir);
 
     /**
      * @param point PointLight to check
      * @return true if light analyzed
      */
-    public boolean hasLight(PointLight point);
+    boolean hasLight(PointLight point);
 
     /**
      * Update shadowSystem
      */
-    public void update();
+    void update();
 
     /**
      * Begin shadow system with main camera and renderable providers.
@@ -168,29 +166,29 @@ public interface ShadowSystem {
      * @param camera
      * @param renderableProviders
      */
-    public <T extends RenderableProvider> void begin(Camera camera, Iterable<T> renderableProviders);
+    <T extends RenderableProvider> void begin(Camera camera, Iterable<T> renderableProviders);
 
     /**
      * Begin pass n rendering.
      *
      * @param n Pass number
      */
-    public void begin(int n);
+    void begin(int n);
 
     /**
      * Switch light
      *
      * @return Current camera
      */
-    public Camera next();
+    Camera next();
 
     /**
      * End shadow system
      */
-    public void end();
+    void end();
 
     /**
      * End pass n rendering
      */
-    public void end(int n);
+    void end(int n);
 }

@@ -385,5 +385,4 @@ public class LongQueue {
         }
         return true;
     }
-
 }

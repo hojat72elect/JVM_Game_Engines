@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.BaseShaderProvider;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
- * 
+ *
  */
 public class MainShaderProvider extends BaseShaderProvider {
     public final MainShader.Config config;

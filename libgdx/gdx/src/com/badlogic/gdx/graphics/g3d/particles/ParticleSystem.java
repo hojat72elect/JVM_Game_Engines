@@ -12,8 +12,9 @@ import com.badlogic.gdx.utils.Pool;
  */
 public final class ParticleSystem implements RenderableProvider {
     private static ParticleSystem instance;
-    private Array<ParticleBatch<?>> batches;
-    private Array<ParticleEffect> effects;
+    private final Array<ParticleBatch<?>> batches;
+    private final Array<ParticleEffect> effects;
+
     public ParticleSystem() {
         batches = new Array<ParticleBatch<?>>();
         effects = new Array<ParticleEffect>();

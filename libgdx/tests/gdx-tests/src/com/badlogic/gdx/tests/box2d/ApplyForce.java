@@ -146,5 +146,4 @@ public class ApplyForce extends Box2DTest {
 
         return false;
     }
-
 }

@@ -79,7 +79,6 @@ public class ParticleEmittersTest extends GdxTest {
 
                 return false;
             }
-
         };
 
         InputMultiplexer multiplexer = new InputMultiplexer();

@@ -47,6 +47,7 @@ public class ResourceData<T> implements Json.Serializable {
         sharedAssets = new Array<AssetData>();
         currentLoadIndex = 0;
     }
+
     public ResourceData(T resource) {
         this();
         this.resource = resource;
@@ -136,10 +137,10 @@ public class ResourceData<T> implements Json.Serializable {
     /**
      * This interface must be implemented by any class requiring additional assets to be loaded/saved
      */
-    public static interface Configurable<T> {
-        public void save(AssetManager manager, ResourceData<T> resources);
+    public interface Configurable<T> {
+        void save(AssetManager manager, ResourceData<T> resources);
 
-        public void load(AssetManager manager, ResourceData<T> resources);
+        void load(AssetManager manager, ResourceData<T> resources);
     }
 
     /**
@@ -234,5 +235,4 @@ public class ResourceData<T> implements Json.Serializable {
             }
         }
     }
-
 }

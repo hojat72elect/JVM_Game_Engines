@@ -2,10 +2,12 @@ package com.badlogic.gdx.tools.flame;
 
 import com.badlogic.gdx.graphics.g3d.particles.emitters.RegularEmitter;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JCheckBox;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -50,5 +52,4 @@ public class RegularEmitterPanel extends EditorPanel<RegularEmitter> {
         addContent(i++, 0, lifeOffsetPanel = new ScaledNumericPanel(editor, emitter.getLifeOffset(), "Duration", "Life Offset",
                 "Particle starting life consumed, in milliseconds.", false));
     }
-
 }

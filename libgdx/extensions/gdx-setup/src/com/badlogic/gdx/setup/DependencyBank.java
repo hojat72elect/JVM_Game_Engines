@@ -75,7 +75,7 @@ public class DependencyBank {
                 new String[]{"com.mobidevelop.robovm:robovm-rt:$roboVMVersion",
                         "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion", "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion",
                         "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"},
-                new String[]{ "com.badlogicgames.gdx:gdx:$gdxVersion:sources",
+                new String[]{"com.badlogicgames.gdx:gdx:$gdxVersion:sources",
                         "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"},
                 new String[]{"com.badlogic.gdx.backends.gdx_backends_gwt"},
 
@@ -147,14 +147,14 @@ public class DependencyBank {
 
                 "Artificial Intelligence framework");
 
-        private String[] coreDependencies;
-        private String[] lwjgl2Dependencies;
-        private String[] lwjgl3Dependencies;
-        private String[] androidDependencies;
-        private String[] iosDependencies;
-        private String[] gwtDependencies;
-        private String[] gwtInherits;
-        private String description;
+        private final String[] coreDependencies;
+        private final String[] lwjgl2Dependencies;
+        private final String[] lwjgl3Dependencies;
+        private final String[] androidDependencies;
+        private final String[] iosDependencies;
+        private final String[] gwtDependencies;
+        private final String[] gwtInherits;
+        private final String description;
 
         ProjectDependency(String[] coreDeps, String[] lwjgl2Deps, String[] lwjgl3Deps, String[] androidDeps, String[] iosDeps,
                           String[] gwtDeps, String[] gwtInhertis, String description) {
@@ -219,5 +219,4 @@ public class DependencyBank {
             return sourceLanguage.platformPlugins[ordinal()];
         }
     }
-
 }

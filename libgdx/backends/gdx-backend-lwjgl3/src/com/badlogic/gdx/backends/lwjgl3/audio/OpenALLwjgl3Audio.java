@@ -1,12 +1,55 @@
 package com.badlogic.gdx.backends.lwjgl3.audio;
 
+import static org.lwjgl.openal.AL10.AL_BUFFER;
+import static org.lwjgl.openal.AL10.AL_NO_ERROR;
+import static org.lwjgl.openal.AL10.AL_ORIENTATION;
+import static org.lwjgl.openal.AL10.AL_PAUSED;
+import static org.lwjgl.openal.AL10.AL_PLAYING;
+import static org.lwjgl.openal.AL10.AL_POSITION;
+import static org.lwjgl.openal.AL10.AL_SOURCE_STATE;
+import static org.lwjgl.openal.AL10.AL_STOPPED;
+import static org.lwjgl.openal.AL10.AL_VELOCITY;
+import static org.lwjgl.openal.AL10.alDeleteSources;
+import static org.lwjgl.openal.AL10.alDisable;
+import static org.lwjgl.openal.AL10.alGenSources;
+import static org.lwjgl.openal.AL10.alGetError;
+import static org.lwjgl.openal.AL10.alGetSourcei;
+import static org.lwjgl.openal.AL10.alListenerfv;
+import static org.lwjgl.openal.AL10.alSourcePause;
+import static org.lwjgl.openal.AL10.alSourcePlay;
+import static org.lwjgl.openal.AL10.alSourceStop;
+import static org.lwjgl.openal.AL10.alSourcei;
+import static org.lwjgl.openal.ALC10.alcCloseDevice;
+import static org.lwjgl.openal.ALC10.alcCreateContext;
+import static org.lwjgl.openal.ALC10.alcDestroyContext;
+import static org.lwjgl.openal.ALC10.alcGetInteger;
+import static org.lwjgl.openal.ALC10.alcGetString;
+import static org.lwjgl.openal.ALC10.alcMakeContextCurrent;
+import static org.lwjgl.openal.ALC10.alcOpenDevice;
+import static org.lwjgl.openal.EXTDisconnect.ALC_CONNECTED;
+import static org.lwjgl.openal.EnumerateAllExt.ALC_ALL_DEVICES_SPECIFIER;
+
 import com.badlogic.gdx.audio.AudioDevice;
 import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.IntArray;
+import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.LongMap;
+import com.badlogic.gdx.utils.ObjectMap;
+
 import org.lwjgl.BufferUtils;
-import org.lwjgl.openal.*;
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.ALC;
+import org.lwjgl.openal.ALCCapabilities;
+import org.lwjgl.openal.ALUtil;
+import org.lwjgl.openal.SOFTDirectChannels;
+import org.lwjgl.openal.SOFTDirectChannelsRemix;
+import org.lwjgl.openal.SOFTReopenDevice;
+import org.lwjgl.openal.SOFTXHoldOnDisconnect;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
@@ -14,11 +57,6 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.lwjgl.openal.AL10.*;
-import static org.lwjgl.openal.ALC10.*;
-import static org.lwjgl.openal.EXTDisconnect.ALC_CONNECTED;
-import static org.lwjgl.openal.EnumerateAllExt.ALC_ALL_DEVICES_SPECIFIER;
 
 /**
  *
@@ -34,8 +72,8 @@ public class OpenALLwjgl3Audio implements Lwjgl3Audio {
     private LongMap<Integer> soundIdToSource;
     private IntMap<Long> sourceToSoundId;
     private long nextSoundId = 0;
-    private ObjectMap<String, Class<? extends OpenALSound>> extensionToSoundClass = new ObjectMap();
-    private ObjectMap<String, Class<? extends OpenALMusic>> extensionToMusicClass = new ObjectMap();
+    private final ObjectMap<String, Class<? extends OpenALSound>> extensionToSoundClass = new ObjectMap();
+    private final ObjectMap<String, Class<? extends OpenALMusic>> extensionToMusicClass = new ObjectMap();
     private OpenALSound[] recentSounds;
     private int mostRecetSound = -1;
     private String preferredOutputDevice = null;

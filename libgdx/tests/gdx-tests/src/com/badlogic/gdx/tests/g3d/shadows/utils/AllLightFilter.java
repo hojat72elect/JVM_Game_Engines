@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g3d.environment.BaseLight;
 
 /**
  * This Filter does not block lights. All lights are allowed.
- *
- * 
  */
 public class AllLightFilter implements LightFilter {
 

@@ -40,5 +40,4 @@ public class MotorJointDef extends JointDef {
         this.linearOffset.set(bodyA.getLocalPoint(bodyB.getPosition()));
         this.angularOffset = bodyB.getAngle() - bodyA.getAngle();
     }
-
 }

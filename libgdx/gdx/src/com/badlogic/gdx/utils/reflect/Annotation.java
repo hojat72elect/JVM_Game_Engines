@@ -5,7 +5,7 @@ package com.badlogic.gdx.utils.reflect;
  */
 public final class Annotation {
 
-    private java.lang.annotation.Annotation annotation;
+    private final java.lang.annotation.Annotation annotation;
 
     Annotation(java.lang.annotation.Annotation annotation) {
         this.annotation = annotation;

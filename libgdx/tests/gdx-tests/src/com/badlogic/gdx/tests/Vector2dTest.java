@@ -16,17 +16,17 @@ public class Vector2dTest extends GdxTest {
     private final long start = System.currentTimeMillis();
     private ShapeRenderer renderer;
     private OrthographicCamera camera;
-    private Vector2 rotating = new Vector2(Vector2.X);
-    private Vector2 scalingX = new Vector2(Vector2.Y);
-    private Vector2 scalingY = new Vector2(Vector2.X);
-    private Vector2 lerping1 = new Vector2(Vector2.X);
-    private Vector2 lerpTarget = new Vector2(Vector2.Y);
-    private Vector2 sum = new Vector2().add(Vector2.X).add(Vector2.Y).nor();
-    private Vector2 mash = new Vector2(Vector2.Y);
-    private Interpolation interpolator = Interpolation.swing;
-    private Vector2 lerping2 = new Vector2(Vector2.X);
-    private Vector2 lerpStart2 = new Vector2(Vector2.X);
-    private Vector2 lerpTarget2 = new Vector2(Vector2.Y);
+    private final Vector2 rotating = new Vector2(Vector2.X);
+    private final Vector2 scalingX = new Vector2(Vector2.Y);
+    private final Vector2 scalingY = new Vector2(Vector2.X);
+    private final Vector2 lerping1 = new Vector2(Vector2.X);
+    private final Vector2 lerpTarget = new Vector2(Vector2.Y);
+    private final Vector2 sum = new Vector2().add(Vector2.X).add(Vector2.Y).nor();
+    private final Vector2 mash = new Vector2(Vector2.Y);
+    private final Interpolation interpolator = Interpolation.swing;
+    private final Vector2 lerping2 = new Vector2(Vector2.X);
+    private final Vector2 lerpStart2 = new Vector2(Vector2.X);
+    private final Vector2 lerpTarget2 = new Vector2(Vector2.Y);
     private float timePassed = 0;
 
     @Override

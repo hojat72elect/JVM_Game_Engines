@@ -194,5 +194,4 @@ public final class Field {
             throw new ReflectionException("Illegal access to field: " + getName(), e);
         }
     }
-
 }

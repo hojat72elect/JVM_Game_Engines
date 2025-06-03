@@ -2,8 +2,9 @@ package com.badlogic.gdx.backends.lwjgl;
 
 import com.badlogic.gdx.ApplicationListener;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
 
 /**
  * Wraps an {@link LwjglAWTCanvas} in a resizable {@link JFrame}.

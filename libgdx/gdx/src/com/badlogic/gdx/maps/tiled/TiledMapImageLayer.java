@@ -39,5 +39,4 @@ public class TiledMapImageLayer extends MapLayer {
     public void setY(float y) {
         this.y = y;
     }
-
 }

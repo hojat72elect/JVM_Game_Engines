@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Ellipse;
  */
 public class EllipseMapObject extends MapObject {
 
-    private Ellipse ellipse;
+    private final Ellipse ellipse;
 
     /**
      * Creates an {@link Ellipse} object whose lower left corner is at (0, 0) with width=1 and height=1

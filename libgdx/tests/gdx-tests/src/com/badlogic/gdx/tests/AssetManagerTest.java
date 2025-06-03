@@ -62,7 +62,6 @@ public class AssetManagerTest extends GdxTest implements AssetErrorListener {
         batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("data/font.fnt"), false);
         skin = new Skin();
-
     }
 
     private void load() {
@@ -200,7 +199,7 @@ public class AssetManagerTest extends GdxTest implements AssetErrorListener {
 
     @Override
     public void error(AssetDescriptor asset, Throwable throwable) {
-        Gdx.app.error("AssetManagerTest", "Couldn't load asset: " + asset, (Exception) throwable);
+        Gdx.app.error("AssetManagerTest", "Couldn't load asset: " + asset, throwable);
     }
 
     @Override

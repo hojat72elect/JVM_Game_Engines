@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
 
 /**
- *  No physics, simple base class for rendering a bunch of entities.
+ * No physics, simple base class for rendering a bunch of entities.
  */
 public class BaseWorld<T extends BaseEntity> implements Disposable {
     protected final Array<T> entities = new Array<T>();

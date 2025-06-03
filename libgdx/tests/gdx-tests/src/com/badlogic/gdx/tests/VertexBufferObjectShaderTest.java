@@ -95,5 +95,4 @@ public class VertexBufferObjectShaderTest extends GdxTest {
     public void resume() {
         vbo.invalidate();
     }
-
 }

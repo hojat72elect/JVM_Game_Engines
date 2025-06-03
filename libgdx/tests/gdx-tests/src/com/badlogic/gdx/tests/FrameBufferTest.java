@@ -121,7 +121,7 @@ public class FrameBufferTest extends GdxTest {
                 + "  gl_FragColor = v_Color * texture2D(u_texture, v_texCoords);\n" + "}";
 
         meshShader = new ShaderProgram(vertexShader, fragmentShader);
-        if (meshShader.isCompiled() == false) throw new IllegalStateException(meshShader.getLog());
+        if (!meshShader.isCompiled()) throw new IllegalStateException(meshShader.getLog());
     }
 
     @Override
@@ -134,5 +134,4 @@ public class FrameBufferTest extends GdxTest {
         spriteBatch.dispose();
         meshShader.dispose();
     }
-
 }

@@ -74,5 +74,4 @@ public class HexagonalTiledMapTest extends GdxTest {
         hexture.dispose();
         map.dispose();
     }
-
 }

@@ -1,7 +1,5 @@
 package com.badlogic.gdx.scenes.scene2d.ui;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -18,6 +16,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
+
+import java.util.Arrays;
 
 /**
  * A group that sizes and positions children using table constraints.
@@ -1397,7 +1397,7 @@ public class Table extends WidgetGroup {
     /**
      *
      */
-    static public enum Debug {
+    public enum Debug {
         none, all, table, cell, actor
     }
 

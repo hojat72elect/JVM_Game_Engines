@@ -40,8 +40,8 @@ public class ParticleShader extends BaseShader {
      * The renderable used to create this shader, invalid after the call to init
      */
     private Renderable renderable;
-    private long materialMask;
-    private long vertexMask;
+    private final long materialMask;
+    private final long vertexMask;
 
     public ParticleShader(final Renderable renderable) {
         this(renderable, new Config());
@@ -50,14 +50,17 @@ public class ParticleShader extends BaseShader {
     public ParticleShader(final Renderable renderable, final Config config) {
         this(renderable, config, createPrefix(renderable, config));
     }
+
     public ParticleShader(final Renderable renderable, final Config config, final String prefix) {
         this(renderable, config, prefix, config.vertexShader != null ? config.vertexShader : getDefaultVertexShader(),
                 config.fragmentShader != null ? config.fragmentShader : getDefaultFragmentShader());
     }
+
     public ParticleShader(final Renderable renderable, final Config config, final String prefix, final String vertexShader,
                           final String fragmentShader) {
         this(renderable, config, new ShaderProgram(prefix + vertexShader, prefix + fragmentShader));
     }
+
     public ParticleShader(final Renderable renderable, final Config config, final ShaderProgram shaderProgram) {
         this.config = config;
         this.program = shaderProgram;
@@ -181,7 +184,7 @@ public class ParticleShader extends BaseShader {
                 depthRangeFar = dta.depthRangeFar;
                 depthMask = dta.depthMask;
             } else if (!config.ignoreUnimplemented)
-                throw new GdxRuntimeException("Unknown material attribute: " + attr.toString());
+                throw new GdxRuntimeException("Unknown material attribute: " + attr);
         }
 
         context.setCullFace(cullFace);
@@ -215,7 +218,7 @@ public class ParticleShader extends BaseShader {
         Billboard, Point
     }
 
-    public static enum AlignMode {
+    public enum AlignMode {
         Screen, ViewPoint// , ParticleDirection
     }
 

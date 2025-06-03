@@ -23,8 +23,6 @@ import java.util.NoSuchElementException;
  * hashing, instead of the more common power-of-two mask, to better distribute poor hashCodes (see <a href=
  * "https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/">Malte
  * Skarupke's blog post</a>). Linear probing continues to work even when all hashCodes collide, just more slowly.
- *
- * 
  */
 public class OrderedSet<T> extends ObjectSet<T> {
     final Array<T> items;
@@ -180,7 +178,7 @@ public class OrderedSet<T> extends ObjectSet<T> {
     }
 
     static public class OrderedSetIterator<K> extends ObjectSetIterator<K> {
-        private Array<K> items;
+        private final Array<K> items;
 
         public OrderedSetIterator(OrderedSet<K> set) {
             super(set);

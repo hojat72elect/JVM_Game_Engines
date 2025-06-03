@@ -1,7 +1,5 @@
 package com.badlogic.gdx.tests.gles32;
 
-import java.nio.ShortBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,6 +12,8 @@ import com.badlogic.gdx.tests.utils.GdxTestConfig;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.nio.ShortBuffer;
 
 @GdxTestConfig(requireGL32 = true)
 public class GL32OffsetElementsTest extends GdxTest {
@@ -32,7 +32,7 @@ public class GL32OffsetElementsTest extends GdxTest {
     private ShortBuffer indices;
     private Mesh mesh;
     private ShaderProgram shader;
-    private Matrix4 transform = new Matrix4();
+    private final Matrix4 transform = new Matrix4();
     private float time;
 
     public void create() {

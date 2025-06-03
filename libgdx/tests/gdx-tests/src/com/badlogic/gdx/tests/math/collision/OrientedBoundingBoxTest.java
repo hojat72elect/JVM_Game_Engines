@@ -28,6 +28,7 @@ import com.badlogic.gdx.math.collision.OrientedBoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.Array;
+
 import java.util.Random;
 
 public class OrientedBoundingBoxTest extends GdxTest implements ApplicationListener {
@@ -42,7 +43,7 @@ public class OrientedBoundingBoxTest extends GdxTest implements ApplicationListe
     private SpriteBatch batch;
     private BitmapFont font;
     private long seed;
-    private Array<Box> boxes = new Array<>();
+    private final Array<Box> boxes = new Array<>();
 
     @Override
     public void create() {
@@ -140,7 +141,6 @@ public class OrientedBoundingBoxTest extends GdxTest implements ApplicationListe
                 box.intersects = true;
             }
         }
-
     }
 
     @Override
@@ -188,14 +188,14 @@ public class OrientedBoundingBoxTest extends GdxTest implements ApplicationListe
                     .setToTranslation(new Vector3(random.nextFloat() * radius, random.nextFloat() * radius, random.nextFloat() * radius));
 
             switch (random.nextInt() % 3) {
-                default:
-                    movement.rotate(new Quaternion(Vector3.X, speed));
-                    break;
                 case 1:
                     movement.rotate(new Quaternion(Vector3.Y, speed));
                     break;
                 case 2:
                     movement.rotate(new Quaternion(Vector3.Z, speed));
+                default:
+                    movement.rotate(new Quaternion(Vector3.X, speed));
+                    break;
             }
 
             // Update a few times to spread the boxes
@@ -229,5 +229,4 @@ public class OrientedBoundingBoxTest extends GdxTest implements ApplicationListe
             attribute.color.set(color);
         }
     }
-
 }

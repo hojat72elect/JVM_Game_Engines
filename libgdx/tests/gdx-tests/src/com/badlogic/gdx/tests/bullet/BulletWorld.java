@@ -21,7 +21,7 @@ import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.PerformanceCounter;
 
 /**
- *  Bullet physics world that holds all bullet entities and constructors.
+ * Bullet physics world that holds all bullet entities and constructors.
  */
 public class BulletWorld extends BaseWorld<BulletEntity> {
     public final btCollisionConfiguration collisionConfiguration;

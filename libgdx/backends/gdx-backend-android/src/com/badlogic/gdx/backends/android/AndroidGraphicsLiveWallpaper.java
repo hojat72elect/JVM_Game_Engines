@@ -3,6 +3,7 @@ package com.badlogic.gdx.backends.android;
 import android.opengl.GLSurfaceView.EGLConfigChooser;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.surfaceview.GLSurfaceView20;
 import com.badlogic.gdx.backends.android.surfaceview.ResolutionStrategy;

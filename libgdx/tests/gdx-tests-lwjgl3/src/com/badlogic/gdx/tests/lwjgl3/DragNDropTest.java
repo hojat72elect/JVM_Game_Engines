@@ -37,7 +37,6 @@ public class DragNDropTest extends GdxTest {
                 }
                 test.addFiles(files);
             }
-
         });
 
         new Lwjgl3Application(test, config);
@@ -67,5 +66,4 @@ public class DragNDropTest extends GdxTest {
             root.add(new Label(file, skin)).left().row();
         }
     }
-
 }

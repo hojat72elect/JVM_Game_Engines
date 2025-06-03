@@ -51,7 +51,6 @@ public class PixmapBlendingTest extends GdxTest {
         logoSprite.setSize(256, 256);
         logoSprite.draw(spriteBatch);
         spriteBatch.end();
-
     }
 
     public boolean needsGL20() {

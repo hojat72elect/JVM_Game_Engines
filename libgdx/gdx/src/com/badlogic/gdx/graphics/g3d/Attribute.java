@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
  * Extend this class to implement a material attribute. Register the attribute type by statically calling the
  * {@link #register(String)} method, whose return value should be used to instantiate the attribute. A class can implement
  * multiple types
- *
  */
 public abstract class Attribute implements Comparable<Attribute> {
     /**

@@ -1,14 +1,31 @@
 package com.badlogic.gdx.backends.lwjgl;
 
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.ApplicationLogger;
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.LifecycleListener;
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.lwjgl.audio.LwjglAudio;
 import com.badlogic.gdx.backends.lwjgl.audio.OpenALLwjglAudio;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Clipboard;
+import com.badlogic.gdx.utils.Null;
+import com.badlogic.gdx.utils.Os;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
+
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.Display;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.geom.AffineTransform;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -56,7 +73,7 @@ public class LwjglCanvas implements LwjglApplicationBase {
         canvas = new Canvas() {
             private final Dimension minSize = new Dimension(1, 1);
 
-            public final void addNotify() {
+            public void addNotify() {
                 super.addNotify();
 
                 AffineTransform transform = getGraphicsConfiguration().getDefaultTransform();
@@ -73,7 +90,7 @@ public class LwjglCanvas implements LwjglApplicationBase {
                     create();
             }
 
-            public final void removeNotify() {
+            public void removeNotify() {
                 stop();
                 super.removeNotify();
             }

@@ -5,7 +5,11 @@ import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.LifecycleListener;
-import com.badlogic.gdx.backends.lwjgl3.*;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -68,7 +72,6 @@ public class Lwjgl3DebugStarter {
 
                         if (character == 'f') {
                             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-
                         }
                         if (character == 'w') {
                             Gdx.graphics.setWindowedMode(MathUtils.random(400, 800), MathUtils.random(400, 800));

@@ -11,5 +11,5 @@ public interface Cullable {
     /**
      * @param cullingArea The culling area in the child actor's coordinates.
      */
-    public void setCullingArea(@Null Rectangle cullingArea);
+    void setCullingArea(@Null Rectangle cullingArea);
 }

@@ -16,11 +16,11 @@
 
 package com.badlogic.gdx.graphics.profiling;
 
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL31;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class GL31Interceptor extends GL30Interceptor implements GL31 {
 
@@ -456,5 +456,4 @@ public class GL31Interceptor extends GL30Interceptor implements GL31 {
         gl31.glVertexBindingDivisor(bindingindex, divisor);
         check();
     }
-
 }

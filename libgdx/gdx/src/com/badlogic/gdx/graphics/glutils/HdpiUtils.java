@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
  * OpenGL yourself. The logical coordinate system provided by the operating system may not have the same resolution as the actual
  * drawing surface to which OpenGL draws, also known as the backbuffer. This class will ensure, that you pass the correct values
  * to OpenGL for any function that expects backbuffer coordinates instead of logical coordinates.
- *
- * 
  */
 public class HdpiUtils {
     private static HdpiMode mode = HdpiMode.Logical;

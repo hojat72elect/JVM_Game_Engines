@@ -1,12 +1,13 @@
 package com.badlogic.gdx.utils;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.reflect.ArrayReflection;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.reflect.ArrayReflection;
+import java.util.Objects;
 
 /**
  * A resizable, ordered or unordered array of objects. If unordered, this class avoids a memory copy when removing elements (the
@@ -651,7 +652,7 @@ public class Array<T> implements Iterable<T> {
         Object[] items1 = this.items, items2 = array.items;
         for (int i = 0; i < n; i++) {
             Object o1 = items1[i], o2 = items2[i];
-            if (!(o1 == null ? o2 == null : o1.equals(o2))) return false;
+            if (!(Objects.equals(o1, o2))) return false;
         }
         return true;
     }

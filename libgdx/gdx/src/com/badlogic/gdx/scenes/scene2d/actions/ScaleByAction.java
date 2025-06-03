@@ -35,5 +35,4 @@ public class ScaleByAction extends RelativeTemporalAction {
     public void setAmountY(float y) {
         this.amountY = y;
     }
-
 }

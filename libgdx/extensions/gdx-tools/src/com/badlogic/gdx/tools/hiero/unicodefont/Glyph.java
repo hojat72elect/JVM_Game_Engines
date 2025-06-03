@@ -1,14 +1,14 @@
 package com.badlogic.gdx.tools.hiero.unicodefont;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont.RenderType;
+
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.GlyphMetrics;
 import java.awt.font.GlyphVector;
-
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont.RenderType;
 
 /**
  * Represents the glyph in a font for a unicode codepoint.
@@ -16,10 +16,10 @@ import com.badlogic.gdx.tools.hiero.unicodefont.UnicodeFont.RenderType;
 public class Glyph {
     float u, v, u2, v2;
     Texture texture;
-    private int codePoint;
+    private final int codePoint;
     private short width, height;
     private short yOffset;
-    private boolean isMissing;
+    private final boolean isMissing;
     private Shape shape;
     private int xOffset, xAdvance;
 
@@ -43,7 +43,6 @@ public class Glyph {
                         + unicodeFont.getPaddingRight();
                 isMissing = codePoint == 0;
             }
-
         } else {
             GlyphMetrics metrics = vector.getGlyphMetrics(index);
             int lsb = (int) metrics.getLSB();

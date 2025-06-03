@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.Input;
@@ -37,7 +34,7 @@ public class VerticalStack extends Box2DTest {
             shape.dispose();
         }
 
-        float xs[] = {0, -10, -5, 5, 10};
+        float[] xs = {0, -10, -5, 5, 10};
 
         for (int j = 0; j < e_columnCount; j++) {
             PolygonShape shape = new PolygonShape();

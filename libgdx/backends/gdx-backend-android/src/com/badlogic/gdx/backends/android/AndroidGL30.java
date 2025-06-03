@@ -1,6 +1,7 @@
 package com.badlogic.gdx.backends.android;
 
 import android.opengl.GLES30;
+
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 

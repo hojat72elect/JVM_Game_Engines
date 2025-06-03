@@ -1,10 +1,5 @@
 package com.badlogic.gdx.graphics.g2d;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -19,6 +14,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.OrderedMap;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Packs {@link Pixmap pixmaps} into one or more {@link Page pages} to generate an atlas of pixmap instances. Provides means to
@@ -92,7 +92,7 @@ public class PixmapPacker implements Disposable {
     int alphaThreshold;
     Color transparentColor = new Color(0f, 0f, 0f, 0f);
     PackStrategy packStrategy;
-    private Color c = new Color();
+    private final Color c = new Color();
 
     /**
      * Uses {@link GuillotineStrategy}.
@@ -627,13 +627,13 @@ public class PixmapPacker implements Disposable {
     /**
      * Choose the page and location for each rectangle.
      */
-    static public interface PackStrategy {
-        public void sort(Array<Pixmap> images);
+    public interface PackStrategy {
+        void sort(Array<Pixmap> images);
 
         /**
          * Returns the page the rectangle should be placed in and modifies the specified rectangle position.
          */
-        public Page pack(PixmapPacker packer, String name, Rectangle rect);
+        Page pack(PixmapPacker packer, String name, Rectangle rect);
     }
 
     static public class Page {
@@ -873,7 +873,6 @@ public class PixmapPacker implements Disposable {
 
             public SkylinePage(PixmapPacker packer) {
                 super(packer);
-
             }
 
             static class Row {
@@ -905,5 +904,4 @@ public class PixmapPacker implements Disposable {
             this.originalHeight = originalHeight;
         }
     }
-
 }

@@ -1,14 +1,11 @@
 package com.badlogic.gdx.tests.g3d;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.utils.MeshBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder.VertexInfo;
@@ -16,6 +13,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 
 /**
  * This is a test class, showing how one could implement a height field. See also {@link HeightMapTest}. Do not expect this to be
@@ -63,7 +63,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
  * Sharp will be used if the vertex attributes contains a normal attribute and you didnt specify `true` for the `smooth` argument
  * of the constructor. This will cause the number of vertices to be around four times the amount grid points and each normal is
  * estimated for each face instead of each point.
- *
  */
 public class HeightField implements Disposable {
     public final Vector2 uvOffset = new Vector2(0, 0);
@@ -84,7 +83,7 @@ public class HeightField implements Disposable {
     public final boolean smooth;
     public final Mesh mesh;
 
-    private final float vertices[];
+    private final float[] vertices;
     private final int stride;
 
     private final int posPos;
@@ -184,7 +183,7 @@ public class HeightField implements Disposable {
     private void setIndices() {
         final int w = width - 1;
         final int h = height - 1;
-        short indices[] = new short[w * h * 6];
+        short[] indices = new short[w * h * 6];
         int i = -1;
         for (int y = 0; y < h; ++y) {
             for (int x = 0; x < w; ++x) {
@@ -334,21 +333,21 @@ public class HeightField implements Disposable {
     protected void setVertex(int index, VertexInfo info) {
         index *= stride;
         if (posPos >= 0) {
-            vertices[index + posPos + 0] = info.position.x;
+            vertices[index + posPos] = info.position.x;
             vertices[index + posPos + 1] = info.position.y;
             vertices[index + posPos + 2] = info.position.z;
         }
         if (norPos >= 0) {
-            vertices[index + norPos + 0] = info.normal.x;
+            vertices[index + norPos] = info.normal.x;
             vertices[index + norPos + 1] = info.normal.y;
             vertices[index + norPos + 2] = info.normal.z;
         }
         if (uvPos >= 0) {
-            vertices[index + uvPos + 0] = info.uv.x;
+            vertices[index + uvPos] = info.uv.x;
             vertices[index + uvPos + 1] = info.uv.y;
         }
         if (colPos >= 0) {
-            vertices[index + colPos + 0] = info.color.r;
+            vertices[index + colPos] = info.color.r;
             vertices[index + colPos + 1] = info.color.g;
             vertices[index + colPos + 2] = info.color.b;
             vertices[index + colPos + 3] = info.color.a;

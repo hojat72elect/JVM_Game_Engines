@@ -1,6 +1,3 @@
-
-
-
 package com.badlogic.gdx.tests.box2d;
 
 import com.badlogic.gdx.math.Vector2;
@@ -49,7 +46,7 @@ public class Cantilever extends Box2DTest {
                 Body body = world.createBody(bd);
                 body.createFixture(fd);
 
-                Vector2 anchor = new Vector2(-15.0f + 1 * i, 5.0f);
+                Vector2 anchor = new Vector2(-15.0f + i, 5.0f);
                 jd.initialize(prevBody, body, anchor);
                 world.createJoint(jd);
                 prevBody = body;
@@ -186,5 +183,4 @@ public class Cantilever extends Box2DTest {
             shape.dispose();
         }
     }
-
 }

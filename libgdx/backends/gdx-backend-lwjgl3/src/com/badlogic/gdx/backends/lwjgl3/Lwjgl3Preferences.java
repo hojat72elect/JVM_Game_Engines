@@ -1,5 +1,11 @@
 package com.badlogic.gdx.backends.lwjgl3;
 
+import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.StreamUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -9,12 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-
-import com.badlogic.gdx.Files.FileType;
-import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.StreamUtils;
 
 public class Lwjgl3Preferences implements Preferences {
     private final Properties properties = new Properties();
@@ -135,14 +135,14 @@ public class Lwjgl3Preferences implements Preferences {
         Map<String, Object> map = new HashMap<String, Object>();
         for (Entry<Object, Object> val : properties.entrySet()) {
             if (val.getValue() instanceof Boolean)
-                map.put((String) val.getKey(), (Boolean) Boolean.parseBoolean((String) val.getValue()));
+                map.put((String) val.getKey(), Boolean.parseBoolean((String) val.getValue()));
             if (val.getValue() instanceof Integer)
-                map.put((String) val.getKey(), (Integer) Integer.parseInt((String) val.getValue()));
+                map.put((String) val.getKey(), Integer.parseInt((String) val.getValue()));
             if (val.getValue() instanceof Long)
-                map.put((String) val.getKey(), (Long) Long.parseLong((String) val.getValue()));
-            if (val.getValue() instanceof String) map.put((String) val.getKey(), (String) val.getValue());
+                map.put((String) val.getKey(), Long.parseLong((String) val.getValue()));
+            if (val.getValue() instanceof String) map.put((String) val.getKey(), val.getValue());
             if (val.getValue() instanceof Float)
-                map.put((String) val.getKey(), (Float) Float.parseFloat((String) val.getValue()));
+                map.put((String) val.getKey(), Float.parseFloat((String) val.getValue()));
         }
 
         return map;

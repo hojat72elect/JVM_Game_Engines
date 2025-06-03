@@ -7,10 +7,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.utils.Array;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -98,5 +103,4 @@ public class TextureAtlasPanel extends JPanel {
         for (Component regionPanel : regionsPanel.getComponents())
             ((TexturePanel) regionPanel).clearSelection();
     }
-
 }

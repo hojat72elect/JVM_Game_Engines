@@ -4,7 +4,12 @@ import android.content.res.AssetFileDescriptor;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -58,7 +63,7 @@ public class ZipResourceFile {
     /* for reading compressed files */
     public HashMap<File, ZipFile> mZipFiles = new HashMap<File, ZipFile>();
     ByteBuffer mLEByteBuffer = ByteBuffer.allocate(4);
-    private HashMap<String, ZipEntryRO> mHashMap = new HashMap<String, ZipEntryRO>();
+    private final HashMap<String, ZipEntryRO> mHashMap = new HashMap<String, ZipEntryRO>();
 
     public ZipResourceFile(String zipFileName) throws IOException {
         addPatchFile(zipFileName);
@@ -74,7 +79,7 @@ public class ZipResourceFile {
         return ((i & 0x00FF) << 8 | (i & 0xFF00) >>> 8);
     }
 
-    static private int read4LE(RandomAccessFile f) throws EOFException, IOException {
+    static private int read4LE(RandomAccessFile f) throws IOException {
         return swapEndian(f.readInt());
     }
 
@@ -368,6 +373,5 @@ public class ZipResourceFile {
         public File getZipFile() {
             return mFile;
         }
-
     }
 }

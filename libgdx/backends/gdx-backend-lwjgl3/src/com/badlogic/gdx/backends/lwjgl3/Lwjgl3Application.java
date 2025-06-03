@@ -1,17 +1,29 @@
 package com.badlogic.gdx.backends.lwjgl3;
 
-import java.io.File;
-import java.io.PrintStream;
-import java.lang.reflect.Method;
-import java.nio.IntBuffer;
-
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.ApplicationLogger;
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.LifecycleListener;
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration.GLEmulation;
 import com.badlogic.gdx.backends.lwjgl3.audio.Lwjgl3Audio;
 import com.badlogic.gdx.backends.lwjgl3.audio.OpenALLwjgl3Audio;
+import com.badlogic.gdx.backends.lwjgl3.audio.mock.MockAudio;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
+import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Clipboard;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.Os;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
 
-import com.badlogic.gdx.utils.*;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.AMDDebugOutput;
@@ -24,23 +36,10 @@ import org.lwjgl.opengl.GLUtil;
 import org.lwjgl.opengl.KHRDebug;
 import org.lwjgl.system.Callback;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Audio;
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.LifecycleListener;
-import com.badlogic.gdx.Net;
-import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.backends.lwjgl3.audio.mock.MockAudio;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Clipboard;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.SharedLibraryLoader;
+import java.io.File;
+import java.io.PrintStream;
+import java.lang.reflect.Method;
+import java.nio.IntBuffer;
 
 public class Lwjgl3Application implements Lwjgl3ApplicationBase {
     private static GLFWErrorCallback errorCallback;
@@ -128,7 +127,6 @@ public class Lwjgl3Application implements Lwjgl3ApplicationBase {
             Method load = angleLoader.getMethod("load");
             load.invoke(angleLoader);
         } catch (ClassNotFoundException t) {
-            return;
         } catch (Throwable t) {
             throw new GdxRuntimeException("Couldn't load ANGLE.", t);
         }
@@ -140,7 +138,6 @@ public class Lwjgl3Application implements Lwjgl3ApplicationBase {
             Method load = angleLoader.getMethod("postGlfwInit");
             load.invoke(angleLoader);
         } catch (ClassNotFoundException t) {
-            return;
         } catch (Throwable t) {
             throw new GdxRuntimeException("Couldn't load ANGLE.", t);
         }
@@ -648,5 +645,4 @@ public class Lwjgl3Application implements Lwjgl3ApplicationBase {
             this.amd = amd;
         }
     }
-
 }

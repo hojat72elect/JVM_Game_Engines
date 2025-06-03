@@ -143,8 +143,8 @@ public class ParallelArray {
     /**
      * This interface is used to provide custom initialization of the {@link Channel} data
      */
-    public static interface ChannelInitializer<T extends Channel> {
-        public void init(T channel);
+    public interface ChannelInitializer<T extends Channel> {
+        void init(T channel);
     }
 
     /**
@@ -290,5 +290,4 @@ public class ParallelArray {
             super.data = data = newData;
         }
     }
-
 }

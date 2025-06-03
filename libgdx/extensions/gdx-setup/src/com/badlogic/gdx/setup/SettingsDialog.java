@@ -1,13 +1,24 @@
 package com.badlogic.gdx.setup;
 
+import static java.awt.GridBagConstraints.BOTH;
+import static java.awt.GridBagConstraints.CENTER;
+import static java.awt.GridBagConstraints.HORIZONTAL;
+import static java.awt.GridBagConstraints.NONE;
+import static java.awt.GridBagConstraints.NORTH;
+import static java.awt.GridBagConstraints.SOUTH;
+import static java.awt.GridBagConstraints.SOUTHEAST;
+import static java.awt.GridBagConstraints.WEST;
+
 import com.badlogic.gdx.setup.GdxSetupUI.SetupButton;
 import com.badlogic.gdx.setup.GdxSetupUI.SetupCheckBox;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,14 +29,23 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.awt.GridBagConstraints.*;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 public class SettingsDialog extends JDialog {
 
     SetupCheckBox offlineBox;
     SetupCheckBox kotlinBox;
     SetupCheckBox oldAssetsBox;
-    private JPanel contentPane;
+    private final JPanel contentPane;
     private SetupButton buttonOK;
     private SetupButton buttonCancel;
     private JLabel linkText;
@@ -189,7 +209,6 @@ public class SettingsDialog extends JDialog {
         bottomPanel.add(buttonPanel, new GridBagConstraints(3, 0, 1, 1, 1, 1, SOUTHEAST, NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         contentPane.add(bottomPanel, new GridBagConstraints(0, 1, 4, 1, 1, 1, SOUTH, HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-
     }
 
     private void uiStyle() {

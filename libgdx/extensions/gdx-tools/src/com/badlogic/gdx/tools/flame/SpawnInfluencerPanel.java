@@ -3,14 +3,29 @@ package com.badlogic.gdx.tools.flame;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.SpawnInfluencer;
-import com.badlogic.gdx.graphics.g3d.particles.values.*;
+import com.badlogic.gdx.graphics.g3d.particles.values.CylinderSpawnShapeValue;
+import com.badlogic.gdx.graphics.g3d.particles.values.EllipseSpawnShapeValue;
+import com.badlogic.gdx.graphics.g3d.particles.values.LineSpawnShapeValue;
+import com.badlogic.gdx.graphics.g3d.particles.values.PointSpawnShapeValue;
+import com.badlogic.gdx.graphics.g3d.particles.values.PrimitiveSpawnShapeValue;
 import com.badlogic.gdx.graphics.g3d.particles.values.PrimitiveSpawnShapeValue.SpawnSide;
+import com.badlogic.gdx.graphics.g3d.particles.values.RectangleSpawnShapeValue;
+import com.badlogic.gdx.graphics.g3d.particles.values.SpawnShapeValue;
+import com.badlogic.gdx.graphics.g3d.particles.values.UnweightedMeshSpawnShapeValue;
+import com.badlogic.gdx.graphics.g3d.particles.values.WeightMeshSpawnShapeValue;
 import com.badlogic.gdx.utils.Array;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -19,7 +34,7 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
     private static final String SPAWN_SHAPE_POINT = "Point", SPAWN_SHAPE_LINE = "Line", SPAWN_SHAPE_RECTANGLE = "Rectangle",
             SPAWN_SHAPE_CYLINDER = "Cylinder", SPAWN_SHAPE_ELLIPSE = "Ellipse", SPAWN_SHAPE_MESH = "Unweighted Mesh",
             SPAWN_SHAPE_WEIGHT_MESH = "Weighted Mesh";
-    private static String[] spawnShapes = new String[]{SPAWN_SHAPE_POINT, SPAWN_SHAPE_LINE, SPAWN_SHAPE_RECTANGLE,
+    private static final String[] spawnShapes = new String[]{SPAWN_SHAPE_POINT, SPAWN_SHAPE_LINE, SPAWN_SHAPE_RECTANGLE,
             SPAWN_SHAPE_ELLIPSE, SPAWN_SHAPE_CYLINDER, SPAWN_SHAPE_MESH, SPAWN_SHAPE_WEIGHT_MESH};
     JComboBox shapeCombo;
     JCheckBox edgesCheckbox;
@@ -69,7 +84,7 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
 
     protected void setPrimitiveSpawnShape(PrimitiveSpawnShapeValue shape, boolean showEdges, SpawnSide side) {
         setSpawnShapeValue(shape);
-        SpawnInfluencer influencer = (SpawnInfluencer) editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+        SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
         influencer.spawnShapeValue = shape;
         widthPanel.setValue(shape.getSpawnWidth());
         heightPanel.setValue(shape.getSpawnHeight());
@@ -123,7 +138,7 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
     }
 
     public void update(FlameMain editor) {
-        SpawnInfluencer influencer = (SpawnInfluencer) editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+        SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
         shapeCombo.setSelectedItem(spawnShapeToString(influencer.spawnShapeValue));
     }
 
@@ -224,7 +239,7 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
 
         edgesCheckbox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                SpawnInfluencer influencer = (SpawnInfluencer) editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+                SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
                 PrimitiveSpawnShapeValue shapeValue = (PrimitiveSpawnShapeValue) influencer.spawnShapeValue;
                 shapeValue.setEdges(edgesCheckbox.isSelected());
                 setEdgesVisible(true);
@@ -234,12 +249,11 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
         sideCombo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 SpawnSide side = (SpawnSide) sideCombo.getSelectedItem();
-                SpawnInfluencer influencer = (SpawnInfluencer) editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+                SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
                 EllipseSpawnShapeValue shapeValue = (EllipseSpawnShapeValue) influencer.spawnShapeValue;
                 shapeValue.setSide(side);
             }
         });
-
     }
 
     @Override
@@ -250,13 +264,12 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
         weightMeshSpawnShapeValue.setMesh(mesh, model);
         meshSpawnShapeValue.setMesh(mesh, model);
         if (shapeCombo.getSelectedItem() == SPAWN_SHAPE_WEIGHT_MESH) {
-            SpawnInfluencer influencer = (SpawnInfluencer) editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+            SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
             influencer.spawnShapeValue = weightMeshSpawnShapeValue;
         } else if (shapeCombo.getSelectedItem() == SPAWN_SHAPE_MESH) {
-            SpawnInfluencer influencer = (SpawnInfluencer) editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+            SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
             influencer.spawnShapeValue = meshSpawnShapeValue;
         }
         editor.restart();
     }
-
 }
