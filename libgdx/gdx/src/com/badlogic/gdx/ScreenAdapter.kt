@@ -1,34 +1,27 @@
-package com.badlogic.gdx;
+package com.badlogic.gdx
 
 /**
- * Convenience implementation of {@link Screen}. Derive from this and only override what you need.
+ * Convenience implementation of [Screen]. Derive from this and only override what you need.
  */
-public class ScreenAdapter implements Screen {
-    @Override
-    public void render(float delta) {
+class ScreenAdapter : Screen {
+    override fun render(delta: Float) {
     }
 
-    @Override
-    public void resize(int width, int height) {
+    override fun resize(width: Int, height: Int) {
     }
 
-    @Override
-    public void show() {
+    override fun show() {
     }
 
-    @Override
-    public void hide() {
+    override fun hide() {
     }
 
-    @Override
-    public void pause() {
+    override fun pause() {
     }
 
-    @Override
-    public void resume() {
+    override fun resume() {
     }
 
-    @Override
-    public void dispose() {
+    override fun dispose() {
     }
 }
