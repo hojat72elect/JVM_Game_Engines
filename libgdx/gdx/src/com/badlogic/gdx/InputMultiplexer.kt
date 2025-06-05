@@ -1,164 +1,192 @@
-package com.badlogic.gdx;
+package com.badlogic.gdx
 
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.SnapshotArray
 
 /**
- * An {@link InputProcessor} that delegates to an ordered list of other InputProcessors. Delegation for an event stops if a
+ * An [InputProcessor] that delegates to an ordered list of other InputProcessors. Delegation for an event stops if a
  * processor returns true, which indicates that the event was handled.
- * <br/> <br/>
- * whenever you want to read a file format from somewhere, this {@link InputMultiplexer} will choose a couple of {@link InputProcessor}s to open that file;
+ *<br/>
+ *
+ *
+ * whenever you want to read a file format from somewhere, this [InputMultiplexer] will choose a couple of [InputProcessor]s to open that file;
  * and if one of those returns true, it will stop.
  */
-public class InputMultiplexer implements InputProcessor {
-    private final SnapshotArray<InputProcessor> processors = new SnapshotArray<>(4);
+class InputMultiplexer() : InputProcessor {
+    private val processors = SnapshotArray<InputProcessor?>(4)
 
-    public InputMultiplexer() {
+    constructor(vararg processors: InputProcessor?) : this() {
+        this.processors.addAll(*processors)
     }
 
-    public InputMultiplexer(InputProcessor... processors) {
-        this.processors.addAll(processors);
+    fun addProcessor(index: Int, processor: InputProcessor) {
+        processors.insert(index, processor)
     }
 
-    public void addProcessor(int index, InputProcessor processor) {
-        if (processor == null) throw new NullPointerException("processor cannot be null");
-        processors.insert(index, processor);
+    fun removeProcessor(index: Int) {
+        processors.removeIndex(index)
     }
 
-    public void removeProcessor(int index) {
-        processors.removeIndex(index);
+    fun addProcessor(processor: InputProcessor) {
+        processors.add(processor)
     }
 
-    public void addProcessor(InputProcessor processor) {
-        if (processor == null) throw new NullPointerException("processor cannot be null");
-        processors.add(processor);
-    }
-
-    public void removeProcessor(InputProcessor processor) {
-        processors.removeValue(processor, true);
+    fun removeProcessor(processor: InputProcessor) {
+        processors.removeValue(processor, true)
     }
 
     /**
      * @return the number of processors in this multiplexer
      */
-    public int size() {
-        return processors.size;
+    fun size(): Int = processors.size
+
+    fun clear() {
+        processors.clear()
     }
 
-    public void clear() {
-        processors.clear();
+    fun getProcessors(): SnapshotArray<InputProcessor?> = processors
+
+    fun setProcessors(vararg processors: InputProcessor?) {
+        this.processors.clear()
+        this.processors.addAll(*processors)
     }
 
-    public SnapshotArray<InputProcessor> getProcessors() {
-        return processors;
+    fun setProcessors(processors: com.badlogic.gdx.utils.Array<InputProcessor?>) {
+        this.processors.clear()
+        this.processors.addAll(processors)
     }
 
-    public void setProcessors(InputProcessor... processors) {
-        this.processors.clear();
-        this.processors.addAll(processors);
-    }
-
-    public void setProcessors(Array<InputProcessor> processors) {
-        this.processors.clear();
-        this.processors.addAll(processors);
-    }
-
-    public boolean keyDown(int keycode) {
-        Object[] items = processors.begin();
+    override fun keyDown(keycode: Int): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).keyDown(keycode)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).keyDown(keycode)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean keyUp(int keycode) {
-        Object[] items = processors.begin();
+    override fun keyUp(keycode: Int): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).keyUp(keycode)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).keyUp(keycode)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean keyTyped(char character) {
-        Object[] items = processors.begin();
+    override fun keyTyped(character: Char): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).keyTyped(character)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).keyTyped(character)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Object[] items = processors.begin();
+    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).touchDown(screenX, screenY, pointer, button)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).touchDown(screenX, screenY, pointer, button)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        Object[] items = processors.begin();
+    override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).touchUp(screenX, screenY, pointer, button)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).touchUp(screenX, screenY, pointer, button)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        Object[] items = processors.begin();
+    override fun touchCancelled(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).touchCancelled(screenX, screenY, pointer, button)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).touchCancelled(screenX, screenY, pointer, button)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        Object[] items = processors.begin();
+    override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).touchDragged(screenX, screenY, pointer)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).touchDragged(screenX, screenY, pointer)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean mouseMoved(int screenX, int screenY) {
-        Object[] items = processors.begin();
+    override fun mouseMoved(screenX: Int, screenY: Int): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).mouseMoved(screenX, screenY)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).mouseMoved(screenX, screenY)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 
-    public boolean scrolled(float amountX, float amountY) {
-        Object[] items = processors.begin();
+    override fun scrolled(amountX: Float, amountY: Float): Boolean {
+        val items = processors.begin()
         try {
-            for (int i = 0, n = processors.size; i < n; i++)
-                if (((InputProcessor) items[i]).scrolled(amountX, amountY)) return true;
+            var i = 0
+            val n = processors.size
+            while (i < n) {
+                if ((items[i] as InputProcessor).scrolled(amountX, amountY)) return true
+                i++
+            }
         } finally {
-            processors.end();
+            processors.end()
         }
-        return false;
+        return false
     }
 }
