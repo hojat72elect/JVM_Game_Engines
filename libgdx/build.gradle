@@ -72,7 +72,7 @@ allprojects {
     }
     tasks.withType(Javadoc) {
         options.encoding = 'UTF-8'
-        options.addBooleanOption('use', true);
+        options.addBooleanOption('use', true)
     }
     tasks.withType(Test) {
         systemProperty 'file.encoding', 'UTF-8'
@@ -86,7 +86,7 @@ allprojects {
 
     if (JavaVersion.current().isJava9Compatible()) {
         tasks.withType(Javadoc) {
-            options.addStringOption("-release", "8");
+            options.addStringOption("-release", "8")
         }
     }
 
@@ -150,8 +150,8 @@ configure(subprojects - project(":backends") - project(":extensions") - project(
 
 tasks.register('setupExternalNativesDirs') {
     doLast {
-        file("build").mkdir();
-        file("extensions/gdx-lwjgl3-angle/res").mkdirs();
+        file("build").mkdir()
+        file("extensions/gdx-lwjgl3-angle/res").mkdirs()
     }
     doNotTrackState("Don't track state")
 }
@@ -185,8 +185,6 @@ tasks.register('fetchNatives', Copy) {
     into "."
     doNotTrackState("Don't track state")
 }
-
-apply from: rootProject.file('publish.gradle')
 
 if (rootProject.file('override.gradle').exists())
     apply from: rootProject.file('override.gradle')
