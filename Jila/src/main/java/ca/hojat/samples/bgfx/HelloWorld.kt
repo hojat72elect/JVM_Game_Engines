@@ -10,10 +10,6 @@ import org.lwjgl.system.Platform
 import kotlin.math.max
 
 
-/**
- * This is the kotlin version of the `hello world` example from bgfx documentation
- * which is available [here](https://github.com/bkaradzic/bgfx/tree/master/examples/00-helloworld).
- */
 fun main() {
     val width = 1_024
     val height = 480
@@ -31,7 +27,7 @@ fun main() {
     if (window == MemoryUtil.NULL)
         throw RuntimeException("Error creating GLFW window")
 
-    GLFW.glfwSetKeyCallback(window) { windowHnd: Long, key: Int, scancode: Int, action: Int, mods: Int ->
+    GLFW.glfwSetKeyCallback(window) { windowHnd: Long, key: Int, _: Int, action: Int, _: Int ->
         if (action != GLFW.GLFW_RELEASE) {
             return@glfwSetKeyCallback
         }
