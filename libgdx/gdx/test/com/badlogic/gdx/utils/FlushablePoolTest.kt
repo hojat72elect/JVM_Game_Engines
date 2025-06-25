@@ -1,121 +1,118 @@
-package com.badlogic.gdx.utils;
+package com.badlogic.gdx.utils
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
 
-import org.junit.Test;
 
-public class FlushablePoolTest {
+class FlushablePoolTest {
+
     @Test
-    public void initializeFlushablePoolTest1() {
-        FlushablePoolClass flushablePool = new com.badlogic.gdx.utils.FlushablePoolTest.FlushablePoolClass();
-        assertEquals(0, flushablePool.getFree());
-        assertEquals(Integer.MAX_VALUE, flushablePool.max);
+    fun `Initialization of a FlushablePool, example 1`() {
+        val sut = FlushablePoolExample()
+        assertEquals(0, sut.free)
+        assertEquals(Integer.MAX_VALUE, sut.max)
     }
 
     @Test
-    public void initializeFlushablePoolTest2() {
-        FlushablePoolClass flushablePool = new com.badlogic.gdx.utils.FlushablePoolTest.FlushablePoolClass(10);
-        assertEquals(0, flushablePool.getFree());
-        assertEquals(Integer.MAX_VALUE, flushablePool.max);
+    fun `Initialization of a FlushablePool, example 2`() {
+        val sut = FlushablePoolExample(10)
+        assertEquals(0, sut.free)
+        assertEquals(Integer.MAX_VALUE, sut.max)
     }
 
     @Test
-    public void initializeFlushablePoolTest3() {
-        FlushablePoolClass flushablePool = new com.badlogic.gdx.utils.FlushablePoolTest.FlushablePoolClass(10, 10);
-        assertEquals(0, flushablePool.getFree());
-        assertEquals(10, flushablePool.max);
+    fun `Initialization of a FlushablePool, example 3`() {
+        val sut = FlushablePoolExample(10, 10)
+        assertEquals(0, sut.free)
+        assertEquals(10, sut.max)
     }
 
     @Test
-    public void obtainTest() {
-        FlushablePoolClass flushablePool = new com.badlogic.gdx.utils.FlushablePoolTest.FlushablePoolClass(10, 10);
-        flushablePool.newObject();
-        assertEquals(0, flushablePool.obtained.size);
-        flushablePool.obtain();
-        assertEquals(1, flushablePool.obtained.size);
-        flushablePool.flush();
-        assertEquals(0, flushablePool.obtained.size);
+    fun `Can correctly obtain an object from a FlushablePool`() {
+        val sut = FlushablePoolExample(10, 10)
+        sut.newObject()
+        assertEquals(0, sut.obtained.size)
+        sut.obtain()
+        assertEquals(1, sut.obtained.size)
+        sut.flush()
+        assertEquals(0, sut.obtained.size)
     }
 
     @Test
-    public void flushTest() {
-        FlushablePoolClass flushablePool = new com.badlogic.gdx.utils.FlushablePoolTest.FlushablePoolClass(10, 10);
-        flushablePool.newObject();
-        flushablePool.obtain();
-        assertEquals(1, flushablePool.obtained.size);
-        flushablePool.flush();
-        assertEquals(0, flushablePool.obtained.size);
+    fun `Can correctly flush a FlushablePool`() {
+        val sut = FlushablePoolExample(10, 10)
+        sut.newObject()
+        sut.obtain()
+        assertEquals(1, sut.obtained.size)
+        sut.flush()
+        assertEquals(0, sut.obtained.size)
     }
 
     @Test
-    public void freeTest() {
-        // Create the flushable pool.
-        FlushablePoolClass flushablePool = new com.badlogic.gdx.utils.FlushablePoolTest.FlushablePoolClass(10, 10);
-        flushablePool.newObject();
-        flushablePool.newObject();
+    fun `Can correctly free objects from a FlushablePool`() {
 
-        // Obtain the elements.
-        String element1 = flushablePool.obtain();
-        String element2 = flushablePool.obtain();
+        // first create the pool
+        val sut = FlushablePoolExample(10, 10)
+        sut.newObject()
+        sut.newObject()
+
+        // Then obtain the required elements
+        val element1 = sut.obtain()
+        val element2 = sut.obtain()
+
+        // Now test the preconditions
+        assertTrue(sut.obtained.contains(element1, true))
+        assertTrue(sut.obtained.contains(element2, true))
+
+        // Finally, free the elements and check containment
+        sut.free(element2)
+        assertTrue(sut.obtained.contains(element1, true))
+        assertFalse(sut.obtained.contains(element2, true))
+    }
+
+
+    @Test
+    fun `Can correctly free all objects from a FlushablePool`() {
+
+        // first, create a flushable pool.
+        val sut = FlushablePoolExample(5, 5)
+        sut.newObject()
+        sut.newObject()
+
+        // Then, obtain elements from the pool.
+        val element1 = sut.obtain()
+        val element2 = sut.obtain()
+
+        // Create an array with the obtained elements.
+        val elementArray = Array<String>()
+        elementArray.add(element1)
+        elementArray.add(element2)
 
         // Test preconditions.
-        assertTrue(flushablePool.obtained.contains(element1, true));
-        assertTrue(flushablePool.obtained.contains(element2, true));
+        assertTrue(sut.obtained.contains(element1, true))
+        assertTrue(sut.obtained.contains(element2, true))
 
-        // Free element and check containment.
-        flushablePool.free(element2);
-        assertTrue(flushablePool.obtained.contains(element1, true));
-        assertFalse(flushablePool.obtained.contains(element2, true));
+        // Finally, free all the elements and check containment.
+        sut.freeAll(elementArray)
+        assertFalse(sut.obtained.contains(element1, true))
+        assertFalse(sut.obtained.contains(element2, true))
     }
 
-    @Test
-    public void freeAllTest() {
-        // Create the flushable pool.
-        FlushablePoolClass flushablePool = new com.badlogic.gdx.utils.FlushablePoolTest.FlushablePoolClass(5, 5);
-        flushablePool.newObject();
-        flushablePool.newObject();
+}
 
-        // Obtain the elements.
-        final String element1 = flushablePool.obtain();
-        final String element2 = flushablePool.obtain();
+/**
+ * This is a FlushablePool<String> which doesn't implement anything special on its own.
+ * we just use it to test the functionalities of a FlushablePool.
+ */
+private class FlushablePoolExample : FlushablePool<String> {
+    constructor() : super()
 
-        // Create array with elements.
-        Array<String> elementArray = new Array<>();
-        elementArray.add(element1);
-        elementArray.add(element2);
+    constructor(initialCapacity: Int) : super(initialCapacity)
 
-        // Test preconditions.
-        assertTrue(flushablePool.obtained.contains(element1, true));
-        assertTrue(flushablePool.obtained.contains(element2, true));
+    constructor(initialCapacity: Int, max: Int) : super(initialCapacity, max)
 
-        // Free elements and check containment.
-        flushablePool.freeAll(elementArray);
-        assertFalse(flushablePool.obtained.contains(element1, true));
-        assertFalse(flushablePool.obtained.contains(element2, true));
-    }
+    public override fun newObject() = free.toString()
 
-    /**
-     * Test implementation class of FlushablePool.
-     */
-    private static class FlushablePoolClass extends FlushablePool<String> {
-
-        FlushablePoolClass() {
-            super();
-        }
-
-        FlushablePoolClass(int initialCapacity) {
-            super(initialCapacity);
-        }
-
-        FlushablePoolClass(int initialCapacity, int max) {
-            super(initialCapacity, max);
-        }
-
-        @Override
-        protected String newObject() {
-            return Integer.toString(getFree());
-        }
-    }
 }
