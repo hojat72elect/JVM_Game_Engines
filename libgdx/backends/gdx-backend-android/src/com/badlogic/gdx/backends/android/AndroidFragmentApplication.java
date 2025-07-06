@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.badlogic.gdx.Application;
@@ -38,11 +39,11 @@ import com.badlogic.gdx.utils.SnapshotArray;
  */
 public class AndroidFragmentApplication extends Fragment implements AndroidApplicationBase {
 
-    protected final Array<Runnable> runnables = new Array<Runnable>();
-    protected final Array<Runnable> executedRunnables = new Array<Runnable>();
-    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<LifecycleListener>(
+    protected final Array<Runnable> runnables = new Array<>();
+    protected final Array<Runnable> executedRunnables = new Array<>();
+    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<>(
             LifecycleListener.class);
-    private final Array<AndroidEventListener> androidEventListeners = new Array<AndroidEventListener>();
+    private final Array<AndroidEventListener> androidEventListeners = new Array<>();
     public Handler handler;
     protected AndroidGraphics graphics;
     protected AndroidInput input;
@@ -307,7 +308,7 @@ public class AndroidFragmentApplication extends Fragment implements AndroidAppli
     }
 
     @Override
-    public void onConfigurationChanged(Configuration config) {
+    public void onConfigurationChanged(@NonNull Configuration config) {
         super.onConfigurationChanged(config);
         boolean keyboardAvailable = config.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;
         input.setKeyboardAvailable(keyboardAvailable);
@@ -315,12 +316,7 @@ public class AndroidFragmentApplication extends Fragment implements AndroidAppli
 
     @Override
     public void exit() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                callbacks.exit();
-            }
-        });
+        handler.post(() -> callbacks.exit());
     }
 
     @Override

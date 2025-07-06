@@ -121,7 +121,6 @@ public class GdxEglConfigChooser implements GLSurfaceView.EGLConfigChooser {
             if (bestAA == null && hasSampleBuffers == 1 && numSamples >= mNumSamples && r == mRedSize && g == mGreenSize
                     && b == mBlueSize && a == mAlphaSize) {
                 bestAA = config;
-                continue;
             }
         }
 
@@ -178,10 +177,7 @@ public class GdxEglConfigChooser implements GLSurfaceView.EGLConfigChooser {
             if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
                 Log.w(TAG, String.format("  %s: %d\n", name, value[0]));
             } else {
-                // Log.w(TAG, String.format(" %s: failed\n", name));
                 egl.eglGetError();
-// while (egl.eglGetError() != EGL10.EGL_SUCCESS)
-// ;
             }
         }
     }

@@ -12,13 +12,6 @@ public interface AndroidWallpaperListener {
 
     /**
      * Called on the rendering thread after the live wallpaper's offset had changed.
-     *
-     * @param xOffset
-     * @param yOffset
-     * @param xOffsetStep
-     * @param yOffsetStep
-     * @param xPixelOffset
-     * @param yPixelOffset
      */
     void offsetChange(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep, int xPixelOffset, int yPixelOffset);
 

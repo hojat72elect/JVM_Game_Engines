@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -76,13 +75,9 @@ public class StandardKeyboardHeightProvider extends PopupWindow implements Keybo
         setWidth(0);
         setHeight(android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 
-        popupView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-                if (popupView != null) {
-                    handleOnGlobalLayout();
-                }
+        popupView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            if (popupView != null) {
+                handleOnGlobalLayout();
             }
         });
     }

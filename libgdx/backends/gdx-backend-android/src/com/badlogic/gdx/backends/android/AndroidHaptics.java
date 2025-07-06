@@ -36,10 +36,7 @@ public class AndroidHaptics {
     @SuppressLint("MissingPermission")
     public void vibrate(int milliseconds) {
         if (vibratorSupport) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
-            else
-                vibrator.vibrate(milliseconds);
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
         }
     }
 
@@ -70,8 +67,7 @@ public class AndroidHaptics {
     public void vibrate(int milliseconds, int intensity, boolean fallback) {
         if (hapticsSupport) {
             intensity = MathUtils.clamp(intensity, 0, 255);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, intensity));
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, intensity));
         } else if (fallback) vibrate(milliseconds);
     }
 

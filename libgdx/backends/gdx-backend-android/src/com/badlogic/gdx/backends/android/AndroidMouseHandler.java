@@ -18,9 +18,9 @@ public class AndroidMouseHandler {
 
         final int action = event.getAction() & MotionEvent.ACTION_MASK;
 
-        int x = 0, y = 0;
-        int scrollAmountX = 0;
-        int scrollAmountY = 0;
+        int x, y;
+        int scrollAmountX;
+        int scrollAmountY;
 
         long timeStamp = System.nanoTime();
         synchronized (input) {
@@ -46,7 +46,7 @@ public class AndroidMouseHandler {
     }
 
     private void logAction(int action) {
-        String actionStr = "";
+        String actionStr;
         if (action == MotionEvent.ACTION_HOVER_ENTER)
             actionStr = "HOVER_ENTER";
         else if (action == MotionEvent.ACTION_HOVER_MOVE)

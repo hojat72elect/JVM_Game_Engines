@@ -19,9 +19,9 @@ public class AndroidTouchHandler {
         int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
         int pointerId = event.getPointerId(pointerIndex);
 
-        int x = 0, y = 0;
-        int realPointerIndex = 0;
-        int button = Buttons.LEFT;
+        int x, y;
+        int realPointerIndex;
+        int button;
 
         long timeStamp = System.nanoTime();
         synchronized (input) {
@@ -103,7 +103,7 @@ public class AndroidTouchHandler {
     }
 
     private void logAction(int action, int pointer) {
-        String actionStr = "";
+        String actionStr;
         if (action == MotionEvent.ACTION_DOWN)
             actionStr = "DOWN";
         else if (action == MotionEvent.ACTION_POINTER_DOWN)

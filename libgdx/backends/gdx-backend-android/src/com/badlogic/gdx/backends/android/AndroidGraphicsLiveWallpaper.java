@@ -103,10 +103,10 @@ public final class AndroidGraphicsLiveWallpaper extends AndroidGraphics {
         }
         lastFrameTime = time;
 
-        boolean lrunning = false;
-        boolean lpause = false;
-        boolean ldestroy = false;
-        boolean lresume = false;
+        boolean lrunning;
+        boolean lpause;
+        boolean ldestroy;
+        boolean lresume;
 
         synchronized (synch) {
             lrunning = running;

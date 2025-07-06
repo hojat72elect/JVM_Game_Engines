@@ -34,9 +34,9 @@ import com.badlogic.gdx.utils.SnapshotArray;
  */
 public class AndroidLiveWallpaper implements AndroidApplicationBase {
 
-    protected final Array<Runnable> runnables = new Array<Runnable>();
-    protected final Array<Runnable> executedRunnables = new Array<Runnable>();
-    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<LifecycleListener>(
+    protected final Array<Runnable> runnables = new Array<>();
+    protected final Array<Runnable> executedRunnables = new Array<>();
+    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<>(
             LifecycleListener.class);
     protected AndroidLiveWallpaperService service;
     protected AndroidGraphicsLiveWallpaper graphics;

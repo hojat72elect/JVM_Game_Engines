@@ -283,8 +283,6 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
      * This instantiates the GL10, GL11 and GL20 instances. Includes the check for certain devices that pretend to support GL11
      * but fuck up vertex buffer objects. This includes the pixelflinger which segfaults when buffers are deleted as well as the
      * Motorola CLIQ and the Samsung Behold II.
-     *
-     * @param gl
      */
     protected void setupGL(javax.microedition.khronos.opengles.GL10 gl) {
         String versionString = gl.glGetString(GL10.GL_VERSION);
@@ -396,18 +394,15 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
             running = false;
             pause = true;
 
-            view.queueEvent(new Runnable() {
-                @Override
-                public void run() {
-                    if (!pause) {
-                        // pause event already picked up by onDrawFrame
-                        return;
-                    }
-
-                    // it's ok to call ApplicationListener's events
-                    // from onDrawFrame because it's executing in GL thread
-                    onDrawFrame(null);
+            view.queueEvent(() -> {
+                if (!pause) {
+                    // pause event already picked up by onDrawFrame
+                    return;
                 }
+
+                // it's ok to call ApplicationListener's events
+                // from onDrawFrame because it's executing in GL thread
+                onDrawFrame(null);
             });
 
             while (pause) {
@@ -454,10 +449,10 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
         }
         lastFrameTime = time;
 
-        boolean lrunning = false;
-        boolean lpause = false;
-        boolean ldestroy = false;
-        boolean lresume = false;
+        boolean lrunning;
+        boolean lpause;
+        boolean ldestroy;
+        boolean lresume;
 
         synchronized (synch) {
             lrunning = running;
@@ -672,19 +667,17 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
         safeInsetRight = 0;
         safeInsetBottom = 0;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            try {
-                DisplayCutout displayCutout = app.getApplicationWindow().getDecorView().getRootWindowInsets().getDisplayCutout();
-                if (displayCutout != null) {
-                    safeInsetRight = displayCutout.getSafeInsetRight();
-                    safeInsetBottom = displayCutout.getSafeInsetBottom();
-                    safeInsetTop = displayCutout.getSafeInsetTop();
-                    safeInsetLeft = displayCutout.getSafeInsetLeft();
-                }
-            } // Some Application implementations (such as Live Wallpapers) do not implement Application#getApplicationWindow()
-            catch (UnsupportedOperationException e) {
-                Gdx.app.log("AndroidGraphics", "Unable to get safe area insets");
+        try {
+            DisplayCutout displayCutout = app.getApplicationWindow().getDecorView().getRootWindowInsets().getDisplayCutout();
+            if (displayCutout != null) {
+                safeInsetRight = displayCutout.getSafeInsetRight();
+                safeInsetBottom = displayCutout.getSafeInsetBottom();
+                safeInsetTop = displayCutout.getSafeInsetTop();
+                safeInsetLeft = displayCutout.getSafeInsetLeft();
             }
+        } // Some Application implementations (such as Live Wallpapers) do not implement Application#getApplicationWindow()
+        catch (UnsupportedOperationException e) {
+            Gdx.app.log("AndroidGraphics", "Unable to get safe area insets");
         }
     }
 

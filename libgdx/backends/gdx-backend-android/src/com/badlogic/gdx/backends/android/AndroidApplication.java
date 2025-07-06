@@ -41,11 +41,11 @@ import com.badlogic.gdx.utils.SnapshotArray;
  */
 public class AndroidApplication extends Activity implements AndroidApplicationBase {
 
-    protected final Array<Runnable> runnables = new Array<Runnable>();
-    protected final Array<Runnable> executedRunnables = new Array<Runnable>();
-    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<LifecycleListener>(
+    protected final Array<Runnable> runnables = new Array<>();
+    protected final Array<Runnable> executedRunnables = new Array<>();
+    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<>(
             LifecycleListener.class);
-    private final Array<AndroidEventListener> androidEventListeners = new Array<AndroidEventListener>();
+    private final Array<AndroidEventListener> androidEventListeners = new Array<>();
     public Handler handler;
     protected AndroidGraphics graphics;
     protected AndroidInput input;
@@ -297,12 +297,7 @@ public class AndroidApplication extends Activity implements AndroidApplicationBa
         }
         super.onResume();
         keyboardHeightProvider.setKeyboardHeightObserver((DefaultAndroidInput) Gdx.input);
-        ((AndroidGraphics) getGraphics()).getView().post(new Runnable() {
-            @Override
-            public void run() {
-                keyboardHeightProvider.start();
-            }
-        });
+        ((AndroidGraphics) getGraphics()).getView().post(() -> keyboardHeightProvider.start());
     }
 
     @Override
@@ -388,12 +383,7 @@ public class AndroidApplication extends Activity implements AndroidApplicationBa
 
     @Override
     public void exit() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                AndroidApplication.this.finish();
-            }
-        });
+        handler.post(AndroidApplication.this::finish);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
             fdLength = assetFd.getLength();
             try {
                 assetFd.close();
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         } else {
             hasAssetFd = false;
@@ -60,7 +60,7 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
 
     @Override
     public InputStream read() {
-        InputStream input = null;
+        InputStream input;
 
         try {
             input = expansionFile.getInputStream(getPath());
@@ -72,13 +72,13 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
 
     @Override
     public FileHandle child(String name) {
-        if (file.getPath().length() == 0) return new AndroidZipFileHandle(new File(name), type);
+        if (file.getPath().isEmpty()) return new AndroidZipFileHandle(new File(name), type);
         return new AndroidZipFileHandle(new File(file, name), type);
     }
 
     @Override
     public FileHandle sibling(String name) {
-        if (file.getPath().length() == 0) throw new GdxRuntimeException("Cannot get the sibling of the root.");
+        if (file.getPath().isEmpty()) throw new GdxRuntimeException("Cannot get the sibling of the root.");
         return Gdx.files.getFileHandle(new File(file.getParent(), name).getPath(), type); // this way we can find the sibling even
         // if it's not inside the obb
     }
@@ -95,10 +95,10 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
         ZipEntryRO[] zipEntries = expansionFile.getEntriesAt(getPath());
         FileHandle[] handles = new FileHandle[zipEntries.length - 1];
         int count = 0;
-        for (int i = 0, n = zipEntries.length; i < n; i++) {
-            if (zipEntries[i].mFileName.length() == getPath().length()) // Don't include the directory itself
+        for (ZipEntryRO zipEntry : zipEntries) {
+            if (zipEntry.mFileName.length() == getPath().length()) // Don't include the directory itself
                 continue;
-            handles[count++] = new AndroidZipFileHandle(zipEntries[i].mFileName);
+            handles[count++] = new AndroidZipFileHandle(zipEntry.mFileName);
         }
         return handles;
     }
@@ -108,10 +108,10 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
         ZipEntryRO[] zipEntries = expansionFile.getEntriesAt(getPath());
         FileHandle[] handles = new FileHandle[zipEntries.length - 1];
         int count = 0;
-        for (int i = 0, n = zipEntries.length; i < n; i++) {
-            if (zipEntries[i].mFileName.length() == getPath().length()) // Don't include the directory itself
+        for (ZipEntryRO zipEntry : zipEntries) {
+            if (zipEntry.mFileName.length() == getPath().length()) // Don't include the directory itself
                 continue;
-            FileHandle child = new AndroidZipFileHandle(zipEntries[i].mFileName);
+            FileHandle child = new AndroidZipFileHandle(zipEntry.mFileName);
             if (!filter.accept(child.file())) continue;
             handles[count] = child;
             count++;
@@ -129,10 +129,10 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
         ZipEntryRO[] zipEntries = expansionFile.getEntriesAt(getPath());
         FileHandle[] handles = new FileHandle[zipEntries.length - 1];
         int count = 0;
-        for (int i = 0, n = zipEntries.length; i < n; i++) {
-            if (zipEntries[i].mFileName.length() == getPath().length()) // Don't include the directory itself
+        for (ZipEntryRO zipEntry : zipEntries) {
+            if (zipEntry.mFileName.length() == getPath().length()) // Don't include the directory itself
                 continue;
-            String path = zipEntries[i].mFileName;
+            String path = zipEntry.mFileName;
             if (!filter.accept(file, path)) continue;
             handles[count] = new AndroidZipFileHandle(path);
             count++;
@@ -150,10 +150,10 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
         ZipEntryRO[] zipEntries = expansionFile.getEntriesAt(getPath());
         FileHandle[] handles = new FileHandle[zipEntries.length - 1];
         int count = 0;
-        for (int i = 0, n = zipEntries.length; i < n; i++) {
-            if (zipEntries[i].mFileName.length() == getPath().length()) // Don't include the directory itself
+        for (ZipEntryRO zipEntry : zipEntries) {
+            if (zipEntry.mFileName.length() == getPath().length()) // Don't include the directory itself
                 continue;
-            String path = zipEntries[i].mFileName;
+            String path = zipEntry.mFileName;
             if (!path.endsWith(suffix)) continue;
             handles[count] = new AndroidZipFileHandle(path);
             count++;

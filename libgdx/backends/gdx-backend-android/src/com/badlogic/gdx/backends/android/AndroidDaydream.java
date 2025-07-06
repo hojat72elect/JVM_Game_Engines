@@ -294,12 +294,7 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 
     @Override
     public void exit() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                AndroidDaydream.this.finish();
-            }
-        });
+        handler.post(AndroidDaydream.this::finish);
     }
 
     @Override

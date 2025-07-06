@@ -126,10 +126,5 @@ public class AndroidApplicationConfiguration {
     /**
      * The loader used to load native libraries. Override this to use a different loading strategy.
      */
-    public GdxNativeLoader nativeLoader = new GdxNativeLoader() {
-        @Override
-        public void load() {
-            GdxNativesLoader.load();
-        }
-    };
+    public GdxNativeLoader nativeLoader = GdxNativesLoader::load;
 }

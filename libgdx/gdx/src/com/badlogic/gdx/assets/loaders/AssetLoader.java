@@ -19,8 +19,6 @@ public abstract class AssetLoader<T, P extends AssetLoaderParameters<T>> {
 
     /**
      * Constructor, sets the {@link FileHandleResolver} to use to resolve the file associated with the asset name.
-     *
-     * @param resolver
      */
     public AssetLoader(FileHandleResolver resolver) {
         this.resolver = resolver;

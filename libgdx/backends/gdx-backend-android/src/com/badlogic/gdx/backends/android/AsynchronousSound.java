@@ -16,78 +16,43 @@ public class AsynchronousSound implements Sound {
 
     @Override
     public long play() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                sound.play();
-            }
-        });
+        handler.post(sound::play);
         return 0;
     }
 
     @Override
     public long play(final float volume) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                sound.play(volume);
-            }
-        });
+        handler.post(() -> sound.play(volume));
         return 0;
     }
 
     @Override
     public long play(final float volume, final float pitch, final float pan) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                sound.play(volume, pitch, pan);
-            }
-        });
+        handler.post(() -> sound.play(volume, pitch, pan));
         return 0;
     }
 
     @Override
     public long loop() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                sound.loop();
-            }
-        });
+        handler.post(sound::loop);
         return 0;
     }
 
     @Override
     public long loop(final float volume) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                sound.loop(volume);
-            }
-        });
+        handler.post(() -> sound.loop(volume));
         return 0;
     }
 
     @Override
     public long loop(final float volume, final float pitch, final float pan) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                sound.loop(volume, pitch, pan);
-            }
-        });
+        handler.post(() -> sound.loop(volume, pitch, pan));
         return 0;
     }
 
     @Override
     public void stop() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                sound.stop();
-            }
-        });
+        handler.post(sound::stop);
     }
 
     @Override

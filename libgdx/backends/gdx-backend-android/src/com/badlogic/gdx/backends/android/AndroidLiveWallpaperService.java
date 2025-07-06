@@ -113,8 +113,6 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
 
     /**
      * Look at {@link AndroidLiveWallpaperService#initialize(ApplicationListener, AndroidApplicationConfiguration)}
-     *
-     * @param listener
      */
     public void initialize(ApplicationListener listener) {
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
@@ -331,9 +329,6 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
         /**
          * Notifies shared GLSurfaceView about changed surface format.
          *
-         * @param format
-         * @param width
-         * @param height
          * @param forceUpdate if false, surface view will be notified only if currently contains expired information
          */
         private void notifySurfaceChanged(final int format, final int width, final int height, boolean forceUpdate) {
@@ -515,15 +510,12 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
                 if (!iconDropConsumed) { // same type of synchronization as in notifyOffsetsChanged()
                     iconDropConsumed = true;
 
-                    app.postRunnable(new Runnable() {
-                        @Override
-                        public void run() {
-                            boolean isCurrent = false;
-                            synchronized (sync) {
-                                isCurrent = (linkedEngine == AndroidWallpaperEngine.this);
-                            }
-                            if (isCurrent) ((AndroidWallpaperListener) app.listener).iconDropped(xIconDrop, yIconDrop);
+                    app.postRunnable(() -> {
+                        boolean isCurrent;
+                        synchronized (sync) {
+                            isCurrent = (linkedEngine == AndroidWallpaperEngine.this);
                         }
+                        if (isCurrent) ((AndroidWallpaperListener) app.listener).iconDropped(xIconDrop, yIconDrop);
                     });
                 }
             }
@@ -568,18 +560,15 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
 // times and with various patterns on various devices - user application must be prepared for that
                     offsetsConsumed = true;
 
-                    app.postRunnable(new Runnable() {
-                        @Override
-                        public void run() {
-                            boolean isCurrent = false;
-                            synchronized (sync) {
-                                isCurrent = (linkedEngine == AndroidWallpaperEngine.this); // without this app can crash when fast
+                    app.postRunnable(() -> {
+                        boolean isCurrent;
+                        synchronized (sync) {
+                            isCurrent = (linkedEngine == AndroidWallpaperEngine.this); // without this app can crash when fast
 // switching between engines (tested!)
-                            }
-                            if (isCurrent)
-                                ((AndroidWallpaperListener) app.listener).offsetChange(xOffset, yOffset, xOffsetStep,
-                                        yOffsetStep, xPixelOffset, yPixelOffset);
                         }
+                        if (isCurrent)
+                            ((AndroidWallpaperListener) app.listener).offsetChange(xOffset, yOffset, xOffsetStep,
+                                    yOffsetStep, xPixelOffset, yPixelOffset);
                     });
                 }
             }
@@ -589,24 +578,21 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
             // notify preview state to app listener
             if (linkedEngine == this && app.listener instanceof AndroidWallpaperListener) {
                 final boolean currentPreviewState = linkedEngine.isPreview();
-                app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        boolean shouldNotify = false;
-                        synchronized (sync) {
-                            if (!isPreviewNotified || notifiedPreviewState != currentPreviewState) {
-                                notifiedPreviewState = currentPreviewState;
-                                isPreviewNotified = true;
-                                shouldNotify = true;
-                            }
+                app.postRunnable(() -> {
+                    boolean shouldNotify = false;
+                    synchronized (sync) {
+                        if (!isPreviewNotified || notifiedPreviewState != currentPreviewState) {
+                            notifiedPreviewState = currentPreviewState;
+                            isPreviewNotified = true;
+                            shouldNotify = true;
                         }
+                    }
 
-                        if (shouldNotify) {
-                            AndroidLiveWallpaper currentApp = app; // without this app can crash when fast switching between engines
+                    if (shouldNotify) {
+                        AndroidLiveWallpaper currentApp = app; // without this app can crash when fast switching between engines
 // (tested!)
-                            if (currentApp != null)
-                                ((AndroidWallpaperListener) currentApp.listener).previewStateChange(currentPreviewState);
-                        }
+                        if (currentApp != null)
+                            ((AndroidWallpaperListener) currentApp.listener).previewStateChange(currentPreviewState);
                     }
                 });
             }
