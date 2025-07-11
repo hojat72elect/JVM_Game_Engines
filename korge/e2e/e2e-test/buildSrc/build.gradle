@@ -1,0 +1,16 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "2.0.20"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+}
+//Eval.xy(this, this, file("../../../gradle/repositories.settings.gradle").text)
+
+dependencies {
+    implementation("com.soywiz:korlibs-image:6.0.0")
+    //implementation("korlibs.korim:korim-jvm:3.4.0")
+    //implementation("korlibs.korim:korim-jvm:999.0.0.999")
+}
