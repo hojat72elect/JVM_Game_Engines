@@ -1,0 +1,30 @@
+name: "Feature request"
+description: "Suggest an idea or general improvement."
+title: "Feature request: "
+labels: ["enhancement"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to suggest a new feature! Please fill out this form as completely as possible.
+  - type: textarea
+    attributes:
+      label: Motivation
+      description: |
+        Description of what the problem is and what the desired solution would be.
+
+        **Include links to relevant issues or discussions, if there are any.**
+      placeholder: I want to be able to 
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Help make it happen!
+      description: "Feature requests with contributing authors are much more likely to get done!"
+      multiple: false
+      options:
+        - I am not willing to submit a PR to implement this change.
+        - I am willing to submit a PR to implement this change, but would need some guidance.
+        - I am willing to submit a PR to implement this change.
+    validations:
+      required: true
