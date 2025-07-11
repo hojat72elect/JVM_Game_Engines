@@ -1,0 +1,70 @@
+name: Build and generate screenshots
+on:
+  push:
+    branches: [ master ]
+
+defaults:
+  run:
+    working-directory: ./orx
+
+jobs:
+  generate_screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+        with:
+          path: ./orx
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Checkout OPENRNDR repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: openrndr/openrndr
+          path: ./openrndr
+          ref: master
+
+      - name: Test glxinfo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mesa-utils xvfb
+          xvfb-run glxinfo
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Build OPENRNDR
+        working-directory: ./openrndr
+        run: ./gradlew publishToMavenLocal snapshot
+
+      - name: Build ORX
+        run: ./gradlew build
+
+      - name: Collect screenshots
+        run: xvfb-run ./gradlew collectScreenshots
+
+      - name: Build main readme
+        run: xvfb-run ./gradlew buildMainReadme
+
+      - name: Prepare media branch
+        run: |
+          git config --global user.email "actions@openrndr.org"
+          git config --global user.name "OPENRNDR Actions"
+          git reset HEAD -- .
+          (git add README.md && git commit -m "add auto-generated README" && git push origin master) || true
+          (git add [a-z-]*/README.md && git commit -m "add demos to README.md" && git push origin master) || true
+          (git add orx-jvm/[a-z-]*/README.md && git commit -m "add orx-jvm demos to README.md" && git push origin master) || true
+          git checkout --orphan media
+          git reset HEAD -- .
+          git add [a-z-]*/images/*.png
+          cd orx-jvm
+          git add [a-z-]*/images/*.png
+          cd ..
+          git commit -m "add auto-generated media"
+          git push -f origin media

@@ -1,0 +1,53 @@
+name: Build
+on:
+  # Trigger the workflow on any pull request
+  pull_request:
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: ./orx
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+        with:
+          path: ./orx
+
+      - name: Checkout OPENRNDR repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: openrndr/openrndr
+          path: ./openrndr
+          ref: master
+
+      - name: Test glxinfo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mesa-utils xvfb
+          xvfb-run glxinfo
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build OPENRNDR
+        working-directory: ./openrndr
+        run: ./gradlew publishToMavenLocal snapshot
+
+      - name: Build ORX
+        run: ./gradlew build
+
+      - name: Collect screenshots without errors
+        run: xvfb-run ./gradlew collectScreenshots

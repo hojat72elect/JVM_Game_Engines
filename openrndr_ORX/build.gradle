@@ -1,0 +1,115 @@
+plugins {
+    alias(libs.plugins.nebula.release)
+    alias(libs.plugins.gradle.nexus.publish)
+    id("org.openrndr.extra.convention.dokka")
+}
+
+repositories {
+    mavenCentral()
+}
+
+task buildMainReadme {
+    doFirst {
+        def subProjects = project.subprojects
+        //.findAll { !it.name.contains("kinect-common") && !it.name.contains
+        // ("kinect-v1-") }
+
+        // Load README.md and find [begin, end] section to replace
+        def mainReadme = file("README.md")
+        def lines = mainReadme.readLines()
+
+        def begin = lines.findIndexOf { it == "<!-- __orxListBegin__ -->" }
+        def end = lines.findIndexOf { it == "<!-- __orxListEnd__ -->" }
+        if (begin == -1 || end == -1) {
+            println("Comments for orx list generation not found in README.md!")
+            return
+        }
+
+        def header = lines.subList(0, begin + 1)
+        def footer = lines.subList(end, lines.size())
+
+        def newReadme = []
+        for (line in header) {
+            newReadme.add(line)
+        }
+
+        // Search for the description at the top of the readme.
+        // Skip the hash character from the headline, then start
+        // on the next line and continue until the next empty line.
+        // Don't fall into Windows line breaks.
+        def descriptionRx = ~/(?s)\#.*?\n(.+?)\n\r?\n/
+        // Note: the readme needs an empty line after the description
+
+        def orxMultiplatform = []
+        def orxJVMOnly = []
+
+        // Build orx list
+        for (sub in subProjects) {
+            def orxReadmeFile = sub.file("README.md")
+            if (orxReadmeFile.exists()) {
+                def orxReadmeText = orxReadmeFile.getText()
+                orxReadmeText.find(descriptionRx) {
+                    description ->
+                        def trimmedDescription = description[1].trim() //.strip() supports unicode, java11 only
+                                .replace("\n", " ").replace("\r", "")
+                        def path = sub.path.substring(1).replace(":", "/")
+                        if (path.startsWith("orx-jvm")) {
+                            orxJVMOnly.add("| [`${sub.name}`]($path/) " +
+                                    "| $trimmedDescription |")
+                        } else {
+                            orxMultiplatform.add("| [`${sub.name}`]($path/) " +
+                                    "| $trimmedDescription |")
+                        }
+                }
+
+            } else {
+                println("${sub.name}/README.md not found!")
+            }
+        }
+
+        newReadme.add("\n## Multiplatform\n")
+        newReadme.add("| name" + "&nbsp;" * 36 + " | description |")
+        newReadme.add("| --- | --- |")
+        newReadme.addAll(orxMultiplatform)
+
+        newReadme.add("\n## JVM only\n")
+        newReadme.add("| name" + "&nbsp;" * 36 + " | description |")
+        newReadme.add("| --- | --- |")
+        newReadme.addAll(orxJVMOnly)
+
+        for (line in footer) {
+            newReadme.add(line)
+        }
+
+        // Write result
+        if (mainReadme.exists()) {
+            mainReadme.delete()
+        }
+        mainReadme.write(newReadme.join("\n"))
+    }
+}
+group = "org.openrndr.extra"
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            username.set(findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME"))
+            password.set(findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD"))
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots"))
+        }
+    }
+}
+
+subprojects {
+    // Equivalent Kotlin is: tasks.register<DependencyReportTask>("dependenciesAll") { ...
+    tasks.register("dependenciesAll", DependencyReportTask) {
+        group = HelpTasksPlugin.HELP_GROUP
+        description = "Displays all dependencies, including subprojects."
+    }
+}
+
+gradle.buildFinished {
+    println("\n")
+    println("orx = \"${version}\"")
+}
