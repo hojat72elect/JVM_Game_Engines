@@ -1,0 +1,32 @@
+name: Publish kool
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Publish libraries
+    runs-on: ubuntu-latest
+    environment: publish
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+
+      - name: Enable Android target
+        run: ./gradlew enableAndroidPlatform
+      - name: Build everything
+        run: ./gradlew build
+      - name: Publish libraries
+        run: ./gradlew publish
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}

@@ -1,0 +1,62 @@
+[versions]
+agp = "8.2.0"
+kotlin = "2.2.0"
+kotlin-coroutines = "1.10.2"
+kotlin-serialization = "1.9.0"
+kotlin-datetime = "0.7.1-0.6.x-compat"
+kotlin-atomicfu = "0.29.0"
+kotlin-dokka = "2.0.0"
+lwjgl = "3.3.6"
+jsvg = "2.0.0"
+androidsvg = "1.4"
+physxjni = "2.6.0"
+physxjswebidl = "2.6.0-1"
+
+# wgpu backend
+wgpu4k = "0.1.1"
+webgpu-ktypes = "0.0.7"
+rococoa = "0.0.1"
+jna = "5.17.0"
+
+[libraries]
+kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+kotlin-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlin-serialization" }
+kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
+kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlin-datetime" }
+kotlin-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version.ref = "kotlin-atomicfu" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+jsvg = { group = "com.github.weisj", name = "jsvg", version.ref = "jsvg" }
+androidsvg = { group = "com.caverock", name = "androidsvg-aar", version.ref = "androidsvg" }
+lwjgl-core = { group = "org.lwjgl", name = "lwjgl", version.ref = "lwjgl" }
+lwjgl-glfw = { group = "org.lwjgl", name = "lwjgl-glfw", version.ref = "lwjgl" }
+lwjgl-jemalloc = { group = "org.lwjgl", name = "lwjgl-jemalloc", version.ref = "lwjgl" }
+lwjgl-opengl = { group = "org.lwjgl", name = "lwjgl-opengl", version.ref = "lwjgl" }
+lwjgl-vulkan = { group = "org.lwjgl", name = "lwjgl-vulkan", version.ref = "lwjgl" }
+lwjgl-vma = { group = "org.lwjgl", name = "lwjgl-vma", version.ref = "lwjgl" }
+lwjgl-shaderc = { group = "org.lwjgl", name = "lwjgl-shaderc", version.ref = "lwjgl" }
+lwjgl-nfd = { group = "org.lwjgl", name = "lwjgl-nfd", version.ref = "lwjgl" }
+lwjgl-stb = { group = "org.lwjgl", name = "lwjgl-stb", version.ref = "lwjgl" }
+physxjni = { group = "de.fabmax", name = "physx-jni", version.ref = "physxjni" }
+physxjswebidl = { group = "npm", name = "physx-js-webidl", version.ref = "physxjswebidl" }
+
+# wgpu backend
+wgpu4k = { module = "io.ygdrasil:wgpu4k", version.ref = "wgpu4k" }
+webgpu-descriptors = { module = "io.ygdrasil:webgpu-ktypes-descriptors", version.ref = "webgpu-ktypes" }
+rococoa = { module = "io.ygdrasil:rococoa", version.ref = "rococoa" }
+jna = { module = "net.java.dev.jna:jna", version.ref = "jna" }
+jna-platform = { module = "net.java.dev.jna:jna-platform", version.ref = "jna" }
+
+
+# used gradle plugins: usually these would be under [plugins], but instead they are regular dependencies of buidlSrc
+plugindep-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+plugindep-kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
+plugindep-kotlin-atomicfu = { group = "org.jetbrains.kotlin", name = "atomicfu", version.ref = "kotlin" }
+plugindep-dokka = { group = "org.jetbrains.dokka", name = "dokka-gradle-plugin", version.ref = "kotlin-dokka" }
+plugindep-android-library = { group = "com.android.library", name = "com.android.library.gradle.plugin", version.ref = "agp" }
+
+[bundles]
+lwjgl = ["lwjgl-core", "lwjgl-glfw", "lwjgl-jemalloc", "lwjgl-opengl", "lwjgl-vulkan", "lwjgl-vma", "lwjgl-shaderc", "lwjgl-nfd", "lwjgl-stb"]
+wgpu4k = ["wgpu4k", "webgpu-descriptors"]
+wgpu4k-surface-utils = ["rococoa", "jna", "jna-platform"]
