@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+apply from : 'publish.gradle'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+
+    implementation "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
+    implementation "games.rednblack.talos:runtime-libgdx:$talosVersion"
+    implementation project(":hyperlap2d-runtime-libgdx")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+task dist(type: Jar) {
+    dependsOn classes
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.output.resourcesDir)
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ["--release", "8"]
+}

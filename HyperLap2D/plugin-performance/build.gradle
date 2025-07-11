@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+}
+
+group 'games.rednblack'
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
+    implementation "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
+
+    implementation 'net.mountainblade:modular:1.0'
+
+    implementation "games.rednblack.puremvc:core:$pureMvcVersion"
+
+    implementation project(":hyperlap2d-common-api")
+    implementation project(":hyperlap2d-runtime-libgdx")
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+compileJava {
+    dependsOn ':hyperlap2d-runtime-libgdx:dist' // Explicit dependency
+}
+
+task dist(type: Jar) {
+    dependsOn classes
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.output.resourcesDir)
+
+    destinationDirectory = file("../distBuld/lib/plugins")
+
+    doLast {
+        def jarToCopy = archiveFileName.get()
+        copy {
+            from "../build/lib/plugins/$jarToCopy"
+            into "../assets/plugins"
+        }
+    }
+}

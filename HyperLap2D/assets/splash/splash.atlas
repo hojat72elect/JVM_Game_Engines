@@ -1,0 +1,11 @@
+splash.png
+	size: 512, 512
+	filter: Linear, Linear
+bg_color
+	bounds: 470, 443, 8, 8
+splash_bg
+	bounds: 1, 121, 467, 330
+splash_logo
+	bounds: 1, 1, 76, 72
+splash_logo_text
+	bounds: 1, 75, 191, 44

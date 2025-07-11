@@ -1,0 +1,943 @@
+{
+  com.badlogic.gdx.graphics.Color: {
+    hyperlap2d-menuitem-grey: {
+      a: 1,
+      b: 0.87,
+      g: 0.87,
+      r: 0.87
+    },
+    hyperlap2d-menuitem-disabled-grey: {
+      a: 1,
+      b: 0.45,
+      g: 0.45,
+      r: 0.45
+    },
+    hyperlap2d-menuitem-shortcut-grey: {
+      a: 1,
+      b: 0.8,
+      g: 0.75,
+      r: 0.72
+    },
+    hyperlap2d-button-text-black: {
+      a: 0.9,
+      b: 0.1,
+      g: 0.1,
+      r: 0.1
+    },
+    hyperlap2d-button-text-white: {
+      a: 1,
+      b: 0.98,
+      g: 0.98,
+      r: 1
+    },
+    green: {
+      a: 1,
+      b: 0,
+      g: 1,
+      r: 0
+    },
+    white: {
+      a: 1,
+      b: 1,
+      g: 1,
+      r: 1
+    },
+    red: {
+      a: 1,
+      b: 0,
+      g: 0,
+      r: 1
+    },
+    black: {
+      a: 1,
+      b: 0,
+      g: 0,
+      r: 0
+    },
+    grey: {
+      a: 1,
+      b: 0.32,
+      g: 0.32,
+      r: 0.32
+    },
+    menuitem-grey: {
+      a: 1,
+      b: 0.65,
+      g: 0.65,
+      r: 0.65
+    },
+    vis-blue: {
+      a: 1,
+      b: 0.886,
+      g: 0.631,
+      r: 0.105
+    },
+    link-label: {
+      a: 1,
+      b: 0.886,
+      g: 0.631,
+      r: 0.105
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+    dialogDim: {
+      name: white,
+      color: {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 0.45
+      }
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+    default: {
+      down: button-down,
+      up: button
+    },
+    toggle: {
+      down: button-down,
+      checked: button-down,
+      up: button
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+    default: {
+      down: button-down,
+      up: button,
+      over: button-over,
+      disabled: button,
+      font: default-font,
+      fontColor: hyperlap2d-button-text-white,
+      disabledFontColor: grey
+    },
+    toggle: {
+      down: button-down,
+      up: button,
+      checked: button-down,
+      over: button-over,
+      font: default-font,
+      fontColor: white
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+    default: {
+      vScroll: scroll,
+      vScrollKnob: scroll-knob-vertical,
+      hScroll: scroll-horizontal,
+      hScrollKnob: scroll-knob-horizontal,
+      background: border
+    },
+    list: {
+      vScroll: scroll,
+      vScrollKnob: scroll-knob-vertical,
+      hScroll: scroll-horizontal,
+      hScrollKnob: scroll-knob-horizontal
+    }
+  },
+  com.kotcrab.vis.ui.util.adapter.SimpleListAdapter$SimpleListAdapterStyle: {
+    default: {selection: list-selection }
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+    default: {
+      font: default-font,
+      fontColor: white,
+      disabledFontColor: grey,
+      background: default-select,
+      backgroundOver: default-select-over,
+      scrollStyle: default,
+      listStyle: {
+        font: default-font,
+        selection: padded-list-selection,
+        background: select-box-list-bg
+      }
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+    default-vertical: {
+      handle: splitpane-vertical
+    },
+    default-horizontal: {
+      handle: splitpane
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+    default: {
+      titleFont: big-font,
+      background: window,
+      titleFontColor: white
+    },
+    noborder: {
+      titleFont: big-font,
+      background: window-noborder,
+      titleFontColor: white
+    },
+    node: {
+      titleFont: big-font,
+      background: window-node,
+      titleFontColor: white
+    },
+    node-selected: {
+      titleFont: big-font,
+      background: window-node-selected,
+      titleFontColor: white
+    },
+    dialog: {
+      titleFont: big-font,
+      background: window,
+      titleFontColor: white,
+      stageBackground: dialogDim
+    },
+    box: {
+      titleFont: big-font,
+      background: panel,
+      titleFontColor: white
+    },
+    sticky-note: {
+      titleFont: big-font,
+      background: sticky-note,
+      titleFontColor: black
+    },
+    console: {
+      titleFont: big-font,
+      background: console-background,
+      titleFontColor: white
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+    default-horizontal: {
+      background: progressbar,
+      knob: progressbar-filled,
+      knobBefore: progressbar-filled
+    },
+    default-vertical: {
+      background: progressbar-vertical,
+      knob: progressbar-filled-vertical,
+      knobBefore: progressbar-filled-vertical
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+    default: {
+      font: default-font,
+      fontColor: white
+    },
+    greyed: {
+      font: default-font,
+      fontColor: menuitem-grey
+    },
+    small: {
+      font: small-font,
+      fontColor: white
+    },
+    menuitem-shortcut: {
+      font: small-font,
+      fontColor: hyperlap2d-menuitem-shortcut-grey
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+    default: {
+      selection: selection,
+      background: textfield,
+      font: default-font,
+      fontColor: white,
+      cursor: cursor
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+    default: {
+      fontColorUnselected: white,
+      selection: list-selection,
+      fontColorSelected: white,
+      font: default-font
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+    default: {
+      background: default-pane,
+      knob: touchpad-knob
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
+    default: {
+      minus: tree-minus,
+      plus: tree-plus,
+      selection: tree-selection,
+      over: tree-over
+    }
+  },
+  com.kotcrab.vis.ui.widget.VisTextField$VisTextFieldStyle: {
+    default: {
+      selection: selection,
+      background: textfield,
+      backgroundOver: textfield-over,
+      focusBorder: border-textfield,
+      errorBorder: border-error,
+      font: default-font,
+      fontColor: white,
+      disabledFontColor: grey,
+      cursor: cursor
+    },
+    light: {
+      selection: selection,
+      background: textfield-light,
+      backgroundOver: textfield-light-over,
+      focusBorder: border-textfield,
+      errorBorder: border-error,
+      font: default-font,
+      fontColor: white,
+      disabledFontColor: grey,
+      cursor: cursor
+    },
+    transparent: {
+      selection: default-select-selection,
+      focusBorder: border-textfield,
+      errorBorder: border-error,
+      font: default-font,
+      fontColor: white,
+      cursor: cursor
+    },
+    sticky-note: {
+      selection: selection,
+      font: default-font,
+      fontColor: black,
+      cursor: cursor
+    },
+    textArea: {
+      errorBorder: border-error,
+      font: default-mono-font,
+      fontColor: white,
+      disabledFontColor: grey,
+      selection: selection,
+      background: textfield,
+      cursor: cursor
+    }
+  },
+  com.kotcrab.vis.ui.widget.H2DHighlightTextArea$H2DHighlightTextAreaStyle: {
+    default: {
+      errorBorder: border-error,
+      font: default-mono-font,
+      fontColor: white,
+      disabledFontColor: white,
+      selection: selection,
+      cursor: cursor,
+      underline : white,
+      highlightBackground : white
+    },
+    code-editor: {
+      errorBorder: border-error,
+      font: default-mono-font,
+      fontColor: white,
+      disabledFontColor: grey,
+      selection: selection,
+      background: textfield,
+      cursor: cursor
+    }
+  },
+  com.kotcrab.vis.ui.widget.VisImageTextButton$VisImageTextButtonStyle: {
+    hierarchy-item-root: {
+      imageUp: icon-root,
+      imageDown: icon-root,
+      imageOver: icon-root,
+      font: big-font
+    },
+    hierarchy-item: {
+      imageUp: icon-composite2,
+      imageDown: icon-composite2,
+      imageOver: icon-composite2,
+      font: big-font
+    }
+  },
+  com.kotcrab.vis.ui.widget.VisTextButton$VisTextButtonStyle: {
+    default: {
+      down: button-down,
+      up: button,
+      over: button-over,
+      disabled: button,
+      font: big-font,
+      fontColor: hyperlap2d-button-text-white,
+      disabledFontColor: grey
+    },
+    dark: {
+      down: button-dark-down,
+      up: button-dark,
+      over: button-dark-over,
+      disabled: button-dark,
+      font: big-font,
+      fontColor: hyperlap2d-button-text-black,
+      disabledFontColor: grey
+    },
+    red: {
+      down: button-flat-red-down,
+      up: button-flat-red,
+      over: button-flat-red-over,
+      disabled: button-flat-red-over,
+      font: big-font,
+      fontColor: white,
+      disabledFontColor: grey
+    },
+    tagBtn: {
+      down: toolbar-over,
+      up: toolbar-over,
+      fontColor: white,
+      font: default-font
+    },
+    toggle: {
+      down: button-down,
+      up: button,
+      checked: button-down,
+      over: button-over,
+      font: default-font,
+      fontColor: white,
+      focusBorder: border
+    },
+    menu-bar: {
+      down: menu-bg-down,
+      up: menu-bg-up,
+      over: menu-bg-over,
+      font: big-font,
+      fontColor: hyperlap2d-menuitem-grey
+    }
+  },
+  games.rednblack.editor.view.ui.box.resourcespanel.draggable.list.ListItemResource$ListItemResourceStyle: {
+    library: {
+      up: button-resource,
+      over: button-resource-over,
+      down: button-resource-over,
+      resourceUp: icon-library,
+      resourceDown: icon-library-over,
+      resourceOver: icon-library-over,
+      labelStyle: {
+        font: small-font,
+        fontColor: white
+      }
+    },
+    particle: {
+      up: button-resource,
+      over: button-resource-over,
+      down: button-resource-over,
+      resourceUp: icon-particle,
+      resourceDown: icon-particle-over,
+      resourceOver: icon-particle-over,
+      labelStyle: {
+        font: small-font,
+        fontColor: white
+      }
+    }
+  },
+  com.kotcrab.vis.ui.widget.VisImageButton$VisImageButtonStyle: {
+    default: {
+      down: button-down,
+      up: button,
+      over: button-over,
+      disabled: button,
+      focusBorder: border
+    },
+    dark: {
+      down: button-dark-down,
+      up: button-dark,
+      over: button-dark-over,
+      disabled: button-dark
+    },
+    toggle: {
+      down: button-down,
+      up: button,
+      checked: button-down,
+      over: button-over,
+      focusBorder: border
+    },
+    close-window: {
+      down: button-red,
+      up: button-window-bg,
+      imageUp: icon-close-white
+    },
+    close-node-window: {
+      imageDown: close-node-pressed,
+      imageOver: close-node-hover,
+      imageUp: close-node
+    },
+    close-panel: {
+      down: button-red,
+      up: button-panel-bg,
+      imageUp: icon-close-white
+    },
+    close-properties: {
+      imageUp: icon-close-white
+    },
+    trash-button: {
+      imageDown: icon-trash-disabled,
+      imageOver: icon-trash-over,
+      imageUp: icon-trash
+    },
+    arrow-button: {
+      imageDown: arrow-down,
+      imageOver: arrow-over,
+      imageUp: arrow
+    },
+    filter-button: {
+      imageDown: filter-down,
+      imageOver: filter-over,
+      imageUp: filter
+    },
+    image-button: {
+      imageUp: image-up
+    },
+    animation-button: {
+      imageUp: animation-up
+    },
+    particle-button: {
+      imageUp: particle-up
+    },
+    library-button: {
+      imageUp: library-up
+    },
+    action-button: {
+      imageUp: action-up
+    },
+    close: {
+      down: button-red,
+      up: button,
+      over: button-over,
+      imageUp: icon-close
+    },
+    close-active-tab: {
+      down: button-red,
+      up: button,
+      over: button-over,
+      imageUp: icon-close
+    },
+    close-chip-tab: {
+      down: tab-chip-close-over,
+      up: tab-chip-close-inactive,
+      over: tab-chip-close-active,
+      disabled: tab-chip-close-inactive,
+      imageUp: icon-close
+    },
+    close-box: {
+      up: box-colapse-on
+    },
+    tool-SELECTION_TOOL: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      checked: toolbar-down,
+      imageUp: tool-move
+    },
+    tool-TRANSFORM_TOOL: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      checked: toolbar-down,
+      imageUp: tool-transform
+    },
+    tool-TEXT_TOOL: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      checked: toolbar-down,
+      imageUp: tool-label
+    },
+    tool-POINT_LIGHT_TOOL: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      checked: toolbar-down,
+      imageUp: tool-sphericlight
+    },
+    tool-CONE_LIGHT_TOOL: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      checked: toolbar-down,
+      imageUp: tool-conuslight
+    },
+    tool-MESH_TOOL: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      checked: toolbar-down,
+      imageUp: tool-mesh
+    },
+    align-center-horisontal: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-center-horisontal
+    },
+    align-center-vertical: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-center-vertical
+    },
+    align-simple-down: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-simple-down
+    },
+    align-simple-up: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-simple-up
+    },
+    align-simple-left: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-simple-left
+    },
+    align-simple-right: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-simple-right
+    },
+    align-edge-down: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-edge-down
+    },
+    align-edge-right: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-edge-right
+    },
+    align-edge-up: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-edge-up
+    },
+    align-edge-left: {
+      down: toolbar-down,
+      up: toolbar-normal,
+      over: toolbar-over,
+      imageUp: align-edge-left
+    },
+    expandable-properties-button: {
+      imageUp: expandable-properties-collapse-on,
+      imageChecked: expandable-properties-collapse-off
+    },
+    expand-button: {
+      imageUp: expand-icon
+    },
+    layer-lock: {
+      imageUp: icon-lock-inactive,
+      imageChecked: icon-lock-active
+    },
+    layer-visible: {
+      imageUp: icon-visible-on,
+      imageChecked: icon-visible-off
+    },
+    new-layer-button: {
+      imageDown: icon-new-layer,
+      imageOver: icon-new-layer,
+      imageUp: icon-new-layer
+    },
+    library-link-button: {
+      imageUp: icon-unlink-inactive,
+      imageOver: icon-link-inactive,
+      imageChecked: icon-link-active,
+      imageCheckedOver: icon-unlink-active
+    },
+    window-action-close: {
+      imageDown: window-action-close-pressed,
+      imageOver: window-action-close-hover,
+      imageUp: window-action-close-normal
+    },
+    window-action-iconify: {
+      imageDown: window-action-iconify-pressed,
+      imageOver: window-action-iconify-hover,
+      imageUp: window-action-iconify-normal
+    },
+    window-action-maximize: {
+      imageDown: window-action-maximize-pressed,
+      imageOver: window-action-maximize-hover,
+      imageUp: window-action-maximize-normal
+    },
+    window-action-restore: {
+      imageDown: window-action-restore-pressed,
+      imageOver: window-action-restore-hover,
+      imageUp: window-action-restore-normal
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+    default-horizontal: {
+      background: slider,
+      knob: slider-knob,
+      disabledKnob: slider-knob-disabled,
+      knobOver: slider-knob-over,
+      knobDown: slider-knob-down
+    },
+    default-vertical: {
+      background: slider-vertical,
+      knob: slider-knob,
+      disabledKnob: slider-knob-disabled,
+      knobOver: slider-knob-over,
+      knobDown: slider-knob-down
+    }
+  },
+  com.kotcrab.vis.ui.widget.VisCheckBox$VisCheckBoxStyle: {
+    default: {
+      checkBackground: vis-check,
+      checkBackgroundOver: vis-check-over,
+      checkBackgroundDown: vis-check-down,
+      tick: vis-check-tick,
+      tickDisabled: vis-check-tick-disabled,
+      focusBorder: border,
+      errorBorder: border-error,
+      font: default-font,
+      fontColor: white,
+      disabledFontColor: grey
+    },
+    radio: {
+      checkBackground: vis-radio,
+      checkBackgroundOver: vis-radio-over,
+      checkBackgroundDown: vis-radio-down,
+      tick: vis-radio-tick,
+      tickDisabled: vis-radio-tick-disabled,
+      focusBorder: border-circle,
+      errorBorder: border-circle-error,
+      font: default-font,
+      fontColor: white,
+      disabledFontColor: grey
+    }
+  },
+  com.kotcrab.vis.ui.widget.PopupMenu$PopupMenuStyle: {
+    default: {
+      background: popup-menu
+    }
+  },
+  com.kotcrab.vis.ui.widget.Separator$SeparatorStyle: {
+    default: {
+      background: separator,
+      thickness: 2
+    },
+    vertical: {
+      background: separator-vertical,
+      thickness: 2
+    },
+    menu: {
+      background: separator-menu,
+      thickness: 2
+    },
+    tool: {
+      background: separator-tool,
+      thickness: 2
+    }
+  },
+  com.kotcrab.vis.ui.widget.VisSplitPane$VisSplitPaneStyle: {
+    default-vertical: {
+      handle: splitpane-vertical,
+      handleOver: splitpane-vertical-over
+    },
+    default-horizontal: {
+      handle: splitpane,
+      handleOver: splitpane-over
+    }
+  },
+  com.kotcrab.vis.ui.widget.MenuItem$MenuItemStyle: {
+    default: {
+      down: menu-item-down,
+      up : menu-item
+      over: menu-item-over,
+      font: default-font,
+      fontColor: hyperlap2d-menuitem-grey,
+      disabledFontColor: hyperlap2d-menuitem-disabled-grey,
+      subMenu: sub-menu
+    }
+  },
+  com.kotcrab.vis.ui.Sizes: {
+    default: {
+      scaleFactor: 1,
+      spacingBottom: 8,
+      spacingRight: 6,
+      buttonBarSpacing: 10,
+      menuItemIconSize: 22,
+      borderSize: 1,
+      spinnerButtonHeight: 12,
+      spinnerFieldSize: 40,
+      fileChooserViewModeBigIconsSize: 200,
+      fileChooserViewModeMediumIconsSize: 128,
+      fileChooserViewModeSmallIconsSize: 64,
+      fileChooserViewModeListWidthSize: 155
+    },
+    x2: {
+      scaleFactor: 2,
+      menuItemIconSize: 44,
+      spinnerButtonHeight: 24,
+      spinnerFieldSize: 80,
+      spacingBottom: 8,
+      spacingRight: 6,
+      buttonBarSpacing: 10,
+      borderSize: 1,
+      fileChooserViewModeBigIconsSize: 200,
+      fileChooserViewModeMediumIconsSize: 128,
+      fileChooserViewModeSmallIconsSize: 64,
+      fileChooserViewModeListWidthSize: 155
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+    default: {
+      label: {
+        font: default-font
+      },
+      background: tooltip-bg
+    }
+  },
+  com.kotcrab.vis.ui.widget.Tooltip$TooltipStyle: {
+    default: {
+      background: tooltip-bg
+    }
+  },
+  com.kotcrab.vis.ui.widget.file.FileChooserStyle: {
+    default: {
+      highlight: list-selection,
+      popupMenuStyle: "default",
+      iconArrowLeft: icon-arrow-left,
+      iconArrowRight: icon-arrow-right,
+      iconFolder: icon-folder,
+      iconFolderParent: icon-folder-parent,
+      iconFolderNew: icon-folder-new,
+      iconDrive: icon-drive,
+      iconFolderStar: icon-folder-star,
+      iconTrash: icon-trash,
+      iconStar: icon-star,
+      iconStarOutline: icon-star-outline,
+      iconRefresh: icon-refresh,
+      iconFileText: icon-file-text,
+      iconFileImage: icon-file-image,
+      iconFilePdf: icon-file-pdf,
+      iconFileAudio: icon-file-audio,
+      iconListSettings: icon-list-settings,
+      contextMenuSelectedItem: vis-radio-tick,
+      expandDropdown: select-down
+    }
+  },
+  com.kotcrab.vis.ui.widget.color.ColorPickerStyle: {
+    default: {
+      pickerStyle: {
+        barSelector: color-picker-bar-selector,
+        cross: color-picker-cross,
+        iconArrowRight: icon-arrow-right,
+        verticalSelector: color-picker-selector-vertical,
+        horizontalSelector: color-picker-selector-horizontal
+      },
+      titleFont: default-font,
+      background: window,
+      titleFontColor: white
+    }
+  },
+  com.kotcrab.vis.ui.widget.toast.Toast$ToastStyle: {
+    default: {
+      background: tooltip-bg,
+      closeButtonStyle: close-window
+    },
+    dark: {
+      background: window-bg,
+      closeButtonStyle: close-window
+    }
+  },
+  com.kotcrab.vis.ui.widget.LinkLabel$LinkLabelStyle: {
+    default: {
+      fontColor: link-label,
+      underline: white,
+      font: default-font
+    }
+  },
+  com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane$TabbedPaneStyle: {
+    default: {
+      draggable: false,
+      vertical: false,
+      buttonStyle: {
+        down: tab-active,
+        up: tab-inactive,
+        checked: tab-active,
+        over: tab-inactive,
+        disabled: tab-inactive,
+        font: default-font,
+        fontColor: white,
+        disabledFontColor: grey
+      }
+    },
+    vertical: {
+      vertical: true,
+      background: menu-bg,
+      separatorBar: list-selection,
+      buttonStyle: {
+        down: button-down,
+        up: button,
+        checked: button-down,
+        over: button-over,
+        disabled: button,
+        font: default-font,
+        fontColor: white,
+        disabledFontColor: grey
+      }
+    }
+  },
+  games.rednblack.h2d.common.view.ui.widget.imagetabbedpane.ImageTabbedPane$TabbedPaneStyle: {
+    default: {
+      draggable: false,
+      vertical: false,
+      tabPadding: 20,
+      singleLine: true,
+      font: default-font,
+      buttonStyle: {
+        down: tab-active,
+        up: tab-inactive,
+        checked: tab-active,
+        over: tab-inactive,
+        disabled: tab-inactive
+      }
+    },
+    chip: {
+      draggable: false,
+      vertical: false,
+      font: default-font,
+      sharedCloseButton : close-chip-tab,
+      tabSpacing : 8,
+      buttonStyle: {
+        down: tab-chip-active,
+        up: tab-chip-inactive,
+        checked: tab-chip-active,
+        over: tab-chip-over,
+        disabled: tab-chip-inactive,
+      }
+    }
+  },
+  com.kotcrab.vis.ui.widget.ListViewStyle: {
+    default: {
+      scrollPaneStyle: list
+    }
+  },
+  com.kotcrab.vis.ui.widget.BusyBar$BusyBarStyle: {
+    default: {
+      height: 2,
+      segment: select-box-list-bg-white,
+      segmentWidth: 100,
+      segmentOverflow: 50
+    },
+    slim: {
+      height: 1,
+      segment: select-box-list-bg-white,
+      segmentWidth: 100,
+      segmentOverflow: 50
+    },
+    thick: {
+      height: 6,
+      segment: select-box-list-bg-white,
+      segmentWidth: 100,
+      segmentOverflow: 50
+    }
+  },
+  com.kotcrab.vis.ui.widget.spinner.Spinner$SpinnerStyle: {
+    default: {
+      down: select-down,
+      up: select-up
+    }
+  }
+}

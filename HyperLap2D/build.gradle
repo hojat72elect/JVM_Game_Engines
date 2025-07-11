@@ -1,0 +1,213 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+    dependencies {
+        classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.beryx.runtime' version '1.13.1'
+}
+
+group 'games.rednblack'
+
+allprojects {
+    version '0.1.6'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url 'https://jitpack.io' }
+}
+
+ext {
+    appName = 'HyperLap2D'
+
+    packMain = ["art/textures", "assets/style/", "uiskin"]
+    packSplash = ["art/splash_textures", "assets/splash/", "splash"]
+}
+
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+
+task packTextures {
+    TexturePacker.Settings settings = new TexturePacker.Settings()
+    settings.legacyOutput = false
+    settings.filterMin = Texture.TextureFilter.Linear
+    settings.filterMag = Texture.TextureFilter.Linear
+    settings.duplicatePadding = true
+    if (project.ext.has('packMain')) {
+        logger.info "Calling TexturePacker: " + packMain
+        TexturePacker.processIfModified(settings, file(packMain[0]).absolutePath, file(packMain[1]).absolutePath, (String)packMain[2])
+    }
+    if (project.ext.has('packSplash')) {
+        logger.info "Calling TexturePacker: " + packSplash
+        TexturePacker.processIfModified(settings, file(packSplash[0]).absolutePath, file(packSplash[1]).absolutePath, (String)packSplash[2])
+    }
+}
+
+mainClassName = "games.rednblack.editor.Main"
+project.ext.assetsDir = new File("assets/");
+def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
+
+def getBuildVersion = {
+    if (osName.contains('mac')) {
+        return getVersion().toString().replaceAll("0\\.", "")
+    }
+    if (project.hasProperty('SNAPSHOT')) {
+        return getVersion() + (project.hasProperty('WORKFLOW_RUN') ? WORKFLOW_RUN : "$System.env.WORKFLOW_RUN")
+    } else {
+        return getVersion()
+    }
+}
+
+task runHyperLap2D(dependsOn: classes, type: JavaExec) {
+    mainClass = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = project.assetsDir
+    jvmArgs = ['-verbose:gc','-XX:+UseZGC','-Xms128m']
+    ignoreExitValue = true
+}
+
+task dist(type: Jar) {
+    dependsOn classes
+    archiveVersion.set(getBuildVersion())
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.output.resourcesDir)
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    from files(project.assetsDir);
+
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+
+    destinationDirectory = file("$buildDir/../distBuld/lib")
+}
+
+jpackageImage.dependsOn dist
+jpackage.dependsOn dist
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    implementation ("com.badlogicgames.gdx:gdx-tools:$gdxVersion") {
+        exclude group: 'com.badlogicgames.gdx', module: 'gdx-backend-lwjgl'
+    }
+    implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
+    implementation "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
+    implementation "net.onedaybeard.artemis:artemis-odb-serializer-json-libgdx:$artemisVersion"
+
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+
+    implementation "games.rednblack.puremvc:core:$pureMvcVersion"
+    implementation "games.rednblack.talos:runtime-libgdx:$talosVersion"
+    implementation "games.rednblack.talos:bvb-libgdx:$talosVersion"
+
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version"
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-linux"
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-linux-arm32"
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-linux-arm64"
+    //implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-linux-riscv64"
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-macos"
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-macos-arm64"
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-windows"
+    implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-windows-x86"
+
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+
+    implementation project(":hyperlap2d-common-api")
+    implementation project(":hyperlap2d-runtime-libgdx")
+    implementation project(":h2d-libgdx-spine-extension")
+    implementation project(":h2d-libgdx-talos-extension")
+    implementation project(":h2d-libgdx-typinglabel-extension")
+    implementation project(":h2d-libgdx-tinyvg-extension")
+    implementation project(":h2d-libgdx-bvb-extension")
+
+    implementation "space.earlygrey:shapedrawer:$shapedrawerVersion"
+    implementation "com.github.tommyettinger:textratypist:$textratypistVersion"
+    implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
+    implementation "com.esotericsoftware.spine:spine-libgdx:$spineVersion"
+    implementation "com.github.lyze237:gdx-TinyVG:$gdxTinyVGVersion"
+    implementation "com.mortennobel:java-image-scaling:0.8.6"
+    implementation "org.apache.commons:commons-lang3:3.12.0"
+    implementation "commons-io:commons-io:2.16.1"
+    implementation 'net.mountainblade:modular:1.0'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+task deleteInstallerTemp(type: Delete) {
+    delete "$buildDir/../distBuld/installer"
+}
+jpackage.dependsOn deleteInstallerTemp
+
+startScripts {
+    dependsOn dist
+}
+
+runtime {
+    javaHome.set(System.getProperty("java.home"))
+    options = ['--strip-debug',
+               '--compress', '2',
+               '--no-header-files',
+               '--no-man-pages',
+               '--strip-native-commands',
+               '--vm', 'server']
+    modules = ['java.base',
+               'java.desktop',
+               'java.compiler',
+               'java.logging',
+               'java.management',
+               'jdk.crypto.cryptoki',
+               'jdk.crypto.ec',
+               'jdk.unsupported']
+
+    jpackage {
+        distDir.set(file("$buildDir/../distBuld"))
+        setVersion(getBuildVersion())
+        mainJar = dist.archiveFileName.get()
+        imageOptions += ['--app-version', getBuildVersion(), '--vendor', 'Red & Black Games', '--description', 'HyperLap2D Editor', '--name', 'HyperLap2D']
+        installerOptions += ['--license-file', 'LICENSE']
+        jvmArgs = ['-verbose:gc','-XX:+UseZGC','-Xms128m']
+        if (osName.contains('windows')) {
+            imageOptions += ["--icon", file("icons/icon.ico")]
+            installerType = 'exe'
+            installerOptions += ['--win-dir-chooser', '--win-menu', '--win-menu-group', 'HyperLap2D',
+                                 '--win-shortcut', '--win-shortcut-prompt',  '--vendor', 'Red & Black Games',
+                                 '--description', 'HyperLap2D Editor',
+                                 '--temp', "$buildDir/../distBuld/installer",
+                                 '--win-upgrade-uuid', 'e5f64fb6-111f-41f3-8f33-03b90e1a3a32',
+                                 "--icon", file("icons/icon.ico")]
+            resourceDir = file("resources-windows")
+        } else if (osName.contains('linux')) {
+            imageOptions += ["--icon", file("icons/HyperLap2D.png")]
+            installerType = 'deb'
+            installerOptions += [
+                    '--vendor', 'Red & Black Games',
+                    '--description', 'HyperLap2D is a Visual Editor for complex 2D worlds and scenes.',
+                    '--linux-menu-group', 'Development', '--linux-deb-maintainer', 'business@rednblack.games',
+                    '--linux-shortcut', '--vendor', 'Red & Black Games', '--linux-rpm-license-type', 'License: GPL3'
+            ]
+            resourceDir = file("resources-linux")
+        } else if (osName.contains('mac')) {
+            imageOptions += ['--copyright', '(c) 2023, Red &amp; Black Games', "--icon", file("icons/icon.icns")
+                             , '--resource-dir', "${projectDir}/resources-macos"]
+            jvmArgs += ['-XstartOnFirstThread', '-Djava.awt.headless=true']
+            installerOptions += ['--verbose','--app-version', getBuildVersion(), '--vendor', 'Red & Black Games', '--resource-dir', "${projectDir}/resources-macos" ]
+            installerType = 'dmg'
+            resourceDir = file("resources-macos")
+        }
+    }
+}

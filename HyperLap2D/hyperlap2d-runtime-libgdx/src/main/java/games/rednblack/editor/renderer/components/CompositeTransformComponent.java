@@ -1,0 +1,26 @@
+package games.rednblack.editor.renderer.components;
+
+import com.artemis.PooledComponent;
+import com.badlogic.gdx.math.Rectangle;
+
+public class CompositeTransformComponent extends PooledComponent {
+	public boolean automaticResize = true;
+	public boolean scissorsEnabled = false;
+	public boolean renderToFBO = false;
+
+	public final Rectangle scissors = new Rectangle();
+	public final Rectangle clipBounds = new Rectangle();
+
+	public float checksum;
+
+	@Override
+	public void reset() {
+		automaticResize = true;
+		scissorsEnabled = false;
+		renderToFBO = false;
+
+		scissors.set(0, 0, 0, 0);
+		clipBounds.set(0, 0, 0, 0);
+		checksum = 0;
+	}
+}

@@ -1,0 +1,240 @@
+[0.1.6]
+- Update libGDX to 1.13.2-SNAPSHOT
+- Update to Java 21
+- [BREAK CHANGE] Add support `fast` atlas packing format. Enabled by default, but generates a warning during export
+
+[0.1.5]
+- Update libGDX to 1.13.1, VisUI to 1.5.5, Talos Legacy to 1.5.1, PureMVC to 1.0.3
+- [BREAK CHANGE] Update Spine runtime support to `4.2.7`
+- Add Items Tree search filter
+- Add Mini Map feature (press and hold keyboard `M` button)
+- Basic folder visualization for different atlas packages
+- Fix many editor memory leaks
+- Fix common crashes related to multi-thread issues
+
+**Runtime**
+- [BREAK CHANGE] Make `ZIndexComponent#layerName` field private
+- [BREAK CHANGE] Move TypingLabel extension to TextraTypist
+- Optimize some built-in systems
+- Allow to extend `HyperLap2dRenderer` and use custom rendering systems
+- Bug fixes and performance improvements
+
+[0.1.4]
+- Update libGDX to 1.12.1
+- Update VisUI to 1.5.3
+- Experimental support to fail safe exceptions
+- Add tooltip for layer name in the items tree
+- Bug fixing and stability improvements
+
+**Runtime**
+- Hotfix GWT compilation
+- [BREAK CHANGE] Add entity parameter `ButtonListener`
+- Improved buttons system: Allow to disable buttons, do not fire `click` when touch up is outside the entity bounds
+- Fix shared layers instances with different library items instances
+- Move to Legacy version of Talos VFX (Pool particles and stability improvements)
+- Support for BVB runtime
+
+[0.1.3]
+- Update libGDX to 1.12.0
+- Update gradle to 7.6
+- Update VisUI to 1.5.2
+- Replace PureMVC with gdx-puremvc
+- Sensor component custom width/height
+- Improve physics bodies bounding boxes (disabled by default)
+- Enable/disable bounding boxes debug view
+- Improved layers drag and drop
+- Add manual camera pan control
+- Bug fixing and stability improvements
+
+**Runtime**
+- [BREAK CHANGE] `TextureArrayCpuPolygonSpriteBatch` is now the default batch implementation
+- [BREAK CHANGE] New `MainItemComponent#uniqueId` management, change from integer to a random string
+- First integration of Spine's BoundingBoxAttachment with Box2D for skeletal collision detection
+- Chained Entities and Spine' SkeletonRenderSeparator
+- Improved PhysicsActions. Add `PhysicsActions#transformTo` and `PhysicsActions#transformBy`
+- Fixed physic's step
+
+[0.1.2]
+- [BREAK CHANGE] Update Spine runtime support to `4.1.0`
+- Support custom lights falloff using Constant-Linear-Quadratic coefficients
+- Release months of bug fixing and cross platform stability improvements
+
+[0.1.1]
+- Allow Box2D bodies inside composite items. Must uncheck composite's automatic resize.
+
+**Editor**
+- Fixed polygon entities dimensions
+- Fixed common crash in Auto Tiles Plugin
+- Fixed import Spine animations exported in compatibility mode
+- Add support to path as atlas region name
+- Hide `white-pixel` resource because mandatory
+- Check updates for Snapshot builds
+- Sprite Sheet to Animation splitter
+- Improve lights follower
+
+**Runtime**
+- [BREAK CHANGE] Improve `ActionEventListener` with `entity` parameter
+- Update Typing Label to `1.3.0`
+
+[0.1.0]
+- [BREAK CHANGE] Update Project version to `1.0.0`
+- Extensions are completely detached from base runtime
+- Custom Variables are stored in JSON format
+- Support Spine's Skins
+- Particle Effects auto start flag
+- Add support to Bitmap Fonts (.fnt)
+- Add support to TinyVG (.tvg)
+- Add support for global scene shader
+- Bug fixes and stability improvements (as usual...)
+
+= Editor =
+- New polygons management with open-ended shapes
+- Fully undecorated in Windows OS and macOS
+- Better UI
+- Use ANGLE GLES 2.0 instead of OpenGL 3+
+- Implement new Shader Management
+- Update LWJGL to 3.3.1
+- Update to Java 17
+
+= Runtime =
+- Rework Assets management
+- Implement `TextureArrayCpuPolygonSpriteBatch` and `TextureArrayPolygonSpriteBatch` (For GLES 2.0)
+- Fix Particle Effects Memory leaks
+
+[0.0.8]
+- [BREAK CHANGE] Rework runtime code, replaced Ashley ECS with Artemis-odb
+- [BREAK CHANGE] Update Spine support to `4.0.18.1`
+- [BREAK CHANGE] Update Talos VFX support to `1.4.0`
+- [BREAK CHANGE] Use new libGDX atlas packing format by default
+- Update libGDX to 1.10.1-SNAPSHOT
+- Support mono space fonts
+- Support Circle shapes for physics bodies
+
+= Editor =
+- Update LWJGL to 3.3.0
+- Add FPS Limit in Settings
+- Add Normal Map resource filter
+- Add automatically center origin
+- Restyle Atlas Packing Dialog
+- Many bug fixes and performance improvements
+
+= Runtime =
+- Split Typing Label into its own extension
+- Support artemis serialization
+- Add `SceneConfiguration#addTagTransmuter`
+
+[0.0.7]
+- [BREAK CHANGE] Spine and Sprite animations are now packed into same main atlas pack
+- [BREAK CHANGE] Update Project version to `0.2.0`
+- Experimental support to Normal Mapping in lights:
+    * Simple Images
+    * Spine Animations
+- Add light `intensity`
+- Add Physics Sensors
+
+= Editor =
+- Use Distance Field fonts for GUI
+- Add Editor performance settings (MSAA, OpenGL 3)
+- Add multiple atlas packing settings
+- Add Import libGDX atlas format
+- Improve `Resources` Panel UI/UX (Multiple selection/delete)
+- Huge improvements to Tiled Plugin:
+    * Sprite and Spine animated Tiles
+    * UI improvements and general refactoring
+    * Split Tile Set image into single tiles (`Resources -> Import Tile Set`)
+    * Drop multiple tiles at once
+    * Sort tiles with drag and drop
+    * Experimental Auto Tiling drawing
+- Improve jpackage releases
+- Update to Java 16
+- Many bug fixes
+
+= Runtime =
+- Fix Lights positioning issues
+- Cone Lights direction can be changed with `TransformComponent#rotation`
+
+[0.0.6]
+- Update libGDX to 1.10.0
+- Add flipX and flipY flag
+- Experimental support to pseudo3d lights
+
+= Editor =
+- Sort resources alphabetically
+- Add Z-Index controls in `Items Tree`
+- Add `Save Project as`
+- Add link scale X/Y properties
+- Add option to scale GUI (`Settings -> General -> UI Scale Density`)
+- Add multiple selection to `Tags` panel
+- Add Import/Export Library Actions
+- Use F10 key to open Console and F11 key to toggle full screen
+- Set minimum OpenGL version to 3.2
+- Stability improvements
+
+= Runtime =
+- Support rendering composites to FBO + FBOs stacking
+- Fix Hdpi/Retina rendering
+- Included updated box2dLights dependence into runtime code
+
+[0.0.5]
+*Release to switch from Bintray/jCenter to Sonatype/Maven Central*
+
+- Runtime performance improvements
+- Update libGDX to 1.9.14
+- Update Ashley to 1.7.4
+
+[0.0.4]
+- Add support to Talos Particles VFX
+- Add Sticky Notes feature
+- Add GL Profiler in Performance plugin
+- Add smooth camera pan
+- Add panning camera with scroll gesture
+- Add support to custom shader uniforms
+- Add basic support to screen-reading shaders
+- Add `Resources` menu:
+    * Add Create Placeholder
+    * Add Create Perlin Noise textures
+- Add colorful `Console` GUI to show debug logs
+- Add hide GUI with F12 button
+- Update HyperLap2D project version to 0.1.1
+- Update libGDX to 1.9.13
+- Fixed some memory leaks and NPEs
+- Improve overall object transforming and support Labels
+- Improved UI with tons of new animations
+- Improved Code Editor style
+
+[0.0.3]
+- Fixed bright lights on some GPUs
+- Fixed undo\redo when creating new objects
+- Fixed common crashes with Tiled plugin
+- Improved Tiled plugin with undo\redo commands
+- Improved Plugin APIs
+- Improved normal followers style with animated dashed lines
+- Improved Graph Node Editor output format: replaced JSONObjects with libGDX Json
+- Improved Open/Save dialogs: replaced VisUI with native dialogs
+- Add async texture packing operation
+- Extend Node Graph Editor:
+    * Add custom parameters
+    * Add custom events
+- Add custom key bindings
+- Add custom exception handler with stacktrace info
+- Add automatic check for updates
+- General bug fix
+
+[0.0.2]
+- Support to Typing Labels
+- Experimental Code Editor for:
+    * Typing Labels
+    * GLSL Fragment shaders
+- Experimental Node Graph Editor for:
+    * Create complex actions
+- Actions Library
+- Animations and UI/UX enhancements
+- Better cursor management
+- Track total time spent using HyperLap2D
+- Enable Origin transformation for any object
+- Improve editor performance
+- Fix many bugs and possible NPE across Editor and Plugins
+- Update all dependencies to latest version
+
+[0.0.1]
+- Initial public alpha release
