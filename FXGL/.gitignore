@@ -1,0 +1,48 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+bin/
+
+# Eclipse #
+.classpath
+.project
+.settings/
+bin/
+target/
+
+# IntelliJ IDEA
+.idea/
+.run/
+out/
+*.iml
+
+# maven #
+dependency-reduced-pom.xml
+
+# logs #
+*.log
+logs/
+*.lck
+
+# FXGL #
+saves/
+profiles/
+system/
+editor_json/
+*.json
+
+# FXGL Tests #
+testprofiles/
+
+# SpaceInvaders #
+hiscore.dat
+
+# Common save file ext #
+*.sav
+*.prefs
+
+# Auto-generated CHANGELOG #
+CHANGELOG_RAW.md
+CHANGELOG.md

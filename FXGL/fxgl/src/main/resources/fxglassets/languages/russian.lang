@@ -1,0 +1,103 @@
+#
+# FXGL - JavaFX Game Library. The MIT License (MIT).
+# Copyright (c) AlmasB (almaslvl@gmail.com).
+# See LICENSE for details.
+#
+
+#
+# Dialog text
+#
+
+dialog.exitGame = Выйти из игры?
+dialog.yes = ДА
+dialog.no = НЕТ
+dialog.ok = ОК
+dialog.cancel = ОТМЕНА
+
+#
+# Menu text
+#
+
+menu.language = ЯЗЫК
+menu.continue = ПРОДОЛЖИТЬ
+menu.resume = ВЕРНУТЬСЯ
+menu.newGame = НОВАЯ ИГРА
+menu.save = СОХРАНИТЬ
+menu.load = ЗАГРУЗИТЬ
+menu.extra = ЭКСТРА
+menu.online = ОНЛАЙН
+menu.video = ВИДЕО
+menu.audio = АУДИО
+menu.credits = КРЕДИТЫ
+menu.options = ОПЦИИ
+menu.logout = ЛОГАУТ
+menu.exit = ВЫХОД
+menu.mainMenu = НА ГЛАВНУЮ
+menu.restore = ВОССТАНОВИТЬ
+menu.gameplay = ИГРА
+menu.controls = УПРАВЛЕНИЕ
+menu.trophies = ТРОФЕИ
+menu.feedback = ОБРАТНАЯ СВЯЗЬ
+menu.back = НАЗАД
+menu.delete = УДАЛИТЬ
+menu.difficulty = СЛОЖНОСТЬ
+menu.playtime = ИГРОВОЕ ВРЕМЯ
+menu.music.volume = ГРОМКОСТЬ МУЗЫКИ
+menu.sound.volume = ГРОМКОСТЬ ЗВУКА
+menu.fullscreen = ПОЛНЫЙ ЭКРАН
+menu.fixRatio = ФИКСИРОВАННОЕ СООТНОШЕНИЕ
+menu.settingsRestore = ВОССТАНОВИТЬ НАСТРОЙКИ ПО УМОЛЧАНИЮ
+menu.exitMainMenu = ВЫЙТИ В ГЛАВНОЕ МЕНЮ?
+menu.logOut = ВЫЙТИ?
+menu.unsavedProgress = НЕСОХРАНЕННЫЙ ПРОГРЕСС БУДЕТ УТЕРЯН!
+menu.chooseFeedback = ВЫБЕРИТЕ СПОСОБ ОБРАТНОЙ СВЯЗИ
+menu.pressAnyKey = НАЖМИТЕ ЛЮБУЮ КЛАВИШУ
+menu.loadSave = ЗАГРУЗИТЬ СОХРАНЕНИЕ
+menu.loading = ЗАГРУЗКА
+menu.loadingSaveFiles = ЗАГРУЗКА СОХРАНЕНИЯ
+menu.loadingLast = ЗАГРУЗКА ПОСЛЕДНЕГО СОХРАНЕНИЯ
+menu.deleteSave = УДАЛИТЬ СОХРАНЕНИЕ
+menu.deleting = УДАЛЕНИЕ
+menu.overwrite = ПЕРЕЗАПИСАТЬ СОХРАНЕНИЕ
+menu.enterSaveName = ВВЕДИТЕ ИМЯ СОХРАНЕНИЯ
+menu.savingData = СОХРАНЕНИЕ ДАННЫХ
+
+#
+# Multiplayer text
+#
+
+multiplayer.new = НОВЫЙ
+multiplayer.select = ВЫБРАТЬ
+multiplayer.options = НАСТРОЙКИ МНОГОПОЛЬЗОВАТЕЛЬСКОГО РЕЖИМА
+multiplayer.connect = ПОДКЛЮЧЕНИЕ...
+multiplayer.connecting = ПОДКЛЮЧЕНИЕ К ИГРЕ
+multiplayer.host = ХОСТ
+multiplayer.hosting = СОЗДАНИЕ ИГРЫ
+multiplayer.enterIp = ВВЕДИТЕ IP АДРЕС СЕРВЕРА
+
+#
+# Profile text
+#
+
+profile.profile = ПРОФИЛЬ
+profile.selectOrCreate = ВЫБЕРИТЕ ПРОФИЛЬ ИЛИ СОЗДАЙТЕ НОВЫЙ
+profile.loadingProfile = ЗАГРУЗКА ПРОФИЛЯ
+profile.loadingProfiles = ЗАГРУЗКА ПРОФИЛЕЙ
+profile.deletingProfile = УДАЛЕНИЕ ПРОФИЛЯ
+profile.corrupted = ПРОФИЛЬ ПОВРЕЖДЕН
+profile.new = НОВЫЙ ПРОФИЛЬ
+
+#
+# Development text
+#
+
+dev.screenshotSaved = СКРИНШОТ СОХРАНЕН
+dev.screenshotFailed = ОШИБКА СОХРАНЕНИЯ СКРИНШОТА
+
+#
+# Achievement text
+#
+
+achievement.achievement = ДОСТИЖЕНИЕ
+achievement.progress = ПРОГРЕСС
+achievement.receive = ВЫ ПОЛУЧИЛИ ДОСТИЖЕНИЕ!

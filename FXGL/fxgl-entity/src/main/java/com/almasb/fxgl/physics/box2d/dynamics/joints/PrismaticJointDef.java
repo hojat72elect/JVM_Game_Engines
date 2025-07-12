@@ -1,0 +1,93 @@
+/*
+ * FXGL - JavaFX Game Library. The MIT License (MIT).
+ * Copyright (c) AlmasB (almaslvl@gmail.com).
+ * See LICENSE for details.
+ */
+package com.almasb.fxgl.physics.box2d.dynamics.joints;
+
+import com.almasb.fxgl.core.math.Vec2;
+import com.almasb.fxgl.physics.box2d.dynamics.Body;
+import com.almasb.fxgl.physics.box2d.dynamics.World;
+
+/**
+ * Prismatic joint definition. This requires defining a line of motion using an axis and an anchor
+ * point. The definition uses local anchor points and a local axis so that the initial configuration
+ * can violate the constraint slightly. The joint translation is zero when the local anchor points
+ * coincide in world space. Using local anchors and a local axis helps when saving and loading a
+ * game.
+ *
+ * Note: at least one body should by dynamic with a non-fixed rotation.
+ *
+ * @author Daniel
+ */
+public class PrismaticJointDef extends JointDef<PrismaticJoint> {
+
+    /**
+     * The local anchor point relative to body1's origin.
+     */
+    public final Vec2 localAnchorA = new Vec2();
+
+    /**
+     * The local anchor point relative to body2's origin.
+     */
+    public final Vec2 localAnchorB = new Vec2();
+
+    /**
+     * The local translation axis in body1.
+     */
+    public final Vec2 localAxisA = new Vec2(1.0f, 0.0f);
+
+    /**
+     * The constrained angle between the bodies: body2_angle - body1_angle.
+     */
+    public float referenceAngle = 0.0f;
+
+    /**
+     * Enable/disable the joint limit.
+     */
+    public boolean enableLimit = false;
+
+    /**
+     * The lower translation limit, usually in meters.
+     */
+    public float lowerTranslation = 0.0f;
+
+    /**
+     * The upper translation limit, usually in meters.
+     */
+    public float upperTranslation = 0.0f;
+
+    /**
+     * Enable/disable the joint motor.
+     */
+    public boolean enableMotor = false;
+
+    /**
+     * The maximum motor torque, usually in N-m.
+     */
+    public float maxMotorForce = 0.0f;
+
+    /**
+     * The desired motor speed in radians per second.
+     */
+    public float motorSpeed = 0.0f;
+
+    /**
+     * Initialize the bodies, anchors, axis, and reference angle using the world anchor and world
+     * axis.
+     */
+    public void initialize(Body b1, Body b2, Vec2 anchor, Vec2 axis) {
+        setBodyA(b1);
+        setBodyB(b2);
+
+        b1.getLocalPointToOut(anchor, localAnchorA);
+        b2.getLocalPointToOut(anchor, localAnchorB);
+        b1.getLocalVectorToOut(axis, localAxisA);
+        referenceAngle = b2.getAngle() - b1.getAngle();
+    }
+
+    @Override
+    protected PrismaticJoint createJoint(World world) {
+        return new PrismaticJoint(world.getPool(), this);
+    }
+}
