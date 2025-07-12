@@ -1,0 +1,437 @@
+{
+    "meta": {
+        "app": "https://littlekt.com",
+        "version": "1.0",
+        "image": "default_tiles.png",
+        "format": "RGBA8888",
+        "scale": 1.0,
+        "size": {
+            "w": 123,
+            "h": 143
+        },
+        "related_multi_packs": [
+        ]
+    },
+    "frames": [
+        {
+            "filename": "grey_arrowDown",
+            "frame": {
+                "x": 90,
+                "y": 75,
+                "w": 16,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            }
+        },
+        {
+            "filename": "grey_arrowLeft",
+            "frame": {
+                "x": 4,
+                "y": 123,
+                "w": 16,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            }
+        },
+        {
+            "filename": "grey_arrowRight",
+            "frame": {
+                "x": 26,
+                "y": 123,
+                "w": 16,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            }
+        },
+        {
+            "filename": "grey_arrowUp",
+            "frame": {
+                "x": 48,
+                "y": 123,
+                "w": 16,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            }
+        },
+        {
+            "filename": "grey_box",
+            "frame": {
+                "x": 4,
+                "y": 55,
+                "w": 38,
+                "h": 36
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 38,
+                "h": 36
+            },
+            "sourceSize": {
+                "w": 38,
+                "h": 36
+            }
+        },
+        {
+            "filename": "grey_boxTick",
+            "frame": {
+                "x": 48,
+                "y": 55,
+                "w": 36,
+                "h": 36
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 36,
+                "h": 36
+            },
+            "sourceSize": {
+                "w": 36,
+                "h": 36
+            }
+        },
+        {
+            "filename": "grey_button",
+            "frame": {
+                "x": 70,
+                "y": 121,
+                "w": 14,
+                "h": 12
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 14,
+                "h": 12
+            },
+            "sourceSize": {
+                "w": 14,
+                "h": 12
+            }
+        },
+        {
+            "filename": "grey_checkmarkGrey",
+            "frame": {
+                "x": 4,
+                "y": 97,
+                "w": 21,
+                "h": 20
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 20
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 20
+            }
+        },
+        {
+            "filename": "grey_checkmarkWhite",
+            "frame": {
+                "x": 31,
+                "y": 97,
+                "w": 21,
+                "h": 20
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 20
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 20
+            }
+        },
+        {
+            "filename": "grey_circle",
+            "frame": {
+                "x": 59,
+                "y": 4,
+                "w": 36,
+                "h": 36
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 36,
+                "h": 36
+            },
+            "sourceSize": {
+                "w": 36,
+                "h": 36
+            }
+        },
+        {
+            "filename": "grey_crossGrey",
+            "frame": {
+                "x": 101,
+                "y": 4,
+                "w": 18,
+                "h": 18
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 18,
+                "h": 18
+            },
+            "sourceSize": {
+                "w": 18,
+                "h": 18
+            }
+        },
+        {
+            "filename": "grey_crossWhite",
+            "frame": {
+                "x": 101,
+                "y": 28,
+                "w": 18,
+                "h": 18
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 18,
+                "h": 18
+            },
+            "sourceSize": {
+                "w": 18,
+                "h": 18
+            }
+        },
+        {
+            "filename": "grey_grabber",
+            "frame": {
+                "x": 107,
+                "y": 112,
+                "w": 8,
+                "h": 9
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 8,
+                "h": 9
+            },
+            "sourceSize": {
+                "w": 8,
+                "h": 9
+            }
+        },
+        {
+            "filename": "grey_outline",
+            "frame": {
+                "x": 4,
+                "y": 4,
+                "w": 49,
+                "h": 45
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 49,
+                "h": 45
+            },
+            "sourceSize": {
+                "w": 49,
+                "h": 45
+            }
+        },
+        {
+            "filename": "grey_panel",
+            "frame": {
+                "x": 58,
+                "y": 97,
+                "w": 20,
+                "h": 18
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 20,
+                "h": 18
+            },
+            "sourceSize": {
+                "w": 20,
+                "h": 18
+            }
+        },
+        {
+            "filename": "grey_sliderBg",
+            "frame": {
+                "x": 107,
+                "y": 97,
+                "w": 10,
+                "h": 9
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 10,
+                "h": 9
+            },
+            "sourceSize": {
+                "w": 10,
+                "h": 9
+            }
+        },
+        {
+            "filename": "grey_tickGrey",
+            "frame": {
+                "x": 84,
+                "y": 97,
+                "w": 17,
+                "h": 17
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 17,
+                "h": 17
+            },
+            "sourceSize": {
+                "w": 17,
+                "h": 17
+            }
+        },
+        {
+            "filename": "grey_tickWhite",
+            "frame": {
+                "x": 90,
+                "y": 52,
+                "w": 17,
+                "h": 17
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 17,
+                "h": 17
+            },
+            "sourceSize": {
+                "w": 17,
+                "h": 17
+            }
+        },
+        {
+            "filename": "pixel_transparent",
+            "frame": {
+                "x": 121,
+                "y": 112,
+                "w": -2,
+                "h": -2
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": -2,
+                "h": -2
+            },
+            "sourceSize": {
+                "w": -2,
+                "h": -2
+            }
+        },
+        {
+            "filename": "pixel_white",
+            "frame": {
+                "x": 59,
+                "y": 46,
+                "w": 1,
+                "h": 1
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+            },
+            "sourceSize": {
+                "w": 1,
+                "h": 1
+            }
+        }
+    ]
+}
