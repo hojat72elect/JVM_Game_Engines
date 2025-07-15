@@ -4,13 +4,13 @@ import com.raylib.java.Raylib
 import com.raylib.java.core.Color
 
 fun main() {
-    val rlj = Raylib()
-    rlj.core.InitWindow(800, 600, "Raylib-J Example")
+    val raylib = Raylib()
+    raylib.core.InitWindow(800, 600, "Game example 1")
 
-    while (!rlj.core.WindowShouldClose()) {
-        rlj.core.BeginDrawing()
-        rlj.core.ClearBackground(Color.WHITE)
-        rlj.text.DrawText("Hello, World!", 500 - rlj.text.MeasureText("Hello, World!", 40) / 2, 300, 40, Color.DARKGRAY)
-        rlj.core.EndDrawing()
+    while (raylib.core.WindowShouldClose().not()) {
+        raylib.core.BeginDrawing()
+        raylib.core.ClearBackground(Color.WHITE)
+        raylib.text.DrawText("Hello, World!\nThis is Hojat\nAnd he's working on his first raylib game", 500 - raylib.text.MeasureText("Hello, World!", 40) / 2, 300, 40, Color.DARKGRAY)
+        raylib.core.EndDrawing()
     }
 }
