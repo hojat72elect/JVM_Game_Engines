@@ -6,8 +6,8 @@ import com.badlogic.gdx.utils.ObjectIntMap;
 /**
  * <p>
  * Interface to the input facilities. This allows polling the state of the keyboard, the touch screen and the accelerometer. On
- * some backends (desktop, gwt, etc) the touch screen is replaced by mouse input. The accelerometer is of course not available on
- * all backends.
+ * some backends (windows and web) the touch screen is replaced by mouse input. The accelerometer is of course not available on
+ * all of the backends.
  * </p>
  *
  * <p>
