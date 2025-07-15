@@ -14,5 +14,4 @@ public class BoneInfo {
         this.name = name;
         this.parent = parent;
     }
-
 }

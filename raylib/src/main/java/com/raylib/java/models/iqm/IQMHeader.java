@@ -20,5 +20,4 @@ public class IQMHeader {
     public IQMHeader() {
         magic = new char[16];
     }
-
 }

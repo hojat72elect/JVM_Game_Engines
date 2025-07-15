@@ -7,5 +7,4 @@ public class IQMTriangle {
     public IQMTriangle() {
         vertex = new int[3];
     }
-
 }

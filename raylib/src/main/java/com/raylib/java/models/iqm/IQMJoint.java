@@ -11,5 +11,4 @@ public class IQMJoint {
         rotate = new float[4];
         scale = new float[3];
     }
-
 }

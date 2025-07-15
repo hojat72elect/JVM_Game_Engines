@@ -29,5 +29,4 @@ public class Mesh {
         texcoords = new float[1];
         vertices = new float[0];
     }
-
 }

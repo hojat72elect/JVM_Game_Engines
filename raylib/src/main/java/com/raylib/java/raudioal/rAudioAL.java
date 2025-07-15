@@ -1,8 +1,84 @@
 package com.raylib.java.raudioal;
 
+import static com.raylib.java.Config.SUPPORT_FILEFORMAT_MP3;
+import static com.raylib.java.Config.SUPPORT_FILEFORMAT_OGG;
+import static com.raylib.java.core.rCore.IsFileExtension;
+import static com.raylib.java.raudioal.rAudioAL.MusicContextType.MUSIC_AUDIO_OGG;
+import static com.raylib.java.raudioal.rAudioAL.MusicContextType.MUSIC_MODULE_MP3;
+import static com.raylib.java.utils.Tracelog.Tracelog;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_DEBUG;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_ERROR;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_INFO;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_WARNING;
+import static org.lwjgl.openal.AL11.AL_BITS;
+import static org.lwjgl.openal.AL11.AL_BUFFER;
+import static org.lwjgl.openal.AL11.AL_BUFFERS_PROCESSED;
+import static org.lwjgl.openal.AL11.AL_BUFFERS_QUEUED;
+import static org.lwjgl.openal.AL11.AL_CHANNELS;
+import static org.lwjgl.openal.AL11.AL_FALSE;
+import static org.lwjgl.openal.AL11.AL_FORMAT_MONO16;
+import static org.lwjgl.openal.AL11.AL_FORMAT_MONO8;
+import static org.lwjgl.openal.AL11.AL_FORMAT_STEREO16;
+import static org.lwjgl.openal.AL11.AL_FORMAT_STEREO8;
+import static org.lwjgl.openal.AL11.AL_FREQUENCY;
+import static org.lwjgl.openal.AL11.AL_GAIN;
+import static org.lwjgl.openal.AL11.AL_INVALID_VALUE;
+import static org.lwjgl.openal.AL11.AL_LOOPING;
+import static org.lwjgl.openal.AL11.AL_ORIENTATION;
+import static org.lwjgl.openal.AL11.AL_PAUSED;
+import static org.lwjgl.openal.AL11.AL_PITCH;
+import static org.lwjgl.openal.AL11.AL_PLAYING;
+import static org.lwjgl.openal.AL11.AL_POSITION;
+import static org.lwjgl.openal.AL11.AL_SOURCE_STATE;
+import static org.lwjgl.openal.AL11.AL_VELOCITY;
+import static org.lwjgl.openal.AL11.alBufferData;
+import static org.lwjgl.openal.AL11.alDeleteBuffers;
+import static org.lwjgl.openal.AL11.alDeleteSources;
+import static org.lwjgl.openal.AL11.alGenBuffers;
+import static org.lwjgl.openal.AL11.alGenSources;
+import static org.lwjgl.openal.AL11.alGetBufferi;
+import static org.lwjgl.openal.AL11.alGetError;
+import static org.lwjgl.openal.AL11.alGetSourcei;
+import static org.lwjgl.openal.AL11.alListener3f;
+import static org.lwjgl.openal.AL11.alListenerf;
+import static org.lwjgl.openal.AL11.alSource3f;
+import static org.lwjgl.openal.AL11.alSourcePause;
+import static org.lwjgl.openal.AL11.alSourcePlay;
+import static org.lwjgl.openal.AL11.alSourceQueueBuffers;
+import static org.lwjgl.openal.AL11.alSourceStop;
+import static org.lwjgl.openal.AL11.alSourceUnqueueBuffers;
+import static org.lwjgl.openal.AL11.alSourcef;
+import static org.lwjgl.openal.AL11.alSourcei;
+import static org.lwjgl.openal.ALC11.ALC_ALL_DEVICES_SPECIFIER;
+import static org.lwjgl.openal.ALC11.ALC_DEFAULT_DEVICE_SPECIFIER;
+import static org.lwjgl.openal.ALC11.ALC_DEVICE_SPECIFIER;
+import static org.lwjgl.openal.ALC11.ALC_FREQUENCY;
+import static org.lwjgl.openal.ALC11.alcCloseDevice;
+import static org.lwjgl.openal.ALC11.alcCreateContext;
+import static org.lwjgl.openal.ALC11.alcDestroyContext;
+import static org.lwjgl.openal.ALC11.alcGetContextsDevice;
+import static org.lwjgl.openal.ALC11.alcGetCurrentContext;
+import static org.lwjgl.openal.ALC11.alcGetInteger;
+import static org.lwjgl.openal.ALC11.alcGetString;
+import static org.lwjgl.openal.ALC11.alcMakeContextCurrent;
+import static org.lwjgl.openal.ALC11.alcOpenDevice;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_close;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_decode_memory;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_get_info;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_get_samples_short_interleaved;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_open_filename;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_open_memory;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_seek_start;
+import static org.lwjgl.stb.STBVorbis.stb_vorbis_stream_length_in_samples;
+
 import com.raylib.java.Raylib;
 import com.raylib.java.utils.FileIO;
-import org.lwjgl.openal.*;
+
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.ALC;
+import org.lwjgl.openal.ALCCapabilities;
+import org.lwjgl.openal.ALCapabilities;
+import org.lwjgl.openal.ALUtil;
 import org.lwjgl.stb.STBVorbisInfo;
 import org.lwjgl.system.MemoryStack;
 
@@ -12,17 +88,6 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.List;
-
-import static com.raylib.java.Config.SUPPORT_FILEFORMAT_MP3;
-import static com.raylib.java.Config.SUPPORT_FILEFORMAT_OGG;
-import static com.raylib.java.core.rCore.IsFileExtension;
-import static com.raylib.java.raudioal.rAudioAL.MusicContextType.MUSIC_AUDIO_OGG;
-import static com.raylib.java.raudioal.rAudioAL.MusicContextType.MUSIC_MODULE_MP3;
-import static com.raylib.java.utils.Tracelog.Tracelog;
-import static com.raylib.java.utils.Tracelog.TracelogType.*;
-import static org.lwjgl.openal.AL11.*;
-import static org.lwjgl.openal.ALC11.*;
-import static org.lwjgl.stb.STBVorbis.*;
 
 public class rAudioAL {
 
@@ -117,15 +182,13 @@ public class rAudioAL {
     // Types and Structures Definition
     //----------------------------------------------------------------------------------
 
-    static class MusicContextType { final static int MUSIC_AUDIO_OGG = 0, MUSIC_AUDIO_FLAC = 1, MUSIC_MODULE_XM = 2, MUSIC_MODULE_MOD = 3, MUSIC_MODULE_MP3 = 4; }
+    public rAudioAL(Raylib context) {
+        this.context = context;
+    }
 
     //----------------------------------------------------------------------------------
     // Module Functions Definition - Audio Device initialization and Closing
     //----------------------------------------------------------------------------------
-
-    public rAudioAL(Raylib context) {
-        this.context = context;
-    }
 
     // Initialize audio device
     public void InitAudioDevice() {
@@ -146,10 +209,9 @@ public class rAudioAL {
             }
         }
 
-        if (device==0) {
+        if (device == 0) {
             Tracelog(LOG_ERROR, "Audio device could not be opened");
-        }
-        else {
+        } else {
             int[] attrib = {0};
             long context = alcCreateContext(device, attrib);
 
@@ -166,8 +228,7 @@ public class rAudioAL {
                 alcCloseDevice(device);
 
                 Tracelog(LOG_ERROR, "Could not initialize audio context");
-            }
-            else {
+            } else {
                 Tracelog(LOG_INFO, "Audio device and context initialized successfully: " + alcGetString(device, ALC_DEVICE_SPECIFIER));
 
                 // Listener definition (just for 2D)
@@ -204,8 +265,7 @@ public class rAudioAL {
 
         if (context == 0) {
             return false;
-        }
-        else {
+        } else {
             long device = alcGetContextsDevice(context);
 
             return device != 0;
@@ -220,24 +280,17 @@ public class rAudioAL {
         alListenerf(AL_GAIN, volume);
     }
 
-    //----------------------------------------------------------------------------------
-// Module Functions Definition - Sounds loading and playing (.WAV)
-//----------------------------------------------------------------------------------
-
     // Load wave data from file
     public Wave LoadWave(String fileName) {
         Wave wave = null;
 
         if (IsFileExtension(fileName, ".wav")) {
             wave = LoadWAV(fileName);
-        }
-        else if (IsFileExtension(fileName, ".ogg")) {
+        } else if (IsFileExtension(fileName, ".ogg")) {
             wave = LoadOGG(fileName);
-        }
-        else if (IsFileExtension(fileName, ".mp3")) {
+        } else if (IsFileExtension(fileName, ".mp3")) {
             wave = LoadMP3(fileName);
-        }
-        else if (IsFileExtension(fileName, ".flac")) {
+        } else if (IsFileExtension(fileName, ".flac")) {
             //wave = LoadFLAC(fileName);
         }
         /*else if (IsFileExtension(fileName, ".rres")) {
@@ -253,11 +306,15 @@ public class rAudioAL {
         }*/
 
         else {
-            Tracelog(LOG_WARNING, "["+fileName+"] Audio fileformat not supported, it can't be loaded");
+            Tracelog(LOG_WARNING, "[" + fileName + "] Audio fileformat not supported, it can't be loaded");
         }
 
         return wave;
     }
+
+    //----------------------------------------------------------------------------------
+// Module Functions Definition - Sounds loading and playing (.WAV)
+//----------------------------------------------------------------------------------
 
     // Load wave data from raw array data
     public Wave LoadWaveEx(ByteBuffer data, int sampleCount, int sampleRate, int sampleSize, int channels) {
@@ -311,8 +368,7 @@ public class rAudioAL {
                         Tracelog(LOG_WARNING, "Wave sample size not supported: " + wave.sampleSize);
                         break;
                 }
-            }
-            else if (wave.channels == 2) {
+            } else if (wave.channels == 2) {
                 switch (wave.sampleSize) {
                     case 8:
                         format = AL_FORMAT_STEREO8;
@@ -327,8 +383,7 @@ public class rAudioAL {
                         Tracelog(LOG_WARNING, "Wave sample size not supported: " + wave.sampleSize);
                         break;
                 }
-            }
-            else {
+            } else {
                 Tracelog(LOG_WARNING, "Wave number of channels not supported: " + wave.channels);
             }
 
@@ -345,20 +400,19 @@ public class rAudioAL {
             //----------------------------------------
             int buffer = alGenBuffers();            // Generate pointer to buffer
 
-            int dataSize = wave.sampleCount*wave.channels*wave.sampleSize/8;    // Size in bytes
+            int dataSize = wave.sampleCount * wave.channels * wave.sampleSize / 8;    // Size in bytes
 
             // Upload sound data to buffer
-            if(wave.data instanceof ByteBuffer) {
+            if (wave.data instanceof ByteBuffer) {
                 alBufferData(buffer, format, ((ByteBuffer) wave.data), wave.sampleRate);
-            }
-            else if(wave.data instanceof ShortBuffer) {
+            } else if (wave.data instanceof ShortBuffer) {
                 alBufferData(buffer, format, ((ShortBuffer) wave.data), wave.sampleRate);
             }
 
             // Attach sound buffer to source
             alSourcei(source, AL_BUFFER, buffer);
 
-            Tracelog(LOG_INFO, "[SND ID "+source+"][BUFR ID "+buffer+"] Sound data loaded successfully ("+wave.sampleRate+" Hz, "+wave.sampleSize+" bit, "+((wave.channels == 1) ? "Mono" : "Stereo")+")");
+            Tracelog(LOG_INFO, "[SND ID " + source + "][BUFR ID " + buffer + "] Sound data loaded successfully (" + wave.sampleRate + " Hz, " + wave.sampleSize + " bit, " + ((wave.channels == 1) ? "Mono" : "Stereo") + ")");
 
             sound.source = source;
             sound.buffer = buffer;
@@ -371,7 +425,7 @@ public class rAudioAL {
     // Unload wave data
     public void UnloadWave(Wave wave) {
         if (wave.data != null) {
-           wave.data.clear();
+            wave.data.clear();
         }
 
         Tracelog(LOG_INFO, "Unloaded wave data from RAM");
@@ -384,7 +438,7 @@ public class rAudioAL {
         alDeleteSources(sound.source);
         alDeleteBuffers(sound.buffer);
 
-        Tracelog(LOG_INFO, "[SND ID "+sound.source+"][BUFR ID "+sound.buffer+"] Unloaded sound data from RAM");
+        Tracelog(LOG_INFO, "[SND ID " + sound.source + "][BUFR ID " + sound.buffer + "] Unloaded sound data from RAM");
     }
 
     // Update sound buffer with new data
@@ -399,7 +453,7 @@ public class rAudioAL {
         Tracelog(LOG_DEBUG, "UpdateSound() : AL_BITS: " + sampleSize);
         Tracelog(LOG_DEBUG, "UpdateSound() : AL_CHANNELS: " + channels);
 
-        int dataSize = samplesCount*channels*sampleSize/8;   // Size of data in bytes
+        int dataSize = samplesCount * channels * sampleSize / 8;   // Size of data in bytes
 
         alSourceStop(sound.source);                 // Stop sound
         alSourcei(sound.source, AL_BUFFER, 0);      // Unbind buffer from sound to update
@@ -491,32 +545,27 @@ public class rAudioAL {
         // Format sample size
         // NOTE: Only supported 8 bit <--> 16 bit <--> 32 bit
         if (wave.sampleSize != sampleSize) {
-            ByteBuffer data = ByteBuffer.allocateDirect(wave.sampleCount*wave.channels*sampleSize/8);
+            ByteBuffer data = ByteBuffer.allocateDirect(wave.sampleCount * wave.channels * sampleSize / 8);
 
             for (int i = 0; i < wave.sampleCount; i++) {
                 for (int j = 0; j < wave.channels; j++) {
                     if (sampleSize == 8) {
                         if (wave.sampleSize == 16) {
-                            data.put(wave.channels * i + j, (byte) ((((ByteBuffer)wave.data).get(wave.channels * i + j)/32767.0f)*256));
+                            data.put(wave.channels * i + j, (byte) ((((ByteBuffer) wave.data).get(wave.channels * i + j) / 32767.0f) * 256));
+                        } else if (wave.sampleSize == 32) {
+                            data.put(wave.channels * i + j, (byte) (((ByteBuffer) wave.data).get(wave.channels * i + j) * 127.0f + 127));
                         }
-                        else if (wave.sampleSize == 32) {
-                            data.put(wave.channels * i + j, (byte) (((ByteBuffer)wave.data).get(wave.channels * i + j)*127.0f + 127));
-                        }
-                    }
-                    else if (sampleSize == 16) {
+                    } else if (sampleSize == 16) {
                         if (wave.sampleSize == 8) {
-                            data.put(wave.channels * i + j, (byte) (((((ByteBuffer)wave.data).get(wave.channels * i + j)-127)/256.0f)*32767));
+                            data.put(wave.channels * i + j, (byte) (((((ByteBuffer) wave.data).get(wave.channels * i + j) - 127) / 256.0f) * 32767));
+                        } else if (wave.sampleSize == 32) {
+                            data.put(wave.channels * i + j, (byte) (((ByteBuffer) wave.data).get(wave.channels * i + j) * 32767));
                         }
-                        else if (wave.sampleSize == 32) {
-                            data.put(wave.channels * i + j, (byte) (((ByteBuffer)wave.data).get(wave.channels * i + j)*32767));
-                        }
-                    }
-                    else if (sampleSize == 32) {
+                    } else if (sampleSize == 32) {
                         if (wave.sampleSize == 8) {
-                            data.put(wave.channels * i + j, (byte) ((((ByteBuffer)wave.data).get(wave.channels * i + j)-127)/256.0f));
-                        }
-                        else if (wave.sampleSize == 16) {
-                            data.put(wave.channels * i + j, (byte) (((ByteBuffer)wave.data).get(wave.channels * i + j)/32767.0f));
+                            data.put(wave.channels * i + j, (byte) ((((ByteBuffer) wave.data).get(wave.channels * i + j) - 127) / 256.0f));
+                        } else if (wave.sampleSize == 16) {
+                            data.put(wave.channels * i + j, (byte) (((ByteBuffer) wave.data).get(wave.channels * i + j) / 32767.0f));
                         }
                     }
                 }
@@ -530,33 +579,28 @@ public class rAudioAL {
         // Format channels (interlaced mode)
         // NOTE: Only supported mono <--> stereo
         if (wave.channels != channels) {
-            ByteBuffer data = ByteBuffer.allocateDirect(wave.sampleCount*wave.sampleSize/8*channels);
+            ByteBuffer data = ByteBuffer.allocateDirect(wave.sampleCount * wave.sampleSize / 8 * channels);
 
             if ((wave.channels == 1) && (channels == 2)) {       // mono ---> stereo (duplicate mono information)
                 for (int i = 0; i < wave.sampleCount; i++) {
                     for (int j = 0; j < channels; j++) {
                         if (wave.sampleSize == 8) {
-                            data.put(channels * i + j, ((ByteBuffer)wave.data).get(i));
-                        }
-                        else if (wave.sampleSize == 16) {
-                            data.put(channels * i + j, ((ByteBuffer)wave.data).get(i));
-                        }
-                        else if (wave.sampleSize == 32) {
-                            data.put(channels * i + j, ((ByteBuffer)wave.data).get(i));
+                            data.put(channels * i + j, ((ByteBuffer) wave.data).get(i));
+                        } else if (wave.sampleSize == 16) {
+                            data.put(channels * i + j, ((ByteBuffer) wave.data).get(i));
+                        } else if (wave.sampleSize == 32) {
+                            data.put(channels * i + j, ((ByteBuffer) wave.data).get(i));
                         }
                     }
                 }
-            }
-            else if ((wave.channels == 2) && (channels == 1)) { // stereo ---> mono (mix stereo channels)
+            } else if ((wave.channels == 2) && (channels == 1)) { // stereo ---> mono (mix stereo channels)
                 for (int i = 0, j = 0; i < wave.sampleCount; i++, j += 2) {
                     if (wave.sampleSize == 8) {
-                        data.put(i,(((ByteBuffer)wave.data).get((j+j + 1)/2)));
-                    }
-                    else if (wave.sampleSize == 16) {
-                        data.put(i,(((ByteBuffer)wave.data).get((j+j + 1)/2)));
-                    }
-                    else if (wave.sampleSize == 32) {
-                        data.put(i,(((ByteBuffer)wave.data).get((j+j + 1)/2)));
+                        data.put(i, (((ByteBuffer) wave.data).get((j + j + 1) / 2)));
+                    } else if (wave.sampleSize == 16) {
+                        data.put(i, (((ByteBuffer) wave.data).get((j + j + 1) / 2)));
+                    } else if (wave.sampleSize == 32) {
+                        data.put(i, (((ByteBuffer) wave.data).get((j + j + 1) / 2)));
                     }
                 }
             }
@@ -575,13 +619,12 @@ public class rAudioAL {
     public Wave WaveCopy(Wave wave) {
         Wave newWave = new Wave();
 
-        newWave.data = ByteBuffer.allocateDirect(wave.sampleCount*wave.sampleSize/8*wave.channels);
+        newWave.data = ByteBuffer.allocateDirect(wave.sampleCount * wave.sampleSize / 8 * wave.channels);
 
         if (newWave.data != null) {
-            if(wave.data instanceof ByteBuffer) {
+            if (wave.data instanceof ByteBuffer) {
                 ((ByteBuffer) newWave.data).put((ByteBuffer) wave.data);
-            }
-            else if(wave.data instanceof ShortBuffer) {
+            } else if (wave.data instanceof ShortBuffer) {
                 ((ShortBuffer) newWave.data).put((ShortBuffer) wave.data);
             }
             newWave.sampleCount = wave.sampleCount;
@@ -599,16 +642,15 @@ public class rAudioAL {
         if ((initSample >= 0) && (initSample < finalSample) && (finalSample > 0) && (finalSample < wave.sampleCount)) {
             int sampleCount = finalSample - initSample;
 
-            ByteBuffer data = ByteBuffer.allocateDirect(sampleCount*wave.sampleSize/8*wave.channels);
+            ByteBuffer data = ByteBuffer.allocateDirect(sampleCount * wave.sampleSize / 8 * wave.channels);
 
-            for(int i = initSample*wave.channels*wave.sampleSize/8; i < sampleCount*wave.channels*wave.sampleSize/8; i++) {
-                data.put((byte)i);
+            for (int i = initSample * wave.channels * wave.sampleSize / 8; i < sampleCount * wave.channels * wave.sampleSize / 8; i++) {
+                data.put((byte) i);
             }
 
             wave.data.clear();
             wave.data = data;
-        }
-        else {
+        } else {
             Tracelog(LOG_WARNING, "Wave crop range out of bounds");
         }
     }
@@ -616,28 +658,22 @@ public class rAudioAL {
     // Get samples data from wave as a floats array
     // NOTE: Returned sample values are normalized to range [-1..1]
     public float[] GetWaveData(Wave wave) {
-        float[] samples = new float[wave.sampleCount*wave.channels];
+        float[] samples = new float[wave.sampleCount * wave.channels];
 
         for (int i = 0; i < wave.sampleCount; i++) {
             for (int j = 0; j < wave.channels; j++) {
                 if (wave.sampleSize == 8) {
-                    samples[wave.channels * i + j] = (((ByteBuffer)wave.data).get(wave.channels * i + j)-127)/256.0f;
-                }
-                else if (wave.sampleSize == 16) {
-                    samples[wave.channels * i + j] = (((ShortBuffer)wave.data).get(wave.channels * i + j)/32767.0f);
-                }
-                else if (wave.sampleSize == 32) {
-                    samples[wave.channels * i + j] = (((ByteBuffer)wave.data).getFloat(wave.channels * i + j));
+                    samples[wave.channels * i + j] = (((ByteBuffer) wave.data).get(wave.channels * i + j) - 127) / 256.0f;
+                } else if (wave.sampleSize == 16) {
+                    samples[wave.channels * i + j] = (((ShortBuffer) wave.data).get(wave.channels * i + j) / 32767.0f);
+                } else if (wave.sampleSize == 32) {
+                    samples[wave.channels * i + j] = (((ByteBuffer) wave.data).getFloat(wave.channels * i + j));
                 }
             }
         }
 
         return samples;
     }
-
-    //----------------------------------------------------------------------------------
-    // Module Functions Definition - Music loading and stream playing (.OGG)
-    //----------------------------------------------------------------------------------
 
     // Load music stream from file
     public Music LoadMusicStream(String fileName) {
@@ -651,10 +687,9 @@ public class rAudioAL {
             music.ctxOgg = stb_vorbis_open_filename(fileName, errorBuffer, null);
 
             if (music.ctxOgg == 0) {
-                Tracelog(LOG_WARNING, "["+fileName+"] OGG audio file could not be opened");
-            }
-            else {
-                 // Get Ogg file info
+                Tracelog(LOG_WARNING, "[" + fileName + "] OGG audio file could not be opened");
+            } else {
+                // Get Ogg file info
                 STBVorbisInfo info = null;
                 try (MemoryStack stack = MemoryStack.stackPush()) {
                     IntBuffer channels = stack.mallocInt(1);
@@ -669,18 +704,15 @@ public class rAudioAL {
                     music.samplesLeft = music.totalSamples;
                     music.ctxType = MUSIC_AUDIO_OGG;
                     music.loopCount = -1;                       // Infinite loop by default
-                }
-                finally {
+                } finally {
 
-                    Tracelog(LOG_DEBUG, "["+fileName+"] FLAC total samples: " + music.totalSamples);
-                    Tracelog(LOG_DEBUG, "["+fileName+"] OGG sample rate: " + info.sample_rate());
-                    Tracelog(LOG_DEBUG, "["+fileName+"] OGG channels: " + info.channels());
-                    Tracelog(LOG_DEBUG, "["+fileName+"] OGG memory required: " + info.temp_memory_required());
+                    Tracelog(LOG_DEBUG, "[" + fileName + "] FLAC total samples: " + music.totalSamples);
+                    Tracelog(LOG_DEBUG, "[" + fileName + "] OGG sample rate: " + info.sample_rate());
+                    Tracelog(LOG_DEBUG, "[" + fileName + "] OGG channels: " + info.channels());
+                    Tracelog(LOG_DEBUG, "[" + fileName + "] OGG memory required: " + info.temp_memory_required());
                 }
-
             }
-        }
-        else if(SUPPORT_FILEFORMAT_MP3 && IsFileExtension(fileName, ".mp3")) {
+        } else if (SUPPORT_FILEFORMAT_MP3 && IsFileExtension(fileName, ".mp3")) {
             try {
                 byte[] fileData = FileIO.LoadFileData(fileName);
                 fr.delthas.javamp3.Sound mp3Sound = new fr.delthas.javamp3.Sound(new ByteArrayInputStream(fileData));
@@ -698,8 +730,7 @@ public class rAudioAL {
                 music.samplesLeft = music.totalSamples;
                 music.ctxType = MUSIC_MODULE_MP3;
                 music.loopCount = -1;
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -764,12 +795,16 @@ public class rAudioAL {
             }
         #endif
         */
-    else {
-        Tracelog(LOG_WARNING, "["+fileName+"] Audio fileformat not supported, it can't be loaded");
+        else {
+            Tracelog(LOG_WARNING, "[" + fileName + "] Audio fileformat not supported, it can't be loaded");
         }
 
         return music;
     }
+
+    //----------------------------------------------------------------------------------
+    // Module Functions Definition - Music loading and stream playing (.OGG)
+    //----------------------------------------------------------------------------------
 
     // Unload music stream
     public void UnloadMusicStream(Music music) {
@@ -806,7 +841,7 @@ public class rAudioAL {
         int state = alGetSourcei(music.stream.source, AL_SOURCE_STATE);
 
         if (state == AL_PAUSED) {
-            Tracelog(LOG_INFO, "[AUD ID "+music.stream.source+"] Resume music stream playing");
+            Tracelog(LOG_INFO, "[AUD ID " + music.stream.source + "] Resume music stream playing");
             alSourcePlay(music.stream.source);
         }
     }
@@ -856,7 +891,7 @@ public class rAudioAL {
             boolean streamEnding = false;
 
             // NOTE: Using dynamic allocation because it could require more than 16KB
-            ByteBuffer pcm = ByteBuffer.allocateDirect(AUDIO_BUFFER_SIZE*music.stream.sampleSize/8*music.stream.channels);
+            ByteBuffer pcm = ByteBuffer.allocateDirect(AUDIO_BUFFER_SIZE * music.stream.sampleSize / 8 * music.stream.channels);
 
             int numBuffersToProcess = processed;
             int samplesCount = 0;    // Total size of data steamed in L+R samples for xm floats,
@@ -865,8 +900,7 @@ public class rAudioAL {
             for (int i = 0; i < numBuffersToProcess; i++) {
                 if (music.samplesLeft >= AUDIO_BUFFER_SIZE) {
                     samplesCount = AUDIO_BUFFER_SIZE;
-                }
-                else {
+                } else {
                     samplesCount = music.samplesLeft;
                 }
 
@@ -900,8 +934,7 @@ public class rAudioAL {
                 UpdateAudioStream(music.stream, pcm, samplesCount);
                 music.samplesLeft -= samplesCount;
 
-                if (music.samplesLeft <= 0)
-                {
+                if (music.samplesLeft <= 0) {
                     streamEnding = true;
                     break;
                 }
@@ -919,8 +952,7 @@ public class rAudioAL {
                     music.loopCount--;        // Decrease loop count
                     PlayMusicStream(music);    // Play again
                 }
-            }
-            else {
+            } else {
                 // NOTE: In case window is minimized, music stream is stopped,
                 // just make sure to play again on window restore
                 if (state != AL_PLAYING) {
@@ -960,7 +992,7 @@ public class rAudioAL {
 
     // Get music time length (in seconds)
     public float GetMusicTimeLength(Music music) {
-        float totalSeconds = (float)music.totalSamples/music.stream.sampleRate;
+        float totalSeconds = (float) music.totalSamples / music.stream.sampleRate;
 
         return totalSeconds;
     }
@@ -970,7 +1002,7 @@ public class rAudioAL {
         float secondsPlayed = 0.0f;
 
         int samplesPlayed = music.totalSamples - music.samplesLeft;
-        secondsPlayed = (float)samplesPlayed/music.stream.sampleRate;
+        secondsPlayed = (float) samplesPlayed / music.stream.sampleRate;
 
         return secondsPlayed;
     }
@@ -985,8 +1017,7 @@ public class rAudioAL {
         // Only mono and stereo channels are supported, more channels require AL_EXT_MCFORMATS extension
         if ((channels > 0) && (channels < 3)) {
             stream.channels = channels;
-        }
-        else {
+        } else {
             Tracelog(LOG_WARNING, "Init audio stream: Number of channels not supported: " + channels);
             stream.channels = 1;  // Fallback to mono channel
         }
@@ -994,13 +1025,20 @@ public class rAudioAL {
         // Setup OpenAL format
         if (stream.channels == 1) {
             switch (sampleSize) {
-                case 8: stream.format = AL_FORMAT_MONO8; break;
-                case 16: stream.format = AL_FORMAT_MONO16; break;
-                case 32: stream.format = AL_FORMAT_MONO_FLOAT32; break;     // Requires OpenAL extension: AL_EXT_FLOAT32
-                default: Tracelog(LOG_WARNING, "Init audio stream: Sample size not supported: " + sampleSize); break;
+                case 8:
+                    stream.format = AL_FORMAT_MONO8;
+                    break;
+                case 16:
+                    stream.format = AL_FORMAT_MONO16;
+                    break;
+                case 32:
+                    stream.format = AL_FORMAT_MONO_FLOAT32;
+                    break;     // Requires OpenAL extension: AL_EXT_FLOAT32
+                default:
+                    Tracelog(LOG_WARNING, "Init audio stream: Sample size not supported: " + sampleSize);
+                    break;
             }
-        }
-        else if (stream.channels == 2) {
+        } else if (stream.channels == 2) {
             switch (sampleSize) {
                 case 8:
                     stream.format = AL_FORMAT_STEREO8;
@@ -1025,13 +1063,13 @@ public class rAudioAL {
         alSource3f(stream.source, AL_VELOCITY, 0.0f, 0.0f, 0.0f);
 
         // Create Buffers (double buffering)
-        for(int i = 0; i < MAX_STREAM_BUFFERS; i++) {
+        for (int i = 0; i < MAX_STREAM_BUFFERS; i++) {
             stream.buffers[i] = alGenBuffers();
         }
 
         // Initialize buffer with zeros by default
         // NOTE: Using dynamic allocation because it requires more than 16KB
-        ByteBuffer pcm = ByteBuffer.allocateDirect(AUDIO_BUFFER_SIZE*stream.sampleSize/8*stream.channels);
+        ByteBuffer pcm = ByteBuffer.allocateDirect(AUDIO_BUFFER_SIZE * stream.sampleSize / 8 * stream.channels);
 
         for (int i = 0; i < MAX_STREAM_BUFFERS; i++) {
             alBufferData(stream.buffers[i], stream.format, pcm, stream.sampleRate);
@@ -1041,7 +1079,7 @@ public class rAudioAL {
 
         alSourceQueueBuffers(stream.source, stream.buffers);
 
-        Tracelog(LOG_INFO, "[AUD ID "+ stream.source+"] Audio stream loaded successfully ("+stream.sampleRate+" Hz, "+stream.sampleSize+" bit, "+((stream.channels == 1) ? "Mono" : "Stereo")+")");
+        Tracelog(LOG_INFO, "[AUD ID " + stream.source + "] Audio stream loaded successfully (" + stream.sampleRate + " Hz, " + stream.sampleSize + " bit, " + ((stream.channels == 1) ? "Mono" : "Stereo") + ")");
 
         return stream;
     }
@@ -1065,7 +1103,7 @@ public class rAudioAL {
         alDeleteSources(stream.source);
         alDeleteBuffers(stream.buffers);
 
-        Tracelog(LOG_INFO, "[AUD ID "+stream.source+"] Unloaded audio stream data");
+        Tracelog(LOG_INFO, "[AUD ID " + stream.source + "] Unloaded audio stream data");
     }
 
     // Update audio stream buffers with data
@@ -1078,9 +1116,8 @@ public class rAudioAL {
         if (alGetError() != AL_INVALID_VALUE) {
             alBufferData(buffer, stream.format, data, stream.sampleRate);
             alSourceQueueBuffers(stream.source, buffer);
-        }
-        else {
-            Tracelog(LOG_WARNING, "[AUD ID "+stream.source+"] Audio buffer not available for unqueuing");
+        } else {
+            Tracelog(LOG_WARNING, "[AUD ID " + stream.source + "] Audio buffer not available for unqueuing");
         }
     }
 
@@ -1116,19 +1153,15 @@ public class rAudioAL {
         alSourceStop(stream.source);
     }
 
-    //----------------------------------------------------------------------------------
-    // Module specific Functions Definition
-    //----------------------------------------------------------------------------------
-
     // Load WAV file into Wave structure
     Wave LoadWAV(String fileName) {
         Wave wave = new Wave();
 
         // Loading file to memory
         byte[] fileData = new byte[0];
-        try{
+        try {
             fileData = FileIO.LoadFileData(fileName);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -1140,11 +1173,14 @@ public class rAudioAL {
             ByteBuffer data = ByteBuffer.allocateDirect(fileData.length);
             data.put(fileData).flip();
             wave.data = data;
-            wave.sampleCount = (wave.data.capacity()/(wave.sampleSize/8))/wave.channels;
+            wave.sampleCount = (wave.data.capacity() / (wave.sampleSize / 8)) / wave.channels;
         }
         return wave;
     }
 
+    //----------------------------------------------------------------------------------
+    // Module specific Functions Definition
+    //----------------------------------------------------------------------------------
 
     // Load OGG file into Wave structure
     // NOTE: Using stb_vorbis library
@@ -1153,13 +1189,13 @@ public class rAudioAL {
 
         // Loading file to memory
         byte[] fileData = new byte[0];
-        try{
+        try {
             fileData = FileIO.LoadFileData(fileName);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try(MemoryStack stack = MemoryStack.stackPush()){
+        try (MemoryStack stack = MemoryStack.stackPush()) {
             IntBuffer errorBuffer = stack.mallocInt(1);
             IntBuffer ChannelsBuffer = stack.mallocInt(1);
             IntBuffer SamplesBuffer = stack.mallocInt(1);
@@ -1168,7 +1204,7 @@ public class rAudioAL {
 
             long oggData = stb_vorbis_open_memory(dataBuffer, errorBuffer, null);
 
-            if(oggData != 0) {
+            if (oggData != 0) {
                 ByteBuffer infoBuffer = ByteBuffer.allocateDirect(STBVorbisInfo.SIZEOF);
                 STBVorbisInfo vorbisInfo = new STBVorbisInfo(infoBuffer);
                 stb_vorbis_get_info(oggData, vorbisInfo);
@@ -1202,13 +1238,16 @@ public class rAudioAL {
             wave.channels = 2;
             wave.sampleRate = alcGetInteger(alcGetContextsDevice(alcGetCurrentContext()), ALC_FREQUENCY);
             wave.data = rawAudio;
-            wave.sampleCount = (wave.data.capacity()/(wave.sampleSize/8))/wave.channels;
-        }
-        catch (IOException e){
+            wave.sampleCount = (wave.data.capacity() / (wave.sampleSize / 8)) / wave.channels;
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return wave;
+    }
+
+    static class MusicContextType {
+        final static int MUSIC_AUDIO_OGG = 0, MUSIC_AUDIO_FLAC = 1, MUSIC_MODULE_XM = 2, MUSIC_MODULE_MOD = 3, MUSIC_MODULE_MP3 = 4;
     }
     /*
 
@@ -1235,6 +1274,4 @@ public class rAudioAL {
         }
     #endif
     */
-
-
 }

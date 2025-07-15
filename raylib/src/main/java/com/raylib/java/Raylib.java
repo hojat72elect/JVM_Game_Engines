@@ -1,14 +1,14 @@
 package com.raylib.java;
 
 import com.raylib.java.core.rCore;
-import com.raylib.java.models.rModels;
 import com.raylib.java.extras.physac.Physac;
+import com.raylib.java.models.rModels;
 import com.raylib.java.raudioal.rAudioAL;
 import com.raylib.java.shapes.rShapes;
 import com.raylib.java.text.rText;
 import com.raylib.java.textures.rTextures;
 
-public class Raylib{
+public class Raylib {
 
     public rAudioAL audio;
     public rCore core;
@@ -22,7 +22,7 @@ public class Raylib{
     /**
      * Creates new Raylib instance.
      */
-    public Raylib(){
+    public Raylib() {
         config = new Config();
         core = new rCore(this);
         textures = new rTextures(this);
@@ -35,11 +35,12 @@ public class Raylib{
 
     /**
      * Creates new Raylib instance and initializes the window
-     * @param ScreenWidth width of the window in pixels
+     *
+     * @param ScreenWidth  width of the window in pixels
      * @param ScreenHeight height of the window in pixels
-     * @param title title to display for the window
+     * @param title        title to display for the window
      */
-    public Raylib(int ScreenWidth, int ScreenHeight, String title){
+    public Raylib(int ScreenWidth, int ScreenHeight, String title) {
         config = new Config();
         core = new rCore(this);
         textures = new rTextures(this);
@@ -51,6 +52,4 @@ public class Raylib{
 
         core.InitWindow(ScreenWidth, ScreenHeight, title);
     }
-
-
 }

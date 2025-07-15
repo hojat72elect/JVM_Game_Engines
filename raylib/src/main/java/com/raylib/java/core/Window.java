@@ -4,9 +4,7 @@ import com.raylib.java.raymath.Matrix;
 import com.raylib.java.raymath.Point;
 import com.raylib.java.raymath.Size;
 
-import java.util.ArrayList;
-
-public class Window{
+public class Window {
     long handle;
 
     //EGLDisplay device;                  // Native display device (physical screen connection)
@@ -34,7 +32,7 @@ public class Window{
     String[] dropFilePaths;               // Store dropped files paths as strings
     int dropFilesCount;                 // Count dropped files strings
 
-    public Window(){
+    public Window() {
         handle = 0;
 
         title = "";
@@ -44,7 +42,7 @@ public class Window{
         shouldClose = false;
         resizedLastFrame = false;
 
-        position = new Point(0,0);
+        position = new Point(0, 0);
         display = new Size();
         screen = new Size();
         currentFbo = new Size();
@@ -56,123 +54,123 @@ public class Window{
         dropFilesCount = 0;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public int getFlags(){
+    public int getFlags() {
         return flags;
     }
 
-    public void setFlags(int flags){
+    public void setFlags(int flags) {
         this.flags = flags;
     }
 
-    public boolean isReady(){
+    public boolean isReady() {
         return ready;
     }
 
-    public void setReady(boolean ready){
+    public void setReady(boolean ready) {
         this.ready = ready;
     }
 
-    public boolean isFullscreen(){
+    public boolean isFullscreen() {
         return fullscreen;
     }
 
-    public void setFullscreen(boolean fullscreen){
+    public void setFullscreen(boolean fullscreen) {
         this.fullscreen = fullscreen;
     }
 
-    public boolean isShouldClose(){
+    public boolean isShouldClose() {
         return shouldClose;
     }
 
-    public void setShouldClose(boolean shouldClose){
+    public void setShouldClose(boolean shouldClose) {
         this.shouldClose = shouldClose;
     }
 
-    public boolean isResizedLastFrame(){
+    public boolean isResizedLastFrame() {
         return resizedLastFrame;
     }
 
-    public void setResizedLastFrame(boolean resizedLastFrame){
+    public void setResizedLastFrame(boolean resizedLastFrame) {
         this.resizedLastFrame = resizedLastFrame;
     }
 
-    public Point getPosition(){
+    public Point getPosition() {
         return position;
     }
 
-    public void setPosition(Point position){
+    public void setPosition(Point position) {
         this.position = position;
     }
 
-    public Size getDisplay(){
+    public Size getDisplay() {
         return display;
     }
 
-    public void setDisplay(Size display){
+    public void setDisplay(Size display) {
         this.display = display;
     }
 
-    public Size getScreen(){
+    public Size getScreen() {
         return screen;
     }
 
-    public void setScreen(Size screen){
+    public void setScreen(Size screen) {
         this.screen = screen;
     }
 
-    public Size getCurrentFbo(){
+    public Size getCurrentFbo() {
         return currentFbo;
     }
 
-    public void setCurrentFbo(Size currentFbo){
+    public void setCurrentFbo(Size currentFbo) {
         this.currentFbo = currentFbo;
     }
 
-    public Size getRender(){
+    public Size getRender() {
         return render;
     }
 
-    public void setRender(Size render){
+    public void setRender(Size render) {
         this.render = render;
     }
 
-    public Point getRenderOffset(){
+    public Point getRenderOffset() {
         return renderOffset;
     }
 
-    public void setRenderOffset(Point renderOffset){
+    public void setRenderOffset(Point renderOffset) {
         this.renderOffset = renderOffset;
     }
 
-    public Matrix getScreenScale(){
+    public Matrix getScreenScale() {
         return screenScale;
     }
 
-    public void setScreenScale(Matrix screenScale){
+    public void setScreenScale(Matrix screenScale) {
         this.screenScale = screenScale;
     }
 
-    public String[] getDropFilePaths(){
+    public String[] getDropFilePaths() {
         return dropFilePaths;
     }
 
-    public void setDropFilePaths(String[] dropFilesPath){
+    public void setDropFilePaths(String[] dropFilesPath) {
         this.dropFilePaths = dropFilesPath;
     }
 
-    public int getDropFilesCount(){
+    public int getDropFilesCount() {
         return dropFilesCount;
     }
 
-    public void setDropFilesCount(int dropFilesCount){
+    public void setDropFilesCount(int dropFilesCount) {
         this.dropFilesCount = dropFilesCount;
     }
 }

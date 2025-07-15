@@ -1,38 +1,38 @@
 package com.raylib.java.raymath;
 
-public class Size{
+public class Size {
 
     public int width;
     public int height;
 
-    public Size(){
+    public Size() {
         this.width = 0;
         this.height = 0;
     }
 
-    public Size(int width, int height){
+    public Size(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public Size(Size size){
+    public Size(Size size) {
         this.width = size.width;
         this.height = size.height;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width){
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public int getHeight(){
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height){
+    public void setHeight(int height) {
         this.height = height;
     }
 }

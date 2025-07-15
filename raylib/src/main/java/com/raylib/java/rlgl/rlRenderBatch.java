@@ -1,6 +1,6 @@
 package com.raylib.java.rlgl;
 
-public class rlRenderBatch{
+public class rlRenderBatch {
 
     int bufferCount;           // Number of vertex buffers (multi-buffering support)
     int currentBuffer;          // Current buffer tracking in case of multi-buffering

@@ -5,6 +5,12 @@ import java.nio.Buffer;
 public class Wave {
 
 
+    int sampleCount;   // Number of samples
+    int sampleRate;    // Frequency (samples per second)
+    int sampleSize;    // Bit depth (bits per sample): 8, 16, 32 (24 not supported)
+    int channels;      // Number of channels (1-mono, 2-stereo)
+    Buffer data;                 // Buffer data pointer
+
     class WAVRiffHeader {
         char[] chunkID;
         int chunkSize;
@@ -39,11 +45,4 @@ public class Wave {
             subChunkID = new char[4];
         }
     }
-
-    int sampleCount;   // Number of samples
-    int sampleRate;    // Frequency (samples per second)
-    int sampleSize;    // Bit depth (bits per sample): 8, 16, 32 (24 not supported)
-    int channels;      // Number of channels (1-mono, 2-stereo)
-    Buffer data;                 // Buffer data pointer
-
 }

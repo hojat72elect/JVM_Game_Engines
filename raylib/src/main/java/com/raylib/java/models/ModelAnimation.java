@@ -6,5 +6,4 @@ public class ModelAnimation {
     public int frameCount;         // Number of animation frames
     public BoneInfo[] bones;        // Bones information (skeleton)
     public Transform[][] framePoses; // Poses array by frame
-
 }

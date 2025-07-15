@@ -1,9 +1,9 @@
 package com.raylib.java.raymath;
 
-public class Float16{
-    public float v[] = new float[16];
+public class Float16 {
+    public float[] v = new float[16];
 
-    public Float16(){
+    public Float16() {
         v[0] = 0;
         v[1] = 0;
         v[2] = 0;
@@ -25,7 +25,7 @@ public class Float16{
     public Float16(float v0, float v1, float v2, float v3,
                    float v4, float v5, float v6, float v7,
                    float v8, float v9, float v10, float v11,
-                   float v12, float v13, float v14, float v15){
+                   float v12, float v13, float v14, float v15) {
         v[0] = v0;
         v[1] = v1;
         v[2] = v2;
@@ -44,7 +44,7 @@ public class Float16{
         v[15] = v15;
     }
 
-    public Float16(Float16 f){
+    public Float16(Float16 f) {
         v[0] = f.v[0];
         v[1] = f.v[1];
         v[2] = f.v[2];
@@ -63,11 +63,11 @@ public class Float16{
         v[15] = f.v[15];
     }
 
-    public float[] getV(){
+    public float[] getV() {
         return v;
     }
 
-    public void setV(float[] v){
+    public void setV(float[] v) {
         this.v = v;
     }
 }

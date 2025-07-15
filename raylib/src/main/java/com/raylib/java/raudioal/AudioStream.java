@@ -13,5 +13,4 @@ public class AudioStream {
     public AudioStream() {
         buffers = new int[2];
     }
-
 }

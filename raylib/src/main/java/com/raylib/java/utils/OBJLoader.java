@@ -7,152 +7,11 @@ import java.util.Objects;
 
 public class OBJLoader {
 
-    /**
-     * OB-J Loader v1.0
-     * written by CreedVI for use in Raylib-J.
-     * Based on TinyOBJLoader-C by Syoyo https://github.com/syoyo/tinyobjloader-c
-     */
-
-    public static class OBJInfo {
-        public int totalVertices;
-        public int totalNormals;
-        public int totalTexcoords;
-        public int totalFaces;
-        public int totalGroups;
-        public int totalMaterials;
-
-        public OBJVertexIndex[] faces;
-        public String[] materialNames;
-        public float[] vertices;
-        public float[] normals;
-        public float[] texcoords;
-        public int[] numVPerLine;
-        public int[] materialIds;
-
-        public OBJShape[] shapes;
-    }
-
-    public static class OBJVertexIndex {
-        public int vIndex, vtIndex, vnIndex;
-    }
-
-    public static class OBJShape {
-        String name;
-        int faceOffset;
-        int length;
-    }
-
-    public static class MTLInfo {
-        public Material[] materials;
-        public int numberOfMaterials;
-
-        public MTLInfo() {
-            materials = new Material[1];
-            for (int i = 0; i < materials.length; i++) {
-                materials[i] = new Material();
-            }
-        }
-    }
-
-    public static class Material {
-        public String name;
-
-        public float illum;
-        public float dissolve;
-        public float shininess;
-        public float ior;
-
-        public float[] ambient;
-        public float[] diffuse;
-        public float[] specular;
-        public float[] transmittance;
-        public float[] emission;
-
-
-        public String ambient_texname;            /* map_Ka */
-        public String diffuse_texname;            /* map_Kd */
-        public String specular_texname;           /* map_Ks */
-        public String specular_highlight_texname; /* map_Ns */
-        public String bump_texname;               /* map_bump, bump */
-        public String displacement_texname;       /* disp */
-        public String alpha_texname;              /* map_d */
-
-        public Material() {
-            int i;
-            name = null;
-            ambient_texname = null;
-            diffuse_texname = null;
-            specular_texname = null;
-            specular_highlight_texname = null;
-            bump_texname = null;
-            displacement_texname = null;
-            alpha_texname = null;
-
-            ambient = new float[3];
-            diffuse =  new float[3];
-            specular = new float[3];
-            transmittance = new float[3];
-            emission = new float[3];
-
-            for (i = 0; i < 3; i++) {
-                ambient[i] = 0.f;
-                diffuse[i] = 1.0f;
-                specular[i] = 0.f;
-                transmittance[i] = 0.f;
-                emission[i] = 0.f;
-            }
-            illum = 0;
-            dissolve = 1.f;
-            shininess = 1.f;
-            ior = 1.f;
-        }
-    }
-
-    public static class Command {
-        float vx, vy, vz;
-        float nx, ny, nz;
-        float tx, ty;
-
-        OBJVertexIndex[] f;
-        int numF;
-
-        int[] fNumVerts;
-        int numFNumVerts;
-        
-        String groupName;
-        String objectName;
-        String materialName;
-        String mtllibName;
-
-        CommandType type;
-
-        public Command() {
-            f = new OBJVertexIndex[16];
-            for (int i = 0; i <16; i++) {
-                f[i] = new OBJVertexIndex();
-            }
-            fNumVerts = new int[16];
-        }
-    }
-
-    private enum CommandType {
-        COMMAND_EMPTY,
-        COMMAND_V,
-        COMMAND_VN,
-        COMMAND_VT,
-        COMMAND_F,
-        COMMAND_G,
-        COMMAND_O,
-        COMMAND_USEMTL,
-        COMMAND_MTLLIB
-    }
+    public static final int FLAG_TRIANGULATE = (1 << 0);
     public OBJInfo objInfo;
     public MTLInfo mtlInfo;
-    private Command[] cmds;
-
     public OBJShape[] shapes;
-
-    public static final int FLAG_TRIANGULATE = (1<<0);
+    private Command[] cmds;
 
     public boolean ReadOBJ(String fileText, boolean triangulate) {
         objInfo = new OBJInfo();
@@ -191,7 +50,6 @@ public class OBJLoader {
                 /* warning. */
                 System.out.println("OB-J: Failed to parse material file " + filename);
             }
-
         }
 
         objInfo.totalVertices = numV;
@@ -219,20 +77,20 @@ public class OBJLoader {
         for (i = 0; i < cmds.length; i++) {
             switch (cmds[i].type) {
                 case COMMAND_V:
-                    objInfo.vertices[3*vCount + 0] = cmds[i].vx;
-                    objInfo.vertices[3*vCount + 1] = cmds[i].vy;
-                    objInfo.vertices[3*vCount + 2] = cmds[i].vz;
+                    objInfo.vertices[3 * vCount] = cmds[i].vx;
+                    objInfo.vertices[3 * vCount + 1] = cmds[i].vy;
+                    objInfo.vertices[3 * vCount + 2] = cmds[i].vz;
                     vCount++;
                     break;
                 case COMMAND_VN:
-                    objInfo.normals[3*vnCount + 0] = cmds[i].nx;
-                    objInfo.normals[3*vnCount + 1] = cmds[i].ny;
-                    objInfo.normals[3*vnCount + 2] = cmds[i].nz;
+                    objInfo.normals[3 * vnCount] = cmds[i].nx;
+                    objInfo.normals[3 * vnCount + 1] = cmds[i].ny;
+                    objInfo.normals[3 * vnCount + 2] = cmds[i].nz;
                     vnCount++;
                     break;
                 case COMMAND_VT:
-                    objInfo.texcoords[2*vtCount + 0] = cmds[i].tx;
-                    objInfo.texcoords[2*vtCount + 1] = cmds[i].ty;
+                    objInfo.texcoords[2 * vtCount] = cmds[i].tx;
+                    objInfo.texcoords[2 * vtCount + 1] = cmds[i].ty;
                     vtCount++;
                     break;
                 case COMMAND_F:
@@ -248,7 +106,7 @@ public class OBJLoader {
                         objInfo.materialIds[faceCount + k] = materialID;
                         objInfo.numVPerLine[faceCount + k] = cmds[i].numFNumVerts;
                     }
-                    
+
                     fCount += cmds[i].numF;
                     faceCount += cmds[i].numFNumVerts;
                     break;
@@ -258,9 +116,8 @@ public class OBJLoader {
                             if (mtlInfo.materials[j].name.equals(cmds[i].materialName)) {
                                 materialID = j;
                                 break;
-                            }
-                            else {
-                                materialID= -1;
+                            } else {
+                                materialID = -1;
                             }
                         }
                     }
@@ -287,8 +144,8 @@ public class OBJLoader {
             }
         }
 
-        shapes = new OBJShape[n+1];
-        for (int j = 0; j <shapes.length; j++) {
+        shapes = new OBJShape[n + 1];
+        for (int j = 0; j < shapes.length; j++) {
             shapes[j] = new OBJShape();
         }
 
@@ -304,8 +161,7 @@ public class OBJLoader {
                     prevShapeName = shapeName;
                     prevShapeFaceOffset = faceCount;
                     prevFaceOffset = faceCount;
-                }
-                else {
+                } else {
                     if (shapeIndex == 0) {
                         shapes[shapeIndex].name = prevShapeName;
                         shapes[shapeIndex].faceOffset = prevShape.faceOffset;
@@ -313,8 +169,7 @@ public class OBJLoader {
 
                         shapeIndex++;
                         prevFaceOffset = faceCount;
-                    }
-                    else {
+                    } else {
                         if ((faceCount - prevFaceOffset) > 0) {
                             shapes[shapeIndex].name = prevShapeName;
                             shapes[shapeIndex].faceOffset = prevFaceOffset;
@@ -328,8 +183,7 @@ public class OBJLoader {
                     prevShapeName = shapeName;
                     prevShapeFaceOffset = faceCount;
                 }
-            }
-            else if (cmds[i].type == CommandType.COMMAND_F) {
+            } else if (cmds[i].type == CommandType.COMMAND_F) {
                 faceCount++;
             }
         }
@@ -342,8 +196,7 @@ public class OBJLoader {
                 shapes[shapeIndex].length = faceCount - prevFaceOffset;
                 shapeIndex++;
             }
-        }
-        else {
+        } else {
             /* Guess no 'v' line occurrence after 'o' or 'g', so discards current
              * shape information. */
         }
@@ -583,7 +436,7 @@ public class OBJLoader {
         }
 
         for (String l : lines) {
-            if(l.startsWith("v ")){
+            if (l.startsWith("v ")) {
                 cmds[line].type = CommandType.COMMAND_V;
                 String[] tmp = l.substring(2).split(" ");
                 String[] verts = new String[3];
@@ -597,8 +450,7 @@ public class OBJLoader {
                 cmds[line].vy = Float.parseFloat(verts[1]);
                 cmds[line].vz = Float.parseFloat(verts[2]);
                 numV++;
-            }
-            else if(l.startsWith("vn ")){
+            } else if (l.startsWith("vn ")) {
                 cmds[line].type = CommandType.COMMAND_VN;
                 String[] tmp = l.substring(3).split(" ");
                 String[] norms = new String[3];
@@ -612,8 +464,7 @@ public class OBJLoader {
                 cmds[line].ny = Float.parseFloat(norms[1]);
                 cmds[line].nz = Float.parseFloat(norms[2]);
                 numVN++;
-            }
-            else if(l.startsWith("vt ")){
+            } else if (l.startsWith("vt ")) {
                 cmds[line].type = CommandType.COMMAND_VT;
                 String[] tmp = l.substring(2).split(" ");
                 String[] tcs = new String[3];
@@ -626,8 +477,7 @@ public class OBJLoader {
                 cmds[line].tx = Float.parseFloat(tcs[0]);
                 cmds[line].ty = Float.parseFloat(tcs[1]);
                 numVT++;
-            }
-            else if (l.startsWith("f ")) {
+            } else if (l.startsWith("f ")) {
                 int num_f = 0;
                 cmds[line].type = CommandType.COMMAND_F;
                 OBJVertexIndex[] f = new OBJVertexIndex[16];
@@ -639,15 +489,15 @@ public class OBJLoader {
 
                 for (int i = 0; i < 3; i++) {
                     OBJVertexIndex vi = new OBJVertexIndex();
-                    vi.vIndex  = Integer.parseInt(tmp[0 + (3*i)]);
-                    vi.vtIndex = Integer.parseInt(tmp[1 + (3*i)]);
-                    vi.vnIndex = Integer.parseInt(tmp[2 + (3*i)]);
+                    vi.vIndex = Integer.parseInt(tmp[(3 * i)]);
+                    vi.vtIndex = Integer.parseInt(tmp[1 + (3 * i)]);
+                    vi.vnIndex = Integer.parseInt(tmp[2 + (3 * i)]);
 
                     f[num_f] = vi;
                     num_f++;
                 }
 
-                if(triangulate) {
+                if (triangulate) {
                     int k;
                     int n = 0;
 
@@ -659,7 +509,7 @@ public class OBJLoader {
                         for (k = 2; k < num_f; k++) {
                             i1 = i2;
                             i2 = f[k];
-                            cmds[line].f[3 * n + 0] = i0;
+                            cmds[line].f[3 * n] = i0;
                             cmds[line].f[3 * n + 1] = i1;
                             cmds[line].f[3 * n + 2] = i2;
 
@@ -669,8 +519,7 @@ public class OBJLoader {
                         cmds[line].numF = 3 * n;
                         cmds[line].numFNumVerts = n;
                     }
-                }
-                else {
+                } else {
                     int k;
                     assert (numF < 16);
                     for (k = 0; k < numF; k++) {
@@ -681,29 +530,162 @@ public class OBJLoader {
                     cmds[line].fNumVerts[0] = numF;
                     cmds[line].numFNumVerts = 1;
                 }
-            }
-            else if (l.startsWith("usemtl ")) {
+            } else if (l.startsWith("usemtl ")) {
                 cmds[line].type = CommandType.COMMAND_USEMTL;
                 cmds[line].materialName = l.substring(7);
-            }
-            else if (l.startsWith("mtllib ")) {
+            } else if (l.startsWith("mtllib ")) {
                 cmds[line].mtllibName = l.substring(7);
                 cmds[line].type = CommandType.COMMAND_MTLLIB;
-            }
-            else if(l.startsWith("g ")) {
+            } else if (l.startsWith("g ")) {
                 cmds[line].type = CommandType.COMMAND_G;
                 cmds[line].groupName = l.substring(2);
-            }
-            else if(l.startsWith("o ")) {
+            } else if (l.startsWith("o ")) {
                 cmds[line].type = CommandType.COMMAND_O;
                 cmds[line].objectName = l.substring(2);
-            }
-            else {
+            } else {
                 cmds[line].type = CommandType.COMMAND_EMPTY;
             }
             line++;
         }
         return cmds;
     }
+    private enum CommandType {
+        COMMAND_EMPTY,
+        COMMAND_V,
+        COMMAND_VN,
+        COMMAND_VT,
+        COMMAND_F,
+        COMMAND_G,
+        COMMAND_O,
+        COMMAND_USEMTL,
+        COMMAND_MTLLIB
+    }
 
+    /**
+     * OB-J Loader v1.0
+     * written by CreedVI for use in Raylib-J.
+     * Based on TinyOBJLoader-C by Syoyo https://github.com/syoyo/tinyobjloader-c
+     */
+
+    public static class OBJInfo {
+        public int totalVertices;
+        public int totalNormals;
+        public int totalTexcoords;
+        public int totalFaces;
+        public int totalGroups;
+        public int totalMaterials;
+
+        public OBJVertexIndex[] faces;
+        public String[] materialNames;
+        public float[] vertices;
+        public float[] normals;
+        public float[] texcoords;
+        public int[] numVPerLine;
+        public int[] materialIds;
+
+        public OBJShape[] shapes;
+    }
+
+    public static class OBJVertexIndex {
+        public int vIndex, vtIndex, vnIndex;
+    }
+
+    public static class OBJShape {
+        String name;
+        int faceOffset;
+        int length;
+    }
+
+    public static class MTLInfo {
+        public Material[] materials;
+        public int numberOfMaterials;
+
+        public MTLInfo() {
+            materials = new Material[1];
+            for (int i = 0; i < materials.length; i++) {
+                materials[i] = new Material();
+            }
+        }
+    }
+
+    public static class Material {
+        public String name;
+
+        public float illum;
+        public float dissolve;
+        public float shininess;
+        public float ior;
+
+        public float[] ambient;
+        public float[] diffuse;
+        public float[] specular;
+        public float[] transmittance;
+        public float[] emission;
+
+
+        public String ambient_texname;            /* map_Ka */
+        public String diffuse_texname;            /* map_Kd */
+        public String specular_texname;           /* map_Ks */
+        public String specular_highlight_texname; /* map_Ns */
+        public String bump_texname;               /* map_bump, bump */
+        public String displacement_texname;       /* disp */
+        public String alpha_texname;              /* map_d */
+
+        public Material() {
+            int i;
+            name = null;
+            ambient_texname = null;
+            diffuse_texname = null;
+            specular_texname = null;
+            specular_highlight_texname = null;
+            bump_texname = null;
+            displacement_texname = null;
+            alpha_texname = null;
+
+            ambient = new float[3];
+            diffuse = new float[3];
+            specular = new float[3];
+            transmittance = new float[3];
+            emission = new float[3];
+
+            for (i = 0; i < 3; i++) {
+                ambient[i] = 0.f;
+                diffuse[i] = 1.0f;
+                specular[i] = 0.f;
+                transmittance[i] = 0.f;
+                emission[i] = 0.f;
+            }
+            illum = 0;
+            dissolve = 1.f;
+            shininess = 1.f;
+            ior = 1.f;
+        }
+    }
+
+    public static class Command {
+        float vx, vy, vz;
+        float nx, ny, nz;
+        float tx, ty;
+
+        OBJVertexIndex[] f;
+        int numF;
+
+        int[] fNumVerts;
+        int numFNumVerts;
+
+        String groupName;
+        String objectName;
+        String materialName;
+        String mtllibName;
+
+        CommandType type;
+
+        public Command() {
+            f = new OBJVertexIndex[16];
+            for (int i = 0; i < 16; i++) {
+                f[i] = new OBJVertexIndex();
+            }
+            fNumVerts = new int[16];
+        }
+    }
 }

@@ -14,5 +14,4 @@ public class Transform {
         scale = new Vector3();
         rotation = new Quaternion();
     }
-
 }

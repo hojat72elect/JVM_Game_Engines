@@ -9,10 +9,9 @@ public class MaterialMap {
     public Color color;            // Material map color
     public float value;            // Material map value
 
-    public MaterialMap(){
+    public MaterialMap() {
         texture = new Texture2D();
         color = new Color();
         value = 0f;
     }
-
 }

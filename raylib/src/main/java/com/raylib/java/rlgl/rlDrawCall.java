@@ -2,7 +2,7 @@ package com.raylib.java.rlgl;
 
 import com.raylib.java.raymath.Matrix;
 
-public class rlDrawCall{
+public class rlDrawCall {
 
     int mode;                   // Drawing mode: LINES, TRIANGLES, QUADS
     int vertexCount;            // Number of vertex of the draw
@@ -14,71 +14,71 @@ public class rlDrawCall{
     Matrix projection;        // Projection matrix for this draw . Using RLGL.projection
     Matrix modelview;         // Modelview matrix for this draw . Using RLGL.modelview
 
-    public rlDrawCall(){
+    public rlDrawCall() {
 
     }
 
-    public int getMode(){
+    public int getMode() {
         return mode;
     }
 
-    public void setMode(int mode){
+    public void setMode(int mode) {
         this.mode = mode;
     }
 
-    public int getVertexCount(){
+    public int getVertexCount() {
         return vertexCount;
     }
 
-    public void setVertexCount(int vertexCount){
+    public void setVertexCount(int vertexCount) {
         this.vertexCount = vertexCount;
     }
 
-    public int getVertexAlignment(){
+    public int getVertexAlignment() {
         return vertexAlignment;
     }
 
-    public void setVertexAlignment(int vertexAlignment){
+    public void setVertexAlignment(int vertexAlignment) {
         this.vertexAlignment = vertexAlignment;
     }
 
-    public int getVaoId(){
+    public int getVaoId() {
         return vaoId;
     }
 
-    public void setVaoId(int vaoId){
+    public void setVaoId(int vaoId) {
         this.vaoId = vaoId;
     }
 
-    public int getShaderId(){
+    public int getShaderId() {
         return shaderId;
     }
 
-    public void setShaderId(int shaderId){
+    public void setShaderId(int shaderId) {
         this.shaderId = shaderId;
     }
 
-    public int getTextureId(){
+    public int getTextureId() {
         return textureId;
     }
 
-    public void setTextureId(int textureId){
+    public void setTextureId(int textureId) {
         this.textureId = textureId;
     }
 
-    public Matrix getProjection(){
+    public Matrix getProjection() {
         return projection;
     }
 
-    public void setProjection(Matrix projection){
+    public void setProjection(Matrix projection) {
         this.projection = projection;
     }
 
-    public Matrix getModelview(){
+    public Matrix getModelview() {
         return modelview;
     }
 
-    public void setModelview(Matrix modelview){
+    public void setModelview(Matrix modelview) {
         this.modelview = modelview;
     }
 }

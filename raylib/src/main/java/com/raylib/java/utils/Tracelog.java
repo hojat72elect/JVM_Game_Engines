@@ -1,13 +1,23 @@
 package com.raylib.java.utils;
 
-import java.lang.reflect.Method;
-
 import static com.raylib.java.Config.SUPPORT_TRACELOG;
 import static com.raylib.java.Config.SUPPORT_TRACELOG_DEBUG;
-import static com.raylib.java.utils.Tracelog.TracelogType.*;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_ALL;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_DEBUG;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_ERROR;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_FATAL;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_INFO;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_TRACE;
+import static com.raylib.java.utils.Tracelog.TracelogType.LOG_WARNING;
 
-public class Tracelog{
+import java.lang.reflect.Method;
 
+public class Tracelog {
+
+    static int logTypeLevel = LOG_ALL;                     // Minimum log type level
+    static int logTypeExit = LOG_ERROR;                     // Log type that exits
+    static int EXIT_FAILURE = 255;
+    static Method logCallback;
     /**
      * Raylib-j Tracelog
      * If <code>SUPPORT_TRACELOG</code> is defined as <code>true</code> in Config.java trace log output messages will be
@@ -16,38 +26,22 @@ public class Tracelog{
 
     final int MAX_TRACELOG_MSG_LENGTH = 128;     // Max length of one trace-log message
 
-    static int logTypeLevel = LOG_ALL;                     // Minimum log type level
-    static int logTypeExit = LOG_ERROR;                     // Log type that exits
-    static int EXIT_FAILURE = 255;
-    static Method logCallback;
-
-    public static class TracelogType{
-        public static final int
-        LOG_ALL = 0,        // Display all logs
-        LOG_TRACE = 1,
-        LOG_DEBUG = 2,
-        LOG_INFO = 3,
-        LOG_WARNING = 4,
-        LOG_ERROR = 5,
-        LOG_FATAL = 6,
-        LOG_NONE = 7;           // Disable logging
-    }
-
     /**
      * Show trace log messages (LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_DEBUG)
+     *
      * @param logType TracelogType enum type that specifies what kind of trace log is to be called.
-     * @param text rText to be printed.
+     * @param text    rText to be printed.
      */
-    public static void Tracelog(int logType, String text){
-        if(SUPPORT_TRACELOG){
+    public static void Tracelog(int logType, String text) {
+        if (SUPPORT_TRACELOG) {
             // Message has level below current threshold, don't emit
-            if (logType < logTypeLevel){
+            if (logType < logTypeLevel) {
                 return;
             }
 
             StringBuilder buffer = new StringBuilder();
 
-            switch (logType){
+            switch (logType) {
                 case LOG_TRACE:
                     buffer.append("TRACE: ");
                     break;
@@ -71,43 +65,54 @@ public class Tracelog{
             }
 
             buffer.append(text).append("\n");
-            if(logType != LOG_DEBUG){
-                System.out.print(buffer.toString());
+            if (logType != LOG_DEBUG) {
+                System.out.print(buffer);
             }
 
-            if (logType == LOG_DEBUG && SUPPORT_TRACELOG_DEBUG){
-                System.out.print(buffer.toString());
+            if (logType == LOG_DEBUG && SUPPORT_TRACELOG_DEBUG) {
+                System.out.print(buffer);
             }
 
-            if (logType == LOG_FATAL){
+            if (logType == LOG_FATAL) {
                 System.exit(EXIT_FAILURE);  // If fatal logging, exit program
             }
-
         }
     }
 
     /**
      * Prints trace log without a log type
+     *
      * @param text rText to be printed
      */
-    public static void Tracelog(String text){
-        if(SUPPORT_TRACELOG && logTypeLevel <= LOG_DEBUG){
+    public static void Tracelog(String text) {
+        if (SUPPORT_TRACELOG && logTypeLevel <= LOG_DEBUG) {
             System.out.println(text);
         }
     }
 
     /**
      * Set the current threshold (minimum) log level
+     *
      * @param logType Minimum log type to be shown
      */
-    public static void SetTraceLogLevel(int logType){
+    public static void SetTraceLogLevel(int logType) {
         logTypeLevel = logType;
     }
 
     // Set a trace log callback to enable custom logging
-    public static void SetTraceLogCallback(Method callback){
+    public static void SetTraceLogCallback(Method callback) {
         logCallback = callback;
     }
 
-
+    public static class TracelogType {
+        public static final int
+                LOG_ALL = 0,        // Display all logs
+                LOG_TRACE = 1,
+                LOG_DEBUG = 2,
+                LOG_INFO = 3,
+                LOG_WARNING = 4,
+                LOG_ERROR = 5,
+                LOG_FATAL = 6,
+                LOG_NONE = 7;           // Disable logging
+    }
 }

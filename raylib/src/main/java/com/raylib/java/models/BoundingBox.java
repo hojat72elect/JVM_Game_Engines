@@ -16,5 +16,4 @@ public class BoundingBox {
         this.min = min;
         this.max = max;
     }
-
 }

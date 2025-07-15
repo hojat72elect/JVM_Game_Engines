@@ -19,20 +19,20 @@ public class rlglData {
         vr = new VR();
     }
 
-    public void setCurrentBatch(rlRenderBatch currentBatch) {
-        this.currentBatch = currentBatch;
-    }
-
-    public void setDefaultBatch(rlRenderBatch defaultBatch) {
-        this.defaultBatch = defaultBatch;
-    }
-
     public rlRenderBatch getCurrentBatch() {
         return currentBatch;
     }
 
+    public void setCurrentBatch(rlRenderBatch currentBatch) {
+        this.currentBatch = currentBatch;
+    }
+
     public rlRenderBatch getDefaultBatch() {
         return defaultBatch;
+    }
+
+    public void setDefaultBatch(rlRenderBatch defaultBatch) {
+        this.defaultBatch = defaultBatch;
     }
 
     public ExtSupported getExtSupported() {

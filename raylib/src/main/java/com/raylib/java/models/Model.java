@@ -39,5 +39,4 @@ public class Model {
             bindPose[i] = new Transform();
         }
     }
-
 }

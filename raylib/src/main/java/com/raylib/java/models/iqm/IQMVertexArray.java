@@ -11,5 +11,4 @@ public class IQMVertexArray {
     public IQMVertexArray() {
 
     }
-
 }

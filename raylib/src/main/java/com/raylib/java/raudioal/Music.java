@@ -2,8 +2,10 @@ package com.raylib.java.raudioal;
 
 public class Music {
 
+    public int loopCount;                      // Loops count (times music repeats), -1 means infinite loop
+    public int totalSamples;                   // Total number of samples
+    public int samplesLeft;                    // Number of samples left to end
     int ctxType;  // Type of music context (OGG, XM, MOD)
-
     long ctxOgg;                 // OGG audio context
     /*
     drflac *ctxFlac;                    // FLAC audio context
@@ -12,13 +14,8 @@ public class Music {
     */
     AudioStream stream;                 // Audio stream (double buffering)
 
-    public int loopCount;                      // Loops count (times music repeats), -1 means infinite loop
-    public int totalSamples;                   // Total number of samples
-    public int samplesLeft;                    // Number of samples left to end
-
     // Music type (file streaming from memory)
     public Music() {
 
     }
-
 }

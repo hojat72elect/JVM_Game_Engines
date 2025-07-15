@@ -1,11 +1,18 @@
 package com.raylib.java.core.rcamera;
 
-import com.raylib.java.raymath.Vector2;
-
-import static com.raylib.java.core.input.Keyboard.*;
+import static com.raylib.java.core.input.Keyboard.KEY_A;
+import static com.raylib.java.core.input.Keyboard.KEY_D;
+import static com.raylib.java.core.input.Keyboard.KEY_E;
+import static com.raylib.java.core.input.Keyboard.KEY_LEFT_ALT;
+import static com.raylib.java.core.input.Keyboard.KEY_LEFT_CONTROL;
+import static com.raylib.java.core.input.Keyboard.KEY_Q;
+import static com.raylib.java.core.input.Keyboard.KEY_S;
+import static com.raylib.java.core.input.Keyboard.KEY_W;
 import static com.raylib.java.core.input.Mouse.MouseButton.MOUSE_BUTTON_MIDDLE;
 
-public class CameraData{
+import com.raylib.java.raymath.Vector2;
+
+public class CameraData {
 
     public int
             MoveFront = KEY_W,
@@ -32,8 +39,7 @@ public class CameraData{
         playerEyesPosition = 1.85f;
         angle = new Vector2();
         moveControl = new int[]{
-            MoveFront, MoveBack, MoveLeft, MoveRight, MoveUp, MoveDown
+                MoveFront, MoveBack, MoveLeft, MoveRight, MoveUp, MoveDown
         };
     }
-
 }

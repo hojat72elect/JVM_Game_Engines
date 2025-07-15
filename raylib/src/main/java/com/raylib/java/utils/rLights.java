@@ -1,13 +1,15 @@
 package com.raylib.java.utils;
 
+import static com.raylib.java.rlgl.RLGL.rlShaderUniformDataType.RL_SHADER_UNIFORM_INT;
+import static com.raylib.java.rlgl.RLGL.rlShaderUniformDataType.RL_SHADER_UNIFORM_VEC3;
+import static com.raylib.java.rlgl.RLGL.rlShaderUniformDataType.RL_SHADER_UNIFORM_VEC4;
+
 import com.raylib.java.core.Color;
 import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector3;
 import com.raylib.java.rlgl.shader.Shader;
 
-import static com.raylib.java.rlgl.RLGL.rlShaderUniformDataType.*;
-
-public class rLights{
+public class rLights {
 
     /**********************************************************************************************
      *
@@ -43,27 +45,14 @@ public class rLights{
     //----------------------------------------------------------------------------------
     // Types and Structures Definition
     //----------------------------------------------------------------------------------
-
-    // Light data
-    public static class Light{
-        public int type;
-        public Vector3 position;
-        public Vector3 target;
-        public Color color;
-        public boolean enabled;
-
-        // Shader locations
-        public int enabledLoc;
-        public int typeLoc;
-        public int posLoc;
-        public int targetLoc;
-        public int colorLoc;
-    }
-
     // Light type
     public static int
-        LIGHT_DIRECTIONAL = 0,
-        LIGHT_POINT = 1;
+            LIGHT_DIRECTIONAL = 0,
+            LIGHT_POINT = 1;
+    //----------------------------------------------------------------------------------
+    // Global Variables Definition
+    //----------------------------------------------------------------------------------
+    static int lightsCount = 0;    // Current amount of created lights
 
 
     //----------------------------------------------------------------------------------
@@ -76,25 +65,11 @@ public class rLights{
     //----------------------------------------------------------------------------------
     // ...
 
-    //----------------------------------------------------------------------------------
-    // Global Variables Definition
-    //----------------------------------------------------------------------------------
-    static int lightsCount = 0;    // Current amount of created lights
-
-    //----------------------------------------------------------------------------------
-    // Module specific Functions Declaration
-    //----------------------------------------------------------------------------------
-    // ...
-
-    //----------------------------------------------------------------------------------
-    // Module Functions Definition
-    //----------------------------------------------------------------------------------
-
     // Create a light and get shader locations
-    public static Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader){
+    public static Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader) {
         Light light = new Light();
 
-        if (lightsCount < MAX_LIGHTS){
+        if (lightsCount < MAX_LIGHTS) {
             light.enabled = true;
             light.type = type;
             light.position = position;
@@ -126,9 +101,18 @@ public class rLights{
         return light;
     }
 
+    //----------------------------------------------------------------------------------
+    // Module specific Functions Declaration
+    //----------------------------------------------------------------------------------
+    // ...
+
+    //----------------------------------------------------------------------------------
+    // Module Functions Definition
+    //----------------------------------------------------------------------------------
+
     // Send light properties to shader
     // NOTE: Light shader locations should be available
-    public static void UpdateLightValues(Shader shader, Light light){
+    public static void UpdateLightValues(Shader shader, Light light) {
         // Send to shader light enabled state and type
         rCore.SetShaderValue(shader, light.enabledLoc, new float[]{(light.enabled ? 1 : 0)}, RL_SHADER_UNIFORM_INT);
         rCore.SetShaderValue(shader, light.typeLoc, new float[]{light.type}, RL_SHADER_UNIFORM_INT);
@@ -151,4 +135,19 @@ public class rLights{
         rCore.SetShaderValue(shader, light.colorLoc, color, RL_SHADER_UNIFORM_VEC4);
     }
 
+    // Light data
+    public static class Light {
+        public int type;
+        public Vector3 position;
+        public Vector3 target;
+        public Color color;
+        public boolean enabled;
+
+        // Shader locations
+        public int enabledLoc;
+        public int typeLoc;
+        public int posLoc;
+        public int targetLoc;
+        public int colorLoc;
+    }
 }

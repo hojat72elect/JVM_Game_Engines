@@ -32,5 +32,4 @@ public class Shader {
     public void setLocs(int[] locs) {
         this.locs = locs;
     }
-
 }
