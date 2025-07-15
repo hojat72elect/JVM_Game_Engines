@@ -1,16 +1,17 @@
 package com.raylib.java.core;
 
+import com.raylib.java.Raylib;
 import com.raylib.java.raymath.Vector2;
 import org.lwjgl.glfw.*;
 
-import static com.raylib.java.Config.ConfigFlag.*;
 import static com.raylib.java.Config.*;
+import static com.raylib.java.Config.ConfigFlag.*;
 import static com.raylib.java.utils.Tracelog.Tracelog;
-import static com.raylib.java.utils.Tracelog.TracelogType.LOG_DEBUG;
-import static com.raylib.java.utils.Tracelog.TracelogType.LOG_WARNING;
+import static com.raylib.java.utils.Tracelog.TracelogType.*;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-public class Callbacks {
+public class Callbacks{
 
     private static rCore context;
 
@@ -29,7 +30,7 @@ public class Callbacks {
 
 
     Callbacks(rCore context) {
-        Callbacks.context = context;
+        this.context = context;
 
         errorCallback = new ErrorCallback();
         windowMaximizeCallback = new WindowMaximizeCallback(context);
@@ -45,30 +46,29 @@ public class Callbacks {
         cursorEnterCallback = new CursorEnterCallback(context);
     }
 
-    class ErrorCallback extends GLFWErrorCallback {
+    class ErrorCallback extends GLFWErrorCallback{
         @Override
-        public void invoke(int error, long description) {
+        public void invoke(int error, long description){
             Tracelog(LOG_WARNING, "GLFW: Error: " + error + " Description: " + description);
         }
     }
 
-    class WindowSizeCallback extends GLFWWindowSizeCallback {
+    class WindowSizeCallback extends GLFWWindowSizeCallback{
 
         private final rCore context;
-
         public WindowSizeCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, int width, int height) {
+        public void invoke(long window, int width, int height){
             Tracelog(LOG_DEBUG, "Window Size Callback Triggered");
             context.SetupViewport(width, height);    // Reset viewport and projection matrix for new size
             context.getWindow().currentFbo.setWidth(width);
             context.getWindow().currentFbo.setHeight(height);
             context.getWindow().setResizedLastFrame(true);
 
-            if (context.IsWindowFullscreen()) {
+            if(context.IsWindowFullscreen()){
                 return;
             }
 
@@ -79,108 +79,109 @@ public class Callbacks {
         }
     }
 
-    class WindowIconifyCallback extends GLFWWindowIconifyCallback {
+    class WindowIconifyCallback extends GLFWWindowIconifyCallback{
 
         private final rCore context;
-
         public WindowIconifyCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, boolean iconified) {
+        public void invoke(long window, boolean iconified){
             Tracelog(LOG_DEBUG, "Iconify Callback Triggered");
-            if (iconified) {
+            if (iconified){
                 context.getWindow().flags |= FLAG_WINDOW_MINIMIZED;  // The window was iconified
-            } else {
+            }
+            else{
                 context.getWindow().flags &= ~FLAG_WINDOW_MINIMIZED;           // The window was restored
             }
         }
     }
 
-    class WindowMaximizeCallback extends GLFWWindowMaximizeCallback {
+    class WindowMaximizeCallback extends GLFWWindowMaximizeCallback{
 
         private final rCore context;
-
         public WindowMaximizeCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, boolean maximized) {
-            if (maximized) {
+        public void invoke(long window, boolean maximized){
+            if (maximized){
                 context.getWindow().flags |= FLAG_WINDOW_MAXIMIZED;  // The window was maximized
-            } else {
+            }
+            else{
                 context.getWindow().flags &= ~FLAG_WINDOW_MAXIMIZED;           // The window was restored
             }
         }
     }
 
-    class WindowFocusCallback extends GLFWWindowFocusCallback {
+    class WindowFocusCallback extends GLFWWindowFocusCallback{
 
         private final rCore context;
-
         public WindowFocusCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, boolean focused) {
+        public void invoke(long window, boolean focused){
             Tracelog(LOG_DEBUG, "Focus Callback Triggered");
-            if (focused) {
+            if (focused){
                 context.getWindow().flags &= ~FLAG_WINDOW_UNFOCUSED;   // The window was focused
-            } else {
+            }
+            else{
                 context.getWindow().flags |= FLAG_WINDOW_UNFOCUSED;            // The window lost focus
             }
         }
     }
 
-    class KeyCallback extends GLFWKeyCallback {
+    class KeyCallback extends GLFWKeyCallback{
 
         private final rCore context;
-
         public KeyCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, int key, int scancode, int action, int mods) {
+        public void invoke(long window, int key, int scancode, int action, int mods){
             // WARNING: GLFW could return GLFW_REPEAT, we need to consider it as 1
             // to work properly with our implementation (IsKeyDown/IsKeyUp checks)
             context.getInput().keyboard.currentKeyState[key] = action != GLFW_RELEASE;
 
             // Check if there is space available in the key queue
-            if ((context.getInput().keyboard.keyPressedQueueCount < MAX_KEY_PRESSED_QUEUE) && (action == GLFW_PRESS)) {
+            if ((context.getInput().keyboard.keyPressedQueueCount < MAX_KEY_PRESSED_QUEUE) && (action == GLFW_PRESS)){
                 // Add character to the queue
                 context.getInput().keyboard.keyPressedQueue[context.getInput().keyboard.keyPressedQueueCount] = key;
                 context.getInput().keyboard.keyPressedQueueCount++;
             }
 
             // Check the exit key to set close window
-            if ((key == context.getInput().keyboard.exitKey) && (action == GLFW_PRESS)) {
+            if ((key == context.getInput().keyboard.exitKey) && (action == GLFW_PRESS)){
                 glfwSetWindowShouldClose(context.getWindow().handle, true);
             }
 
-            if (SUPPORT_SCREEN_CAPTURE) {
-                if ((key == GLFW_KEY_F12) && (action == GLFW_PRESS)) {
-                    if (SUPPORT_GIF_RECORDING) {
+            if(SUPPORT_SCREEN_CAPTURE){
+                if ((key == GLFW_KEY_F12) && (action == GLFW_PRESS)){
+                    if(SUPPORT_GIF_RECORDING){
                         //TODO: GIF RECORDING
-                    } else {
+                    }
+                    else {
                         context.TakeScreenshot("screenshot" + context.screenshotCounter + ".png");
                         context.screenshotCounter++;
                     }
                 }
             }
 
-            if (SUPPORT_EVENTS_AUTOMATION) {
-                if ((key == GLFW_KEY_F11) && (action == GLFW_PRESS)) {
+            if(SUPPORT_EVENTS_AUTOMATION){
+                if ((key == GLFW_KEY_F11) && (action == GLFW_PRESS)){
                     context.eventsRecording = !context.eventsRecording;
 
                     // On finish recording, we export events into a file
-                    if (!context.eventsRecording) {
+                    if (!context.eventsRecording){
                         context.ExportAutomationEvents("eventsrec.rep");
                     }
-                } else if ((key == GLFW_KEY_F9) && (action == GLFW_PRESS)) {
+                }
+                else if ((key == GLFW_KEY_F9) && (action == GLFW_PRESS)){
                     context.LoadAutomationEvents("eventsrec.rep");
                     context.eventsPlaying = true;
 
@@ -192,17 +193,16 @@ public class Callbacks {
         }
     }
 
-    class CharCallback extends GLFWCharCallback {
+    class CharCallback extends GLFWCharCallback{
 
         private final rCore context;
-
         public CharCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, int codepoint) {
-            Tracelog(LOG_DEBUG, "Char Callback: KEY:" + codepoint + "(" + Character.highSurrogate(codepoint) + ")");
+        public void invoke(long window, int codepoint){
+            Tracelog(LOG_DEBUG, "Char Callback: KEY:"+codepoint+"("+ Character.highSurrogate(codepoint) +")");
 
             // NOTE: Registers any key down considering OS keyboard layout but
             // do not detects action events, those should be managed by user...
@@ -210,7 +210,7 @@ public class Callbacks {
             // Ref: https://www.glfw.org/docs/latest/input_guide.html#input_char
 
             // Check if there is space available in the queue
-            if (context.getInput().keyboard.getCharPressedQueueCount() < MAX_KEY_PRESSED_QUEUE) {
+            if (context.getInput().keyboard.getCharPressedQueueCount() < MAX_KEY_PRESSED_QUEUE){
                 // Add character to the queue
                 context.getInput().keyboard.getCharPressedQueue()[context.getInput().keyboard.getCharPressedQueueCount()] =
                         codepoint;
@@ -219,16 +219,15 @@ public class Callbacks {
         }
     }
 
-    class MouseButtonCallback extends GLFWMouseButtonCallback {
+    class MouseButtonCallback extends GLFWMouseButtonCallback{
 
         private final rCore context;
-
         public MouseButtonCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, int button, int action, int mods) {
+        public void invoke(long window, int button, int action, int mods){
             Tracelog(LOG_DEBUG, "Mouse Button Callback Triggered");
             // WARNING: GLFW could only return GLFW_PRESS (1) or GLFW_RELEASE (0) for now,
             // but future releases may add more actions (i.e. GLFW_REPEAT)
@@ -236,16 +235,15 @@ public class Callbacks {
         }
     }
 
-    class MouseCursorPosCallback extends GLFWCursorPosCallback {
+    class MouseCursorPosCallback extends GLFWCursorPosCallback{
 
         private final rCore context;
-
         public MouseCursorPosCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, double xpos, double ypos) {
+        public void invoke(long window, double xpos, double ypos){
             Tracelog(LOG_DEBUG, "Cursor Position Callback Triggered");
             context.getInput().mouse.previousPosition.x = context.getInput().mouse.currentPosition.x;
             context.getInput().mouse.previousPosition.y = context.getInput().mouse.currentPosition.y;
@@ -254,53 +252,50 @@ public class Callbacks {
         }
     }
 
-    class MouseScrollCallback extends GLFWScrollCallback {
+    class MouseScrollCallback extends GLFWScrollCallback{
 
         private final rCore context;
-
         public MouseScrollCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, double xoffset, double yoffset) {
+        public void invoke(long window, double xoffset, double yoffset){
             Tracelog(LOG_DEBUG, "Scroll Callback Triggered");
             context.getInput().mouse.setCurrentWheelMove(new Vector2((float) xoffset, (float) yoffset));
         }
     }
 
-    class CursorEnterCallback extends GLFWCursorEnterCallback {
+    class CursorEnterCallback extends GLFWCursorEnterCallback{
 
         private final rCore context;
-
         public CursorEnterCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, boolean entered) {
+        public void invoke(long window, boolean entered){
             Tracelog(LOG_DEBUG, "Cursor Enter Callback Triggered");
             context.getInput().mouse.setCursorOnScreen(entered);
         }
     }
 
-    class WindowDropCallback extends GLFWDropCallback {
+    class WindowDropCallback extends GLFWDropCallback{
 
         private final rCore context;
-
         public WindowDropCallback(rCore context) {
             this.context = context;
         }
 
         @Override
-        public void invoke(long window, int count, long names) {
+        public void invoke(long window, int count, long names){
             Tracelog(LOG_DEBUG, "Drop Callback Triggered");
             context.ClearDroppedFiles();
             String[] paths = new String[(int) names];
 
             context.getWindow().setDropFilePaths(new String[count]);
 
-            for (int j = 0; j < count; j++) {
+            for (int j = 0; j < count; j++){
                 context.getWindow().getDropFilePaths()[count] = String.valueOf(MAX_FILEPATH_LENGTH);
                 paths[j] = String.valueOf(context.getWindow().getDropFilePaths()[j]);
             }

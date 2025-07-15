@@ -2,7 +2,7 @@ package com.raylib.java.textures;
 
 import com.raylib.java.shapes.Rectangle;
 
-public class NPatchInfo {
+public class NPatchInfo{
 
     public Rectangle source;   // Region in the texture
     public int left;              // left border offset
@@ -11,7 +11,7 @@ public class NPatchInfo {
     public int bottom;            // bottom border offset
     public int type;              // layout of the n-patch: 3x3, 1x3 or 3x1
 
-    public static class NPatchType {
+    public static class NPatchType{
         public static final int
                 NPATCH_NINE_PATCH = 0,         // Npatch defined by 3x3 tiles
                 NPATCH_THREE_PATCH_VERTICAL = 1,    // Npatch defined by 1x3 tiles
@@ -19,7 +19,7 @@ public class NPatchInfo {
     }
 
     public NPatchInfo() {
-        source = new Rectangle(0, 0, 1, 1);
+        source = new Rectangle(0,0,1,1);
         left = 0;
         right = 0;
         top = 0;

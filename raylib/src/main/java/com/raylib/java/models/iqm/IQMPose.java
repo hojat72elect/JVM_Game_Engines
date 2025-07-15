@@ -4,8 +4,8 @@ public class IQMPose {
 
     public int parent;
     public int mask;
-    public float[] channeloffset;
-    public float[] channelscale;
+    public float channeloffset[];
+    public float channelscale[];
 
     public IQMPose() {
         channeloffset = new float[10];

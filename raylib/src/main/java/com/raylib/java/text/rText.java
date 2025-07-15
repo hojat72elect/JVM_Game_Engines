@@ -6,6 +6,7 @@ import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.shapes.Rectangle;
 import com.raylib.java.textures.Image;
+import com.raylib.java.textures.rTextures;
 import com.raylib.java.utils.FileIO;
 import com.raylib.java.utils.Tracelog;
 import org.lwjgl.stb.*;
@@ -27,7 +28,7 @@ import static com.raylib.java.utils.Tracelog.Tracelog;
 import static com.raylib.java.utils.Tracelog.TracelogType.LOG_INFO;
 import static com.raylib.java.utils.Tracelog.TracelogType.LOG_WARNING;
 
-public class rText {
+public class rText{
 
     /**********************************************************************************************
      *
@@ -80,7 +81,7 @@ public class rText {
      *
      **********************************************************************************************/
 
-    public static class FontType { // Font type, defines generation method
+    public static class FontType{ // Font type, defines generation method
 
         public final static int
                 FONT_DEFAULT = 0,       // Default font generation, anti-aliased
@@ -214,11 +215,12 @@ public class rText {
         //Fill image.data with defaultFontData (convert from bit to pixel!)
         for (int i = 0, counter = 0; i < imFont.getWidth() * imFont.getHeight(); i += 32) {
             for (int j = 31; j >= 0; j--) {
-                if (BitCheck(defaultFontData[counter], j)) {
+                if (BitCheck(defaultFontData[counter], j)){
                     // NOTE: We are unreferencing data as short, so,
                     // we must consider data as little-endian order (alpha + gray)
                     fontdata[i + j] = (short) 0xffff;
-                } else {
+                }
+                else{
                     fontdata[i + j] = (short) 0x00ff;
                 }
             }
@@ -250,21 +252,23 @@ public class rText {
         for (int i = 0; i < defaultFont.glyphCount; i++) {
             defaultFont.glyphs[i].value = 32 + i;  // First char is 32
 
-            defaultFont.recs[i].x = (float) currentPosX;
-            defaultFont.recs[i].y = (float) (charsDivisor + currentLine * (charsHeight + charsDivisor));
-            defaultFont.recs[i].width = (float) charsWidth[i];
-            defaultFont.recs[i].height = (float) charsHeight;
+            defaultFont.recs[i].x = (float)currentPosX;
+            defaultFont.recs[i].y = (float)(charsDivisor + currentLine*(charsHeight + charsDivisor));
+            defaultFont.recs[i].width = (float)charsWidth[i];
+            defaultFont.recs[i].height = (float)charsHeight;
 
-            testPosX += (int) (defaultFont.recs[i].width + (float) charsDivisor);
+            testPosX += (int)(defaultFont.recs[i].width + (float)charsDivisor);
 
             if (testPosX >= defaultFont.texture.width) {
                 currentLine++;
-                currentPosX = 2 * charsDivisor + charsWidth[i];
+                currentPosX = 2*charsDivisor + charsWidth[i];
                 testPosX = currentPosX;
 
-                defaultFont.recs[i].x = (float) charsDivisor;
-                defaultFont.recs[i].y = (float) (charsDivisor + currentLine * (charsHeight + charsDivisor));
-            } else {
+                defaultFont.recs[i].x = (float)charsDivisor;
+                defaultFont.recs[i].y = (float)(charsDivisor + currentLine*(charsHeight + charsDivisor));
+            }
+
+            else {
                 currentPosX = testPosX;
             }
 
@@ -279,7 +283,7 @@ public class rText {
 
         context.textures.UnloadImage(imFont);
 
-        defaultFont.baseSize = (int) defaultFont.recs[0].height;
+        defaultFont.baseSize = (int)defaultFont.recs[0].height;
 
         Tracelog(LOG_INFO, "FONT: Default font loaded successfully (" + defaultFont.glyphCount + " glyphs)");
     }
@@ -298,7 +302,8 @@ public class rText {
     public Font GetFontDefault() {
         if (SUPPORT_DEFAULT_FONT) {
             return defaultFont;
-        } else {
+        }
+        else{
             return new Font();
         }
     }
@@ -328,7 +333,8 @@ public class rText {
         if (font.texture.getId() == 0) {
             Tracelog(LOG_WARNING, "FONT: [" + fileName + "] Failed to load font texture -> Using default font");
             font = GetFontDefault();
-        } else {
+        }
+        else{
             context.textures.SetTextureFilter(font.texture, RL_TEXTURE_FILTER_POINT); // By default we set point filter (best performance)
             Tracelog(LOG_INFO, "FONT: Data loaded successfully (" + FONT_TTF_DEFAULT_SIZE + " pixel size | " + FONT_TTF_DEFAULT_NUMCHARS + " glyphs)");
         }
@@ -345,7 +351,7 @@ public class rText {
         // Loading file to memory
         int fileSize = 0;
         byte[] fileData = null;
-        try {
+        try{
             fileData = FileIO.LoadFileData(fileName);
             fileSize = fileData != null ? fileData.length : 0;
         } catch (IOException exception) {
@@ -355,7 +361,8 @@ public class rText {
         if (fileData != null) {
             // Loading font from memory data
             font = LoadFontFromMemory(rCore.GetFileExtension(fileName), fileData, fileSize, fontSize, fontChars, charsCount);
-        } else {
+        }
+        else{
             font = GetFontDefault();
         }
 
@@ -384,12 +391,12 @@ public class rText {
         // Parse image data to get charSpacing and lineSpacing
         for (y = 0; y < image.getHeight(); y++) {
             for (x = 0; x < image.getWidth(); x++) {
-                if (!ColorEqual(pixels != null ? pixels[y * image.getWidth() + x] : null, key)) {
+                if (!ColorEqual(pixels != null ? pixels[y * image.getWidth() + x] : null, key)){
                     break;
                 }
             }
 
-            if (!ColorEqual(pixels != null ? pixels[y * image.getWidth() + x] : null, key)) {
+            if (!ColorEqual(pixels != null ? pixels[y * image.getWidth() + x] : null, key)){
                 break;
             }
         }
@@ -410,10 +417,10 @@ public class rText {
         int xPosToRead = charSpacing;
 
         // Parse image data to get rectangle sizes
-        while ((lineSpacing + lineToRead * (charHeight + lineSpacing)) < image.getHeight()) {
+        while ((lineSpacing + lineToRead * (charHeight + lineSpacing)) < image.getHeight()){
             while ((xPosToRead < image.getWidth()) &&
                     !ColorEqual((pixels[(lineSpacing + (charHeight + lineSpacing) * lineToRead) * image.getWidth() + xPosToRead]),
-                            key)) {
+                                key)){
                 tempCharValues[index] = firstChar + index;
 
                 tempCharRecs[index].x = (float) xPosToRead;
@@ -422,7 +429,7 @@ public class rText {
 
                 int charWidth = 0;
 
-                while (!ColorEqual(pixels[(lineSpacing + (charHeight + lineSpacing) * lineToRead) * image.getWidth() + xPosToRead + charWidth], key)) {
+                while (!ColorEqual(pixels[(lineSpacing + (charHeight + lineSpacing) * lineToRead) * image.getWidth() + xPosToRead + charWidth], key)){
                     charWidth++;
                 }
 
@@ -440,7 +447,7 @@ public class rText {
         // NOTE: We need to remove key color borders from image to avoid weird
         // artifacts on texture scaling when using TEXTURE_FILTER_BILINEAR or TEXTURE_FILTER_TRILINEAR
         for (int i = 0; i < image.getHeight() * image.getWidth(); i++) {
-            if (ColorEqual(pixels[i], key)) {
+            if (ColorEqual(pixels[i], key)){
                 pixels[i] =
                         Color.BLANK;
             }
@@ -448,7 +455,7 @@ public class rText {
 
         // Create a new image with the processed color data (key color replaced by BLANK)
         Image fontClear = new Image(pixels, image.getWidth(), image.getHeight(),
-                RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 1);
+                                    RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 1);
 
         // Create spritefont with all data parsed from image
         Font font = new Font();
@@ -497,7 +504,7 @@ public class rText {
         String fileExtLower = fileType.toLowerCase();
 
         if (SUPPORT_FILEFORMAT_TTF) {
-            if (fileExtLower.equals(".ttf") || fileExtLower.equals(".otf")) {
+            if (fileExtLower.equals(".ttf") || fileExtLower.equals(".otf")){
                 font.baseSize = fontSize;
                 font.glyphCount = (charsCount > 0) ? charsCount : 95;
                 font.glyphPadding = 0;
@@ -517,11 +524,13 @@ public class rText {
 
                     context.textures.UnloadImage(atlas);
                     Tracelog(LOG_INFO, "FONT: Data loaded successfully (" + font.baseSize + " pixel size | " + font.glyphCount + " glyphs)");
-                } else {
+                }
+                else {
                     font = GetFontDefault();
                 }
             }
-        } else {
+        }
+        else {
             font = GetFontDefault();
         }
 
@@ -549,7 +558,7 @@ public class rText {
                 IntBuffer ascent, descent, lineGap;
                 STBTTFontinfo fontInfo = STBTTFontinfo.create();
 
-                try (MemoryStack stack = MemoryStack.stackPush()) {
+                try (MemoryStack stack = MemoryStack.stackPush()){
                     ascent = stack.mallocInt(1);
                     descent = stack.mallocInt(1);
                     lineGap = stack.mallocInt(1);
@@ -558,7 +567,7 @@ public class rText {
                     fontBuffer.put(fileData).flip();
 
 
-                    if (STBTruetype.stbtt_InitFont(fontInfo, fontBuffer)) {    // Init font for data reading
+                    if (STBTruetype.stbtt_InitFont(fontInfo, fontBuffer)){    // Init font for data reading
 
                         // Calculate font scale factor
                         float scaleFactor = STBTruetype.stbtt_ScaleForPixelHeight(fontInfo, (float) fontSize);
@@ -615,7 +624,8 @@ public class rText {
                                 chars[i].image.setData(codepointarray);
                                 chars[i].offsetX = xoff.get(0);
                                 chars[i].offsetY = yoff.get(0);
-                            } else if (ch != 32) {
+                            }
+                            else if (ch != 32) {
                                 IntBuffer xoff, yoff;
                                 xoff = stack.mallocInt(1);
                                 yoff = stack.mallocInt(1);
@@ -666,7 +676,8 @@ public class rText {
                                 for (int p = 0; p < chwidth * chheight; p++) {
                                     if (chars[i].image.getData()[p] < FONT_BITMAP_ALPHA_THRESHOLD) {
                                         chars[i].image.getData()[p] = 0;
-                                    } else {
+                                    }
+                                    else{
                                         chars[i].image.getData()[p] = (byte) 255;
                                     }
                                 }
@@ -692,7 +703,8 @@ public class rText {
                             TracelogS("FONT: Character offsetY: " + ((int) ((float) asc * scaleFactor) + chY1i));
                             */
                         }
-                    } else {
+                    }
+                    else{
                         Tracelog(LOG_WARNING, "FONT: Failed to process TTF font data");
                     }
                 }
@@ -729,7 +741,7 @@ public class rText {
             // so image size would result bigger than default font type
             float requiredArea = 0;
             for (int i = 0; i < font.glyphCount; i++) {
-                requiredArea += ((font.glyphs[i].image.width + 2 * font.glyphPadding) * (font.baseSize + 2 * font.glyphPadding));
+                requiredArea += ((font.glyphs[i].image.width + 2*font.glyphPadding)*(font.baseSize + 2*font.glyphPadding));
             }
             float guessSize = (float) (Math.sqrt(requiredArea) * 1.4f);
             int imageSize = (int) Math.pow(2, Math.ceil(Math.log(guessSize) / Math.log(2)));  // Calculate next POT
@@ -756,8 +768,9 @@ public class rText {
                     byte[] fcData = font.glyphs[i].image.getData();
                     // Copy pixel data from fc.data to atlas
                     for (int y = 0; y < font.glyphs[i].image.height; y++) {
-                        if (font.glyphs[i].image.width >= 0)
-                            System.arraycopy(fcData, y * font.glyphs[i].image.width + 0, atlasData, (offsetY + y) * atlas.width + (offsetX + x), font.glyphs[i].image.width);
+                        for (int x = 0; x < font.glyphs[i].image.width; x++) {
+                            atlasData[(offsetY + y) * atlas.width + (offsetX + x)] = fcData[y * font.glyphs[i].image.width + x];
+                        }
                     }
 
                     // Fill chars rectangles in atlas info
@@ -790,7 +803,8 @@ public class rText {
                         }
                     }
                 }
-            } else if (packMethod == 1) { // Use Skyline rect packing algorithm (stb_pack_rect)
+            }
+            else if (packMethod == 1) { // Use Skyline rect packing algorithm (stb_pack_rect)
                 STBRPContext context = STBRPContext.create();
 
                 ByteBuffer nBB = ByteBuffer.allocateDirect(font.glyphCount * STBRPNode.SIZEOF);
@@ -806,7 +820,7 @@ public class rText {
                 STBRPRect.Buffer rects = new STBRPRect.Buffer(rBB);
 
                 for (int i = 0; i < font.glyphCount; i++) {
-                    rects.put(i, STBRPRect.create());
+                     rects.put(i, STBRPRect.create());
                 }
 
                 // Fill rectangles for packaging
@@ -835,7 +849,8 @@ public class rText {
                                         fcData[y * font.glyphs[i].image.width + x];
                             }
                         }
-                    } else {
+                    }
+                    else{
                         Tracelog(LOG_WARNING, "FONT: Failed to package character (" + i + ")");
                     }
                 }
@@ -874,7 +889,7 @@ public class rText {
         boolean success = false;
 
         int TEXT_BYTES_PER_LINE = 20;
-        int MAX_FONT_DATA_SIZE = 1024 * 1024;
+        int MAX_FONT_DATA_SIZE = 1024*1024;
 
         // Get file name from path
         String fileNamePascal = TextToPascal(rCore.GetFileNameWithoutExt(fileName));
@@ -935,19 +950,20 @@ public class rText {
             txtData.append("static unsigned char fontData_" + fileNamePascal + "[COMPRESSED_DATA_SIZE_FONT_" + TextToUpper(fileNamePascal) + "] = { ");
 
             for (int i = 0; i < compDataSize - 1; i++) {
-                txtData.append((i % TEXT_BYTES_PER_LINE == 0) ? "0x" + String.format("%02x", compData[i]) + ",\n    " : "0x" + String.format("%02x", compData[i]) + ", ");
+                txtData.append ((i % TEXT_BYTES_PER_LINE == 0) ? "0x" + String.format( "%02x", compData[i]) + ",\n    " : "0x" + String.format( "%02x", compData[i]) + ", ");
             }
 
-            txtData.append("0x" + compData[compDataSize - 1] + " };\n\n");
-        } else {
+            txtData.append( "0x" + compData[compDataSize - 1] + " };\n\n");
+        }
+        else {
             // Save font image data (uncompressed)
             txtData.append("// Font image pixels data\n");
             txtData.append("// NOTE: 2 bytes per pixel, GRAY + ALPHA channels\n");
             txtData.append("static unsigned char fontImageData_" + fileNamePascal + "[" + imageDataSize + "] = { ");
             for (int i = 0; i < imageDataSize - 1; i++) {
-                txtData.append((i % TEXT_BYTES_PER_LINE == 0) ? "0x" + String.format("%02x", image.getData()[i]) + ",\n    " : "0x" + String.format("%02x", image.getData()[i]) + ", ");
+                txtData.append ((i % TEXT_BYTES_PER_LINE == 0) ? "0x" + String.format( "%02x", image.getData()[i]) + ",\n    " : "0x" + String.format( "%02x", image.getData()[i]) + ", ");
             }
-            txtData.append("0x" + String.format("%02x", image.getData()[imageDataSize - 1]) + " };\n\n");
+            txtData.append("0x" + String.format( "%02x", image.getData()[imageDataSize - 1]) + " };\n\n");
         }
 
         // Save font recs data
@@ -977,19 +993,20 @@ public class rText {
         txtData.append("    font.glyphCount = " + font.glyphCount + ";\n");
         txtData.append("    font.glyphPadding = " + font.glyphPadding + ";\n\n");
         txtData.append("    // Custom font loading\n");
-        if (SUPPORT_COMPRESSED_FONT_ATLAS) {
+        if(SUPPORT_COMPRESSED_FONT_ATLAS) {
             txtData.append("    // NOTE: Compressed font image data (DEFLATE), it requires DecompressData() function\n");
             txtData.append("    int fontDataSize_" + fileNamePascal + " = 0;\n");
             txtData.append("    unsigned char *data = DecompressData(fontData_" + fileNamePascal + ", COMPRESSED_DATA_SIZE_FONT_" + TextToUpper(fileNamePascal) + ", &fontDataSize_" + fileNamePascal + ");\n");
             txtData.append("    Image imFont = { data, " + image.width + ", " + image.height + ", 1, " + image.format + " };\n\n");
-        } else {
+        }
+        else {
             txtData.append("    Image imFont = { fontImageData_" + fileName + ", " + image.width + ", " + image.height + ", 1, " + image.format + " };\n\n");
         }
 
         txtData.append("    // Load texture from image\n");
         txtData.append("    font.texture = LoadTextureFromImage(imFont);\n");
 
-        if (SUPPORT_COMPRESSED_FONT_ATLAS) {
+        if(SUPPORT_COMPRESSED_FONT_ATLAS) {
             txtData.append("    UnloadImage(imFont);  // Uncompressed data can be unloaded from memory\n\n");
         }
 
@@ -999,7 +1016,7 @@ public class rText {
         //  - 2. Data assignment. This option consumes less memory and Font MUST NOT be unloaded by user because data is on protected DATA segment
         boolean SUPPORT_FONT_DATA_COPY = false;
 
-        if (SUPPORT_FONT_DATA_COPY) {
+        if(SUPPORT_FONT_DATA_COPY) {
             txtData.append("    // Copy glyph recs data from global fontRecs\n");
             txtData.append("    // NOTE: Required to avoid issues if trying to free font\n");
             txtData.append("    font.recs = (Rectangle *)malloc(font.glyphCount*sizeof(Rectangle));\n");
@@ -1009,7 +1026,8 @@ public class rText {
             txtData.append("    // NOTE: Required to avoid issues if trying to free font\n");
             txtData.append("    font.glyphs = (GlyphInfo *)malloc(font.glyphCount*sizeof(GlyphInfo));\n");
             txtData.append("    memcpy(font.glyphs, fontGlyphs_" + fileNamePascal + ", font.glyphCount*sizeof(GlyphInfo));\n\n");
-        } else {
+        }
+        else {
             txtData.append("    // Assign glyph recs and info data directly\n");
             txtData.append("    // WARNING: This font data must not be unloaded\n");
             txtData.append("    font.recs = fontRecs_" + fileNamePascal + ";\n");
@@ -1025,7 +1043,8 @@ public class rText {
         try {
             success = FileIO.SaveFileText(fileName, txtData.toString());
             Tracelog(LOG_INFO, "FILEIO: [" + fileName + "] Font as code exported successfully");
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             success = false;
             Tracelog(LOG_WARNING, "FILEIO: [" + fileName + "] Failed to export font as code");
         }
@@ -1045,7 +1064,8 @@ public class rText {
 
         if (fps < 30 && fps >= 15) {
             color = Color.ORANGE;  // Warning FPS
-        } else if (fps < 15) {
+        }
+        else if (fps < 15) {
             color = Color.RED;    // Low FPS
         }
 
@@ -1103,17 +1123,19 @@ public class rText {
             if (codepoint == '\n') {
                 // NOTE: Fixed line spacing of 1.5 line-height
                 // TODO: Support custom line spacing defined by user
-                textOffsetY += (int) ((font.baseSize + font.baseSize / 2.0f) * scaleFactor);
+                textOffsetY += (int)((font.baseSize + font.baseSize/2.0f)*scaleFactor);
                 textOffsetX = 0.0f;
-            } else {
-                if ((codepoint != ' ') && (codepoint != '\t')) {
+            }
+            else{
+                if ((codepoint != ' ') && (codepoint != '\t')){
                     DrawTextCodepoint(font, codepoint, new Vector2(position.getX() + textOffsetX,
-                            position.getY() + textOffsetY), fontSize, tint);
+                                                                   position.getY() + textOffsetY), fontSize, tint);
                 }
 
                 if (font.glyphs[index].advanceX == 0) {
                     textOffsetX += (font.recs[index].getWidth() * scaleFactor + spacing);
-                } else {
+                }
+                else{
                     textOffsetX += ((float) font.glyphs[index].advanceX * scaleFactor + spacing);
                 }
             }
@@ -1124,7 +1146,7 @@ public class rText {
 
     // Draw text using Font and pro parameters (rotation)
     public void DrawTextPro(Font font, String text, Vector2 position, Vector2 origin, float rotation, float fontSize,
-                            float spacing, Color tint) {
+                         float spacing, Color tint) {
         rlPushMatrix();
 
         rlTranslatef(position.x, position.y, 0.0f);
@@ -1167,24 +1189,26 @@ public class rText {
     public void DrawTextCodepoints(Font font, int[] codepoints, Vector2 position, float fontSize, float spacing, Color tint) {
         int textOffsetY = 0;            // Offset between lines (on line break '\n')
         float textOffsetX = 0.0f;       // Offset X to next character to draw
-        float scaleFactor = fontSize / font.baseSize;         // Character quad scaling factor
+        float scaleFactor = fontSize/font.baseSize;         // Character quad scaling factor
 
         for (int i = 0; i < codepoints.length; i++) {
             int index = GetGlyphIndex(font, codepoints[i]);
             if (codepoints[i] == '\n') {
                 // NOTE: Fixed line spacing of 1.5 line-height
                 // TODO: Support custom line spacing defined by user
-                textOffsetY += (int) ((font.baseSize + font.baseSize / 2.0f) * scaleFactor);
+                textOffsetY += (int)((font.baseSize + font.baseSize/2.0f)*scaleFactor);
                 textOffsetX = 0.0f;
-            } else {
+            }
+            else {
                 if ((codepoints[i] != ' ') && (codepoints[i] != '\t')) {
                     DrawTextCodepoint(font, codepoints[i], new Vector2(position.x + textOffsetX, position.y + textOffsetY), fontSize, tint);
                 }
 
                 if (font.glyphs[index].advanceX == 0) {
-                    textOffsetX += (font.recs[index].width * scaleFactor + spacing);
-                } else {
-                    textOffsetX += ((float) font.glyphs[index].advanceX * scaleFactor + spacing);
+                    textOffsetX += ((float)font.recs[index].width*scaleFactor + spacing);
+                }
+                else {
+                    textOffsetX += ((float)font.glyphs[index].advanceX*scaleFactor + spacing);
                 }
             }
         }
@@ -1195,9 +1219,9 @@ public class rText {
         Vector2 vec = new Vector2();
 
         // Check if default font has been loaded
-        if (GetFontDefault().texture.getId() != 0) {
+        if (GetFontDefault().texture.getId() != 0){
             int defaultFontSize = 10;   // Default Font chars height in pixel
-            if (fontSize < defaultFontSize) {
+            if (fontSize < defaultFontSize){
                 fontSize = defaultFontSize;
             }
             int spacing = fontSize / defaultFontSize;
@@ -1209,7 +1233,7 @@ public class rText {
     }
 
     // Measure string size for Font
-    public Vector2 MeasureTextEx(Font font, String text, float fontSize, float spacing) {
+    public Vector2 MeasureTextEx(Font font, String text, float fontSize, float spacing){
         int len = TextLength(text);
         int tempLen = 0;                // Used to count longer text line num chars
         int lenCounter = 0;
@@ -1224,7 +1248,7 @@ public class rText {
         int index;                  // Index position in sprite font
 
 
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++){
             lenCounter++;
 
             next = 0;
@@ -1234,18 +1258,20 @@ public class rText {
 
             // NOTE: normally we exit the decoding sequence as soon as a bad byte is found (and return 0x3f)
             // but we need to draw all of the bad bytes using the '?' symbol so to not skip any we set next = 1
-            if (letter == 0x3f) {
+            if (letter == 0x3f){
                 next = 1;
             }
             i += next - 1;
 
-            if (letter != '\n') {
-                if (font.glyphs[index].advanceX != 0) {
+            if (letter != '\n'){
+                if (font.glyphs[index].advanceX != 0){
                     textWidth += font.glyphs[index].advanceX;
-                } else {
+                }
+                else{
                     textWidth += (font.recs[index].getWidth() + font.glyphs[index].offsetX);
                 }
-            } else {
+            }
+            else{
                 if (tempTextWidth < textWidth) tempTextWidth = textWidth;
                 lenCounter = 0;
                 textWidth = 0;
@@ -1265,11 +1291,11 @@ public class rText {
     }
 
     // Returns index position for a unicode character on spritefont
-    public int GetGlyphIndex(Font font, int codepoint) {
+    public int GetGlyphIndex(Font font, int codepoint){
         // Support charsets with any characters order
         int index = GLYPH_NOTFOUND_CHAR_FALLBACK;
-        for (int i = 0; i < font.glyphCount; i++) {
-            if (font.glyphs[i].value == codepoint) {
+        for (int i = 0; i < font.glyphCount; i++){
+            if (font.glyphs[i].value == codepoint){
                 index = i;
                 break;
             }
@@ -1289,18 +1315,18 @@ public class rText {
         return font.recs[GetGlyphIndex(font, codepoint)];
     }
 
-    public int TextLength(String text) {
+    public int TextLength(String text){
         return text.length();
     }
 
     // Formatting of text with variables to 'embed'
     // Note: Calls String.format()
-    public String TextFormat(String text, Object args) {
+    public String TextFormat(String text, Object args){
         return String.format(text, args);
     }
 
     // Get integer value from text
-    public int TextToInteger(String text) {
+    public int TextToInteger(String text){
         return Integer.parseInt(text);
     }
 
@@ -1308,26 +1334,27 @@ public class rText {
     //can't really copy from one memory address to another...
 
     // Check if two text string are equal
-    public boolean TextIsEqual(String text1, String text2) {
+    public boolean TextIsEqual(String text1, String text2){
         return text1.equals(text2);
     }
 
     // Get a piece of a text string
-    public String TextSubtext(String text, int position, int length) {
-        if (length < text.length()) {
+    public String TextSubtext(String text, int position, int length){
+        if (length < text.length()){
             return text.substring(position, length);
-        } else {
+        }
+        else{
             return text.substring(position);
         }
     }
 
     // Replace text string
-    public String TextReplace(String text, String replace, String by) {
+    public String TextReplace(String text, String replace, String by){
         return text.replace(replace, by);
     }
 
     // Insert text in a specific position, moves all text forward
-    public String TextInsert(String text, String insert, int position) {
+    public String TextInsert(String text, String insert, int position){
         String result;
 
         result = text.substring(0, position);
@@ -1338,10 +1365,10 @@ public class rText {
     }
 
     // Join text strings with delimiter
-    public String TextJoin(String[] text, char delimiter) {
+    public String TextJoin(String[] text, char delimiter){
         StringBuilder result = new StringBuilder();
 
-        for (String s : text) {
+        for (String s: text){
             result.append(s);
             result.append(delimiter);
         }
@@ -1350,13 +1377,14 @@ public class rText {
     }
 
     // Split string into multiple strings
-    public String[] TextSplit(String text, char delimiter) {
+    public String[] TextSplit(String text, char delimiter){
         String[] result = new String[MAX_TEXTSPLIT_COUNT];
 
-        for (int i = 0, j = 0; i < text.length(); i++) {
-            if (text.charAt(i) != delimiter) {
+        for (int i = 0, j = 0; i < text.length(); i++){
+            if (text.charAt(i) != delimiter){
                 result[j] += text.charAt(i);
-            } else {
+            }
+            else{
                 j++;
             }
         }
@@ -1365,40 +1393,42 @@ public class rText {
     }
 
     // Append text at specific position
-    public String TextAppend(String text, String append) {
+    public String TextAppend(String text, String append){
         return text + append;
     }
 
     // Find first text occurrence within a string
-    public int TextFindIndex(String text, String find) {
+    public int TextFindIndex(String text, String find){
         return text.indexOf(find);
     }
 
     //Get upper case version of provided string
-    public String TextToUpper(String text) {
+    public String TextToUpper(String text){
         return text.toUpperCase();
     }
 
     //Get lower case version of provided string
-    public String TextToLower(String text) {
+    public String TextToLower(String text){
         return text.toLowerCase();
     }
 
     // Get Pascal case notation version of provided string
-    public String TextToPascal(String text) {
+    public String TextToPascal(String text){
         char[] buffer = new char[MAX_TEXT_BUFFER_LENGTH];
 
         buffer[0] = text.toUpperCase().charAt(0);
 
-        for (int i = 1, j = 1; i < MAX_TEXT_BUFFER_LENGTH; i++, j++) {
-            if (text.charAt(j) != '\0') {
-                if (text.charAt(j) != '_') {
+        for (int i = 1, j = 1; i < MAX_TEXT_BUFFER_LENGTH; i++, j++){
+            if (text.charAt(j) != '\0'){
+                if (text.charAt(j) != '_'){
                     buffer[i] = text.charAt(j);
-                } else {
+                }
+                else{
                     j++;
                     buffer[i] = text.toUpperCase().charAt(j);
                 }
-            } else {
+            }
+            else{
                 buffer[i] = '\0';
                 break;
             }
@@ -1408,14 +1438,14 @@ public class rText {
     }
 
     // Encode text codepoint into UTF-8 text
-    public String TextCodepointsToUTF8(int[] codepoints, int length) {
+    public String TextCodepointsToUTF8(int[] codepoints, int length){
         // We allocate enough memory fo fit all possible codepoints
         // NOTE: 5 bytes for every codepoint should be enough
         StringBuilder text = new StringBuilder();
         String utf8;
         int size = 0;
 
-        for (int i = 0, bytes; i < length; i++) {
+        for (int i = 0, bytes; i < length; i++){
             utf8 = CodepointToUTF8(codepoints[i]);
             bytes = utf8.length();
             text.append(utf8);
@@ -1426,23 +1456,26 @@ public class rText {
     }
 
     // Encode codepoint into UTF-8 text (char array length returned as parameter)
-    public String CodepointToUTF8(int codepoint) {
+    public String CodepointToUTF8(int codepoint){
         char[] utf8 = new char[6];
         int length = 0;
 
-        if (codepoint <= 0x7f) {
+        if (codepoint <= 0x7f){
             utf8[0] = (char) codepoint;
             length = 1;
-        } else if (codepoint <= 0x7ff) {
+        }
+        else if (codepoint <= 0x7ff){
             utf8[0] = (char) (((codepoint >> 6) & 0x1f) | 0xc0);
             utf8[1] = (char) ((codepoint & 0x3f) | 0x80);
             length = 2;
-        } else if (codepoint <= 0xffff) {
+        }
+        else if (codepoint <= 0xffff){
             utf8[0] = (char) (((codepoint >> 12) & 0x0f) | 0xe0);
             utf8[1] = (char) (((codepoint >> 6) & 0x3f) | 0x80);
             utf8[2] = (char) ((codepoint & 0x3f) | 0x80);
             length = 3;
-        } else if (codepoint <= 0x10ffff) {
+        }
+        else if (codepoint <= 0x10ffff){
             utf8[0] = (char) (((codepoint >> 18) & 0x07) | 0xf0);
             utf8[1] = (char) (((codepoint >> 12) & 0x3f) | 0x80);
             utf8[2] = (char) (((codepoint >> 6) & 0x3f) | 0x80);
@@ -1454,7 +1487,7 @@ public class rText {
     }
 
     // Get all codepoints in a string, codepoints count returned by parameters
-    public int[] LoadCodepoints(String text) {
+    public int[] LoadCodepoints(String text){
         int[] codepoints = new int[MAX_TEXT_UNICODE_CHARS];
         Arrays.fill(codepoints, 0);
 
@@ -1462,7 +1495,7 @@ public class rText {
         int textLength = TextLength(text);
         int codepointsCount = 0;
 
-        for (int i = 0; i < textLength; codepointsCount++) {
+        for (int i = 0; i < textLength; codepointsCount++){
             codepoints[codepointsCount] = GetCodepoint(text.toCharArray(), i);
             i += bytesProcessed;
         }
@@ -1477,17 +1510,18 @@ public class rText {
 
     // Returns total number of characters(codepoints) in a UTF8 encoded text, until '\0' is found
     // NOTE: If an invalid UTF8 sequence is encountered a '?'(0x3f) codepoint is counted instead
-    public int GetCodepointsCount(String text) {
+    public int GetCodepointsCount(String text){
         int len = 0;
         int ptr = 0;
 
-        while (ptr < text.length() && text.charAt(ptr) != '\0') {
+        while (ptr < text.length() && text.charAt(ptr) != '\0'){
             next = 0;
             int letter = GetCodepoint(text.toCharArray(), ptr);
 
-            if (letter == 0x3f) {
+            if (letter == 0x3f){
                 ptr += 1;
-            } else {
+            }
+            else{
                 ptr += next;
             }
 
@@ -1503,7 +1537,7 @@ public class rText {
     // NOTE: the standard says U+FFFD should be returned in case of errors
     // but that character is not supported by the default font in raylib
     // TODO: optimize this code for speed!!
-    public int GetCodepoint(char[] text, int bytesProcessed) {
+    public int GetCodepoint(char[] text, int bytesProcessed){
         /*
             UTF8 specs from https://www.ietf.org/rfc/rfc3629.txt
             Char. number range  |        UTF-8 octet sequence
@@ -1520,36 +1554,38 @@ public class rText {
         int octet = text.toString().getBytes(StandardCharsets.UTF_8)[0]; // The first UTF8 octet
         bytesProcessed = 1;
 
-        if (octet <= 0x7f) {
+        if (octet <= 0x7f){
             // Only one octet (ASCII range x00-7F)
             code = text[0];
-        } else if ((octet & 0xe0) == 0xc0) {
+        }
+        else if ((octet & 0xe0) == 0xc0){
             // Two octets
             // [0]xC2-DF    [1]UTF8-tail(x80-BF)
             char octet1 = text[1];
 
-            if ((octet1 == '\0') || ((octet1 >> 6) != 2)) {
+            if ((octet1 == '\0') || ((octet1 >> 6) != 2)){
                 bytesProcessed = 2;
                 return code;
             } // Unexpected sequence
 
-            if ((octet >= 0xc2) && (octet <= 0xdf)) {
+            if ((octet >= 0xc2) && (octet <= 0xdf)){
                 code = ((octet & 0x1f) << 6) | (octet1 & 0x3f);
                 bytesProcessed = 2;
             }
-        } else if ((octet & 0xf0) == 0xe0) {
+        }
+        else if ((octet & 0xf0) == 0xe0){
             // Three octets
             char octet1 = text[1];
             char octet2;
 
-            if ((octet1 == '\0') || ((octet1 >> 6) != 2)) {
+            if ((octet1 == '\0') || ((octet1 >> 6) != 2)){
                 bytesProcessed = 2;
                 return code;
             } // Unexpected sequence
 
             octet2 = text[2];
 
-            if ((octet2 == '\0') || ((octet2 >> 6) != 2)) {
+            if ((octet2 == '\0') || ((octet2 >> 6) != 2)){
                 bytesProcessed = 3;
                 return code;
             } // Unexpected sequence
@@ -1562,18 +1598,19 @@ public class rText {
         */
 
             if (((octet == 0xe0) && !((octet1 >= 0xa0) && (octet1 <= 0xbf))) ||
-                    ((octet == 0xed) && !((octet1 >= 0x80) && (octet1 <= 0x9f)))) {
+                    ((octet == 0xed) && !((octet1 >= 0x80) && (octet1 <= 0x9f)))){
                 bytesProcessed = 2;
                 return code;
             }
 
-            if ((octet >= 0xe0) && (octet <= 0xef)) {
+            if ((octet >= 0xe0) && (octet <= 0xef)){
                 code = ((octet & 0xf) << 12) | ((octet1 & 0x3f) << 6) | (octet2 & 0x3f);
                 bytesProcessed = 3;
             }
-        } else if ((octet & 0xf8) == 0xf0) {
+        }
+        else if ((octet & 0xf8) == 0xf0){
             // Four octets
-            if (octet > 0xf4) {
+            if (octet > 0xf4){
                 return code;
             }
 
@@ -1581,21 +1618,21 @@ public class rText {
             char octet2 = '\0';
             char octet3 = '\0';
 
-            if ((octet1 == '\0') || ((octet1 >> 6) != 2)) {
+            if ((octet1 == '\0') || ((octet1 >> 6) != 2)){
                 bytesProcessed = 2;
                 return code;
             }  // Unexpected sequence
 
             octet2 = text[2];
 
-            if ((octet2 == '\0') || ((octet2 >> 6) != 2)) {
+            if ((octet2 == '\0') || ((octet2 >> 6) != 2)){
                 bytesProcessed = 3;
                 return code;
             }  // Unexpected sequence
 
             octet3 = text[3];
 
-            if ((octet3 == '\0') || ((octet3 >> 6) != 2)) {
+            if ((octet3 == '\0') || ((octet3 >> 6) != 2)){
                 bytesProcessed = 4;
                 return code;
             }  // Unexpected sequence
@@ -1607,18 +1644,18 @@ public class rText {
         */
 
             if (((octet == 0xf0) && !((octet1 >= 0x90) && (octet1 <= 0xbf))) ||
-                    ((octet == 0xf4) && !((octet1 >= 0x80) && (octet1 <= 0x8f)))) {
+                    ((octet == 0xf4) && !((octet1 >= 0x80) && (octet1 <= 0x8f)))){
                 bytesProcessed = 2;
                 return code;
             } // Unexpected sequence
 
-            if (octet >= 0xf0) {
+            if (octet >= 0xf0){
                 code = ((octet & 0x7) << 18) | ((octet1 & 0x3f) << 12) | ((octet2 & 0x3f) << 6) | (octet3 & 0x3f);
                 bytesProcessed = 4;
             }
         }
 
-        if (code > 0x10ffff) {
+        if (code > 0x10ffff){
             code = 0x3f;     // Codepoints after U+10ffff are invalid
         }
 
@@ -1628,10 +1665,10 @@ public class rText {
     }
 
     // Read a line from memory
-    public int GetLine(String origin, String buffer, int maxLength) {
+    public int GetLine(String origin, String buffer, int maxLength){
         int count = 0;
-        for (; count < maxLength; count++) {
-            if (origin.charAt(count) == '\n') {
+        for (; count < maxLength; count++){
+            if (origin.charAt(count) == '\n'){
                 break;
             }
         }
@@ -1640,7 +1677,7 @@ public class rText {
     }
 
     // Load a BMFont file (AngelCode font file)
-    public Font LoadBMFont(String fileName) {
+    public Font LoadBMFont(String fileName){
         int fontSize, imWidth, imHeight, charsCount;
         int lineTracker = 1;
         String fileText = null, imFileName = null;
@@ -1648,9 +1685,9 @@ public class rText {
 
         Font font = new Font();
 
-        try {
+        try{
             fileText = FileIO.LoadFileText(fileName);
-        } catch (IOException e) {
+        } catch (IOException e){
             e.printStackTrace();
         }
 
@@ -1658,18 +1695,18 @@ public class rText {
 
         //start at line 1 because there's no useful info in line 0
         fontSize = Integer.parseInt(fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("lineHeight=") + 11,
-                fileLines[lineTracker].indexOf("base=") - 1));
+                                                                     fileLines[lineTracker].indexOf("base=") - 1));
         imWidth = Integer.parseInt(fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("scaleW=") + 7,
-                fileLines[lineTracker].indexOf("scaleH=") - 1));
+                                                                    fileLines[lineTracker].indexOf("scaleH=") - 1));
         imHeight = Integer.parseInt(fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("scaleH=") + 7,
-                fileLines[lineTracker].indexOf("pages=") - 1));
+                                                                     fileLines[lineTracker].indexOf("pages=") - 1));
         lineTracker++;
         Tracelog.Tracelog("FONT: [" + fileName + "] Loaded font info:");
         Tracelog.Tracelog("    > Base size: " + fontSize);
         Tracelog.Tracelog("    > Texture scale: " + imWidth + "x" + imHeight);
 
         imFileName = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("file=\"") + 6,
-                fileLines[lineTracker].lastIndexOf("\""));
+                                                      fileLines[lineTracker].lastIndexOf("\""));
         lineTracker++;
         Tracelog.Tracelog("    > Texture filename: " + imFileName);
 
@@ -1681,13 +1718,13 @@ public class rText {
 
         Image imFont = context.textures.LoadImage(imPath);
 
-        if (imFont.format == RL_PIXELFORMAT_UNCOMPRESSED_GRAYSCALE) {
+        if (imFont.format == RL_PIXELFORMAT_UNCOMPRESSED_GRAYSCALE){
             // Convert image to GRAYSCALE + ALPHA, using the mask as the alpha channel
             Image imFontAlpha = new Image();
 
             byte[] ifaData = new byte[imFont.width * imFont.height * 2];
             byte[] imData = imFont.getData();
-            for (int p = 0, i = 0; p < (imFont.width * imFont.height * 2); p += 2, i++) {
+            for (int p = 0, i = 0; p < (imFont.width * imFont.height * 2); p += 2, i++){
                 ifaData[p] = (byte) 0xff;
                 ifaData[p + 1] = imData[i];
             }
@@ -1709,48 +1746,48 @@ public class rText {
         font.glyphCount = charsCount;
         font.glyphPadding = 0;
         font.glyphs = new GlyphInfo[charsCount];
-        for (int i = 0; i < font.glyphs.length; i++) {
+        for (int i = 0; i < font.glyphs.length; i++){
             font.glyphs[i] = new GlyphInfo();
         }
         font.recs = new Rectangle[charsCount];
-        for (int i = 0; i < font.recs.length; i++) {
+        for (int i = 0; i < font.recs.length; i++){
             font.recs[i] = new Rectangle();
         }
 
         int charId, charX, charY, charWidth, charHeight, charOffsetX, charOffsetY, charAdvanceX;
 
-        for (int i = 0; ; i++) {
+        for (int i = 0; ; i++){
             String tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("id=") + 3,
-                    fileLines[lineTracker].indexOf("x="));
+                                                          fileLines[lineTracker].indexOf("x="));
             charId = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
             tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("x=") + 2,
-                    fileLines[lineTracker].indexOf("y="));
+                                                   fileLines[lineTracker].indexOf("y="));
             charX = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
             tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("y=") + 2,
-                    fileLines[lineTracker].indexOf("width="));
+                                                   fileLines[lineTracker].indexOf("width="));
             charY = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
             tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("width=") + 6,
-                    fileLines[lineTracker].indexOf("height="));
+                                                   fileLines[lineTracker].indexOf("height="));
             charWidth = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
             tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("height=") + 7,
-                    fileLines[lineTracker].indexOf("xoffset="));
+                                                   fileLines[lineTracker].indexOf("xoffset="));
             charHeight = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
             tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("xoffset=") + 8,
-                    fileLines[lineTracker].indexOf("yoffset="));
+                                                   fileLines[lineTracker].indexOf("yoffset="));
             charOffsetX = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
 
             tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("yoffset=") + 8,
-                    fileLines[lineTracker].indexOf("xadvance="));
+                                                   fileLines[lineTracker].indexOf("xadvance="));
             charOffsetY = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
             tmp = fileLines[lineTracker].substring(fileLines[lineTracker].indexOf("xadvance=") + 9,
-                    fileLines[lineTracker].indexOf("page="));
+                                                   fileLines[lineTracker].indexOf("page="));
             charAdvanceX = Integer.parseInt(tmp.substring(0, tmp.indexOf(" ")));
 
             // Get character rectangle in the font atlas texture
@@ -1768,18 +1805,19 @@ public class rText {
 
             lineTracker++;
 
-            if (lineTracker == fileLines.length) {
+            if (lineTracker == fileLines.length){
                 break;
             }
         }
 
         context.textures.UnloadImage(imFont);
 
-        if (font.texture.getId() == 0) {
+        if (font.texture.getId() == 0){
             UnloadFont(font);
             font = GetFontDefault();
             Tracelog(LOG_WARNING, "FONT: [" + fileName + "] Failed to load texture, reverted to default font");
-        } else {
+        }
+        else{
             Tracelog(LOG_INFO, "FONT: [" + fileName + "] Font loaded successfully");
         }
 

@@ -9,3 +9,4 @@ META-INF/
 *.txt
 .gradle/
 build/
+local.properties

@@ -1,6 +1,6 @@
 package com.raylib.java.rlgl.vr;
 
-public class VrDeviceInfo {
+public class VrDeviceInfo{
 
     // Head-Mounted-Display device parameters
 
@@ -15,88 +15,88 @@ public class VrDeviceInfo {
     public float[] lensDistortionValues;  // Lens distortion constant parameters
     public float[] chromaAbCorrection;    // Chromatic aberration correction parameters
 
-    public VrDeviceInfo() {
+    public VrDeviceInfo(){
         lensDistortionValues = new float[4];
         chromaAbCorrection = new float[4];
     }
 
-    public int gethResolution() {
+    public int gethResolution(){
         return hResolution;
     }
 
-    public void sethResolution(int hResolution) {
+    public void sethResolution(int hResolution){
         this.hResolution = hResolution;
     }
 
-    public int getvResolution() {
+    public int getvResolution(){
         return vResolution;
     }
 
-    public void setvResolution(int vResolution) {
+    public void setvResolution(int vResolution){
         this.vResolution = vResolution;
     }
 
-    public float gethScreenSize() {
+    public float gethScreenSize(){
         return hScreenSize;
     }
 
-    public void sethScreenSize(float hScreenSize) {
+    public void sethScreenSize(float hScreenSize){
         this.hScreenSize = hScreenSize;
     }
 
-    public float getvScreenSize() {
+    public float getvScreenSize(){
         return vScreenSize;
     }
 
-    public void setvScreenSize(float vScreenSize) {
+    public void setvScreenSize(float vScreenSize){
         this.vScreenSize = vScreenSize;
     }
 
-    public float getvScreenCenter() {
+    public float getvScreenCenter(){
         return vScreenCenter;
     }
 
-    public void setvScreenCenter(float vScreenCenter) {
+    public void setvScreenCenter(float vScreenCenter){
         this.vScreenCenter = vScreenCenter;
     }
 
-    public float getEyeToScreenDistance() {
+    public float getEyeToScreenDistance(){
         return eyeToScreenDistance;
     }
 
-    public void setEyeToScreenDistance(float eyeToScreenDistance) {
+    public void setEyeToScreenDistance(float eyeToScreenDistance){
         this.eyeToScreenDistance = eyeToScreenDistance;
     }
 
-    public float getLensSeparationDistance() {
+    public float getLensSeparationDistance(){
         return lensSeparationDistance;
     }
 
-    public void setLensSeparationDistance(float lensSeparationDistance) {
+    public void setLensSeparationDistance(float lensSeparationDistance){
         this.lensSeparationDistance = lensSeparationDistance;
     }
 
-    public float getInterpupillaryDistance() {
+    public float getInterpupillaryDistance(){
         return interpupillaryDistance;
     }
 
-    public void setInterpupillaryDistance(float interpupillaryDistance) {
+    public void setInterpupillaryDistance(float interpupillaryDistance){
         this.interpupillaryDistance = interpupillaryDistance;
     }
 
-    public float[] getLensDistortionValues() {
+    public float[] getLensDistortionValues(){
         return lensDistortionValues;
     }
 
-    public void setLensDistortionValues(float[] lensDistortionValues) {
+    public void setLensDistortionValues(float[] lensDistortionValues){
         this.lensDistortionValues = lensDistortionValues;
     }
 
-    public float[] getChromaAbCorrection() {
+    public float[] getChromaAbCorrection(){
         return chromaAbCorrection;
     }
 
-    public void setChromaAbCorrection(float[] chromaAbCorrection) {
+    public void setChromaAbCorrection(float[] chromaAbCorrection){
         this.chromaAbCorrection = chromaAbCorrection;
     }
 }

@@ -2,7 +2,7 @@ package com.raylib.java.rlgl.vr;
 
 import com.raylib.java.raymath.Matrix;
 
-public class VrStereoConfig {
+public class VrStereoConfig{
 
     public Matrix[] projection;           // VR projection matrices (per eye)
     public Matrix[] viewOffset;           // VR view offset matrices (per eye)
@@ -13,7 +13,7 @@ public class VrStereoConfig {
     public float[] scale;                 // VR distortion scale
     public float[] scaleIn;               // VR distortion scale in
 
-    public VrStereoConfig() {
+    public VrStereoConfig(){
         projection = new Matrix[2];
         viewOffset = new Matrix[2];
         leftLensCenter = new float[2];
@@ -24,67 +24,67 @@ public class VrStereoConfig {
         scaleIn = new float[2];
     }
 
-    public Matrix[] getProjection() {
+    public Matrix[] getProjection(){
         return projection;
     }
 
-    public void setProjection(Matrix[] projection) {
+    public void setProjection(Matrix[] projection){
         this.projection = projection;
     }
 
-    public Matrix[] getViewOffset() {
+    public Matrix[] getViewOffset(){
         return viewOffset;
     }
 
-    public void setViewOffset(Matrix[] viewOffset) {
+    public void setViewOffset(Matrix[] viewOffset){
         this.viewOffset = viewOffset;
     }
 
-    public float[] getLeftLensCenter() {
+    public float[] getLeftLensCenter(){
         return leftLensCenter;
     }
 
-    public void setLeftLensCenter(float[] leftLensCenter) {
+    public void setLeftLensCenter(float[] leftLensCenter){
         this.leftLensCenter = leftLensCenter;
     }
 
-    public float[] getRightLensCenter() {
+    public float[] getRightLensCenter(){
         return rightLensCenter;
     }
 
-    public void setRightLensCenter(float[] rightLensCenter) {
+    public void setRightLensCenter(float[] rightLensCenter){
         this.rightLensCenter = rightLensCenter;
     }
 
-    public float[] getLeftScreenCenter() {
+    public float[] getLeftScreenCenter(){
         return leftScreenCenter;
     }
 
-    public void setLeftScreenCenter(float[] leftScreenCenter) {
+    public void setLeftScreenCenter(float[] leftScreenCenter){
         this.leftScreenCenter = leftScreenCenter;
     }
 
-    public float[] getRightScreenCenter() {
+    public float[] getRightScreenCenter(){
         return rightScreenCenter;
     }
 
-    public void setRightScreenCenter(float[] rightScreenCenter) {
+    public void setRightScreenCenter(float[] rightScreenCenter){
         this.rightScreenCenter = rightScreenCenter;
     }
 
-    public float[] getScale() {
+    public float[] getScale(){
         return scale;
     }
 
-    public void setScale(float[] scale) {
+    public void setScale(float[] scale){
         this.scale = scale;
     }
 
-    public float[] getScaleIn() {
+    public float[] getScaleIn(){
         return scaleIn;
     }
 
-    public void setScaleIn(float[] scaleIn) {
+    public void setScaleIn(float[] scaleIn){
         this.scaleIn = scaleIn;
     }
 }

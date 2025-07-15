@@ -11,24 +11,25 @@ import static com.raylib.java.utils.Tracelog.Tracelog;
 import static com.raylib.java.utils.Tracelog.TracelogType.LOG_INFO;
 import static com.raylib.java.utils.Tracelog.TracelogType.LOG_WARNING;
 
-public class FileIO {
+public class FileIO{
 
     //TODO: FIGURE OUT THIS MESS
     //Load data from file into a buffer
-    public static byte[] LoadFileData(String fileName) throws IOException {
+    public static byte[] LoadFileData(String fileName) throws IOException{
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-        if (SUPPORT_STANDARD_FILEIO) {
+        if (SUPPORT_STANDARD_FILEIO){
 
             InputStream inputStream;
             if (fileName.contains("/")) {
                 inputStream = FileIO.class.getResourceAsStream(fileName.substring(fileName.lastIndexOf('/')));
-            } else {
-                inputStream = FileIO.class.getResourceAsStream("/" + fileName);
             }
-            if (inputStream == null) {
+            else {
+                inputStream = FileIO.class.getResourceAsStream("/"+fileName);
+            }
+            if(inputStream == null) {
                 String ext = fileName.substring(fileName.lastIndexOf('.')).toUpperCase();
-                inputStream = getFileFromResourceAsStream(fileName.substring(0, fileName.lastIndexOf('.')) + ext);
+                inputStream = getFileFromResourceAsStream(fileName.substring(0, fileName.lastIndexOf('.'))+ext);
             }
 
             if (inputStream != null) {
@@ -38,13 +39,15 @@ public class FileIO {
                     while (-1 != (read = inputStream.read(input))) {
                         buffer.write(input, 0, read);
                     }
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
                 return buffer.toByteArray();
             }
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "FILEIO: Standard file io not supported, use custom file callback");
         }
 
@@ -52,42 +55,45 @@ public class FileIO {
     }
 
     // Unload file data allocated by LoadFileData()
-    public static void UnloadFileData(Object o) {
+    public static void UnloadFileData(Object o){
         o = null;
     }
 
     // Save data to file from buffer
-    public static boolean SaveFileData(String fileName, byte[] data, int bytesToWrite) throws IOException {
+    public static boolean SaveFileData(String fileName, byte[] data, int bytesToWrite) throws IOException{
         boolean success = false;
 
-        if (fileName != null) {
-            if (SUPPORT_STANDARD_FILEIO) {
+        if (fileName != null){
+            if (SUPPORT_STANDARD_FILEIO){
                 Path path = Paths.get(fileName);
 
-                if (!path.toFile().exists()) {
-                    try {
+                if (!path.toFile().exists()){
+                    try{
                         Files.write(path, data);
-                    } catch (IOException exception) {
+                    } catch (IOException exception){
                         Tracelog(LOG_WARNING, "FILEIO: Failed to write file" + fileName);
                         throw exception;
-                    } finally {
-                        success = true;
-                    }
-                } else {
-                    Tracelog(LOG_INFO, "FILEIO: Overwriting file " + fileName);
-                    try {
-                        Files.write(path, data);
-                    } catch (IOException exception) {
-                        Tracelog(LOG_WARNING, "FILEIO: Failed to write file" + fileName);
-                        throw exception;
-                    } finally {
+                    } finally{
                         success = true;
                     }
                 }
-            } else {
+                else{
+                    Tracelog(LOG_INFO, "FILEIO: Overwriting file " + fileName);
+                    try{
+                        Files.write(path, data);
+                    } catch (IOException exception){
+                        Tracelog(LOG_WARNING, "FILEIO: Failed to write file" + fileName);
+                        throw exception;
+                    } finally{
+                        success = true;
+                    }
+                }
+            }
+            else{
                 Tracelog(LOG_WARNING, "FILEIO: Standard file io not supported, use custom file callback");
             }
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "FILEIO: File name provided is not valid");
         }
 
@@ -100,19 +106,20 @@ public class FileIO {
      *
      * @param fileName name and extension of file to be loaded
      */
-    public static String LoadFileText(String fileName) throws IOException {
-        if (fileName != null) {
+    public static String LoadFileText(String fileName) throws IOException{
+        if (fileName != null){
 
-            if (SUPPORT_STANDARD_FILEIO) {
+            if (SUPPORT_STANDARD_FILEIO){
                 InputStream inputStream;
                 if (fileName.contains("/")) {
                     inputStream = FileIO.class.getResourceAsStream(fileName.substring(fileName.lastIndexOf('/')));
-                } else {
-                    inputStream = FileIO.class.getResourceAsStream("/" + fileName);
                 }
-                if (inputStream == null) {
+                else {
+                    inputStream = FileIO.class.getResourceAsStream("/"+fileName);
+                }
+                if(inputStream == null) {
                     String ext = fileName.substring(fileName.lastIndexOf('.')).toUpperCase();
-                    inputStream = getFileFromResourceAsStream(fileName.substring(0, fileName.lastIndexOf('.')) + ext);
+                    inputStream = getFileFromResourceAsStream(fileName.substring(0, fileName.lastIndexOf('.'))+ext);
                 }
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -126,10 +133,12 @@ public class FileIO {
 
                 if (tmp != null) {
                     return builder.toString();
-                } else {
+                }
+                else{
                     Tracelog(LOG_WARNING, "FILEIO: [" + fileName + "] Failed to open text file");
                 }
-            } else {
+            }
+            else{
                 Tracelog(LOG_WARNING, "FILEIO: Standard file io not supported, use custom file callback");
             }
         }
@@ -137,50 +146,53 @@ public class FileIO {
     }
 
     // Unload file text data allocated by LoadFileText()
-    public static Object UnloadFileText() {
+    public static Object UnloadFileText(){
         return null;
     }
 
     // Save text data to file (write), string must be '\0' terminated
-    public static boolean SaveFileText(String fileName, String text) throws IOException {
+    public static boolean SaveFileText(String fileName, String text) throws IOException{
         boolean success = false;
 
-        if (fileName != null) {
+        if (fileName != null){
 
-            if (SUPPORT_STANDARD_FILEIO) {
+            if (SUPPORT_STANDARD_FILEIO){
                 Path path = Paths.get(fileName);
 
-                if (!path.toFile().exists()) {
-                    try {
+                if (!path.toFile().exists()){
+                    try{
                         Files.write(path, Collections.singleton(text));
-                    } catch (IOException exception) {
+                    } catch (IOException exception){
                         Tracelog(LOG_WARNING, "FILEIO: Failed to write file" + fileName);
                         throw exception;
-                    } finally {
-                        success = true;
-                    }
-                } else {
-                    Tracelog(LOG_INFO, "FILEIO: Overwriting file " + fileName);
-                    try {
-                        Files.write(path, Collections.singleton(text));
-                    } catch (IOException exception) {
-                        Tracelog(LOG_WARNING, "FILEIO: Failed to write file" + fileName);
-                        throw exception;
-                    } finally {
+                    } finally{
                         success = true;
                     }
                 }
-            } else {
+                else{
+                    Tracelog(LOG_INFO, "FILEIO: Overwriting file " + fileName);
+                    try{
+                        Files.write(path, Collections.singleton(text));
+                    } catch (IOException exception){
+                        Tracelog(LOG_WARNING, "FILEIO: Failed to write file" + fileName);
+                        throw exception;
+                    } finally{
+                        success = true;
+                    }
+                }
+            }
+            else{
                 Tracelog(LOG_WARNING, "FILEIO: Standard file io not supported, use custom file callback");
             }
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "FILEIO: File name provided is not valid");
         }
 
         return success;
     }
 
-    private static InputStream getFileFromResourceAsStream(String fileName) {
+    private static InputStream getFileFromResourceAsStream(String fileName){
         return FileIO.class.getResourceAsStream(fileName);
     }
 }

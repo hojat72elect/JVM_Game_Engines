@@ -1,6 +1,6 @@
 package com.raylib.java;
 
-public class Config {
+public class Config{
 
     /**
      * Raylib configuration flags
@@ -13,11 +13,11 @@ public class Config {
 // Module selection - Some modules could be avoided
 // Mandatory modules: rcore, rlgl, utils
 //------------------------------------------------------------------------------------
-    public static boolean SUPPORT_MODULE_RSHAPES = true;
-    public static boolean SUPPORT_MODULE_RTEXTURES = true;
-    public static boolean SUPPORT_MODULE_RTEXT = true;          // WARNING: It requires SUPPORT_MODULE_RTEXTURES to load sprite font textures
-    public static boolean SUPPORT_MODULE_RMODELS = true;
-    public static boolean SUPPORT_MODULE_RAUDIO = true;
+            public static boolean SUPPORT_MODULE_RSHAPES   = true;
+            public static boolean SUPPORT_MODULE_RTEXTURES = true;
+            public static boolean SUPPORT_MODULE_RTEXT     = true;          // WARNING: It requires SUPPORT_MODULE_RTEXTURES to load sprite font textures
+            public static boolean SUPPORT_MODULE_RMODELS   = true;
+            public static boolean SUPPORT_MODULE_RAUDIO    = true;
 
     //------------------------------------------------------------------------------------
     // Module: core - Configuration Flags
@@ -136,18 +136,18 @@ public class Config {
     public final static float RL_CULL_DISTANCE_FAR = 1000.0f;      // Default projection matrix far cull distance
 
     // Default shader vertex attribute names to set location points
-    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION = "vertexPosition";   // Binded by default to shader location: 0
-    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD = "vertexTexCoord";    // Binded by default to shader location: 1
-    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL = "vertexNormal";      // Binded by default to shader location: 2
-    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR = "vertexColor";       // Binded by default to shader location: 3
-    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT = "vertexTangent";     // Binded by default to shader location: 4
-    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2 = "vertexTexCoord2";   // Binded by default to shader location: 5
-    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_MVP = "mvp";               // model-view-projection matrix
-    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW = "matView";           // view matrix
+    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION    = "vertexPosition";   // Binded by default to shader location: 0
+    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD    = "vertexTexCoord";    // Binded by default to shader location: 1
+    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL      = "vertexNormal";      // Binded by default to shader location: 2
+    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR       =  "vertexColor";       // Binded by default to shader location: 3
+    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT     = "vertexTangent";     // Binded by default to shader location: 4
+    public static final String RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2   = "vertexTexCoord2";   // Binded by default to shader location: 5
+    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_MVP        = "mvp";               // model-view-projection matrix
+    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW       = "matView";           // view matrix
     public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION = "matProjection";     // projection matrix
-    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL = "matModel";          // model matrix
-    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL = "matNormal";         // normal matrix (transpose(inverse(matModelView))
-    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR = "colDiffuse";        // color diffuse (base tint color, multiplied by texture color)
+    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL      = "matModel";          // model matrix
+    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL     = "matNormal";         // normal matrix (transpose(inverse(matModelView))
+    public static final String RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR      = "colDiffuse";        // color diffuse (base tint color, multiplied by texture color)
     public static final String RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0 = "texture0";          // texture0 (texture slot active 0)
     public static final String RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1 = "texture1";          // texture1 (texture slot active 1)
     public static final String RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2 = "texture2";          // texture2 (texture slot active 2)
@@ -328,386 +328,346 @@ public class Config {
     //------------------------------------------------------------------------------------
     public final static boolean COMPUTE_TANGENTS_METHOD_01 = true;
 
-    public static class ConfigFlag {
+    public static class ConfigFlag{
         public static final int
-                FLAG_VSYNC_HINT = 0x00000040,   // Set to try enabling V-Sync on GPU
-                FLAG_FULLSCREEN_MODE = 0x00000002,   // Set to run program in fullscreen
-                FLAG_WINDOW_RESIZABLE = 0x00000004,   // Set to allow resizable window
-                FLAG_WINDOW_UNDECORATED = 0x00000008,   // Set to disable window decoration (frame and buttons)
-                FLAG_WINDOW_HIDDEN = 0x00000080,   // Set to hide window
-                FLAG_WINDOW_MINIMIZED = 0x00000200,   // Set to minimize window (iconify)
-                FLAG_WINDOW_MAXIMIZED = 0x00000400,   // Set to maximize window (expanded to monitor)
-                FLAG_WINDOW_UNFOCUSED = 0x00000800,   // Set to window non focused
-                FLAG_WINDOW_TOPMOST = 0x00001000,   // Set to window always on top
-                FLAG_WINDOW_ALWAYS_RUN = 0x00000100,   // Set to allow windows running while minimized
-                FLAG_WINDOW_TRANSPARENT = 0x00000010,   // Set to allow transparent framebuffer
-                FLAG_WINDOW_HIGHDPI = 0x00002000,   // Set to support HighDPI
-                FLAG_WINDOW_MOUSE_PASSTHROUGH = 0x00004000, // Set to support mouse passthrough, only supported when FLAG_WINDOW_UNDECORATED
-                FLAG_MSAA_4X_HINT = 0x00000020,   // Set to try enabling MSAA 4X
-                FLAG_INTERLACED_HINT = 0x00010000;    // Set to try enabling interlaced video format (for V3D)
+        FLAG_VSYNC_HINT = 0x00000040,   // Set to try enabling V-Sync on GPU
+        FLAG_FULLSCREEN_MODE = 0x00000002,   // Set to run program in fullscreen
+        FLAG_WINDOW_RESIZABLE = 0x00000004,   // Set to allow resizable window
+        FLAG_WINDOW_UNDECORATED = 0x00000008,   // Set to disable window decoration (frame and buttons)
+        FLAG_WINDOW_HIDDEN = 0x00000080,   // Set to hide window
+        FLAG_WINDOW_MINIMIZED = 0x00000200,   // Set to minimize window (iconify)
+        FLAG_WINDOW_MAXIMIZED = 0x00000400,   // Set to maximize window (expanded to monitor)
+        FLAG_WINDOW_UNFOCUSED = 0x00000800,   // Set to window non focused
+        FLAG_WINDOW_TOPMOST = 0x00001000,   // Set to window always on top
+        FLAG_WINDOW_ALWAYS_RUN = 0x00000100,   // Set to allow windows running while minimized
+        FLAG_WINDOW_TRANSPARENT = 0x00000010,   // Set to allow transparent framebuffer
+        FLAG_WINDOW_HIGHDPI = 0x00002000,   // Set to support HighDPI
+        FLAG_WINDOW_MOUSE_PASSTHROUGH = 0x00004000, // Set to support mouse passthrough, only supported when FLAG_WINDOW_UNDECORATED
+        FLAG_MSAA_4X_HINT = 0x00000020,   // Set to try enabling MSAA 4X
+        FLAG_INTERLACED_HINT = 0x00010000;    // Set to try enabling interlaced video format (for V3D)
 
     }
 
-    public Config() {
+    public Config(){
     }
 
     /**
      * Define support for Raylib's built in camera system
-     *
      * @param supportCameraSystem flag for support
      */
-    public void setSupportCameraSystem(boolean supportCameraSystem) {
+    public void setSupportCameraSystem(boolean supportCameraSystem){
         SUPPORT_CAMERA_SYSTEM = supportCameraSystem;
     }
 
     /**
      * Define support for Raylib's gesture system
-     *
      * @param supportGesturesSystem flag for support
      */
-    public void setSupportGesturesSystem(boolean supportGesturesSystem) {
+    public void setSupportGesturesSystem(boolean supportGesturesSystem){
         SUPPORT_GESTURES_SYSTEM = supportGesturesSystem;
     }
 
     /**
      * Define support for Raylib's mouse gesture system
-     *
      * @param supportMouseGestures flag for support
      */
-    public void setSupportMouseGestures(boolean supportMouseGestures) {
+    public void setSupportMouseGestures(boolean supportMouseGestures){
         SUPPORT_MOUSE_GESTURES = supportMouseGestures;
     }
 
     /**
      * Define support for SSH keyboard for PRI
-     *
      * @param supportSshKeyboardRpi flag for support
      */
-    public void setSupportSshKeyboardRpi(boolean supportSshKeyboardRpi) {
+    public void setSupportSshKeyboardRpi(boolean supportSshKeyboardRpi){
         SUPPORT_SSH_KEYBOARD_RPI = supportSshKeyboardRpi;
     }
 
     /**
      * Define support for native mouse cursor drawing
-     *
      * @param supportMouseCursorNative flag for support
      */
-    public void setSupportMouseCursorNative(boolean supportMouseCursorNative) {
+    public void setSupportMouseCursorNative(boolean supportMouseCursorNative){
         SUPPORT_MOUSE_CURSOR_POINT = supportMouseCursorNative;
     }
 
     /**
      * Define support for busy wait loop
-     *
      * @param supportBusyWaitLoop flag for support
      */
-    public void setSupportBusyWaitLoop(boolean supportBusyWaitLoop) {
+    public void setSupportBusyWaitLoop(boolean supportBusyWaitLoop){
         SUPPORT_WINMM_HIGHRES_TIMER = supportBusyWaitLoop;
     }
 
     /**
      * Define support for half busy wait loop
-     *
      * @param supportHalfbusyWaitLoop flag for support
      */
-    public void setSupportHalfbusyWaitLoop(boolean supportHalfbusyWaitLoop) {
+   public void setSupportHalfbusyWaitLoop(boolean supportHalfbusyWaitLoop){
         SUPPORT_HALFBUSY_WAIT_LOOP = supportHalfbusyWaitLoop;
     }
 
     /**
      * Define support for Event Waiting
-     *
      * @param supportEventsWaiting flag for support
      */
-    public void setSupportEventsWaiting(boolean supportEventsWaiting) {
+    public void setSupportEventsWaiting(boolean supportEventsWaiting){
         SUPPORT_EVENTS_WAITING = supportEventsWaiting;
     }
 
     /**
      * Define support for screen capture
-     *
      * @param supportScreenCapture flag for support
      */
-    public void setSupportScreenCapture(boolean supportScreenCapture) {
+    public void setSupportScreenCapture(boolean supportScreenCapture){
         SUPPORT_SCREEN_CAPTURE = supportScreenCapture;
     }
 
     /**
      * Define support for gif recording
-     *
      * @param supportGifRecording flag for support
      */
-    public void setSupportGifRecording(boolean supportGifRecording) {
+    public void setSupportGifRecording(boolean supportGifRecording){
         SUPPORT_GIF_RECORDING = supportGifRecording;
     }
 
     /**
      * Define support for Raylib's compression API
-     *
      * @param supportCompressionApi flag for support
      */
-    public void setSupportCompressionApi(boolean supportCompressionApi) {
+    public void setSupportCompressionApi(boolean supportCompressionApi){
         SUPPORT_COMPRESSION_API = supportCompressionApi;
     }
 
     /**
      * Define support for data storage
-     *
      * @param supportDataStorage flag for support
      */
-    public void setSupportDataStorage(boolean supportDataStorage) {
+    public void setSupportDataStorage(boolean supportDataStorage){
         SUPPORT_DATA_STORAGE = supportDataStorage;
     }
 
     /**
      * Define support for Raylib's built in file IO
-     *
      * @param supportStandardFileio flag for support
      */
-    public void setSupportStandardFileio(boolean supportStandardFileio) {
+    public void setSupportStandardFileio(boolean supportStandardFileio){
         SUPPORT_STANDARD_FILEIO = supportStandardFileio;
     }
 
     /**
      * Define support for VR simulation
-     *
      * @param supportVrSimulator flag for support
      */
-    public void setSupportVrSimulator(boolean supportVrSimulator) {
+    public void setSupportVrSimulator(boolean supportVrSimulator){
         SUPPORT_VR_SIMULATOR = supportVrSimulator;
     }
 
     /**
      * Define support for font texture
-     *
      * @param supportFontTexture flag for support
      */
-    public void setSupportFontTexture(boolean supportFontTexture) {
+    public void setSupportFontTexture(boolean supportFontTexture){
         SUPPORT_FONT_TEXTURE = supportFontTexture;
     }
 
     /**
      * Define support for Quad drawing
-     *
      * @param supportQuadsDrawMode flag for support
      */
-    public void setSupportQuadsDrawMode(boolean supportQuadsDrawMode) {
+    public void setSupportQuadsDrawMode(boolean supportQuadsDrawMode){
         SUPPORT_QUADS_DRAW_MODE = supportQuadsDrawMode;
     }
 
     /**
      * Define support for .png files
-     *
      * @param supportFileformatPng flag for support
      */
-    public void setSupportFileformatPng(boolean supportFileformatPng) {
+    public void setSupportFileformatPng(boolean supportFileformatPng){
         SUPPORT_FILEFORMAT_PNG = supportFileformatPng;
     }
 
     /**
      * Define support for .gif files
-     *
      * @param supportFileformatGif flag for support
      */
-    public void setSupportFileformatGif(boolean supportFileformatGif) {
+    public void setSupportFileformatGif(boolean supportFileformatGif){
         SUPPORT_FILEFORMAT_GIF = supportFileformatGif;
     }
 
     /**
      * Define support for .dds files
-     *
      * @param supportFileformatDds flag for support
      */
-    public void setSupportFileformatDds(boolean supportFileformatDds) {
+    public void setSupportFileformatDds(boolean supportFileformatDds){
         SUPPORT_FILEFORMAT_DDS = supportFileformatDds;
     }
 
     /**
      * Define support for .hdr files
-     *
      * @param supportFileformatHdr flag for support
      */
-    public void setSupportFileformatHdr(boolean supportFileformatHdr) {
+    public void setSupportFileformatHdr(boolean supportFileformatHdr){
         SUPPORT_FILEFORMAT_HDR = supportFileformatHdr;
     }
 
     /**
      * Define support for image export
-     *
      * @param supportImageExport flag for support
      */
-    public void setSupportImageExport(boolean supportImageExport) {
+    public void setSupportImageExport(boolean supportImageExport){
         SUPPORT_IMAGE_EXPORT = supportImageExport;
     }
 
     /**
      * Define support for image generation
-     *
      * @param supportImageGeneration flag for support
      */
-    public void setSupportImageGeneration(boolean supportImageGeneration) {
+    public void setSupportImageGeneration(boolean supportImageGeneration){
         SUPPORT_IMAGE_GENERATION = supportImageGeneration;
     }
 
     /**
      * Define support for image manipulation
-     *
      * @param supportImageManipulation flag for support
      */
-    public void setSupportImageManipulation(boolean supportImageManipulation) {
+    public void setSupportImageManipulation(boolean supportImageManipulation){
         SUPPORT_IMAGE_MANIPULATION = supportImageManipulation;
     }
 
     /**
      * Define support for Raylib's default font
-     *
      * @param supportDefaultFont flag for support
      */
-    public void setSupportDefaultFont(boolean supportDefaultFont) {
+    public void setSupportDefaultFont(boolean supportDefaultFont){
         SUPPORT_DEFAULT_FONT = supportDefaultFont;
     }
 
     /**
      * Define support for .fnt files
-     *
      * @param supportFileformatFnt flag for support
      */
-    public void setSupportFileformatFnt(boolean supportFileformatFnt) {
+    public void setSupportFileformatFnt(boolean supportFileformatFnt){
         SUPPORT_FILEFORMAT_FNT = supportFileformatFnt;
     }
 
     /**
      * Define support for .ttf files
-     *
      * @param supportFileformatTtf flag for support
      */
-    public void setSupportFileformatTtf(boolean supportFileformatTtf) {
+    public void setSupportFileformatTtf(boolean supportFileformatTtf){
         SUPPORT_FILEFORMAT_TTF = supportFileformatTtf;
     }
 
     /**
      * Define support for text manipulation
-     *
      * @param supportTextManipulation flag for support
      */
-    public void setSupportTextManipulation(boolean supportTextManipulation) {
+    public void setSupportTextManipulation(boolean supportTextManipulation){
         SUPPORT_TEXT_MANIPULATION = supportTextManipulation;
     }
 
     /**
      * Define support for .obj files
-     *
      * @param supportFileformatObj flag for support
      */
-    public void setSupportFileformatObj(boolean supportFileformatObj) {
+    public void setSupportFileformatObj(boolean supportFileformatObj){
         SUPPORT_FILEFORMAT_OBJ = supportFileformatObj;
     }
 
     /**
      * Define support for .mtl files
-     *
      * @param supportFileformatMtl flag for support
      */
-    public void setSupportFileformatMtl(boolean supportFileformatMtl) {
+    public void setSupportFileformatMtl(boolean supportFileformatMtl){
         SUPPORT_FILEFORMAT_MTL = supportFileformatMtl;
     }
 
     /**
      * Define support for .iqm files
-     *
      * @param supportFileformatIqm flag for support
      */
-    public void setSupportFileformatIqm(boolean supportFileformatIqm) {
+    public void setSupportFileformatIqm(boolean supportFileformatIqm){
         SUPPORT_FILEFORMAT_IQM = supportFileformatIqm;
     }
 
     /**
      * Define support for .gltf files
-     *
      * @param supportFileformatGltf flag for support
      */
-    public void setSupportFileformatGltf(boolean supportFileformatGltf) {
+    public void setSupportFileformatGltf(boolean supportFileformatGltf){
         SUPPORT_FILEFORMAT_GLTF = supportFileformatGltf;
     }
 
     /**
      * Define support for mesh generation
-     *
      * @param supportMeshGeneration flag for support
      */
-    public void setSupportMeshGeneration(boolean supportMeshGeneration) {
+    public void setSupportMeshGeneration(boolean supportMeshGeneration){
         SUPPORT_MESH_GENERATION = supportMeshGeneration;
     }
 
     /**
      * Define support for .wav files
-     *
      * @param supportFileformatWav flag for support
      */
-    public void setSupportFileformatWav(boolean supportFileformatWav) {
+    public void setSupportFileformatWav(boolean supportFileformatWav){
         SUPPORT_FILEFORMAT_WAV = supportFileformatWav;
     }
 
     /**
      * Define support for .ogg files
-     *
      * @param supportFileformatOgg flag for support
      */
-    public void setSupportFileformatOgg(boolean supportFileformatOgg) {
+    public void setSupportFileformatOgg(boolean supportFileformatOgg){
         SUPPORT_FILEFORMAT_OGG = supportFileformatOgg;
     }
 
     /**
      * Define support for .xm files
-     *
      * @param supportFileformatXm flag for support
      */
-    public void setSupportFileformatXm(boolean supportFileformatXm) {
+    public void setSupportFileformatXm(boolean supportFileformatXm){
         SUPPORT_FILEFORMAT_XM = supportFileformatXm;
     }
 
     /**
      * Define support for .mod files
-     *
      * @param supportFileformatMod flag for support
      */
-    public void setSupportFileformatMod(boolean supportFileformatMod) {
+    public void setSupportFileformatMod(boolean supportFileformatMod){
         SUPPORT_FILEFORMAT_MOD = supportFileformatMod;
     }
 
     /**
      * Define support for .mp3 files
-     *
      * @param supportFileformatMp3 flag for support
      */
-    public void setSupportFileformatMp3(boolean supportFileformatMp3) {
+    public void setSupportFileformatMp3(boolean supportFileformatMp3){
         SUPPORT_FILEFORMAT_MP3 = supportFileformatMp3;
     }
 
     /**
      * Define support for .flac files
-     *
      * @param supportFileformatFlac flag for support
      */
-    public void setSupportFileformatFlac(boolean supportFileformatFlac) {
+    public void setSupportFileformatFlac(boolean supportFileformatFlac){
         SUPPORT_FILEFORMAT_FLAC = supportFileformatFlac;
     }
 
     /**
      * Define support for trace log messages
-     *
      * @param supportTracelog flag for support
      */
-    public void setSupportTracelog(boolean supportTracelog) {
+    public void setSupportTracelog(boolean supportTracelog){
         SUPPORT_TRACELOG = supportTracelog;
     }
 
     /**
      * Define support for debug trace log messages
-     *
      * @param supportTracelogDebug flag for support
      */
-    public void setSupportTracelogDebug(boolean supportTracelogDebug) {
+    public void setSupportTracelogDebug(boolean supportTracelogDebug){
         SUPPORT_TRACELOG_DEBUG = supportTracelogDebug;
     }
 }

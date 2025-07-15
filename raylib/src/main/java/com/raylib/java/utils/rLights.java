@@ -7,7 +7,7 @@ import com.raylib.java.rlgl.shader.Shader;
 
 import static com.raylib.java.rlgl.RLGL.rlShaderUniformDataType.*;
 
-public class rLights {
+public class rLights{
 
     /**********************************************************************************************
      *
@@ -45,7 +45,7 @@ public class rLights {
     //----------------------------------------------------------------------------------
 
     // Light data
-    public static class Light {
+    public static class Light{
         public int type;
         public Vector3 position;
         public Vector3 target;
@@ -62,8 +62,8 @@ public class rLights {
 
     // Light type
     public static int
-            LIGHT_DIRECTIONAL = 0,
-            LIGHT_POINT = 1;
+        LIGHT_DIRECTIONAL = 0,
+        LIGHT_POINT = 1;
 
 
     //----------------------------------------------------------------------------------
@@ -91,10 +91,10 @@ public class rLights {
     //----------------------------------------------------------------------------------
 
     // Create a light and get shader locations
-    public static Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader) {
+    public static Light CreateLight(int type, Vector3 position, Vector3 target, Color color, Shader shader){
         Light light = new Light();
 
-        if (lightsCount < MAX_LIGHTS) {
+        if (lightsCount < MAX_LIGHTS){
             light.enabled = true;
             light.type = type;
             light.position = position;
@@ -128,7 +128,7 @@ public class rLights {
 
     // Send light properties to shader
     // NOTE: Light shader locations should be available
-    public static void UpdateLightValues(Shader shader, Light light) {
+    public static void UpdateLightValues(Shader shader, Light light){
         // Send to shader light enabled state and type
         rCore.SetShaderValue(shader, light.enabledLoc, new float[]{(light.enabled ? 1 : 0)}, RL_SHADER_UNIFORM_INT);
         rCore.SetShaderValue(shader, light.typeLoc, new float[]{light.type}, RL_SHADER_UNIFORM_INT);

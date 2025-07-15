@@ -5,29 +5,30 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Vox-J translated by CreedVI for use within Raylib-J
- * <p>
- * The MIT License (MIT)
- * <p>
- * Copyright (c) 2021 Johann Nadalutti.
- * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * <p>
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * <p>
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ *
+ *    Vox-J translated by CreedVI for use within Raylib-J
+ *
+ *    The MIT License (MIT)
+ *
+ *    Copyright (c) 2021 Johann Nadalutti.
+ *
+ *    Permission is hereby granted, free of charge, to any person obtaining a copy
+ *    of this software and associated documentation files (the "Software"), to deal
+ *    in the Software without restriction, including without limitation the rights
+ *    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *    copies of the Software, and to permit persons to whom the Software is
+ *    furnished to do so, subject to the following conditions:
+ *
+ *    The above copyright notice and this permission notice shall be included in
+ *    all copies or substantial portions of the Software.
+ *
+ *    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *    THE SOFTWARE.
  */
 
 public class VoxLoader {
@@ -127,8 +128,8 @@ public class VoxLoader {
         public short[] array;
         public int used, size;
 
-        protected ArrayUShort() {
-            initArrayUShort(64);
+        protected ArrayUShort(){
+            initArrayUShort( 64);
         }
 
         protected void initArrayUShort(int initialSize) {
@@ -156,7 +157,7 @@ public class VoxLoader {
     }
 
     // A chunk that contain voxels
-    public static class CubeChunk3D {
+    public static class CubeChunk3D{
         byte[] m_array; //If Sparse != null
         int arraySize; //Size for m_array in bytes (DEBUG ONLY)
     }
@@ -204,9 +205,9 @@ public class VoxLoader {
     public static final int VOX_ERROR_INVALID_FORMAT = -2;
     public static final int VOX_ERROR_FILE_VERSION_TOO_OLD = -3;
 
-    private static final int CHUNKSIZE = 16;      // chunk size (CHUNKSIZE*CHUNKSIZE*CHUNKSIZE) in voxels
-    private static final int CHUNKSIZE_OPSHIFT = 4;      // 1<<4=16 -> Warning depend of CHUNKSIZE
-    private static final int CHUNK_FLATTENOFFSET_OPSHIFT = 8;      // Warning depend of CHUNKSIZE
+    private static final int CHUNKSIZE                   = 16;      // chunk size (CHUNKSIZE*CHUNKSIZE*CHUNKSIZE) in voxels
+    private static final int CHUNKSIZE_OPSHIFT           =  4;      // 1<<4=16 -> Warning depend of CHUNKSIZE
+    private static final int CHUNK_FLATTENOFFSET_OPSHIFT =  8;      // Warning depend of CHUNKSIZE
 
     //
     // used right handed system and CCW face
@@ -229,13 +230,13 @@ public class VoxLoader {
     //
     // CCW
     final int[][] fv = {
-            {0, 2, 6, 4}, //-X
-            {5, 7, 3, 1}, //+X
-            {0, 4, 5, 1}, //-y
-            {6, 2, 3, 7}, //+y
-            {1, 3, 2, 0}, //-Z
-            {4, 6, 7, 5}  //+Z
-    };
+            {0, 2, 6, 4 }, //-X
+            {5, 7, 3, 1 }, //+X
+            {0, 4, 5, 1 }, //-y
+            {6, 2, 3, 7 }, //+y
+            {1, 3, 2, 0 }, //-Z
+            {4, 6, 7, 5 }  //+Z
+        };
 
     final VoxVector3[] SolidVertex = {
             new VoxVector3(0, 0, 0),   //0
@@ -250,12 +251,12 @@ public class VoxLoader {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Vox Loader
-    /// //////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
 
     public VoxArray3D pvoxArray;
 
     public VoxLoader() {
-        this.pvoxArray = Vox_AllocArray(256, 256, 256);
+        this.pvoxArray = Vox_AllocArray(256,256,256);
     }
 
     // Allocated VoxArray3D size
@@ -415,7 +416,7 @@ public class VoxLoader {
         float scale = 0.25f;
 
         VoxVector3 vtx = new VoxVector3();
-
+        
         vtx.x = (SolidVertex[_nNumVertex].x + _wcx) * scale;
         vtx.y = (SolidVertex[_nNumVertex].y + _wcy) * scale;
         vtx.z = (SolidVertex[_nNumVertex].z + _wcz) * scale;
@@ -440,9 +441,9 @@ public class VoxLoader {
 
         //For each Cube's faces
         for (i = 0; i < 6; i++) { // 6 faces
-            if ((byVFMask & (1 << i)) != 0) {    //If face is visible
+            if ((byVFMask & (1 << i)) != 0) {	//If face is visible
                 for (j = 0; j < 4; j++) {  // 4 corners
-                    int nNumVertex = fv[i][j];  //Face,Corner
+                    int  nNumVertex = fv[i][j];  //Face,Corner
                     if (bVertexComputed[nNumVertex] == 0) { //if never calc
                         bVertexComputed[nNumVertex] = 1;
                         vertComputed[nNumVertex] = Vox_GetVertexPosition(x, y, z, nNumVertex);
@@ -478,11 +479,11 @@ public class VoxLoader {
             this.pvoxArray.colors.insertArrayColor(col);
 
             //v0 - v1 - v2, v0 - v2 - v3
-            this.pvoxArray.indices.insertArrayUShort((short) (idx));
+            this.pvoxArray.indices.insertArrayUShort((short) (idx + 0));
             this.pvoxArray.indices.insertArrayUShort((short) (idx + 2));
             this.pvoxArray.indices.insertArrayUShort((short) (idx + 1));
 
-            this.pvoxArray.indices.insertArrayUShort((short) (idx));
+            this.pvoxArray.indices.insertArrayUShort((short) (idx + 0));
             this.pvoxArray.indices.insertArrayUShort((short) (idx + 3));
             this.pvoxArray.indices.insertArrayUShort((short) (idx + 2));
         }
@@ -500,7 +501,7 @@ public class VoxLoader {
         // @raysan5: Reviewed (unsigned long) -> (unsigned int), possible issue with Ubuntu 18.04 64bit
 
         // @raysan5: reviewed signature loading
-        try (ByteArrayInputStream fileData = new ByteArrayInputStream(pvoxData)) {
+        try(ByteArrayInputStream fileData = new ByteArrayInputStream(pvoxData)) {
             byte[] signature = new byte[4];
             int fileDataPtr = 0;
 
@@ -568,46 +569,41 @@ public class VoxLoader {
 
                     //Alloc vox array
                     Vox_AllocArray(sizeX, sizeZ, sizeY);    //Reverse Y<>Z for left to right handed system
-                } else if (chunk.equals("XYZI")) {
+                }
+                else if (chunk.equals("XYZI")) {
                     int vx, vy, vz, vi;
 
                     //(numVoxels : 4 bytes )
                     //(each voxel: 1 byte x 4 : x, y, z, colorIndex ) x numVoxels
                     fileData.read(tmp);
-                    numVoxels = Vox_toInt(tmp);
+                    numVoxels  = Vox_toInt(tmp);
                     fileDataPtr += Integer.BYTES;
 
                     while (numVoxels > 0) {
-                        vx = fileData.read();
-                        fileDataPtr++;
-                        vy = fileData.read();
-                        fileDataPtr++;
-                        vz = fileData.read();
-                        fileDataPtr++;
-                        vi = fileData.read();
-                        fileDataPtr++;
+                        vx = fileData.read(); fileDataPtr++;
+                        vy = fileData.read(); fileDataPtr++;
+                        vz = fileData.read(); fileDataPtr++;
+                        vi = fileData.read(); fileDataPtr++;
 
                         Vox_SetVoxel(vx, vz, this.pvoxArray.sizeZ - vy - 1, vi); //Reverse Y<>Z for left to right handed system
 
                         numVoxels--;
                     }
-                } else if (chunk.equals("RGBA")) {
+                }
+                else if (chunk.equals("RGBA")) {
                     //(each pixel: 1 byte x 4 : r, g, b, a ) x 256
                     for (int i = 0; i < 256 - 1; i++) {
                         VoxColor col = new VoxColor((byte) 0, (byte) 0, (byte) 0, (byte) 0);
-                        col.r = (byte) fileData.read();
-                        fileDataPtr++;
-                        col.g = (byte) fileData.read();
-                        fileDataPtr++;
-                        col.b = (byte) fileData.read();
-                        fileDataPtr++;
-                        col.a = (byte) fileData.read();
-                        fileDataPtr++;
+                        col.r = (byte) fileData.read(); fileDataPtr++;
+                        col.g = (byte) fileData.read(); fileDataPtr++;
+                        col.b = (byte) fileData.read(); fileDataPtr++;
+                        col.a = (byte) fileData.read(); fileDataPtr++;
 
                         this.pvoxArray.palette[i + 1] = col;
                     }
 
-                } else {
+                }
+                else {
                     //move ahead in the data...
                     fileData.skip(chunkSize);
                     fileDataPtr += chunkSize;
@@ -638,7 +634,8 @@ public class VoxLoader {
             }
 
             return VOX_SUCCESS;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             return VOX_ERROR_FILE_NOT_FOUND;
         }
     }
@@ -676,13 +673,13 @@ public class VoxLoader {
         // flip the bytes because .vox file format...
         byte[] tmp = new byte[bytes.length];
         System.arraycopy(bytes, 0, tmp, 0, bytes.length);
-        for (int i = 0, k = bytes.length - 1; i < bytes.length; i++, k--) {
-            bytes[k] = tmp[i];
+        for (int i = 0, k = bytes.length-1; i < bytes.length; i++, k--) {
+            bytes[k] = tmp [i];
         }
 
-        for (int i = 0; i < 4; i++) {
+        for (int i=0; i<4; i++) {
             ret <<= 8;
-            ret |= (int) bytes[i] & 0xFF;
+            ret |= (int)bytes[i] & 0xFF;
         }
         return ret;
     }

@@ -61,7 +61,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFWNativeWin32.glfwGetWin32Window;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class rCore {
+public class rCore{
 
     public RLGL rlgl;
 
@@ -91,7 +91,7 @@ public class rCore {
 
     private final Raylib context;
 
-    public rCore(Raylib context) {
+    public rCore(Raylib context){
         this.context = context;
 
         window = new Window();
@@ -102,11 +102,11 @@ public class rCore {
         events = new ArrayList<>();
     }
 
-    Window getWindow() {
+    Window getWindow(){
         return window;
     }
 
-    Input getInput() {
+    Input getInput(){
         return input;
     }
 
@@ -129,44 +129,49 @@ public class rCore {
      * @param height Window height in pixels
      * @param title  Window title - passing null will use a default title
      */
-    public void InitWindow(int width, int height, String title) {
+    public void InitWindow(int width, int height, String title){
         Tracelog(LOG_INFO, "Initializing raylib " + RAYLIB_VERSION);
         Tracelog(LOG_INFO, "Supported raylib modules: ");
         Tracelog(LOG_INFO, "    > rcore:..... loaded (mandatory)");
         Tracelog(LOG_INFO, "    > rlgl:...... loaded (mandatory)");
 
-        if (SUPPORT_MODULE_RSHAPES) {
+        if(SUPPORT_MODULE_RSHAPES) {
             Tracelog(LOG_INFO, "    > rshapes:... loaded (optional)");
-        } else {
+        }
+        else {
             Tracelog(LOG_INFO, "    > rshapes:... not loaded (optional)");
         }
 
-        if (SUPPORT_MODULE_RTEXTURES) {
+        if(SUPPORT_MODULE_RTEXTURES) {
             Tracelog(LOG_INFO, "    > rtextures:. loaded (optional)");
-        } else {
+        }
+        else {
             Tracelog(LOG_INFO, "    > rtextures:. not loaded (optional)");
         }
 
-        if (SUPPORT_MODULE_RTEXT) {
+        if(SUPPORT_MODULE_RTEXT) {
             Tracelog(LOG_INFO, "    > rtext:..... loaded (optional)");
-        } else {
+        }
+        else {
             Tracelog(LOG_INFO, "    > rtext:..... not loaded (optional)");
         }
 
-        if (SUPPORT_MODULE_RMODELS) {
+        if(SUPPORT_MODULE_RMODELS) {
             Tracelog(LOG_INFO, "    > rmodels:... loaded (optional)");
-        } else {
+        }
+        else {
             Tracelog(LOG_INFO, "    > rmodels:... not loaded (optional)");
         }
 
-        if (SUPPORT_MODULE_RAUDIO) {
+        if(SUPPORT_MODULE_RAUDIO) {
             Tracelog(LOG_INFO, "    > raudio:.... loaded (optional)");
-        } else {
+        }
+        else {
             Tracelog(LOG_INFO, "    > raudio:.... not loaded (optional)");
         }
 
 
-        if (title == null || title.isEmpty()) {
+        if(title == null || title.isEmpty()){
             title = "Raylib-J Application";
         }
 
@@ -186,7 +191,7 @@ public class rCore {
         // NOTE: returns true if window and graphic device has been initialized successfully
         window.ready = InitGraphicsDevice(width, height);
 
-        if (!window.ready) {
+        if (!window.ready){
             System.exit(-1);
             return;
         }
@@ -194,23 +199,24 @@ public class rCore {
         // Init hi-res timer
         InitTimer();
 
-        if (SUPPORT_MODULE_RTEXT && SUPPORT_DEFAULT_FONT) {
+        if (SUPPORT_MODULE_RTEXT && SUPPORT_DEFAULT_FONT){
             // Load default font
             // WARNING: External function: Module required: rtext
             context.text.LoadFontDefault();
             Rectangle rec = context.text.GetFontDefault().getRecs()[95];
             // NOTE: We set up a 1px padding on char rectangle to avoid pixel bleeding on MSAA filtering
             SetShapesTexture(context.text.GetFontDefault().getTexture(), new Rectangle(rec.getX() + 1, rec.getY() + 1,
-                    rec.getWidth() - 2, rec.getHeight() - 2));
-        } else if (SUPPORT_MODULE_RSHAPES) {
+                                                                                        rec.getWidth() - 2, rec.getHeight() - 2));
+        }
+        else if (SUPPORT_MODULE_RSHAPES){
             // Set default texture and rectangle to be used for shapes drawing
             // NOTE: rlgl default texture is a 1x1 pixel UNCOMPRESSED_R8G8B8A8
-            Texture2D texture = new Texture2D(rlGetTextureIdDefault(), 1, 1, 1, RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+            Texture2D texture = new Texture2D(rlgl.rlGetTextureIdDefault(), 1, 1, 1, RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
             SetShapesTexture(texture, new Rectangle(0.0f, 0.0f, 1.0f, 1.0f));    // WARNING: Module required: rshapes
         }
 
         if (SUPPORT_MODULE_RTEXT && SUPPORT_MODULE_RTEXTURES) {
-            if ((window.getFlags() & FLAG_WINDOW_HIGHDPI) > 0) {
+            if ((window.getFlags() & FLAG_WINDOW_HIGHDPI) > 0){
                 // Set default font texture filter for HighDPI (blurry)
                 // RL_TEXTURE_FILTER_LINEAR - tex filter: BILINEAR, no mipmaps
                 rlTextureParameters(context.text.GetFontDefault().texture.id, RL_TEXTURE_MIN_FILTER, RL_TEXTURE_FILTER_LINEAR);
@@ -224,8 +230,8 @@ public class rCore {
     /**
      * Close window and unload OpenGL context
      */
-    public void CloseWindow() {
-        if (SUPPORT_MODULE_RTEXT && SUPPORT_DEFAULT_FONT) {
+    public void CloseWindow(){
+        if (SUPPORT_MODULE_RTEXT && SUPPORT_DEFAULT_FONT){
             context.text.UnloadFontDefault();        // WARNING: Module required: rtext
         }
 
@@ -243,10 +249,10 @@ public class rCore {
      * @return <code>true</code> if window is ready to close.
      * NOTE: Must be inverted for use in a while loop
      */
-    public boolean WindowShouldClose() {
-        if (window.isReady()) {
+    public boolean WindowShouldClose(){
+        if (window.isReady()){
             // While window minimized, stop loop execution
-            while (IsWindowState(FLAG_WINDOW_MINIMIZED) && !IsWindowState(FLAG_WINDOW_ALWAYS_RUN)) {
+            while (IsWindowState(FLAG_WINDOW_MINIMIZED) && !IsWindowState(FLAG_WINDOW_ALWAYS_RUN)){
                 glfwWaitEvents();
             }
 
@@ -256,7 +262,8 @@ public class rCore {
             //glfwSetWindowShouldClose(window.handle, GLFW_FALSE);
             glfwSetWindowShouldClose(window.handle, false);
             return window.isShouldClose();
-        } else {
+        }
+        else{
             return true;
         }
     }
@@ -266,7 +273,7 @@ public class rCore {
      *
      * @return <code>true</code> if window was initialized successfully
      */
-    public boolean IsWindowReady() {
+    public boolean IsWindowReady(){
         return window.ready;
     }
 
@@ -275,7 +282,7 @@ public class rCore {
      *
      * @return <code>true</code> if window is fullscreen
      */
-    public boolean IsWindowFullscreen() {
+    public boolean IsWindowFullscreen(){
         return window.fullscreen;
     }
 
@@ -284,27 +291,27 @@ public class rCore {
      *
      * @return <code>true</code> if window is hidden
      */
-    public boolean IsWindowHidden() {
+    public boolean IsWindowHidden(){
         return ((window.flags & FLAG_WINDOW_HIDDEN) > 0);
     }
 
     // Check if window has been minimized
-    public boolean IsWindowMinimized() {
+    public boolean IsWindowMinimized(){
         return ((window.flags & FLAG_WINDOW_MINIMIZED) > 0);
     }
 
     // Check if window has been maximized (only PLATFORM_DESKTOP)
-    public boolean IsWindowMaximized() {
+    public boolean IsWindowMaximized(){
         return ((window.flags & FLAG_WINDOW_MAXIMIZED) > 0);
     }
 
     // Check if window has the focus
-    public boolean IsWindowFocused() {
+    public boolean IsWindowFocused(){
         return ((window.flags & FLAG_WINDOW_UNFOCUSED) == 0);      // TODO!
     }
 
     // Check if window has been resizedLastFrame
-    public boolean IsWindowResized() {
+    public boolean IsWindowResized(){
         return window.resizedLastFrame;
     }
 
@@ -314,15 +321,15 @@ public class rCore {
      * @param flag Window flag to be checked
      * @return <code>true</code> if flag is enabled
      */
-    public boolean IsWindowState(int flag) {
+    public boolean IsWindowState(int flag){
         return ((window.flags & flag) > 0);
     }
 
     /**
      * Toggle fullscreen mode (only PLATFORM_DESKTOP)
      */
-    public void ToggleFullscreen() {
-        if (!window.fullscreen) {
+    public void ToggleFullscreen(){
+        if (!window.fullscreen){
             // Store previous window position (in case we exit fullscreen)
             glfwGetWindowPos(window.handle, new int[]{(int) window.position.x}, new int[]{(int) window.position.y});
 
@@ -332,31 +339,33 @@ public class rCore {
             int monitorIndex = GetCurrentMonitor();
             long monitor = (monitorIndex < monitorCount) ? monitors.get(monitorIndex) : -1;
 
-            if (monitor < 0) {
+            if (monitor < 0){
                 Tracelog(LOG_WARNING, "GLFW: Failed to get monitor");
                 window.setFullscreen(false);
                 window.flags &= ~FLAG_FULLSCREEN_MODE;
 
                 glfwSetWindowMonitor(window.handle, GetCurrentMonitor(), 0, 0, window.screen.getWidth(),
-                        window.screen.getHeight(), GLFW_DONT_CARE); // NOTE: Resizing not allowed by default!
+                                     window.screen.getHeight(), GLFW_DONT_CARE); // NOTE: Resizing not allowed by default!
                 return;
-            } else {
+            }
+            else {
                 window.setFullscreen(true);
                 window.flags |= FLAG_FULLSCREEN_MODE;
 
                 glfwSetWindowMonitor(window.handle, monitor, 0, 0, window.screen.getWidth(), window.screen.getHeight(), GLFW_DONT_CARE);
             }
-        } else {
+        }
+        else{
             window.setFullscreen(false);
             window.flags &= ~FLAG_FULLSCREEN_MODE;
 
             glfwSetWindowMonitor(window.handle, 0, (int) window.position.getX(), (int) window.position.getY(),
-                    window.screen.getWidth(), window.screen.getHeight(), GLFW_DONT_CARE);
+                                 window.screen.getWidth(), window.screen.getHeight(), GLFW_DONT_CARE);
         }
 
         // Try to enable GPU V-Sync, so frames are limited to screen refresh rate (60Hz -> 60 FPS)
         // NOTE: V-Sync can be enabled by graphic driver configuration
-        if ((window.flags & FLAG_VSYNC_HINT) == 1) {
+        if ((window.flags & FLAG_VSYNC_HINT) == 1){
             glfwSwapInterval(1);
         }
     }
@@ -364,8 +373,8 @@ public class rCore {
     /**
      * Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
      */
-    public void MaximizeWindow() {
-        if (glfwGetWindowAttrib(window.handle, GLFW_RESIZABLE) == GLFW_TRUE) {
+    public void MaximizeWindow(){
+        if (glfwGetWindowAttrib(window.handle, GLFW_RESIZABLE) == GLFW_TRUE){
             glfwMaximizeWindow(window.handle);
             window.flags |= FLAG_WINDOW_MAXIMIZED;
         }
@@ -374,7 +383,7 @@ public class rCore {
     /**
      * Set window state: minimized (only PLATFORM_DESKTOP)
      */
-    public void MinimizeWindow() {
+    public void MinimizeWindow(){
         // NOTE: Following function launches callback that sets appropiate flag!
         glfwIconifyWindow(window.handle);
     }
@@ -382,8 +391,8 @@ public class rCore {
     /**
      * Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
      */
-    public void RestoreWindow() {
-        if (glfwGetWindowAttrib(window.handle, GLFW_RESIZABLE) == GLFW_TRUE) {
+    public void RestoreWindow(){
+        if (glfwGetWindowAttrib(window.handle, GLFW_RESIZABLE) == GLFW_TRUE){
             // Restores the specified window if it was previously iconified (minimized) or maximized
             glfwRestoreWindow(window.handle);
             window.flags &= ~FLAG_WINDOW_MINIMIZED;
@@ -392,78 +401,78 @@ public class rCore {
     }
 
     // Set window configuration state using flags
-    public void SetWindowState(int flags) {
+    public void SetWindowState(int flags){
         // Check previous state and requested state to apply required changes
         // NOTE: In most cases the functions already change the flags internally
 
         // State change: FLAG_VSYNC_HINT
-        if (((window.flags & FLAG_VSYNC_HINT) != (flags & FLAG_VSYNC_HINT)) && ((flags & FLAG_VSYNC_HINT) > 0)) {
+        if (((window.flags & FLAG_VSYNC_HINT) != (flags & FLAG_VSYNC_HINT)) && ((flags & FLAG_VSYNC_HINT) > 0)){
             glfwSwapInterval(1);
             window.flags |= FLAG_VSYNC_HINT;
         }
 
         // State change: FLAG_FULLSCREEN_MODE
-        if ((window.flags & FLAG_FULLSCREEN_MODE) != (flags & FLAG_FULLSCREEN_MODE)) {
+        if ((window.flags & FLAG_FULLSCREEN_MODE) != (flags & FLAG_FULLSCREEN_MODE)){
             ToggleFullscreen();     // NOTE: window state flag updated inside function
         }
 
         // State change: FLAG_WINDOW_RESIZABLE
-        if (((window.flags & FLAG_WINDOW_RESIZABLE) != (flags & FLAG_WINDOW_RESIZABLE)) && ((flags & FLAG_WINDOW_RESIZABLE) > 0)) {
+        if (((window.flags & FLAG_WINDOW_RESIZABLE) != (flags & FLAG_WINDOW_RESIZABLE)) && ((flags & FLAG_WINDOW_RESIZABLE) > 0)){
             glfwSetWindowAttrib(window.handle, GLFW_RESIZABLE, GLFW_TRUE);
             window.flags |= FLAG_WINDOW_RESIZABLE;
         }
 
         // State change: FLAG_WINDOW_UNDECORATED
-        if (((window.flags & FLAG_WINDOW_UNDECORATED) != (flags & FLAG_WINDOW_UNDECORATED)) && (flags & FLAG_WINDOW_UNDECORATED) > 0) {
+        if (((window.flags & FLAG_WINDOW_UNDECORATED) != (flags & FLAG_WINDOW_UNDECORATED)) && (flags & FLAG_WINDOW_UNDECORATED) > 0){
             glfwSetWindowAttrib(window.handle, GLFW_DECORATED, GLFW_FALSE);
             window.flags |= FLAG_WINDOW_UNDECORATED;
         }
 
         // State change: FLAG_WINDOW_HIDDEN
-        if (((window.flags & FLAG_WINDOW_HIDDEN) != (flags & FLAG_WINDOW_HIDDEN)) && ((flags & FLAG_WINDOW_HIDDEN) > 0)) {
+        if (((window.flags & FLAG_WINDOW_HIDDEN) != (flags & FLAG_WINDOW_HIDDEN)) && ((flags & FLAG_WINDOW_HIDDEN) > 0)){
             glfwHideWindow(window.handle);
             window.flags |= FLAG_WINDOW_HIDDEN;
         }
 
         // State change: FLAG_WINDOW_MINIMIZED
-        if (((window.flags & FLAG_WINDOW_MINIMIZED) != (flags & FLAG_WINDOW_MINIMIZED)) && ((flags & FLAG_WINDOW_MINIMIZED) > 0)) {
+        if (((window.flags & FLAG_WINDOW_MINIMIZED) != (flags & FLAG_WINDOW_MINIMIZED)) && ((flags & FLAG_WINDOW_MINIMIZED) > 0)){
             //GLFW_ICONIFIED
             MinimizeWindow();       // NOTE: window state flag updated inside function
         }
 
         // State change: FLAG_WINDOW_MAXIMIZED
-        if (((window.flags & FLAG_WINDOW_MAXIMIZED) != (flags & FLAG_WINDOW_MAXIMIZED)) && ((flags & FLAG_WINDOW_MAXIMIZED) > 0)) {
+        if (((window.flags & FLAG_WINDOW_MAXIMIZED) != (flags & FLAG_WINDOW_MAXIMIZED)) && ((flags & FLAG_WINDOW_MAXIMIZED) > 0)){
             //GLFW_MAXIMIZED
             MaximizeWindow();       // NOTE: window state flag updated inside function
         }
 
         // State change: FLAG_WINDOW_UNFOCUSED
-        if (((window.flags & FLAG_WINDOW_UNFOCUSED) != (flags & FLAG_WINDOW_UNFOCUSED)) && ((flags & FLAG_WINDOW_UNFOCUSED) > 0)) {
+        if (((window.flags & FLAG_WINDOW_UNFOCUSED) != (flags & FLAG_WINDOW_UNFOCUSED)) && ((flags & FLAG_WINDOW_UNFOCUSED) > 0)){
             glfwSetWindowAttrib(window.handle, GLFW_FOCUS_ON_SHOW, GLFW_FALSE);
             window.flags |= FLAG_WINDOW_UNFOCUSED;
         }
 
         // State change: FLAG_WINDOW_TOPMOST
-        if (((window.flags & FLAG_WINDOW_TOPMOST) != (flags & FLAG_WINDOW_TOPMOST)) && ((flags & FLAG_WINDOW_TOPMOST) > 0)) {
+        if (((window.flags & FLAG_WINDOW_TOPMOST) != (flags & FLAG_WINDOW_TOPMOST)) && ((flags & FLAG_WINDOW_TOPMOST) > 0)){
             glfwSetWindowAttrib(window.handle, GLFW_FLOATING, GLFW_TRUE);
             window.flags |= FLAG_WINDOW_TOPMOST;
         }
 
         // State change: FLAG_WINDOW_ALWAYS_RUN
-        if (((window.flags & FLAG_WINDOW_ALWAYS_RUN) != (flags & FLAG_WINDOW_ALWAYS_RUN)) && ((flags & FLAG_WINDOW_ALWAYS_RUN) > 0)) {
+        if (((window.flags & FLAG_WINDOW_ALWAYS_RUN) != (flags & FLAG_WINDOW_ALWAYS_RUN)) && ((flags & FLAG_WINDOW_ALWAYS_RUN) > 0)){
             window.flags |= FLAG_WINDOW_ALWAYS_RUN;
         }
 
         // The following states can not be changed after window creation
 
         // State change: FLAG_WINDOW_TRANSPARENT
-        if (((window.flags & FLAG_WINDOW_TRANSPARENT) != (flags & FLAG_WINDOW_TRANSPARENT)) && ((flags & FLAG_WINDOW_TRANSPARENT) > 0)) {
+        if (((window.flags & FLAG_WINDOW_TRANSPARENT) != (flags & FLAG_WINDOW_TRANSPARENT)) && ((flags & FLAG_WINDOW_TRANSPARENT) > 0)){
             Tracelog(LOG_WARNING, "WINDOW: Framebuffer transparency can only by configured before window " +
                     "initialization");
         }
 
         // State change: FLAG_WINDOW_HIGHDPI
-        if (((window.flags & FLAG_WINDOW_HIGHDPI) != (flags & FLAG_WINDOW_HIGHDPI)) && ((flags & FLAG_WINDOW_HIGHDPI) > 0)) {
+        if (((window.flags & FLAG_WINDOW_HIGHDPI) != (flags & FLAG_WINDOW_HIGHDPI)) && ((flags & FLAG_WINDOW_HIGHDPI) > 0)){
             Tracelog(LOG_WARNING, "WINDOW: High DPI can only by configured before window initialization");
         }
 
@@ -475,87 +484,88 @@ public class rCore {
         }
 
 
+
         // State change: FLAG_MSAA_4X_HINT
-        if (((window.flags & FLAG_MSAA_4X_HINT) != (flags & FLAG_MSAA_4X_HINT)) && ((flags & FLAG_MSAA_4X_HINT) > 0)) {
+        if (((window.flags & FLAG_MSAA_4X_HINT) != (flags & FLAG_MSAA_4X_HINT)) && ((flags & FLAG_MSAA_4X_HINT) > 0)){
             Tracelog(LOG_WARNING, "WINDOW: MSAA can only by configured before window initialization");
         }
 
         // State change: FLAG_INTERLACED_HINT
-        if (((window.flags & FLAG_INTERLACED_HINT) != (flags & FLAG_INTERLACED_HINT)) && ((flags & FLAG_INTERLACED_HINT) > 0)) {
+        if (((window.flags & FLAG_INTERLACED_HINT) != (flags & FLAG_INTERLACED_HINT)) && ((flags & FLAG_INTERLACED_HINT) > 0)){
             Tracelog(LOG_WARNING, "RPI: Interlaced mode can only by configured before window initialization");
         }
     }
 
     // Clear window configuration state flags
-    public void ClearWindowState(int flags) {
+    public void ClearWindowState(int flags){
         // Check previous state and requested state to apply required changes
         // NOTE: In most cases the functions already change the flags internally
 
         // State change: FLAG_VSYNC_HINT
-        if (((window.flags & FLAG_VSYNC_HINT) > 0) && ((flags & FLAG_VSYNC_HINT) > 0)) {
+        if (((window.flags & FLAG_VSYNC_HINT) > 0) && ((flags & FLAG_VSYNC_HINT) > 0)){
             glfwSwapInterval(0);
             window.flags &= ~FLAG_VSYNC_HINT;
         }
 
         // State change: FLAG_FULLSCREEN_MODE
-        if (((window.flags & FLAG_FULLSCREEN_MODE) > 0) && ((flags & FLAG_FULLSCREEN_MODE) > 0)) {
+        if (((window.flags & FLAG_FULLSCREEN_MODE) > 0) && ((flags & FLAG_FULLSCREEN_MODE) > 0)){
             ToggleFullscreen();     // NOTE: window state flag updated inside function
         }
 
         // State change: FLAG_WINDOW_RESIZABLE
-        if (((window.flags & FLAG_WINDOW_RESIZABLE) > 0) && ((flags & FLAG_WINDOW_RESIZABLE) > 0)) {
+        if (((window.flags & FLAG_WINDOW_RESIZABLE) > 0) && ((flags & FLAG_WINDOW_RESIZABLE) > 0)){
             glfwSetWindowAttrib(window.handle, GLFW_RESIZABLE, GLFW_FALSE);
             window.flags &= ~FLAG_WINDOW_RESIZABLE;
         }
 
         // State change: FLAG_WINDOW_UNDECORATED
-        if (((window.flags & FLAG_WINDOW_UNDECORATED) > 0) && ((flags & FLAG_WINDOW_UNDECORATED) > 0)) {
+        if (((window.flags & FLAG_WINDOW_UNDECORATED) > 0) && ((flags & FLAG_WINDOW_UNDECORATED) > 0)){
             glfwSetWindowAttrib(window.handle, GLFW_DECORATED, GLFW_TRUE);
             window.flags &= ~FLAG_WINDOW_UNDECORATED;
         }
 
         // State change: FLAG_WINDOW_HIDDEN
-        if (((window.flags & FLAG_WINDOW_HIDDEN) > 0) && ((flags & FLAG_WINDOW_HIDDEN) > 0)) {
+        if (((window.flags & FLAG_WINDOW_HIDDEN) > 0) && ((flags & FLAG_WINDOW_HIDDEN) > 0)){
             glfwShowWindow(window.handle);
             window.flags &= ~FLAG_WINDOW_HIDDEN;
         }
 
         // State change: FLAG_WINDOW_MINIMIZED
-        if (((window.flags & FLAG_WINDOW_MINIMIZED) > 0) && ((flags & FLAG_WINDOW_MINIMIZED) > 0)) {
+        if (((window.flags & FLAG_WINDOW_MINIMIZED) > 0) && ((flags & FLAG_WINDOW_MINIMIZED) > 0)){
             RestoreWindow();       // NOTE: window state flag updated inside function
         }
 
         // State change: FLAG_WINDOW_MAXIMIZED
-        if (((window.flags & FLAG_WINDOW_MAXIMIZED) > 0) && ((flags & FLAG_WINDOW_MAXIMIZED) > 0)) {
+        if (((window.flags & FLAG_WINDOW_MAXIMIZED) > 0) && ((flags & FLAG_WINDOW_MAXIMIZED) > 0)){
             RestoreWindow();       // NOTE: window state flag updated inside function
         }
 
         // State change: FLAG_WINDOW_UNFOCUSED
-        if (((window.flags & FLAG_WINDOW_UNFOCUSED) > 0) && ((flags & FLAG_WINDOW_UNFOCUSED) > 0)) {
+        if (((window.flags & FLAG_WINDOW_UNFOCUSED) > 0) && ((flags & FLAG_WINDOW_UNFOCUSED) > 0)){
             glfwSetWindowAttrib(window.handle, GLFW_FOCUS_ON_SHOW, GLFW_TRUE);
             window.flags &= ~FLAG_WINDOW_UNFOCUSED;
         }
 
         // State change: FLAG_WINDOW_TOPMOST
-        if (((window.flags & FLAG_WINDOW_TOPMOST) > 0) && ((flags & FLAG_WINDOW_TOPMOST) > 0)) {
+        if (((window.flags & FLAG_WINDOW_TOPMOST) > 0) && ((flags & FLAG_WINDOW_TOPMOST) > 0)){
             glfwSetWindowAttrib(window.handle, GLFW_FLOATING, GLFW_FALSE);
             window.flags &= ~FLAG_WINDOW_TOPMOST;
         }
 
         // State change: FLAG_WINDOW_ALWAYS_RUN
-        if (((window.flags & FLAG_WINDOW_ALWAYS_RUN) > 0) && ((flags & FLAG_WINDOW_ALWAYS_RUN) > 0)) {
+        if (((window.flags & FLAG_WINDOW_ALWAYS_RUN) > 0) && ((flags & FLAG_WINDOW_ALWAYS_RUN) > 0)){
             window.flags &= ~FLAG_WINDOW_ALWAYS_RUN;
         }
 
         // The following states can not be changed after window creation
 
         // State change: FLAG_WINDOW_TRANSPARENT
-        if (((window.flags & FLAG_WINDOW_TRANSPARENT) > 0) && ((flags & FLAG_WINDOW_TRANSPARENT) > 0)) {
+        if (((window.flags & FLAG_WINDOW_TRANSPARENT) > 0) && ((flags & FLAG_WINDOW_TRANSPARENT) > 0)){
             Tracelog(LOG_WARNING, "WINDOW: Framebuffer transparency can only by configured before window initialization");
         }
 
         // State change: FLAG_WINDOW_HIGHDPI
-        if (((window.flags & FLAG_WINDOW_HIGHDPI) > 0) && ((flags & FLAG_WINDOW_HIGHDPI) > 0)) {
+        if (((window.flags & FLAG_WINDOW_HIGHDPI) > 0) && ((flags & FLAG_WINDOW_HIGHDPI) > 0)){
             Tracelog(LOG_WARNING, "WINDOW: High DPI can only by configured before window initialization");
         }
 
@@ -566,20 +576,20 @@ public class rCore {
         }
 
         // State change: FLAG_MSAA_4X_HINT
-        if (((window.flags & FLAG_MSAA_4X_HINT) > 0) && ((flags & FLAG_MSAA_4X_HINT) > 0)) {
+        if (((window.flags & FLAG_MSAA_4X_HINT) > 0) && ((flags & FLAG_MSAA_4X_HINT) > 0)){
             Tracelog(LOG_WARNING, "WINDOW: MSAA can only by configured before window initialization");
         }
 
         // State change: FLAG_INTERLACED_HINT
-        if (((window.flags & FLAG_INTERLACED_HINT) > 0) && ((flags & FLAG_INTERLACED_HINT) > 0)) {
+        if (((window.flags & FLAG_INTERLACED_HINT) > 0) && ((flags & FLAG_INTERLACED_HINT) > 0)){
             Tracelog(LOG_WARNING, "RPI: Interlaced mode can only by configured before window initialization");
         }
     }
 
     // Set icon for window (only PLATFORM_DESKTOP)
     // NOTE: Image must be in RGBA format, 8bit per channel
-    public void SetWindowIcon(Image image) {
-        if (image.getFormat() == RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8) {
+    public void SetWindowIcon(Image image){
+        if (image.getFormat() == RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8){
             byte[] imgData = image.getData();
             GLFWImage.Buffer iconBuffer = GLFWImage.malloc(1);
             GLFWImage icon = GLFWImage.malloc();
@@ -595,55 +605,58 @@ public class rCore {
             // NOTE 2: The specified image data is copied before this function returns
             glfwSetWindowIcon(window.handle, iconBuffer);
             iconBuffer.free();
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: window icon image must be in R8G8B8A8 pixel format");
         }
     }
 
     // Set title for window (only PLATFORM_DESKTOP)
-    public void SetWindowTitle(String title) {
+    public void SetWindowTitle(String title){
         window.title = title;
         glfwSetWindowTitle(window.handle, title);
     }
 
     // Set window position on screen (windowed mode)
-    public void SetWindowPosition(int x, int y) {
+    public void SetWindowPosition(int x, int y){
         glfwSetWindowPos(window.handle, x, y);
     }
 
     // Set monitor for the current window (fullscreen mode)
-    public void SetWindowMonitor(long monitor) {
+    public void SetWindowMonitor(long monitor){
         int monitorCount = 0;
         PointerBuffer monitors = glfwGetMonitors();
 
-        if ((monitor >= 0) && (monitor < monitorCount)) {
+        if ((monitor >= 0) && (monitor < monitorCount)){
             Tracelog(LOG_INFO, "GLFW: Selected fullscreen monitor: [" + monitor + "] " + glfwGetMonitorName(monitor));
 
             GLFWVidMode mode = glfwGetVideoMode(monitor);
             glfwSetWindowMonitor(window.handle, monitor, 0, 0, mode.width(), mode.height(), mode.refreshRate());
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
         }
     }
 
     // Set window minimum dimensions (FLAG_WINDOW_RESIZABLE)
-    public void SetWindowMinSize(int width, int height) {
+    public void SetWindowMinSize(int width, int height){
         GLFWVidMode mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         glfwSetWindowSizeLimits(window.handle, width, height, mode.width(), mode.height());
     }
 
     // Set window dimensions
-    public void SetWindowSize(int width, int height) {
+    public void SetWindowSize(int width, int height){
         glfwSetWindowSize(window.handle, width, height);
     }
 
     // Set window opacity, value opacity is between 0.0 and 1.0
 
     public void SetWindowOpacity(float opacity) {
-        if (PLATFORM_DESKTOP) {
+        if(PLATFORM_DESKTOP) {
             if (opacity >= 1.0f) {
                 opacity = 1.0f;
-            } else if (opacity <= 0.0f) {
+            }
+            else if (opacity <= 0.0f) {
                 opacity = 0.0f;
             }
 
@@ -657,7 +670,7 @@ public class rCore {
      *
      * @return Width of current window
      */
-    public int GetScreenWidth() {
+    public int GetScreenWidth(){
         return window.currentFbo.getWidth();
     }
 
@@ -666,21 +679,22 @@ public class rCore {
      *
      * @return Height of current window
      */
-    public int GetScreenHeight() {
+    public int GetScreenHeight(){
         return window.currentFbo.getHeight();
     }
 
     // Get native window handle
-    public long GetWindowHandle() {
-        if (__WINDOWS__) {
+    public long GetWindowHandle(){
+        if (__WINDOWS__){
             return glfwGetWin32Window(window.handle);
-        } else {
+        }
+        else{
             return 0;
         }
     }
 
     // Get number of monitors
-    public int GetMonitorCount() {
+    public int GetMonitorCount(){
         int monitorCount = 0;
         PointerBuffer pb = glfwGetMonitors();
         monitorCount = pb.sizeof();
@@ -688,31 +702,32 @@ public class rCore {
     }
 
     // Get number of monitors
-    public int GetCurrentMonitor() {
+    public int GetCurrentMonitor(){
         int monitorCount;
         PointerBuffer monitors = glfwGetMonitors();
         monitorCount = monitors.sizeof();
         long monitor;
 
-        if (monitorCount == 1) {
+        if (monitorCount == 1){
             return 0;
         }
 
-        if (IsWindowFullscreen()) {
+        if (IsWindowFullscreen()){
             monitor = glfwGetWindowMonitor(window.handle);
-            for (int i = 0; i < monitorCount; i++) {
-                if (monitors.get(i) == monitor) {
+            for (int i = 0; i < monitorCount; i++){
+                if (monitors.get(i) == monitor){
                     return i;
                 }
             }
             return 0;
-        } else {
+        }
+        else{
             int x = 0;
             int y = 0;
 
             nglfwGetWindowPos(window.handle, x, y);
 
-            for (int i = 0; i < monitorCount; i++) {
+            for (int i = 0; i < monitorCount; i++){
                 int mx = 0;
                 int my = 0;
 
@@ -721,7 +736,7 @@ public class rCore {
 
                 monitor = monitors.get(i);
                 nglfwGetMonitorWorkarea(monitor, mx, my, width, height);
-                if (x >= mx && x <= (mx + width) && y >= my && y <= (my + height)) {
+                if (x >= mx && x <= (mx + width) && y >= my && y <= (my + height)){
                     return i;
                 }
             }
@@ -730,58 +745,63 @@ public class rCore {
     }
 
     // Get selected monitor position
-    public Vector2 GetMonitorPosition(int monitor) {
+    public Vector2 GetMonitorPosition(int monitor){
         int monitorCount;
         PointerBuffer monitors = glfwGetMonitors();
         monitorCount = monitors.sizeof();
-        if ((monitor >= 0) && (monitor < monitorCount)) {
+        if ((monitor >= 0) && (monitor < monitorCount)){
             IntBuffer x = IntBuffer.allocate(1);
             IntBuffer y = IntBuffer.allocate(1);
             glfwGetMonitorPos(monitor, x, y);
             return new Vector2(x.get(0), y.get(0));
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
         }
         return null;
     }
 
     // Get selected monitor width (currently used by monitor)
-    public int GetMonitorWidth(int monitor) {
+    public int GetMonitorWidth(int monitor){
         int monitorCount;
         PointerBuffer monitors = glfwGetMonitors();
         monitorCount = monitors.sizeof();
 
-        if ((monitor >= 0) && (monitor < monitorCount)) {
+        if ((monitor >= 0) && (monitor < monitorCount)){
             GLFWVidMode.Buffer modes = glfwGetVideoModes(monitors.get(monitor));
 
             // We return the maximum resolution available, the last one in the modes array
-            if (modes.sizeof() > 0) {
+            if (modes.sizeof() > 0){
                 return modes.width();
-            } else {
+            }
+            else{
                 Tracelog(LOG_WARNING, "GLFW: Failed to find video mode for selected monitor");
             }
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
         }
         return 0;
     }
 
     // Get selected monitor height (currently used by monitor)
-    public int GetMonitorHeight(int monitor) {
+    public int GetMonitorHeight(int monitor){
         int monitorCount;
         PointerBuffer monitors = glfwGetMonitors();
         monitorCount = monitors.sizeof();
 
-        if ((monitor >= 0) && (monitor < monitorCount)) {
+        if ((monitor >= 0) && (monitor < monitorCount)){
             GLFWVidMode.Buffer modes = glfwGetVideoModes(monitors.get(monitor));
 
             // We return the maximum resolution available, the last one in the modes array
-            if (modes.sizeof() > 0) {
+            if (modes.sizeof() > 0){
                 return modes.height();
-            } else {
+            }
+            else{
                 Tracelog(LOG_WARNING, "GLFW: Failed to find video mode for selected monitor");
             }
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
             return 0;
         }
@@ -789,32 +809,34 @@ public class rCore {
     }
 
     // Get selected monitor physical width in millimetres
-    public int GetMonitorPhysicalWidth(int monitor) {
+    public int GetMonitorPhysicalWidth(int monitor){
         int monitorCount;
         PointerBuffer monitors = glfwGetMonitors();
         monitorCount = monitors.sizeof();
 
-        if ((monitor >= 0) && (monitor < monitorCount)) {
+        if ((monitor >= 0) && (monitor < monitorCount)){
             int physicalWidth = 0;
             nglfwGetMonitorPhysicalSize(monitor, physicalWidth, 0);
             return physicalWidth;
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
         }
         return 0;
     }
 
     // Get primary monitor physical height in millimetres
-    public int GetMonitorPhysicalHeight(int monitor) {
+    public int GetMonitorPhysicalHeight(int monitor){
         int monitorCount;
         PointerBuffer monitors = glfwGetMonitors();
         monitorCount = monitors.sizeof();
 
-        if ((monitor >= 0) && (monitor < monitorCount)) {
+        if ((monitor >= 0) && (monitor < monitorCount)){
             int physicalHeight = 0;
             nglfwGetMonitorPhysicalSize(monitor, 0, physicalHeight);
             return physicalHeight;
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
         }
         return 0;
@@ -828,7 +850,8 @@ public class rCore {
             if ((monitor >= 0) && (monitor < monitorCount)) {
                 GLFWVidMode vidmode = glfwGetVideoMode(monitors.get(monitor));
                 return vidmode.refreshRate();
-            } else {
+            }
+            else {
                 Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
             }
         }
@@ -846,7 +869,7 @@ public class rCore {
     public Vector2 GetWindowPosition() {
         IntBuffer x = IntBuffer.allocate(1);
         IntBuffer y = IntBuffer.allocate(1);
-        if (PLATFORM_DESKTOP) {
+        if(PLATFORM_DESKTOP) {
             glfwGetWindowPos(window.handle, x, y);
         }
         return new Vector2(x.get(0), y.get(0));
@@ -854,9 +877,9 @@ public class rCore {
 
     // Get window scale DPI factor
     public Vector2 GetWindowScaleDPI() {
-        Vector2 scale = new Vector2(1f, 1f);
+        Vector2 scale = new Vector2(1f,1f);
 
-        if (PLATFORM_DESKTOP) {
+        if(PLATFORM_DESKTOP) {
             FloatBuffer xdpi = FloatBuffer.allocate(1);
             FloatBuffer ydpi = FloatBuffer.allocate(1);
             Vector2 windowPos = GetWindowPosition();
@@ -889,14 +912,15 @@ public class rCore {
     }
 
     // Get the human-readable, UTF-8 encoded name of the primary monitor
-    public String GetMonitorName(int monitor) {
+    public String GetMonitorName(int monitor){
         int monitorCount;
         PointerBuffer monitors = glfwGetMonitors();
         monitorCount = monitors.sizeof();
 
-        if ((monitor >= 0) && (monitor < monitorCount)) {
+        if ((monitor >= 0) && (monitor < monitorCount)){
             return glfwGetMonitorName(monitor);
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "GLFW: Failed to find selected monitor");
         }
         return "";
@@ -904,12 +928,12 @@ public class rCore {
 
     // Get clipboard text content
     // NOTE: returned string is allocated and freed by GLFW
-    public String GetClipboardText() {
+    public String GetClipboardText(){
         return glfwGetClipboardString(window.handle);
     }
 
     // Set clipboard text content
-    public void SetClipboardText(String text) {
+    public void SetClipboardText(String text){
         glfwSetClipboardString(window.handle, text);
     }
 
@@ -925,30 +949,30 @@ public class rCore {
     }
 
     // Show mouse cursor
-    public void ShowCursor() {
+    public void ShowCursor(){
         glfwSetInputMode(window.handle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         input.mouse.setCursorHidden(false);
     }
 
     // Hides mouse cursor
-    public void HideCursor() {
+    public void HideCursor(){
         glfwSetInputMode(window.handle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         input.mouse.setCursorHidden(true);
     }
 
     // Check if cursor is not visible
-    public boolean IsCursorHidden() {
+    public boolean IsCursorHidden(){
         return input.mouse.isCursorHidden();
     }
 
     // Enables cursor (unlock cursor)
-    public void EnableCursor() {
+    public void EnableCursor(){
         glfwSetInputMode(window.handle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         input.mouse.setCursorHidden(false);
     }
 
     // Disables cursor (lock cursor)
-    public void DisableCursor() {
+    public void DisableCursor(){
         glfwSetInputMode(window.handle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         input.mouse.setCursorHidden(true);
     }
@@ -957,7 +981,7 @@ public class rCore {
      * @return <code>true</code> if cursor is within window bounds
      */
     // Check if cursor is on the current screen.
-    public boolean IsCursorOnScreen() {
+    public boolean IsCursorOnScreen(){
         return input.mouse.isCursorOnScreen();
     }
 
@@ -966,7 +990,7 @@ public class rCore {
      *
      * @param color Color to fill the background
      */
-    public void ClearBackground(Color color) {
+    public void ClearBackground(Color color){
         RLGL.rlClearColor(color.getR(), color.getG(), color.getB(), color.getA());   // Set clear color
         RLGL.rlClearScreenBuffers();                             // Clear current framebuffers
     }
@@ -974,7 +998,7 @@ public class rCore {
     /**
      * Setup canvas (framebuffer) to start drawing
      */
-    public void BeginDrawing() {
+    public void BeginDrawing(){
         // WARNING: Previously to BeginDrawing() other render textures drawing could happen,
         // consequently the measure for update vs draw is not accurate (only the total frame time is accurate)
 
@@ -993,10 +1017,10 @@ public class rCore {
     /**
      * End canvas drawing and swap buffers (double buffering)
      */
-    public void EndDrawing() {
+    public void EndDrawing(){
         rlgl.rlDrawRenderBatchActive();      // Update and draw internal render batch
 
-        if (SUPPORT_GIF_RECORDING) {
+        if(SUPPORT_GIF_RECORDING) {
             // Draw record indicator
             /*TODO
             if (gifRecording) {
@@ -1024,7 +1048,7 @@ public class rCore {
             }*/
         }
 
-        if (SUPPORT_EVENTS_AUTOMATION) {
+        if(SUPPORT_EVENTS_AUTOMATION) {
             // Draw record/play indicator
             /* TODO
             if (eventsRecording) {
@@ -1049,7 +1073,7 @@ public class rCore {
             }*/
         }
 
-        if (!SUPPORT_CUSTOM_FRAME_CONTROL) {
+        if(!SUPPORT_CUSTOM_FRAME_CONTROL) {
             SwapScreenBuffer();                  // Copy back buffer to front buffer (screen)
 
             // Frame time control system
@@ -1073,11 +1097,12 @@ public class rCore {
             PollInputEvents();      // Poll user events (before next frame update)
         }
 
-        if (SUPPORT_EVENTS_AUTOMATION) {
+        if(SUPPORT_EVENTS_AUTOMATION) {
             // Events recording and playing logic
             if (eventsRecording) {
                 RecordAutomationEvent(time.frameCounter);
-            } else if (eventsPlaying) {
+            }
+            else if (eventsPlaying) {
                 // TODO: When should we play? After/before/replace PollInputEvents()?
                 if (time.frameCounter >= eventCount) eventsPlaying = false;
                 PlayAutomationEvent(time.frameCounter);
@@ -1088,7 +1113,7 @@ public class rCore {
     }
 
     // Initialize 2D mode with custom camera (2D)
-    public void BeginMode2D(Camera2D camera) {
+    public void BeginMode2D(Camera2D camera){
         rlgl.rlDrawRenderBatchActive();                         // Draw Buffers (Only OpenGL 3+ and ES2)
 
         RLGL.rlLoadIdentity();                   // Reset current matrix (modelview)
@@ -1101,7 +1126,7 @@ public class rCore {
     }
 
     // Ends 2D mode with custom camera
-    public void EndMode2D() {
+    public void EndMode2D(){
         rlgl.rlDrawRenderBatchActive();                         // Draw Buffers (Only OpenGL 3+ and ES2)
 
         RLGL.rlLoadIdentity();                   // Reset current matrix (modelview)
@@ -1109,7 +1134,7 @@ public class rCore {
     }
 
     // Initializes 3D mode with custom camera (3D)
-    public void BeginMode3D(Camera3D camera) {
+    public void BeginMode3D(Camera3D camera){
         rlgl.rlDrawRenderBatchActive();                         // Draw Buffers (Only OpenGL 3+ and ES2)
 
         RLGL.rlMatrixMode(RLGL.RL_PROJECTION);        // Switch to projection matrix
@@ -1118,14 +1143,15 @@ public class rCore {
 
         float aspect = (float) window.currentFbo.getWidth() / (float) window.currentFbo.getHeight();
 
-        if (camera.projection == CAMERA_PERSPECTIVE) {
+        if (camera.projection == CAMERA_PERSPECTIVE){
             // Setup perspective projection
             double top = RL_CULL_DISTANCE_NEAR * Math.tan(camera.getFovy() * 0.5 * DEG2RAD);
             double right = top * aspect;
 
             RLGL.rlFrustum(-right, right, -top, top, RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
 
-        } else if (camera.projection == CAMERA_ORTHOGRAPHIC) {
+        }
+        else if (camera.projection == CAMERA_ORTHOGRAPHIC){
             // Setup orthographic projection
             double top = camera.getFovy() / 2.0;
             double right = top * aspect;
@@ -1145,7 +1171,7 @@ public class rCore {
     }
 
     // Ends 3D mode and returns to default 2D orthographic mode
-    public void EndMode3D() {
+    public void EndMode3D(){
         rlgl.rlDrawRenderBatchActive();                         // Process internal buffers (update + draw)
 
         RLGL.rlMatrixMode(RLGL.RL_PROJECTION);        // Switch to projection matrix
@@ -1160,7 +1186,7 @@ public class rCore {
     }
 
     // Initializes render texture for drawing
-    public void BeginTextureMode(RenderTexture target) {
+    public void BeginTextureMode(RenderTexture target){
         rlgl.rlDrawRenderBatchActive();                         // Draw Buffers (Only OpenGL 3+ and ES2)
 
         RLGL.rlEnableFramebuffer(target.getId());     // Enable render target
@@ -1189,7 +1215,7 @@ public class rCore {
     }
 
     // Ends drawing to render texture
-    public void EndTextureMode() {
+    public void EndTextureMode(){
         rlgl.rlDrawRenderBatchActive();                 // Draw Buffers (Only OpenGL 3+ and ES2)
 
         RLGL.rlDisableFramebuffer();     // Disable render target (fbo)
@@ -1203,29 +1229,29 @@ public class rCore {
     }
 
     // Begin custom shader mode
-    public void BeginShaderMode(Shader shader) {
+    public void BeginShaderMode(Shader shader){
         rlgl.rlSetShader(shader.getId(), shader.getLocs());
     }
 
     // End custom shader mode (returns to default shader)
-    public void EndShaderMode() {
-        rlgl.rlSetShader(rlGetShaderIdDefault(), rlGetShaderLocsDefault());
+    public void EndShaderMode(){
+        rlgl.rlSetShader(rlgl.rlGetShaderIdDefault(), rlgl.rlGetShaderLocsDefault());
     }
 
     // Begin blending mode (alpha, additive, multiplied)
     // NOTE: Only 3 blending modes supported, default blend mode is alpha
-    public void BeginBlendMode(int mode) {
+    public void BeginBlendMode(int mode){
         rlgl.rlSetBlendMode(mode);
     }
 
     // End blending mode (reset to default: alpha blending)
-    public void EndBlendMode() {
+    public void EndBlendMode(){
         rlgl.rlSetBlendMode(rlBlendMode.RL_BLEND_ALPHA);
     }
 
     // Begin scissor mode (define screen area for following drawing)
     // NOTE: Scissor rec refers to bottom-left corner, we change it to upper-left
-    public void BeginScissorMode(int x, int y, int width, int height) {
+    public void BeginScissorMode(int x, int y, int width, int height){
         rlgl.rlDrawRenderBatchActive(); // Force drawing elements
 
         rlgl.rlEnableScissorTest();
@@ -1233,12 +1259,14 @@ public class rCore {
         if (__APPLE__) {
             Vector2 scale = GetWindowScaleDPI();
 
-            rlgl.rlScissor((int) (x * scale.x), (int) (GetScreenHeight() * scale.y - (((y + height) * scale.y))), (int) (width * scale.x), (int) (height * scale.y));
-        } else {
+            rlgl.rlScissor((int)(x*scale.x), (int)(GetScreenHeight()*scale.y - (((y + height)*scale.y))), (int)(width*scale.x), (int)(height*scale.y));
+        }
+        else {
             if ((window.flags & FLAG_WINDOW_HIGHDPI) > 0) {
                 Vector2 scale = GetWindowScaleDPI();
-                rlgl.rlScissor((int) (x * scale.x), (int) (window.currentFbo.height - (y + height) * scale.y), (int) (width * scale.x), (int) (height * scale.y));
-            } else {
+                rlgl.rlScissor((int)(x*scale.x), (int)(window.currentFbo.height - (y + height)*scale.y), (int)(width*scale.x), (int)(height*scale.y));
+            }
+            else {
                 rlgl.rlScissor(x, window.currentFbo.height - (y + height), width, height);
             }
         }
@@ -1246,13 +1274,13 @@ public class rCore {
     }
 
     // End scissor mode
-    public void EndScissorMode() {
+    public void EndScissorMode(){
         rlgl.rlDrawRenderBatchActive(); // Force drawing elements
         rlgl.rlDisableScissorTest();
     }
 
     // Begin VR drawing configuration
-    public void BeginVrStereoMode(VrStereoConfig config) {
+    public void BeginVrStereoMode(VrStereoConfig config){
         rlgl.rlEnableStereoRenderer();
 
         // Set stereo render matrices
@@ -1262,15 +1290,15 @@ public class rCore {
     }
 
     // End VR drawing process (and desktop mirror)
-    public void EndVrStereoMode() {
+    public void EndVrStereoMode(){
         rlgl.rlDisableStereoRenderer();
     }
 
     // Load VR stereo config for VR simulator device parameters
-    public VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device) {
+    public VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device){
         VrStereoConfig config = new VrStereoConfig();
 
-        if (RLGL.GRAPHICS_API_OPENGL_33 || RLGL.GRAPHICS_API_OPENGL_ES2) {
+        if (RLGL.GRAPHICS_API_OPENGL_33 || RLGL.GRAPHICS_API_OPENGL_ES2){
             // Compute aspect ratio
             float aspect = ((float) device.gethResolution() * 0.5f) / (float) device.getvResolution();
 
@@ -1303,7 +1331,7 @@ public class rCore {
 
             // Fovy is normally computed with: 2*atan2f(device.vScreenSize, 2*device.eyeToScreenDistance)
             // ...but with lens distortion it is increased (see Oculus SDK Documentation)
-            float fovy = (float) (2.0f * Math.atan2(device.vScreenSize * 0.5f * distortionScale, device.eyeToScreenDistance));     // Really need distortionScale?
+            float fovy = (float) (2.0f*Math.atan2(device.vScreenSize*0.5f*distortionScale, device.eyeToScreenDistance));     // Really need distortionScale?
             //float fovy = 2.0f * (float) Math.atan2(device.vScreenSize * 0.5f, device.eyeToScreenDistance);
 
             // Compute camera projection matrices
@@ -1332,7 +1360,8 @@ public class rCore {
             config.eyeViewportLeft[2] = device.hResolution/2;
             config.eyeViewportLeft[3] = device.vResolution;
             */
-        } else {
+        }
+        else{
             Tracelog(LOG_WARNING, "RLGL: VR Simulator not supported on OpenGL 1.1");
         }
 
@@ -1340,28 +1369,28 @@ public class rCore {
     }
 
     // Unload VR stereo config properties
-    public void UnloadVrStereoConfig(VrStereoConfig config) {
+    public void UnloadVrStereoConfig(VrStereoConfig config){
         //...
     }
 
-    public Shader LoadShader(String vsFileName, String fsFileName) {
+    public Shader LoadShader(String vsFileName, String fsFileName){
         Shader shader = new Shader();
 
         String vShaderStr = null;
         String fShaderStr = null;
 
-        if (vsFileName != null) {
-            try {
+        if (vsFileName != null){
+            try{
                 vShaderStr = FileIO.LoadFileText(vsFileName);
-            } catch (IOException e) {
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
 
-        if (fsFileName != null) {
-            try {
+        if (fsFileName != null){
+            try{
                 fShaderStr = FileIO.LoadFileText(fsFileName);
-            } catch (IOException e) {
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
@@ -1372,7 +1401,7 @@ public class rCore {
     }
 
     // Load shader from code strings and bind default locations
-    public Shader LoadShaderFromMemory(String vsCode, String fsCode) {
+    public Shader LoadShaderFromMemory(String vsCode, String fsCode){
         Shader shader = new Shader();
         shader.locs = new int[RLGL.MAX_SHADER_LOCATIONS];
 
@@ -1382,7 +1411,7 @@ public class rCore {
         shader.setId(rlgl.rlLoadShaderCode(vsCode, fsCode));
 
         // After shader loading, we TRY to set default location names
-        if (shader.getId() > 0) {
+        if (shader.getId() > 0){
             // Default shader attrib locations have been fixed before linking:
             //          vertex position location    = 0
             //          vertex texcoord location    = 1
@@ -1419,51 +1448,51 @@ public class rCore {
     }
 
     // Unload shader from GPU memory (VRAM)
-    public static void UnloadShader(Shader shader) {
-        if (shader.getId() != rlGetShaderIdDefault()) {
+    public static void UnloadShader(Shader shader){
+        if (shader.getId() != rlGetShaderIdDefault()){
             rlUnloadShaderProgram(shader.getId());
             shader.setLocs(null);
         }
     }
 
     // Get shader uniform location
-    public static int GetShaderLocation(Shader shader, String uniformName) {
+    public static int GetShaderLocation(Shader shader, String uniformName){
         return RLGL.rlGetLocationUniform(shader.getId(), uniformName);
     }
 
     // Get shader attribute location
-    public int GetShaderLocationAttrib(Shader shader, String attribName) {
-        return rlGetLocationAttrib(shader.id, attribName);
+    public int GetShaderLocationAttrib(Shader shader, String attribName){
+        return rlgl.rlGetLocationAttrib(shader.id, attribName);
     }
 
     // Set shader uniform value
-    public static void SetShaderValue(Shader shader, int locIndex, float[] value, int uniformType) {
+    public static void SetShaderValue(Shader shader, int locIndex, float[] value, int uniformType){
         SetShaderValueV(shader, locIndex, value, uniformType, 1);
     }
 
     // Set shader uniform value vector
-    public static void SetShaderValueV(Shader shader, int locIndex, float[] value, int uniformType, int count) {
+    public static void SetShaderValueV(Shader shader, int locIndex, float[] value, int uniformType, int count){
         RLGL.rlEnableShader(shader.getId());
         RLGL.rlSetUniform(locIndex, value, uniformType, count);
         //rlDisableShader();      // Avoid reseting current shader program, in case other uniforms are set
     }
 
     // Set shader uniform value (matrix 4x4)
-    public void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat) {
+    public void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat){
         rlEnableShader(shader.getId());
-        rlSetUniformMatrix(locIndex, mat);
+        rlgl.rlSetUniformMatrix(locIndex, mat);
         //rlDisableShader();
     }
 
     // Set shader uniform value for texture
-    public void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture) {
+    public void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture){
         rlEnableShader(shader.getId());
         rlgl.rlSetUniformSampler(locIndex, texture.getId());
         //rlDisableShader();
     }
 
     // Returns a ray trace from mouse position
-    public Ray GetMouseRay(Vector2 mouse, Camera3D camera) {
+    public Ray GetMouseRay(Vector2 mouse, Camera3D camera){
         Ray ray = new Ray();
 
         // Calculate normalized device coordinates
@@ -1480,11 +1509,12 @@ public class rCore {
 
         Matrix matProj = MatrixIdentity();
 
-        if (camera.projection == CAMERA_PERSPECTIVE) {
+        if (camera.projection == CAMERA_PERSPECTIVE){
             // Calculate projection matrix from perspective
             matProj = MatrixPerspective(camera.getFovy() * DEG2RAD,
-                    ((double) GetScreenWidth() / (double) GetScreenHeight()), RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
-        } else if (camera.projection == CAMERA_ORTHOGRAPHIC) {
+                                        ((double) GetScreenWidth() / (double) GetScreenHeight()), RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
+        }
+        else if (camera.projection == CAMERA_ORTHOGRAPHIC){
             float aspect = (float) window.screen.getWidth() / (float) window.screen.getHeight();
             double top = camera.getFovy() / 2.0;
             double right = top * aspect;
@@ -1495,22 +1525,23 @@ public class rCore {
 
         // Unproject far/near points
         Vector3 nearPoint = Vector3Unproject(new Vector3(deviceCoords.getX(), deviceCoords.getY(), 0.0f), matProj,
-                matView);
+                                             matView);
         Vector3 farPoint = Vector3Unproject(new Vector3(deviceCoords.getX(), deviceCoords.getY(), 1.0f), matProj,
-                matView);
+                                            matView);
 
         // Unproject the mouse cursor in the near plane.
         // We need this as the source position because orthographic projects, compared to perspect doesn't have a
         // convergence point, meaning that the "eye" of the camera is more like a plane than a point.
         Vector3 cameraPlanePointerPos = Vector3Unproject(new Vector3(deviceCoords.getX(), deviceCoords.getY(), -1.0f),
-                matProj, matView);
+                                                         matProj, matView);
 
         // Calculate normalized direction vector
         Vector3 direction = Vector3Normalize(Vector3Subtract(farPoint, nearPoint));
 
-        if (camera.projection == CAMERA_PERSPECTIVE) {
+        if (camera.projection == CAMERA_PERSPECTIVE){
             ray.position = camera.getPosition();
-        } else if (camera.projection == CAMERA_ORTHOGRAPHIC) {
+        }
+        else if (camera.projection == CAMERA_ORTHOGRAPHIC){
             ray.position = cameraPlanePointerPos;
         }
 
@@ -1521,7 +1552,7 @@ public class rCore {
     }
 
     // Get transform matrix for camera
-    public Matrix GetCameraMatrix(Camera3D camera) {
+    public Matrix GetCameraMatrix(Camera3D camera){
         return MatrixLookAt(camera.getPosition(), camera.getTarget(), camera.getUp());
     }
 
@@ -1531,7 +1562,7 @@ public class rCore {
      * @param camera
      * @return Transform matrix
      */
-    public Matrix GetCameraMatrix2D(Camera2D camera) {
+    public Matrix GetCameraMatrix2D(Camera2D camera){
         Matrix matTransform = new Matrix();
         // The camera in world-space is set by
         //   1. Move it to target
@@ -1558,21 +1589,22 @@ public class rCore {
     }
 
     // Returns the screen space position from a 3d world space position
-    public Vector2 GetWorldToScreen(Vector3 position, Camera3D camera) {
+    public Vector2 GetWorldToScreen(Vector3 position, Camera3D camera){
 
         return GetWorldToScreenEx(position, camera, GetScreenWidth(), GetScreenHeight());
     }
 
     // Returns size position for a 3d world space position (useful for texture drawing)
-    public Vector2 GetWorldToScreenEx(Vector3 position, Camera3D camera, int width, int height) {
+    public Vector2 GetWorldToScreenEx(Vector3 position, Camera3D camera, int width, int height){
         // Calculate projection matrix (from perspective instead of frustum
         Matrix matProj = MatrixIdentity();
 
-        if (camera.projection == CAMERA_PERSPECTIVE) {
+        if (camera.projection == CAMERA_PERSPECTIVE){
             // Calculate projection matrix from perspective
             matProj = MatrixPerspective(camera.getFovy() * DEG2RAD, ((double) width / (double) height),
-                    RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
-        } else if (camera.projection == CAMERA_ORTHOGRAPHIC) {
+                                        RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
+        }
+        else if (camera.projection == CAMERA_ORTHOGRAPHIC){
             float aspect = (float) window.screen.getWidth() / (float) window.screen.getHeight();
             double top = camera.getFovy() / 2.0;
             double right = top * aspect;
@@ -1595,17 +1627,17 @@ public class rCore {
 
         // Calculate normalized device coordinates (inverted y)
         Vector3 ndcPos = new Vector3(worldPos.getX() / worldPos.getW(), -worldPos.getY() / worldPos.getW(),
-                worldPos.getZ() / worldPos.getW());
+                                     worldPos.getZ() / worldPos.getW());
 
         // Calculate 2d screen position vector
         Vector2 screenPosition = new Vector2((ndcPos.getX() + 1.0f) / 2.0f * (float) width,
-                (ndcPos.getY() + 1.0f) / 2.0f * (float) height);
+                                             (ndcPos.getY() + 1.0f) / 2.0f * (float) height);
 
         return screenPosition;
     }
 
     // Returns the screen space position for a 2d camera world space position
-    public Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera) {
+    public Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera){
         Matrix matCamera = GetCameraMatrix2D(camera);
         Vector3 transform = Vector3Transform(new Vector3(position.getX(), position.getY(), 0), matCamera);
 
@@ -1613,7 +1645,7 @@ public class rCore {
     }
 
     // Returns the world space position for a 2d camera screen space position
-    public Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera) {
+    public Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera){
         Matrix invMatCamera = MatrixInvert(GetCameraMatrix2D(camera));
         Vector3 transform = Vector3Transform(new Vector3(position.getX(), position.getY(), 0), invMatCamera);
 
@@ -1625,10 +1657,11 @@ public class rCore {
      *
      * @param fps FPS limit
      */
-    public void SetTargetFPS(int fps) {
-        if (fps < 1) {
+    public void SetTargetFPS(int fps){
+        if (fps < 1){
             time.setTarget(0.0f);
-        } else {
+        }
+        else{
             time.setTarget(1.0 / (double) fps);
         }
 
@@ -1641,7 +1674,7 @@ public class rCore {
      *
      * @return Current average framerate
      */
-    public int GetFPS() {
+    public int GetFPS(){
 
         int FPS_CAPTURE_FRAMES_COUNT = 30;      // 30 captures
         float FPS_AVERAGE_TIME_SECONDS = 0.5f;     // 500 millisecondes
@@ -1651,7 +1684,7 @@ public class rCore {
 
         if (fpsFrame == 0) return 0;
 
-        if ((GetTime() - last) > FPS_STEP) {
+        if ((GetTime() - last) > FPS_STEP){
             last = (float) GetTime();
             index = (index + 1) % FPS_CAPTURE_FRAMES_COUNT;
             average -= history[index];
@@ -1667,7 +1700,7 @@ public class rCore {
      *
      * @return Seconds taken for last frame
      */
-    public float GetFrameTime() {
+    public float GetFrameTime(){
         return (float) time.getFrame();
     }
 
@@ -1678,7 +1711,7 @@ public class rCore {
      *
      * @return Time program has been running in seconds
      */
-    public double GetTime() {
+    public double GetTime(){
         return glfwGetTime();
     }
 
@@ -1686,7 +1719,7 @@ public class rCore {
     // NOTE: This function is expected to be called before window creation,
     // because it sets up some flags for the window creation process.
     // To configure window states after creation, just use SetWindowState()
-    public void SetConfigFlags(int flags) {
+    public void SetConfigFlags(int flags){
         // Selected flags are set but not evaluated at this point,
         // flag evaluation happens at InitWindow() or SetWindowState()
         window.flags |= flags;
@@ -1695,24 +1728,25 @@ public class rCore {
     // Takes a screenshot of current screen (saved a .png)
     // NOTE: This function could work in any platform but some platforms: PLATFORM_ANDROID and PLATFORM_WEB
     // have their own internal file-systems, to dowload image to user file-system some additional mechanism is required
-    public void TakeScreenshot(String fileName) {
+    public void TakeScreenshot(String fileName){
         if (SUPPORT_MODULE_RTEXTURES) {
             Vector2 scale = GetWindowScaleDPI();
 
-            short[] imgData = rlReadScreenPixels((int) ((float) window.render.width * scale.x), (int) ((float) window.render.height * scale.y));
+            short[] imgData = rlgl.rlReadScreenPixels((int)((float)window.render.width*scale.x), (int)((float)window.render.height*scale.y));
             byte[] dataB = new byte[imgData.length];
             IntStream.range(0, dataB.length).forEach(i -> dataB[i] = (byte) imgData[i]);
             Image image = new Image(dataB, window.render.width, window.render.height, 1,
-                    RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+                                    RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
 
-            String path = fileName;
+            String path = "" + fileName;
 
             context.textures.ExportImage(image, path); // WARNING: Module required: rtextures
 
             // TODO: Verification required for log
             Tracelog(LOG_INFO, "SYSTEM: [" + path + "] Screenshot taken successfully");
-        } else {
-            Tracelog(LOG_WARNING, "IMAGE: ExportImage() requires module: rtextures");
+        }
+        else {
+            Tracelog(LOG_WARNING,"IMAGE: ExportImage() requires module: rtextures");
         }
     }
 
@@ -1723,8 +1757,8 @@ public class rCore {
      * @param max Maximum value of random number
      * @return Random value between the <code>min/code> and <code>max</code>
      */
-    public int GetRandomValue(int min, int max) {
-        if (min > max) {
+    public int GetRandomValue(int min, int max){
+        if (min > max){
             int tmp = max;
             max = min;
             min = tmp;
@@ -1734,7 +1768,7 @@ public class rCore {
     }
 
     // Check if the file exists
-    public boolean FileExists(String fileName) {
+    public boolean FileExists(String fileName){
         File file = new File(fileName);
 
         return file.exists();
@@ -1742,12 +1776,12 @@ public class rCore {
 
     // Check file extension
     // NOTE: Extensions checking is not case-sensitive
-    public static boolean IsFileExtension(String fileName, String ext) {
+    public static boolean IsFileExtension(String fileName, String ext){
         String fileExt = GetFileExtension(fileName);
         return fileExt.equals(ext);
     }
 
-    public boolean DirectoryExists(String fileName) {
+    public boolean DirectoryExists(String fileName){
         File tmp = new File(fileName);
         return tmp.isDirectory();
     }
@@ -1758,7 +1792,7 @@ public class rCore {
         return (int) tmp.length();
     }
 
-    public static String GetFileExtension(String fileName) {
+    public static String GetFileExtension(String fileName){
         return fileName.substring(fileName.lastIndexOf('.'));
     }
 
@@ -1766,18 +1800,19 @@ public class rCore {
     // StrPrBrk
 
     // Get filename for a path string
-    public String GetFileName(String filePath) {
+    public String GetFileName(String filePath){
         filePath = filePath.replace('\\', '/');
 
         if (filePath.contains("/")) {
             return filePath.substring(filePath.lastIndexOf('/'));
-        } else {
+        }
+        else {
             return filePath;
         }
     }
 
     // Get filename string without extension (uses static string)
-    public static String GetFileNameWithoutExt(String filePath) {
+    public static String GetFileNameWithoutExt(String filePath){
 
         filePath = filePath.replace('\\', '/');
 
@@ -1790,7 +1825,8 @@ public class rCore {
 
         if (filePath.contains("\\")) {
             dirPath = filePath.substring(0, filePath.lastIndexOf("\\"));
-        } else if (filePath.contains("/")) {
+        }
+        else if (filePath.contains("/")) {
             dirPath = filePath.substring(0, filePath.lastIndexOf("/"));
         }
 
@@ -1803,7 +1839,8 @@ public class rCore {
 
         if (dirPath.contains("\\")) {
             prevDirPath = dirPath.substring(0, dirPath.lastIndexOf("\\"));
-        } else if (dirPath.contains("/")) {
+        }
+        else if (dirPath.contains("/")) {
             prevDirPath = dirPath.substring(0, dirPath.lastIndexOf("/"));
         }
 
@@ -1812,7 +1849,6 @@ public class rCore {
 
     /**
      * Get current working directory
-     *
      * @return Current working directory
      */
     public String GetWorkingDirectory() {
@@ -1852,22 +1888,22 @@ public class rCore {
     // ChangeDirectory
 
     // Check if a file has been dropped into window
-    public boolean IsFileDropped() {
+    public boolean IsFileDropped(){
         return (window.dropFilesCount > 0);
     }
 
     // Get dropped files names
-    public String[] LoadDroppedFiles() {
+    public String[] LoadDroppedFiles(){
         return window.dropFilePaths;
     }
 
-    public int GetDroppedFilesCount() {
+    public int GetDroppedFilesCount(){
         return window.dropFilesCount;
     }
 
-    public void ClearDroppedFiles() {
-        if (window.getDropFilesCount() > 0) {
-            for (int i = 0; i < window.getDropFilesCount(); i++) {
+    public void ClearDroppedFiles(){
+        if (window.getDropFilesCount() > 0){
+            for (int i = 0; i < window.getDropFilesCount(); i++){
                 window.dropFilePaths[i] = null;
             }
 
@@ -1878,10 +1914,10 @@ public class rCore {
     }
 
     // Get file modification time (last write time)
-    public long GetFileModTime(String fileName) {
+    public long GetFileModTime(String fileName){
         long result = 0L;
 
-        if (FileExists(fileName)) {
+        if (FileExists(fileName)){
             File tmp = new File(fileName);
             result = tmp.lastModified();
         }
@@ -1895,37 +1931,39 @@ public class rCore {
 
 
     // Encode data to Base64 string
-    public byte[] EncodeDataBase64(byte[] data, int dataLength, int outputLength) {
+    public byte[] EncodeDataBase64(byte[] data, int dataLength, int outputLength)
+    {
         char[] base64encodeTable = {
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-                'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-                'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+            'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+            'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
         };
 
-        int[] modTable = {0, 2, 1};
+        int[] modTable = { 0, 2, 1 };
 
-        outputLength = 4 * ((dataLength + 2) / 3);
+        outputLength = 4*((dataLength + 2)/3);
 
         byte[] encodedData = new byte[outputLength];
 
-        if (encodedData == null) {
+        if (encodedData == null){
             return null;
         }
 
-        for (int i = 0, j = 0; i < dataLength; ) {
-            int octetA = (i < dataLength) ? data[i++] : 0;
-            int octetB = (i < dataLength) ? data[i++] : 0;
-            int octetC = (i < dataLength) ? data[i++] : 0;
+        for (int i = 0, j = 0; i < dataLength;)
+        {
+            int octetA = (i < dataLength)? data[i++] : 0;
+            int octetB = (i < dataLength)? data[i++] : 0;
+            int octetC = (i < dataLength)? data[i++] : 0;
 
             int triple = (octetA << 0x10) + (octetB << 0x08) + octetC;
 
-            encodedData[j++] = (byte) base64encodeTable[(triple >> 3 * 6) & 0x3F];
-            encodedData[j++] = (byte) base64encodeTable[(triple >> 2 * 6) & 0x3F];
-            encodedData[j++] = (byte) base64encodeTable[(triple >> 6) & 0x3F];
-            encodedData[j++] = (byte) base64encodeTable[(triple >> 0) & 0x3F];
+            encodedData[j++] = (byte) base64encodeTable[(triple >> 3*6) & 0x3F];
+            encodedData[j++] = (byte) base64encodeTable[(triple >> 2*6) & 0x3F];
+            encodedData[j++] = (byte) base64encodeTable[(triple >> 1*6) & 0x3F];
+            encodedData[j++] = (byte) base64encodeTable[(triple >> 0*6) & 0x3F];
         }
 
-        for (int i = 0; i < modTable[dataLength % 3]; i++) {
+        for (int i = 0; i < modTable[dataLength%3]; i++){
             encodedData[outputLength - 1 - i] = '=';
         }
 
@@ -1935,45 +1973,50 @@ public class rCore {
     // Decode Base64 string data
     public byte[] DecodeDataBase64(byte[] data, int outputLength) {
         byte[] base64decodeTable = {
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 62, 0, 0, 0, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 0, 0, 0, 0, 0, 0, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
-                37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 62, 0, 0, 0, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 0, 0, 0, 0, 0, 0, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+            37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
         };
 
         // Get output size of Base64 input data
         int outLength = 0;
-        for (int i = 0; data[4 * i] != 0; i++) {
-            if (data[4 * i + 3] == '=') {
-                if (data[4 * i + 2] == '=') outLength += 1;
+        for (int i = 0; data[4*i] != 0; i++) {
+            if (data[4*i + 3] == '=')
+            {
+                if (data[4*i + 2] == '=') outLength += 1;
                 else outLength += 2;
-            } else outLength += 3;
+            }
+            else outLength += 3;
         }
 
         // Allocate memory to store decoded Base64 data
         byte[] decodedData = new byte[outLength];
 
-        for (int i = 0; i < outLength / 3; i++) {
-            byte a = base64decodeTable[data[4 * i]];
-            byte b = base64decodeTable[data[4 * i + 1]];
-            byte c = base64decodeTable[data[4 * i + 2]];
-            byte d = base64decodeTable[data[4 * i + 3]];
+        for (int i = 0; i < outLength/3; i++){
+            byte a = base64decodeTable[data[4*i]];
+            byte b = base64decodeTable[data[4*i + 1]];
+            byte c = base64decodeTable[data[4*i + 2]];
+            byte d = base64decodeTable[data[4*i + 3]];
 
-            decodedData[3 * i] = (byte) ((byte) (a << 2) | (b >> 4));
-            decodedData[3 * i + 1] = (byte) ((byte) (b << 4) | (c >> 2));
-            decodedData[3 * i + 2] = (byte) ((byte) (c << 6) | d);
+            decodedData[3*i] = (byte) ((byte) (a << 2) | (b >> 4));
+            decodedData[3*i + 1] = (byte) ((byte) (b << 4) | (c >> 2));
+            decodedData[3*i + 2] = (byte) ((byte) (c << 6) | d);
         }
 
-        if (outLength % 3 == 1) {
-            int n = outLength / 3;
-            byte a = base64decodeTable[data[4 * n]];
-            byte b = base64decodeTable[data[4 * n + 1]];
+        if (outLength%3 == 1)
+        {
+            int n = outLength/3;
+            byte a = base64decodeTable[data[4*n]];
+            byte b = base64decodeTable[data[4*n + 1]];
             decodedData[outLength - 1] = (byte) ((byte) (a << 2) | (b >> 4));
-        } else if (outLength % 3 == 2) {
-            int n = outLength / 3;
-            byte a = base64decodeTable[data[4 * n]];
-            byte b = base64decodeTable[data[4 * n + 1]];
-            byte c = base64decodeTable[data[4 * n + 2]];
+        }
+        else if (outLength%3 == 2)
+        {
+            int n = outLength/3;
+            byte a = base64decodeTable[data[4*n]];
+            byte b = base64decodeTable[data[4*n + 1]];
+            byte c = base64decodeTable[data[4*n + 2]];
             decodedData[outLength - 2] = (byte) ((byte) (a << 2) | (b >> 4));
             decodedData[outLength - 1] = (byte) ((byte) (b << 4) | (c >> 2));
         }
@@ -1989,35 +2032,35 @@ public class rCore {
     // Module Functions Definition - Input (Keyboard, Mouse, Gamepad) Functions
     //----------------------------------------------------------------------------------
     // Detect if a key has been pressed once
-    public boolean IsKeyPressed(int key) {
+    public boolean IsKeyPressed(int key){
         return ((!input.keyboard.getPreviousKeyState()[key]) && (input.keyboard.getCurrentKeyState()[key]));
     }
 
     // Detect if a key is being pressed (key held down)
-    public boolean IsKeyDown(int key) {
+    public boolean IsKeyDown(int key){
         return input.keyboard.getCurrentKeyState()[key];
     }
 
     // Detect if a key has been released once
-    public boolean IsKeyReleased(int key) {
+    public boolean IsKeyReleased(int key){
         return (input.keyboard.getPreviousKeyState()[key] && !input.keyboard.getCurrentKeyState()[key]);
     }
 
     // Detect if a key is NOT being pressed (key not held down)
-    public boolean IsKeyUp(int key) {
+    public boolean IsKeyUp(int key){
         return !input.keyboard.getCurrentKeyState()[key];
     }
 
     // Get the last key pressed
-    public int GetKeyPressed() {
+    public int GetKeyPressed(){
         int value = 0;
 
-        if (input.keyboard.getKeyPressedQueueCount() > 0) {
+        if (input.keyboard.getKeyPressedQueueCount() > 0){
             // Get character from the queue head
             value = input.keyboard.getKeyPressedQueue()[0];
 
             // Shift elements 1 step toward the head.
-            for (int i = 0; i < (input.keyboard.getKeyPressedQueueCount() - 1); i++) {
+            for (int i = 0; i < (input.keyboard.getKeyPressedQueueCount() - 1); i++){
                 input.keyboard.getKeyPressedQueue()[i] = input.keyboard.getKeyPressedQueue()[i + 1];
             }
 
@@ -2030,15 +2073,15 @@ public class rCore {
     }
 
     // Get the last char pressed
-    public int GetCharPressed() {
+    public int GetCharPressed(){
         int value = 0;
 
-        if (input.keyboard.getCharPressedQueueCount() > 0) {
+        if (input.keyboard.getCharPressedQueueCount() > 0){
             // Get character from the queue head
             value = input.keyboard.getCharPressedQueue()[0];
 
             // Shift elements 1 step toward the head.
-            if (input.keyboard.getCharPressedQueueCount() - 1 >= 0) {
+            if (input.keyboard.getCharPressedQueueCount() - 1 >= 0){
                 System.arraycopy(input.keyboard.getKeyPressedQueue(), 1, input.keyboard.getKeyPressedQueue(), 0, input.keyboard.getCharPressedQueueCount() - 1);
             }
 
@@ -2052,40 +2095,42 @@ public class rCore {
 
     // Set a custom key to exit program
     // NOTE: default exitKey is ESCAPE
-    public void SetExitKey(int key) {
+    public void SetExitKey(int key){
         input.keyboard.setExitKey(key);
     }
 
     // NOTE: Gamepad support not implemented in emscripten GLFW3 (PLATFORM_WEB)
     // Detect if a gamepad is available
-    public boolean IsGamepadAvailable(int gamepad) {
+    public boolean IsGamepadAvailable(int gamepad){
         return (gamepad < MAX_GAMEPADS) && input.gamepad.getReady()[gamepad];
     }
 
     // Return gamepad internal name id
-    public String GetGamepadName(int gamepad) {
-        if (PLATFORM_DESKTOP) {
-            if (input.gamepad.getReady()[gamepad]) {
+    public String GetGamepadName(int gamepad){
+        if (PLATFORM_DESKTOP){
+            if (input.gamepad.getReady()[gamepad]){
                 return glfwGetJoystickName(gamepad);
-            } else {
+            }
+            else{
                 return null;
             }
-        } else {
+        }
+        else{
             return null;
         }
     }
 
     // Return gamepad axis count
-    public int GetGamepadAxisCount(int gamepad) {
+    public int GetGamepadAxisCount(int gamepad){
         return input.gamepad.getAxisCount();
     }
 
     // Return axis movement vector for a gamepad
-    public float GetGamepadAxisMovement(int gamepad, int axis) {
+    public float GetGamepadAxisMovement(int gamepad, int axis){
         float value = 0;
 
         if ((gamepad < MAX_GAMEPADS) && input.gamepad.getReady()[gamepad] && (axis < MAX_GAMEPAD_AXIS) &&
-                (Math.abs(input.gamepad.getAxisState()[gamepad][axis]) > 0.1f)) {
+                (Math.abs(input.gamepad.getAxisState()[gamepad][axis]) > 0.1f)){
             value =
                     input.gamepad.getAxisState()[gamepad][axis];      // 0.1f = GAMEPAD_AXIS_MINIMUM_DRIFT/DELTA
         }
@@ -2094,7 +2139,7 @@ public class rCore {
     }
 
     // Detect if a gamepad button has been pressed once
-    public boolean IsGamepadButtonPressed(int gamepad, int button) {
+    public boolean IsGamepadButtonPressed(int gamepad, int button){
         boolean pressed = false;
 
         pressed = (gamepad < MAX_GAMEPADS) && input.gamepad.ready[gamepad] && (button < MAX_GAMEPAD_BUTTONS) &&
@@ -2104,7 +2149,7 @@ public class rCore {
     }
 
     // Detect if a gamepad button is being pressed
-    public boolean IsGamepadButtonDown(int gamepad, int button) {
+    public boolean IsGamepadButtonDown(int gamepad, int button){
         boolean result = (gamepad < MAX_GAMEPADS) && input.gamepad.getReady()[gamepad] && (button < MAX_GAMEPAD_BUTTONS) &&
                 (input.gamepad.getCurrentButtonState()[gamepad][button] == 1);
 
@@ -2112,7 +2157,7 @@ public class rCore {
     }
 
     // Detect if a gamepad button has NOT been pressed once
-    public boolean IsGamepadButtonReleased(int gamepad, int button) {
+    public boolean IsGamepadButtonReleased(int gamepad, int button){
         boolean released = false;
 
         released = (gamepad < MAX_GAMEPADS) && input.gamepad.getReady()[gamepad] && (button < MAX_GAMEPAD_BUTTONS) &&
@@ -2122,7 +2167,7 @@ public class rCore {
     }
 
     // Detect if a mouse button is NOT being pressed
-    public boolean IsGamepadButtonUp(int gamepad, int button) {
+    public boolean IsGamepadButtonUp(int gamepad, int button){
         boolean result = (gamepad < MAX_GAMEPADS) && input.gamepad.getReady()[gamepad] && (button < MAX_GAMEPAD_BUTTONS) &&
                 (input.gamepad.getCurrentButtonState()[gamepad][button] == 0);
 
@@ -2130,18 +2175,18 @@ public class rCore {
     }
 
     // Get the last gamepad button pressed
-    public int GetGamepadButtonPressed() {
+    public int GetGamepadButtonPressed(){
         return input.gamepad.getLastButtonPressed();
     }
 
     // Set internal gamepad mappings
-    public boolean SetGamepadMappings(byte[] mappings) {
+    public boolean SetGamepadMappings(byte[] mappings){
         boolean result = false;
 
         ByteBuffer mappingsBuffer = ByteBuffer.allocateDirect(mappings.length);
         mappingsBuffer.put(mappings).flip();
 
-        if (PLATFORM_DESKTOP) {
+        if (PLATFORM_DESKTOP){
             result = glfwUpdateGamepadMappings(mappingsBuffer);
         }
 
@@ -2149,7 +2194,7 @@ public class rCore {
     }
 
     // Detect if a mouse button has been pressed once
-    public boolean IsMouseButtonPressed(int button) {
+    public boolean IsMouseButtonPressed(int button){
         boolean pressed = (input.mouse.getCurrentButtonState()[button] == 1) &&
                 (input.mouse.getPreviousButtonState()[button] == 0);
 
@@ -2164,7 +2209,7 @@ public class rCore {
     }
 
     // Detect if a mouse button is being pressed
-    public boolean IsMouseButtonDown(int button) {
+    public boolean IsMouseButtonDown(int button){
         boolean down = input.mouse.getCurrentButtonState()[button] == 1;
 
         /*
@@ -2177,7 +2222,7 @@ public class rCore {
     }
 
     // Detect if a mouse button has been released once
-    public boolean IsMouseButtonReleased(int button) {
+    public boolean IsMouseButtonReleased(int button){
         boolean released = (input.mouse.getCurrentButtonState()[button] == 0) &&
                 (input.mouse.getPreviousButtonState()[button] == 1);
 
@@ -2192,12 +2237,12 @@ public class rCore {
     }
 
     // Detect if a mouse button is NOT being pressed
-    public boolean IsMouseButtonUp(int button) {
+    public boolean IsMouseButtonUp(int button){
         return !IsMouseButtonDown(button);
     }
 
     // Returns mouse position X
-    public int GetMouseX() {
+    public int GetMouseX(){
         /* TODO: Touch support - MODULE GESTURES
         #if defined(PLATFORM_ANDROID)
             return (int)input.Touch.position[0].x;
@@ -2208,7 +2253,7 @@ public class rCore {
     }
 
     // Returns mouse position Y
-    public int GetMouseY() {
+    public int GetMouseY(){
         /* TODO: Touch support - MODULE GESTURES
         #if defined(PLATFORM_ANDROID)
             return (int)input.Touch.position[0].y;
@@ -2219,7 +2264,7 @@ public class rCore {
     }
 
     // Returns mouse position XY
-    public Vector2 GetMousePosition() {
+    public Vector2 GetMousePosition(){
         Vector2 position = new Vector2();
 
         /*
@@ -2246,7 +2291,7 @@ public class rCore {
     }
 
     // Set mouse position XY
-    public void SetMousePosition(int x, int y) {
+    public void SetMousePosition(int x, int y){
         input.mouse.setCurrentPosition(new Vector2((float) x, (float) y));
         // NOTE: emscripten not implemented
         glfwSetCursorPos(window.handle, input.mouse.currentPosition.x, input.mouse.currentPosition.y);
@@ -2254,23 +2299,24 @@ public class rCore {
 
     // Set mouse offset
     // NOTE: Useful when rendering to different size targets
-    public void SetMouseOffset(int offsetX, int offsetY) {
+    public void SetMouseOffset(int offsetX, int offsetY){
         input.mouse.setOffset(new Vector2((float) offsetX, (float) offsetY));
     }
 
     // Set mouse scaling
     // NOTE: Useful when rendering to different size targets
-    public void SetMouseScale(float scaleX, float scaleY) {
+    public void SetMouseScale(float scaleX, float scaleY){
         input.mouse.setScale(new Vector2(scaleX, scaleY));
     }
 
     // Returns mouse wheel movement Y
-    public float GetMouseWheelMove() {
+    public float GetMouseWheelMove(){
         float result = 0.0f;
 
-        if (Math.abs(input.mouse.currentWheelMove.x) > Math.abs(input.mouse.currentWheelMove.y)) {
+        if(Math.abs(input.mouse.currentWheelMove.x) > Math.abs(input.mouse.currentWheelMove.y)) {
             result = input.mouse.currentWheelMove.x;
-        } else {
+        }
+        else {
             result = input.mouse.currentWheelMove.y;
         }
 
@@ -2279,16 +2325,17 @@ public class rCore {
 
     // Get mouse wheel movement X/Y as a vector
     public Vector2 GetMouseWheelMoveV() {
-        return input.mouse.currentWheelMove;
+       return input.mouse.currentWheelMove;
     }
 
     // Set mouse cursor
     // NOTE: This is a no-op on platforms other than PLATFORM_DESKTOP
-    public void SetMouseCursor(int cursor) {
+    public void SetMouseCursor(int cursor){
         input.mouse.setCursor(cursor);
-        if (cursor == MOUSE_CURSOR_DEFAULT.ordinal()) {
+        if (cursor == MOUSE_CURSOR_DEFAULT.ordinal()){
             glfwSetCursor(window.handle, 0);
-        } else {
+        }
+        else{
             // NOTE: We are relating internal GLFW enum values to our MouseCursor enum values
             glfwSetCursor(window.handle, glfwCreateStandardCursor(0x00036000 + cursor));
         }
@@ -2361,7 +2408,7 @@ public class rCore {
     // NOTE: width and height represent the screen (framebuffer) desired size, not actual display size
     // If width or height are 0, default display size will be used for framebuffer size
     // NOTE: returns false in case graphic device could not be created
-    boolean InitGraphicsDevice(int width, int height) {
+    boolean InitGraphicsDevice(int width, int height){
         window.screen.setWidth(width);            // User desired width
         window.screen.setHeight(height);          // User desired height
         window.setScreenScale(MatrixIdentity());  // No draw scaling required by default
@@ -2372,14 +2419,14 @@ public class rCore {
         callback = new Callbacks(this);
         glfwSetErrorCallback(callback.errorCallback);
 
-        if (!glfwInit()) {
+        if (!glfwInit()){
             Tracelog(LOG_WARNING, "GLFW: Failed to initialize GLFW");
             return false;
         }
 
         // Find monitor resolution
         long monitor = glfwGetPrimaryMonitor();
-        if (monitor < 0) {
+        if (monitor < 0){
             Tracelog(LOG_WARNING, "GLFW: Failed to get primary monitor");
             return false;
         }
@@ -2389,11 +2436,11 @@ public class rCore {
         window.display.setHeight(mode.height());
 
         // Screen size security check
-        if (window.screen.getWidth() == 0) {
+        if (window.screen.getWidth() == 0){
             window.screen.setWidth(window.display.getWidth());
         }
 
-        if (window.screen.getHeight() == 0) {
+        if (window.screen.getHeight() == 0){
             window.screen.setHeight(window.display.getHeight());
         }
 
@@ -2409,57 +2456,63 @@ public class rCore {
         //glfwWindowHint(GLFW_AUX_BUFFERS, 0);          // Number of auxiliar buffers
 
         // Check window creation flags
-        if ((window.getFlags() & FLAG_FULLSCREEN_MODE) > 0) {
+        if ((window.getFlags() & FLAG_FULLSCREEN_MODE) > 0){
             window.fullscreen = true;
         }
 
-        if ((window.getFlags() & FLAG_WINDOW_HIDDEN) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_HIDDEN) > 0){
             glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // Visible window
-        } else {
+        }
+        else{
             glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);     // Window initially hidden
         }
 
-        if ((window.getFlags() & FLAG_WINDOW_UNDECORATED) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_UNDECORATED) > 0){
             glfwWindowHint(GLFW_DECORATED, GLFW_FALSE); // Border and buttons on Window
-        } else {
+        }
+        else{
             glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);   // Decorated window
         }
 
-        if ((window.getFlags() & FLAG_WINDOW_RESIZABLE) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_RESIZABLE) > 0){
             glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // Resizable window
-        } else {
+        }
+        else{
             glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);  // Avoid window being resizable
         }
 
         // Disable FLAG_WINDOW_MINIMIZED, not supported on initialization
-        if ((window.getFlags() & FLAG_WINDOW_MINIMIZED) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_MINIMIZED) > 0){
             window.flags &= ~FLAG_WINDOW_MINIMIZED;
         }
 
         // Disable FLAG_WINDOW_MAXIMIZED, not supported on initialization
-        if ((window.getFlags() & FLAG_WINDOW_MAXIMIZED) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_MAXIMIZED) > 0){
             window.flags &= ~FLAG_WINDOW_MAXIMIZED;
         }
 
-        if ((window.getFlags() & FLAG_WINDOW_UNFOCUSED) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_UNFOCUSED) > 0){
             glfwWindowHint(GLFW_FOCUSED, GLFW_FALSE);
-        } else {
+        }
+        else{
             glfwWindowHint(GLFW_FOCUSED, GLFW_TRUE);
         }
 
-        if ((window.getFlags() & FLAG_WINDOW_TOPMOST) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_TOPMOST) > 0){
             glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
-        } else {
+        }
+        else{
             glfwWindowHint(GLFW_FLOATING, GLFW_FALSE);
         }
 
-        if ((window.getFlags() & FLAG_WINDOW_TRANSPARENT) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_TRANSPARENT) > 0){
             glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);     // Transparent framebuffer
-        } else {
+        }
+        else{
             glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_FALSE);     // Transparent framebuffer
         }
 
-        if ((window.getFlags() & FLAG_WINDOW_HIGHDPI) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_HIGHDPI) > 0){
             // Resize window content area based on the monitor content scale.
             // NOTE: This hint only has an effect on platforms where screen coordinates and pixels always map 1:1 such as Windows and X11.
             // On platforms like macOS the resolution of the framebuffer is changed independently of the window size.
@@ -2468,18 +2521,20 @@ public class rCore {
             if (__APPLE__) {
                 glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
             }
-        } else {
+        }
+        else{
             glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_FALSE);
         }
 
         // Mouse Passthrough
-        if ((window.getFlags() & FLAG_WINDOW_MOUSE_PASSTHROUGH) > 0) {
+        if((window.getFlags() & FLAG_WINDOW_MOUSE_PASSTHROUGH) > 0){
             glfwWindowHint(GLFW_MOUSE_PASSTHROUGH, GLFW_TRUE);
-        } else {
+        }
+        else {
             glfwWindowHint(GLFW_MOUSE_PASSTHROUGH, GLFW_FALSE);
         }
 
-        if ((window.getFlags() & FLAG_MSAA_4X_HINT) > 0) {
+        if ((window.getFlags() & FLAG_MSAA_4X_HINT) > 0){
             Tracelog(LOG_INFO, "DISPLAY: Trying to enable MSAA x4");
             glfwWindowHint(GLFW_SAMPLES, 4);   // Tries to enable multisampling x4 (MSAA), default is 0
         }
@@ -2490,31 +2545,35 @@ public class rCore {
 
         // Check selection OpenGL version
 
-        if (RLGL.rlGetVersion() == rlGlVersion.OPENGL_21) {
+        if (RLGL.rlGetVersion() == rlGlVersion.OPENGL_21){
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);          // Choose OpenGL major version (just hint)
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);          // Choose OpenGL minor version (just hint)
-        } else if (RLGL.rlGetVersion() == rlGlVersion.OPENGL_33) {
+        }
+        else if (RLGL.rlGetVersion() == rlGlVersion.OPENGL_33){
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);          // Choose OpenGL major version (just hint)
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);          // Choose OpenGL minor version (just hint)
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Profiles Hint: Only 3.3 and above!
-            if (__APPLE__) {
+            if (__APPLE__){
                 glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-            } else {
+            }
+            else{
                 glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_FALSE);
             }
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-        } else if (RLGL.rlGetVersion() == rlGlVersion.OPENGL_ES_20) {
+        }
+        else if (RLGL.rlGetVersion() == rlGlVersion.OPENGL_ES_20){
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
             glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
-            if (PLATFORM_DESKTOP) {
+            if (PLATFORM_DESKTOP){
                 glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
-            } else {
+            }
+            else{
                 glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_NATIVE_CONTEXT_API);
             }
         }
 
-        if (Config.MAX_GAMEPADS > 0) {
+        if (Config.MAX_GAMEPADS > 0){
             // NOTE: GLFW 3.4+ defers initialization of the Joystick subsystem on the first call to any Joystick related functions.
             // Forcing this initialization here avoids doing it on `PollInputEvents` called by `EndDrawing` after first frame has been just drawn.
             // The initialization will still happen and possible delays still occur, but before the window is shown, which is a nicer experience.
@@ -2522,15 +2581,15 @@ public class rCore {
             glfwSetJoystickCallback(null);
         }
 
-        if (window.fullscreen) {
+        if (window.fullscreen){
             // remember center for switchinging from fullscreen to window
             window.position.setX(window.display.getWidth() / 2 - window.screen.getWidth() / 2);
             window.position.setY(window.display.getHeight() / 2 - window.screen.getHeight() / 2);
 
-            if (window.position.getX() < 0) {
+            if (window.position.getX() < 0){
                 window.position.setX(0);
             }
-            if (window.position.getX() < 0) {
+            if (window.position.getX() < 0){
                 window.position.setY(0);
             }
 
@@ -2539,9 +2598,9 @@ public class rCore {
             GLFWVidMode.Buffer modes = glfwGetVideoModes(glfwGetPrimaryMonitor());
             count = modes != null ? modes.sizeof() : 0;
             // Get closest video mode to desired window.screen.getWidth()/window.screen.getHeight()
-            for (int i = 0; i < count; i++) {
-                if (modes.width() >= window.screen.getWidth()) {
-                    if (modes.height() >= window.screen.getHeight()) {
+            for (int i = 0; i < count; i++){
+                if (modes.width() >= window.screen.getWidth()){
+                    if (modes.height() >= window.screen.getHeight()){
                         window.display.setWidth(modes.width());
                         window.display.setHeight(modes.height());
                         break;
@@ -2564,11 +2623,12 @@ public class rCore {
             SetupFramebuffer(window.display.getWidth(), window.display.getHeight());
 
             window.handle = glfwCreateWindow(window.display.getWidth(), window.display.getHeight(),
-                    (window.title != null) ? window.title : " ", glfwGetPrimaryMonitor(), 0);
+                                             (window.title != null) ? window.title : " ", glfwGetPrimaryMonitor(), 0);
 
             // NOTE: Full-screen change, not working properly...
             //glfwSetWindowMonitor(window.handle, glfwGetPrimaryMonitor(), 0, 0, window.screen.getWidth(), window.screen.getHeight(), GLFW_DONT_CARE);
-        } else {
+        }
+        else{
             if (PLATFORM_DESKTOP) {
                 // If we are windowed fullscreen, ensures that window does not minimize when focus is lost
                 if ((window.screen.height == window.display.height) && (window.screen.width == window.display.width)) {
@@ -2580,7 +2640,7 @@ public class rCore {
             window.handle = glfwCreateWindow(window.screen.getWidth(), window.screen.getHeight(), (window.title != null)
                     ? window.title : " ", NULL, NULL);
 
-            if (window.handle > 0) {
+            if (window.handle > 0){
                 // Center window on screen
                 int windowPosX = window.display.getWidth() / 2 - window.screen.getWidth() / 2;
                 int windowPosY = window.display.getHeight() / 2 - window.screen.getHeight() / 2;
@@ -2595,18 +2655,19 @@ public class rCore {
             }
         }
 
-        if (window.handle <= 0) {
+        if (window.handle <= 0){
             glfwTerminate();
             Tracelog(LOG_WARNING, "GLFW: Failed to initialize Window");
             return false;
-        } else {
+        }
+        else{
             Tracelog(LOG_INFO, "DISPLAY: Device initialized successfully");
             Tracelog(LOG_INFO,
-                    "    > Display size: " + window.display.getWidth() + " x " + window.display.getHeight());
+                     "    > Display size: " + window.display.getWidth() + " x " + window.display.getHeight());
             Tracelog(LOG_INFO,
-                    "    > Render size:  " + window.render.getWidth() + " x " + window.render.getHeight());
+                     "    > Render size:  " + window.render.getWidth() + " x " + window.render.getHeight());
             Tracelog(LOG_INFO,
-                    "    > Screen size:  " + window.screen.getWidth() + " x " + window.screen.getHeight());
+                     "    > Screen size:  " + window.screen.getWidth() + " x " + window.screen.getHeight());
             Tracelog(LOG_INFO, "    > Viewport offsets: " + window.renderOffset.x + ", " + window.renderOffset.y);
         }
 
@@ -2643,7 +2704,7 @@ public class rCore {
         int fbWidth = window.render.getWidth();
         int fbHeight = window.render.getHeight();
 
-        if ((window.getFlags() & FLAG_WINDOW_HIGHDPI) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_HIGHDPI) > 0){
             glfwGetFramebufferSize(window.handle, new int[]{fbWidth}, new int[]{fbHeight});
 
             // Screen scaling matrix is required in case desired screen area is different from display area
@@ -2658,14 +2719,14 @@ public class rCore {
 
         glfwShowWindow(window.handle);
 
-        if ((window.getFlags() & FLAG_WINDOW_MINIMIZED) > 0) {
+        if ((window.getFlags() & FLAG_WINDOW_MINIMIZED) > 0){
             MinimizeWindow();
         }
 
         return true;
     }
 
-    void SetupViewport(int width, int height) {
+     void SetupViewport(int width, int height){
         window.render.setWidth(width);
         window.render.setHeight(height);
 
@@ -2673,8 +2734,8 @@ public class rCore {
         // NOTE: We consider render size and offset in case black bars are required and
         // render area does not match full display area (this situation is only applicable on fullscreen mode)
         RLGL.rlViewport((int) window.renderOffset.x / 2, (int) window.renderOffset.y / 2,
-                (int) (window.render.getWidth() - window.renderOffset.getX()),
-                (int) (window.render.getHeight() - window.renderOffset.getY()));
+                        (int) (window.render.getWidth() - window.renderOffset.getX()),
+                        (int) (window.render.getHeight() - window.renderOffset.getY()));
 
         RLGL.rlMatrixMode(RLGL.RL_PROJECTION);        // Switch to projection matrix
         RLGL.rlLoadIdentity();                   // Reset current matrix (projection)
@@ -2690,9 +2751,9 @@ public class rCore {
     // Compute framebuffer size relative to screen size and display size
     // NOTE: Global variables CORE.Window.render.width/CORE.Window.render.height and
     // CORE.Window.renderOffset.x/CORE.Window.renderOffset.y can be modified
-    void SetupFramebuffer(int width, int height) {
+    void SetupFramebuffer(int width, int height){
         // Calculate window.render.getWidth() and window.render.getHeight(), we have the display size (input params) and the desired screen size (global var)
-        if ((window.screen.getWidth() > window.display.getWidth()) || (window.screen.getHeight() > window.display.getHeight())) {
+        if ((window.screen.getWidth() > window.display.getWidth()) || (window.screen.getHeight() > window.display.getHeight())){
             Tracelog(LOG_WARNING, "DISPLAY: Downscaling required: Screen size (" + window.screen.getWidth() + "x" +
                     window.screen.getHeight() + ") is bigger than display size " + "(" + window.display.getWidth() + "x" +
                     window.display.getHeight() + ")");
@@ -2701,12 +2762,13 @@ public class rCore {
             float widthRatio = (float) window.display.getWidth() / (float) window.screen.getWidth();
             float heightRatio = (float) window.display.getHeight() / (float) window.screen.getHeight();
 
-            if (widthRatio <= heightRatio) {
+            if (widthRatio <= heightRatio){
                 window.render.setWidth(window.display.getWidth());
                 window.render.setHeight(Math.round((float) window.screen.getHeight() * widthRatio));
                 window.renderOffset.x = 0;
                 window.renderOffset.y = (window.display.getHeight() - window.render.getHeight());
-            } else {
+            }
+            else{
                 window.render.setWidth((Math.round((float) window.screen.getWidth() * heightRatio)));
                 window.render.setHeight(window.display.getHeight());
                 window.renderOffset.x = (window.display.getWidth() - window.render.getWidth());
@@ -2724,13 +2786,14 @@ public class rCore {
 
             Tracelog(LOG_WARNING, "DISPLAY: Downscale matrix generated, content will be rendered at (" +
                     window.render.getWidth() + "x" + window.render.getHeight() + ")");
-        } else if ((window.screen.getWidth() < window.display.getWidth()) || (window.screen.getHeight() < window.display.getHeight())) {
+        }
+        else if ((window.screen.getWidth() < window.display.getWidth()) || (window.screen.getHeight() < window.display.getHeight())){
             // Required screen size is smaller than display size
             Tracelog(LOG_INFO, "DISPLAY: Upscaling required: Screen size (" + window.screen.getWidth() + "x" +
                     window.screen.getHeight() + ") smaller than display size (" + window.display.getWidth() + "x" +
                     window.display.getHeight() + ")");
 
-            if ((window.screen.getWidth() == 0) || (window.screen.getHeight() == 0)) {
+            if ((window.screen.getWidth() == 0) || (window.screen.getHeight() == 0)){
                 window.screen.setWidth(window.display.getWidth());
                 window.screen.setHeight(window.display.getHeight());
             }
@@ -2739,18 +2802,20 @@ public class rCore {
             float displayRatio = (float) window.display.getWidth() / (float) window.display.getHeight();
             float screenRatio = (float) window.screen.getWidth() / (float) window.screen.getHeight();
 
-            if (displayRatio <= screenRatio) {
+            if (displayRatio <= screenRatio){
                 window.render.setWidth(window.screen.getWidth());
                 window.render.setHeight(Math.round((float) window.screen.getWidth() / displayRatio));
                 window.renderOffset.setX(0);
                 window.renderOffset.setY((window.render.getHeight() - window.screen.getHeight()));
-            } else {
+            }
+            else{
                 window.render.setWidth(Math.round((float) window.screen.getHeight() * displayRatio));
                 window.render.setHeight(window.screen.getHeight());
                 window.renderOffset.setX((window.render.getWidth() - window.screen.getWidth()));
                 window.renderOffset.setY(0);
             }
-        } else {
+        }
+        else{
             window.render.setWidth(window.screen.getWidth());
             window.render.setHeight(window.screen.getHeight());
             window.renderOffset.setX(0);
@@ -2761,7 +2826,7 @@ public class rCore {
     /**
      * Initialize hi-resolution timer
      */
-    void InitTimer() {
+    void InitTimer(){
         time.setPrevious(GetTime());       // Get time as double
     }
 
@@ -2770,17 +2835,18 @@ public class rCore {
      *
      * @param seconds Time to wait in seconds
      */
-    public void WaitTime(double seconds) {
-        if (SUPPORT_WINMM_HIGHRES_TIMER) {
+    public void WaitTime(double seconds){
+        if (SUPPORT_WINMM_HIGHRES_TIMER){
             double prevTime = GetTime();
             double nextTime = 0.0;
 
             // Busy wait loop
             while ((nextTime - prevTime) < seconds) nextTime = GetTime();
-        } else {
-            if (SUPPORT_HALFBUSY_WAIT_LOOP) {
+        }
+        else{
+            if (SUPPORT_HALFBUSY_WAIT_LOOP){
                 double destTime = GetTime() + seconds;
-                while (GetTime() < destTime) {
+                while (GetTime() < destTime){
                 }
             }
         }
@@ -2789,7 +2855,7 @@ public class rCore {
     /**
      * Poll (store) all input events
      */
-    void PollInputEvents() {
+    void PollInputEvents(){
         // Reset keys/chars pressed registered
         input.keyboard.setKeyPressedQueueCount(0);
         input.keyboard.setCharPressedQueueCount(0);
@@ -2809,13 +2875,13 @@ public class rCore {
         // Check if gamepads are ready
         // NOTE: We do it here in case of disconnection
         boolean[] gamepadReady = new boolean[MAX_GAMEPADS];
-        for (int i = 0; i < MAX_GAMEPADS; i++) {
+        for (int i = 0; i < MAX_GAMEPADS; i++){
             gamepadReady[i] = glfwJoystickPresent(i);
         }
         input.gamepad.setReady(gamepadReady);
 
         // Register gamepads buttons events
-        for (int i = 0; i < MAX_GAMEPADS; i++) {
+        for (int i = 0; i < MAX_GAMEPADS; i++){
             if (input.gamepad.getReady()[i]) {     // Check if gamepad is available
                 // Register previous gamepad states
                 System.arraycopy(input.gamepad.currentButtonState[i], 0, input.gamepad.previousButtonState[i], 0, input.gamepad.currentButtonState[i].length);
@@ -2829,7 +2895,7 @@ public class rCore {
 
                 ByteBuffer buttons = state.buttons();
 
-                for (int k = 0; (buttons != null) && (k < GLFW_GAMEPAD_BUTTON_DPAD_LEFT + 1) && (k < MAX_GAMEPAD_BUTTONS); k++) {
+                for (int k = 0; (buttons != null) && (k < GLFW_GAMEPAD_BUTTON_DPAD_LEFT + 1) && (k < MAX_GAMEPAD_BUTTONS); k++){
                     int button = -1;
 
                     switch (k) {
@@ -2890,7 +2956,8 @@ public class rCore {
                         if (buttons.get(k) == GLFW_PRESS) {
                             input.gamepad.currentButtonState[i][button] = 1;
                             input.gamepad.lastButtonPressed = button;
-                        } else {
+                        }
+                        else {
                             input.gamepad.currentButtonState[i][button] = 0;
                         }
                     }
@@ -2899,7 +2966,7 @@ public class rCore {
                 // Get current axis state
                 FloatBuffer axes = state.axes();
 
-                for (int k = 0; (axes != null) && (k < GLFW_GAMEPAD_AXIS_LAST + 1) && (k < MAX_GAMEPAD_AXIS); k++) {
+                for (int k = 0; (axes != null) && (k < GLFW_GAMEPAD_AXIS_LAST + 1) && (k < MAX_GAMEPAD_AXIS); k++){
                     input.gamepad.getAxisState()[i][k] = axes.get(k);
                 }
 
@@ -2913,9 +2980,10 @@ public class rCore {
 
         window.setResizedLastFrame(false);
 
-        if (SUPPORT_EVENTS_WAITING) {
+        if (SUPPORT_EVENTS_WAITING){
             glfwWaitEvents();
-        } else {
+        }
+        else{
             glfwPollEvents();       // Register keyboard/mouse events (callbacks)... and window events!
         }
     }
@@ -2923,7 +2991,7 @@ public class rCore {
     /**
      * Swap back buffer with front buffer (screen drawing)
      */
-    void SwapScreenBuffer() {
+    void SwapScreenBuffer(){
         glfwSwapBuffers(window.handle);
     }
 
@@ -2985,9 +3053,9 @@ public class rCore {
 
         // Load events (text file)
         String[] repFile = new String[0];
-        try {
+        try{
             repFile = FileIO.LoadFileText(fileName).split("\n");
-        } catch (IOException e) {
+        } catch (IOException e){
             e.printStackTrace();
         }
 
@@ -2995,9 +3063,10 @@ public class rCore {
             int count = 0;
 
             while (count < repFile.length) {
-                if (repFile[count].charAt(0) == 'c' && !repFile[count].contains("#")) {
+                if (repFile[count].charAt(0) == 'c' && !repFile[count].contains("#")){
                     eventCount = Integer.parseInt(repFile[count].substring(2));
-                } else if (repFile[count].charAt(0) == 'e') {
+                }
+                else if (repFile[count].charAt(0) == 'e') {
                     String[] eLine = repFile[count].split(" ");
                     events.get(count).frame = Integer.parseInt(eLine[1]);
                     events.get(count).type = Integer.parseInt(eLine[2]);
@@ -3046,9 +3115,9 @@ public class rCore {
                         .append("\n");
             }
 
-            try {
+            try{
                 FileIO.SaveFileText(fileName, repFileText.toString());
-            } catch (IOException e) {
+            } catch (IOException e){
                 e.printStackTrace();
             }
 
@@ -3111,11 +3180,11 @@ public class rCore {
         }
 
         // INPUT_MOUSE_POSITION (only saved if changed)
-        if (((int) input.mouse.currentPosition.x != (int) input.mouse.previousPosition.x) || ((int) input.mouse.currentPosition.y != (int) input.mouse.previousPosition.y)) {
+        if (((int)input.mouse.currentPosition.x != (int)input.mouse.previousPosition.x) || ((int)input.mouse.currentPosition.y != (int)input.mouse.previousPosition.y)) {
             events.get(eventCount).frame = frame;
             events.get(eventCount).type = INPUT_MOUSE_POSITION.ordinal();
-            events.get(eventCount).params[0] = (int) input.mouse.currentPosition.x;
-            events.get(eventCount).params[1] = (int) input.mouse.currentPosition.y;
+            events.get(eventCount).params[0] = (int)input.mouse.currentPosition.x;
+            events.get(eventCount).params[1] = (int)input.mouse.currentPosition.y;
             events.get(eventCount).params[2] = 0;
 
             Tracelog(LOG_INFO, "[" + events.get(eventCount).frame + "] INPUT_MOUSE_POSITION: " + events.get(eventCount).params[0] + ", " + events.get(eventCount).params[1] + ", " + events.get(eventCount).params[2]);
@@ -3225,7 +3294,7 @@ public class rCore {
                     events.get(eventCount).type = INPUT_GAMEPAD_AXIS_MOTION.ordinal();
                     events.get(eventCount).params[0] = gamepad;
                     events.get(eventCount).params[1] = axis;
-                    events.get(eventCount).params[2] = (int) (input.gamepad.axisState[gamepad][axis] * 32768.0f);
+                    events.get(eventCount).params[2] = (int)(input.gamepad.axisState[gamepad][axis]*32768.0f);
 
                     Tracelog(LOG_INFO, "[" + events.get(eventCount).frame + "] INPUT_GAMEPAD_AXIS_MOTION: " + events.get(eventCount).params[0] + ", " + events.get(eventCount).params[1] + ", " + events.get(eventCount).params[2]);
                     eventCount++;
@@ -3267,12 +3336,12 @@ public class rCore {
                         input.mouse.currentButtonState[events.get(i).params[0]] = 1;
                         break;
                     case INPUT_MOUSE_POSITION:      // param[0]: x, param[1]: y
-                        input.mouse.currentPosition.x = (float) events.get(i).params[0];
-                        input.mouse.currentPosition.y = (float) events.get(i).params[1];
+                        input.mouse.currentPosition.x = (float)events.get(i).params[0];
+                        input.mouse.currentPosition.y = (float)events.get(i).params[1];
                         break;
                     case INPUT_MOUSE_WHEEL_MOTION:   // param[0]: delta
-                        input.mouse.currentWheelMove.x = (float) events.get(i).params[0];
-                        input.mouse.currentWheelMove.y = (float) events.get(i).params[1];
+                        input.mouse.currentWheelMove.x = (float)events.get(i).params[0];
+                        input.mouse.currentWheelMove.y = (float)events.get(i).params[1];
                         break;
                     case INPUT_TOUCH_UP:     // param[0]: id
                         input.touch.currentTouchState[events.get(i).params[0]] = false;
@@ -3281,8 +3350,8 @@ public class rCore {
                         input.touch.currentTouchState[events.get(i).params[0]] = true;
                         break;
                     case INPUT_TOUCH_POSITION:      // param[0]: id, param[1]: x, param[2]: y
-                        input.touch.position[events.get(i).params[0]].x = (float) events.get(i).params[1];
-                        input.touch.position[events.get(i).params[0]].y = (float) events.get(i).params[2];
+                        input.touch.position[events.get(i).params[0]].x = (float)events.get(i).params[1];
+                        input.touch.position[events.get(i).params[0]].y = (float)events.get(i).params[2];
                         break;
                     case INPUT_GAMEPAD_CONNECT:     // param[0]: gamepad
                         input.gamepad.ready[events.get(i).params[0]] = true;
@@ -3297,7 +3366,7 @@ public class rCore {
                         input.gamepad.currentButtonState[events.get(i).params[0]][events.get(i).params[1]] = 1;
                         break;
                     case INPUT_GAMEPAD_AXIS_MOTION: // param[0]: gamepad, param[1]: axis, param[2]: delta
-                        input.gamepad.axisState[events.get(i).params[0]][events.get(i).params[1]] = ((float) events.get(i).params[2] / 32768.0f);
+                        input.gamepad.axisState[events.get(i).params[0]][events.get(i).params[1]] = ((float)events.get(i).params[2]/32768.0f);
                         break;
                     case INPUT_GESTURE: // param[0]: gesture (enum Gesture) -> rgestures.h: GESTURES.current
                         //TODO

@@ -2,7 +2,7 @@ package com.raylib.java.text;
 
 import com.raylib.java.textures.Image;
 
-public class GlyphInfo {
+public class GlyphInfo{
 
     public int value;              // Character value (Unicode)
     public int offsetX;            // Character offset X when drawing
@@ -10,7 +10,7 @@ public class GlyphInfo {
     public int advanceX;           // Character advance position X
     public Image image;            // Character image data
 
-    public GlyphInfo() {
+    public GlyphInfo(){
         value = 0;
         offsetX = 0;
         offsetY = 0;
@@ -18,43 +18,43 @@ public class GlyphInfo {
         image = new Image();
     }
 
-    public int getValue() {
+    public int getValue(){
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(int value){
         this.value = value;
     }
 
-    public int getOffsetX() {
+    public int getOffsetX(){
         return offsetX;
     }
 
-    public void setOffsetX(int offsetX) {
+    public void setOffsetX(int offsetX){
         this.offsetX = offsetX;
     }
 
-    public int getOffsetY() {
+    public int getOffsetY(){
         return offsetY;
     }
 
-    public void setOffsetY(int offsetY) {
+    public void setOffsetY(int offsetY){
         this.offsetY = offsetY;
     }
 
-    public int getAdvanceX() {
+    public int getAdvanceX(){
         return advanceX;
     }
 
-    public void setAdvanceX(int advanceX) {
+    public void setAdvanceX(int advanceX){
         this.advanceX = advanceX;
     }
 
-    public Image getImage() {
+    public Image getImage(){
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(Image image){
         this.image = image;
     }
 }

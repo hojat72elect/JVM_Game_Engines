@@ -10,7 +10,7 @@ public class Material {
     public MaterialMap[] maps;      // Material maps array (MAX_MATERIAL_MAPS)
     public float[] params;        // Material generic parameters (if required)
 
-    public Material() {
+    public Material(){
         shader = new Shader();
         maps = new MaterialMap[MAX_MATERIAL_MAPS];
         for (int i = 0; i < maps.length; i++) {

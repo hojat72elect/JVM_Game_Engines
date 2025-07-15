@@ -2,7 +2,7 @@ package com.raylib.java.extras.physac;
 
 import com.raylib.java.raymath.Vector2;
 
-public class PhysicsBody {
+public class PhysicsBody{
 
     public long id;                                    // Unique identifier
     public boolean enabled;                            // Enabled dynamics state (collisions are calculated anyway)
@@ -24,7 +24,7 @@ public class PhysicsBody {
     public boolean freezeOrient;                       // Physics rotation constraint
     public PhysicsShape shape;                         // Physics body shape information (type, radius, vertices, transform)
 
-    public PhysicsBody() {
+    public PhysicsBody(){
         position = new Vector2();
         velocity = new Vector2();
         force = new Vector2();

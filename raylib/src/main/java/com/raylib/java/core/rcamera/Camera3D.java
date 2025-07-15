@@ -1,6 +1,7 @@
 package com.raylib.java.core.rcamera;
 
 import com.raylib.java.Raylib;
+import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Matrix;
 import com.raylib.java.raymath.Raymath;
 import com.raylib.java.raymath.Vector2;
@@ -9,55 +10,55 @@ import com.raylib.java.raymath.Vector3;
 public class Camera3D {
 
     // rCamera projection modes
-    public static class CameraProjection {
+    public static class CameraProjection{
         public static int
                 CAMERA_PERSPECTIVE = 0,
                 CAMERA_ORTHOGRAPHIC = 1;
     }
 
-    public static class CameraMode {
+    public static class CameraMode{
         public static final int CAMERA_CUSTOM = 0,
-                CAMERA_FREE = 1,
-                CAMERA_ORBITAL = 2,
-                CAMERA_FIRST_PERSON = 3,
-                CAMERA_THIRD_PERSON = 4;
+        CAMERA_FREE = 1,
+        CAMERA_ORBITAL = 2,
+        CAMERA_FIRST_PERSON = 3,
+        CAMERA_THIRD_PERSON = 4;
     }
 
     // rCamera mouse movement sensitivity
-    private static final float CAMERA_MOUSE_MOVE_SENSITIVITY = 0.003f;
-    private static final float CAMERA_MOUSE_SCROLL_SENSITIVITY = 1.5f;
+    private static float CAMERA_MOUSE_MOVE_SENSITIVITY = 0.003f;
+    private static float CAMERA_MOUSE_SCROLL_SENSITIVITY = 1.5f;
 
     // FREE_CAMERA
-    private static final float CAMERA_FREE_MOUSE_SENSITIVITY = 0.01f;
-    private static final float CAMERA_FREE_DISTANCE_MIN_CLAMP = 0.3f;
-    private static final float CAMERA_FREE_DISTANCE_MAX_CLAMP = 120.0f;
-    private static final float CAMERA_FREE_MIN_CLAMP = 85.0f;
-    private static final float CAMERA_FREE_MAX_CLAMP = -85.0f;
-    private static final float CAMERA_FREE_SMOOTH_ZOOM_SENSITIVITY = 0.05f;
-    private static final float CAMERA_FREE_PANNING_DIVIDER = 5.1f;
+    private static float CAMERA_FREE_MOUSE_SENSITIVITY = 0.01f;
+    private static float CAMERA_FREE_DISTANCE_MIN_CLAMP = 0.3f;
+    private static float CAMERA_FREE_DISTANCE_MAX_CLAMP = 120.0f;
+    private static float CAMERA_FREE_MIN_CLAMP = 85.0f;
+    private static float CAMERA_FREE_MAX_CLAMP = -85.0f;
+    private static float CAMERA_FREE_SMOOTH_ZOOM_SENSITIVITY = 0.05f;
+    private static float CAMERA_FREE_PANNING_DIVIDER = 5.1f;
 
     // ORBITAL_CAMERA
-    private static final float CAMERA_ORBITAL_SPEED = 0.01f; // Radians per frame
+    private static float CAMERA_ORBITAL_SPEED = 0.01f; // Radians per frame
 
     // FIRST_PERSON
     //float CAMERA_FIRST_PERSON_MOUSE_SENSITIVITY           0.003f
-    private final float CAMERA_FIRST_PERSON_FOCUS_DISTANCE = 25.0f;
-    private static final float CAMERA_FIRST_PERSON_MIN_CLAMP = 89.0f;
-    private static final float CAMERA_FIRST_PERSON_MAX_CLAMP = -89.0f;
+    private float CAMERA_FIRST_PERSON_FOCUS_DISTANCE = 25.0f;
+    private static float CAMERA_FIRST_PERSON_MIN_CLAMP = 89.0f;
+    private static float CAMERA_FIRST_PERSON_MAX_CLAMP = -89.0f;
 
-    private static final float CAMERA_FIRST_PERSON_STEP_TRIGONOMETRIC_DIVIDER = 8.0f;
-    private static final float CAMERA_FIRST_PERSON_STEP_DIVIDER = 30.0f;
-    private static final float CAMERA_FIRST_PERSON_WAVING_DIVIDER = 200.0f;
+    private static float CAMERA_FIRST_PERSON_STEP_TRIGONOMETRIC_DIVIDER = 8.0f;
+    private static float CAMERA_FIRST_PERSON_STEP_DIVIDER = 30.0f;
+    private static float CAMERA_FIRST_PERSON_WAVING_DIVIDER = 200.0f;
 
     // THIRD_PERSON
     //float CAMERA_THIRD_PERSON_MOUSE_SENSITIVITY           0.003f
-    private static final float CAMERA_THIRD_PERSON_DISTANCE_CLAMP = 1.2f;
-    private static final float CAMERA_THIRD_PERSON_MIN_CLAMP = 5.0f;
-    private static final float CAMERA_THIRD_PERSON_MAX_CLAMP = -85.0f;
-    private final Vector3 CAMERA_THIRD_PERSON_OFFSET = new Vector3(0.4f, 0.0f, 0.0f);
+    private static float CAMERA_THIRD_PERSON_DISTANCE_CLAMP = 1.2f;
+    private static float CAMERA_THIRD_PERSON_MIN_CLAMP = 5.0f;
+    private static float CAMERA_THIRD_PERSON_MAX_CLAMP = -85.0f;
+    private Vector3 CAMERA_THIRD_PERSON_OFFSET = new Vector3(0.4f, 0.0f, 0.0f);
 
     // PLAYER (used by camera)
-    private static final float PLAYER_MOVEMENT_SENSITIVITY = 20.0f;
+    private static float PLAYER_MOVEMENT_SENSITIVITY = 20.0f;
 
     public Vector3 position;                // rCamera position
     public Vector3 up;                      // rCamera up vector (rotation over its axis)
@@ -69,7 +70,7 @@ public class Camera3D {
 
     private final Raylib context;
 
-    public Camera3D(Raylib context) {
+    public Camera3D(Raylib context){
         this.context = context;
         position = new Vector3();
         target = new Vector3();
@@ -80,7 +81,7 @@ public class Camera3D {
         cameraData = new CameraData();
     }
 
-    public Camera3D(Raylib context, CameraData cameraData) {
+    public Camera3D(Raylib context, CameraData cameraData){
         this.context = context;
         position = new Vector3();
         target = new Vector3();
@@ -89,7 +90,7 @@ public class Camera3D {
         this.cameraData = cameraData;
     }
 
-    public Camera3D(Raylib context, Vector3 position, Vector3 target, Vector3 up, Float fovy, int projection) {
+    public Camera3D(Raylib context, Vector3 position, Vector3 target, Vector3 up, Float fovy, int projection){
         this.context = context;
         this.position = position;
         this.target = target;
@@ -106,7 +107,7 @@ public class Camera3D {
     //       Mouse: IsMouseButtonDown(), GetMousePosition(), GetMouseWheelMove()
     //       Keys:  IsKeyDown()
     // TODO: Port to quaternion-based camera (?)
-    public void UpdateCamera() {
+    public void UpdateCamera(){
         int swingCounter = 0;    // Used for 1st person swinging movement
 
         // TODO: Compute cameraData.targetDistance and cameraData.angle here (?)
@@ -143,7 +144,7 @@ public class Camera3D {
         switch (cameraData.mode) {
             case CameraMode.CAMERA_FREE: {          // rCamera free controls, using standard 3d-content-creation scheme
                 // rCamera zoom
-                if ((cameraData.targetDistance < CAMERA_FREE_DISTANCE_MAX_CLAMP) && (mouseWheelMove < 0)) {
+                if ((cameraData.targetDistance < CAMERA_FREE_DISTANCE_MAX_CLAMP) && (mouseWheelMove < 0)){
                     cameraData.targetDistance -= (mouseWheelMove * CAMERA_MOUSE_SCROLL_SENSITIVITY);
                     if (cameraData.targetDistance > CAMERA_FREE_DISTANCE_MAX_CLAMP) {
                         cameraData.targetDistance = CAMERA_FREE_DISTANCE_MAX_CLAMP;
@@ -151,34 +152,38 @@ public class Camera3D {
                 }
 
                 // rCamera looking down
-                else if ((position.y > target.y) && (cameraData.targetDistance == CAMERA_FREE_DISTANCE_MAX_CLAMP) && (mouseWheelMove < 0)) {
+                else if ((position.y > target.y) && (cameraData.targetDistance == CAMERA_FREE_DISTANCE_MAX_CLAMP) && (mouseWheelMove < 0)){
                     target.x += mouseWheelMove * (target.x - position.x) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.y += mouseWheelMove * (target.y - position.y) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.z += mouseWheelMove * (target.z - position.z) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
-                } else if ((position.y > target.y) && (target.y >= 0)) {
+                }
+                else if ((position.y > target.y) && (target.y >= 0)){
                     target.x += mouseWheelMove * (target.x - position.x) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.y += mouseWheelMove * (target.y - position.y) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.z += mouseWheelMove * (target.z - position.z) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
 
                     // if (target.y < 0) target.y = -0.001;
-                } else if ((position.y > target.y) && (target.y < 0) && (mouseWheelMove > 0)) {
+                }
+                else if ((position.y > target.y) && (target.y < 0) && (mouseWheelMove > 0)){
                     cameraData.targetDistance -= (mouseWheelMove * CAMERA_MOUSE_SCROLL_SENSITIVITY);
                     if (cameraData.targetDistance < CAMERA_FREE_DISTANCE_MIN_CLAMP) {
                         cameraData.targetDistance = CAMERA_FREE_DISTANCE_MIN_CLAMP;
                     }
                 }
                 // rCamera looking up
-                else if ((position.y < target.y) && (cameraData.targetDistance == CAMERA_FREE_DISTANCE_MAX_CLAMP) && (mouseWheelMove < 0)) {
+                else if ((position.y < target.y) && (cameraData.targetDistance == CAMERA_FREE_DISTANCE_MAX_CLAMP) && (mouseWheelMove < 0)){
                     target.x += mouseWheelMove * (target.x - position.x) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.y += mouseWheelMove * (target.y - position.y) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.z += mouseWheelMove * (target.z - position.z) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
-                } else if ((position.y < target.y) && (target.y <= 0)) {
+                }
+                else if ((position.y < target.y) && (target.y <= 0)){
                     target.x += mouseWheelMove * (target.x - position.x) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.y += mouseWheelMove * (target.y - position.y) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
                     target.z += mouseWheelMove * (target.z - position.z) * CAMERA_MOUSE_SCROLL_SENSITIVITY / cameraData.targetDistance;
 
                     // if (target.y > 0) target.y = 0.001;
-                } else if ((position.y < target.y) && (target.y > 0) && (mouseWheelMove > 0)) {
+                }
+                else if ((position.y < target.y) && (target.y > 0) && (mouseWheelMove > 0)){
                     cameraData.targetDistance -= (mouseWheelMove * CAMERA_MOUSE_SCROLL_SENSITIVITY);
                     if (cameraData.targetDistance < CAMERA_FREE_DISTANCE_MIN_CLAMP) {
                         cameraData.targetDistance = CAMERA_FREE_DISTANCE_MIN_CLAMP;
@@ -192,7 +197,8 @@ public class Camera3D {
                         if (sZoomKey) {
                             // rCamera smooth zoom
                             cameraData.targetDistance += (mousePositionDelta.y * CAMERA_FREE_SMOOTH_ZOOM_SENSITIVITY);
-                        } else {
+                        }
+                        else{
                             // rCamera rotation
                             cameraData.angle.x += mousePositionDelta.x * -CAMERA_FREE_MOUSE_SENSITIVITY;
                             cameraData.angle.y += mousePositionDelta.y * -CAMERA_FREE_MOUSE_SENSITIVITY;
@@ -200,15 +206,17 @@ public class Camera3D {
                             // Angle clamp
                             if (cameraData.angle.y > CAMERA_FREE_MIN_CLAMP * Raymath.DEG2RAD) {
                                 cameraData.angle.y = CAMERA_FREE_MIN_CLAMP * Raymath.DEG2RAD;
-                            } else if (cameraData.angle.y < CAMERA_FREE_MAX_CLAMP * Raymath.DEG2RAD) {
+                            }
+                            else if (cameraData.angle.y < CAMERA_FREE_MAX_CLAMP * Raymath.DEG2RAD) {
                                 cameraData.angle.y = CAMERA_FREE_MAX_CLAMP * Raymath.DEG2RAD;
                             }
                         }
-                    } else {
+                    }
+                    else{
                         // rCamera panning
-                        target.x += ((mousePositionDelta.x * CAMERA_FREE_MOUSE_SENSITIVITY) * Math.cos(cameraData.angle.x) + (mousePositionDelta.y * -CAMERA_FREE_MOUSE_SENSITIVITY) * Math.sin(cameraData.angle.x) * Math.sin(cameraData.angle.y)) * (cameraData.targetDistance / CAMERA_FREE_PANNING_DIVIDER);
-                        target.y += ((mousePositionDelta.y * CAMERA_FREE_MOUSE_SENSITIVITY) * Math.cos(cameraData.angle.y)) * (cameraData.targetDistance / CAMERA_FREE_PANNING_DIVIDER);
-                        target.z += ((mousePositionDelta.x * -CAMERA_FREE_MOUSE_SENSITIVITY) * Math.sin(cameraData.angle.x) + (mousePositionDelta.y * -CAMERA_FREE_MOUSE_SENSITIVITY) * Math.cos(cameraData.angle.x) * Math.sin(cameraData.angle.y)) * (cameraData.targetDistance / CAMERA_FREE_PANNING_DIVIDER);
+                        target.x += ((mousePositionDelta.x*CAMERA_FREE_MOUSE_SENSITIVITY)*Math.cos(cameraData.angle.x) + (mousePositionDelta.y*-CAMERA_FREE_MOUSE_SENSITIVITY)*Math.sin(cameraData.angle.x)*Math.sin(cameraData.angle.y))*(cameraData.targetDistance/CAMERA_FREE_PANNING_DIVIDER);
+                        target.y += ((mousePositionDelta.y*CAMERA_FREE_MOUSE_SENSITIVITY)*Math.cos(cameraData.angle.y))*(cameraData.targetDistance/CAMERA_FREE_PANNING_DIVIDER);
+                        target.z += ((mousePositionDelta.x*-CAMERA_FREE_MOUSE_SENSITIVITY)*Math.sin(cameraData.angle.x) + (mousePositionDelta.y*-CAMERA_FREE_MOUSE_SENSITIVITY)*Math.cos(cameraData.angle.x)*Math.sin(cameraData.angle.y))*(cameraData.targetDistance/CAMERA_FREE_PANNING_DIVIDER);
                     }
 
                 }
@@ -258,7 +266,8 @@ public class Camera3D {
                 // Angle clamp
                 if (cameraData.angle.y > CAMERA_FIRST_PERSON_MIN_CLAMP * Raymath.DEG2RAD) {
                     cameraData.angle.y = CAMERA_FIRST_PERSON_MIN_CLAMP * Raymath.DEG2RAD;
-                } else if (cameraData.angle.y < CAMERA_FIRST_PERSON_MAX_CLAMP * Raymath.DEG2RAD) {
+                }
+                else if (cameraData.angle.y < CAMERA_FIRST_PERSON_MAX_CLAMP * Raymath.DEG2RAD) {
                     cameraData.angle.y = CAMERA_FIRST_PERSON_MAX_CLAMP * Raymath.DEG2RAD;
                 }
 
@@ -273,8 +282,8 @@ public class Camera3D {
                 target.z = position.z - transform.m14;
 
                 // If movement detected (some key pressed), increase swinging
-                for (int i = 0; i < 6; i++) {
-                    if (direction[i] == 1) {
+                for (int i = 0; i < 6; i++){
+                    if (direction[i] == 1){
                         swingCounter++;
                         break;
                     }
@@ -289,7 +298,7 @@ public class Camera3D {
 
             }
             break;
-            case CameraMode.CAMERA_THIRD_PERSON: {
+            case CameraMode.CAMERA_THIRD_PERSON:{
                 // rCamera moves as in a third-person game, following target at a
                 // distance, controls are configurable
                 position.x += (Math.sin(cameraData.angle.x) * direction[1] -
@@ -311,9 +320,10 @@ public class Camera3D {
                 cameraData.angle.y += (mousePositionDelta.y * -CAMERA_MOUSE_MOVE_SENSITIVITY);
 
                 // Angle clamp
-                if (cameraData.angle.y > CAMERA_THIRD_PERSON_MIN_CLAMP * Raymath.DEG2RAD) {
+                if (cameraData.angle.y > CAMERA_THIRD_PERSON_MIN_CLAMP * Raymath.DEG2RAD){
                     cameraData.angle.y = CAMERA_THIRD_PERSON_MIN_CLAMP * Raymath.DEG2RAD;
-                } else if (cameraData.angle.y < CAMERA_THIRD_PERSON_MAX_CLAMP * Raymath.DEG2RAD) {
+                }
+                else if (cameraData.angle.y < CAMERA_THIRD_PERSON_MAX_CLAMP * Raymath.DEG2RAD){
                     cameraData.angle.y = CAMERA_THIRD_PERSON_MAX_CLAMP * Raymath.DEG2RAD;
                 }
 
@@ -321,16 +331,17 @@ public class Camera3D {
                 cameraData.targetDistance -= (mouseWheelMove * CAMERA_MOUSE_SCROLL_SENSITIVITY);
 
                 // rCamera distance clamp
-                if (cameraData.targetDistance < CAMERA_THIRD_PERSON_DISTANCE_CLAMP) {
+                if (cameraData.targetDistance < CAMERA_THIRD_PERSON_DISTANCE_CLAMP){
                     cameraData.targetDistance = CAMERA_THIRD_PERSON_DISTANCE_CLAMP;
                 }
 
                 // TODO: It seems position is not correctly updated or some rounding issue makes the camera move straight to target...
                 position.x = (float) (Math.sin(cameraData.angle.x) * cameraData.targetDistance * Math.cos(cameraData.angle.y) + target.x);
 
-                if (cameraData.angle.y <= 0.0f) {
+                if (cameraData.angle.y <= 0.0f){
                     position.y = (float) (Math.sin(cameraData.angle.y) * cameraData.targetDistance * Math.sin(cameraData.angle.y) + target.y);
-                } else {
+                }
+                else{
                     position.y = (float) (-Math.sin(cameraData.angle.y) * cameraData.targetDistance * Math.sin(cameraData.angle.y) + target.y);
                 }
 
@@ -362,9 +373,10 @@ public class Camera3D {
         cameraData.playerEyesPosition = this.position.y;          // Init player eyes position to camera Y position
 
         // Lock cursor for first person and third person cameras
-        if ((mode == CameraMode.CAMERA_FIRST_PERSON) || (mode == CameraMode.CAMERA_THIRD_PERSON)) {
+        if ((mode == CameraMode.CAMERA_FIRST_PERSON) || (mode == CameraMode.CAMERA_THIRD_PERSON)){
             context.core.DisableCursor();
-        } else {
+        }
+        else{
             context.core.EnableCursor();
         }
 
@@ -372,22 +384,22 @@ public class Camera3D {
     }
 
     // Set camera pan key to combine with mouse movement (free camera)
-    public void SetCameraPanControl(int keyPan) {
+    public void SetCameraPanControl(int keyPan){
         cameraData.panControl = keyPan;
     }
 
     // Set camera alt key to combine with mouse movement (free camera)
-    public void SetCameraAltControl(int keyAlt) {
+    public void SetCameraAltControl(int keyAlt){
         cameraData.altControl = keyAlt;
     }
 
     // Set camera smooth zoom key to combine with mouse (free camera)
-    public void SetCameraSmoothZoomControl(int szoomKey) {
+    public void SetCameraSmoothZoomControl(int szoomKey){
         cameraData.smoothZoomControl = szoomKey;
     }
 
     // Set camera move controls (1st person and 3rd person cameras)
-    public void SetCameraMoveControls(int keyFront, int keyBack, int keyRight, int keyLeft, int keyUp, int keyDown) {
+    public void SetCameraMoveControls(int keyFront, int keyBack, int keyRight, int keyLeft, int keyUp, int keyDown){
         cameraData.MoveFront = keyFront;
         cameraData.MoveBack = keyBack;
         cameraData.MoveRight = keyRight;
@@ -395,24 +407,24 @@ public class Camera3D {
         cameraData.MoveUp = keyUp;
         cameraData.MoveDown = keyDown;
     }
-
-    public Vector3 getPosition() {
+    
+    public Vector3 getPosition(){
         return position;
     }
 
-    public Vector3 getTarget() {
+    public Vector3 getTarget(){
         return target;
     }
 
-    public Vector3 getUp() {
+    public Vector3 getUp(){
         return up;
     }
 
-    public float getFovy() {
+    public float getFovy(){
         return fovy;
     }
 
-    public int getProjection() {
+    public int getProjection(){
         return projection;
     }
 
@@ -420,23 +432,23 @@ public class Camera3D {
         return cameraData.mode;
     }
 
-    public void setTarget(Vector3 target) {
+    public void setTarget(Vector3 target){
         this.target = target;
     }
 
-    public void setFovy(float fovy) {
+    public void setFovy(float fovy){
         this.fovy = fovy;
     }
 
-    public void setPosition(Vector3 position) {
+    public void setPosition(Vector3 position){
         this.position = position;
     }
 
-    public void setprojection(int projection) {
+    public void setprojection(int projection){
         this.projection = projection;
     }
 
-    public void setUp(Vector3 up) {
+    public void setUp(Vector3 up){
         this.up = up;
     }
 

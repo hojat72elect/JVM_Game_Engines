@@ -2,7 +2,7 @@ package com.raylib.java.extras.physac;
 
 import com.raylib.java.raymath.Vector2;
 
-public class PhysicsManifoldData {
+public class PhysicsManifoldData{
 
     public long id;                                    // Unique identifier
     public PhysicsBody bodyA;                          // Manifold first physics body reference
@@ -15,7 +15,7 @@ public class PhysicsManifoldData {
     public float dynamicFriction;                      // Mixed dynamic friction during collision
     public float staticFriction;                       // Mixed static friction during collision
 
-    public PhysicsManifoldData() {
+    public PhysicsManifoldData(){
         normal = new Vector2();
         contacts = new Vector2[]{new Vector2(), new Vector2()};
 

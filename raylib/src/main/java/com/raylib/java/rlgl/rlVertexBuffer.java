@@ -1,6 +1,6 @@
 package com.raylib.java.rlgl;
 
-public class rlVertexBuffer {
+public class rlVertexBuffer{
 
     int elementCount;          // Number of elements in the buffer (QUADS)
     float[] vertices;            // Vertex position (XYZ - 3 components per vertex) (shader-location = 0)
@@ -28,59 +28,59 @@ public class rlVertexBuffer {
         this.elementCount = elementCount;
     }
 
-    public float[] getVertices() {
+    public float[] getVertices(){
         return vertices;
     }
 
-    public void setVertices(float[] vertices) {
+    public void setVertices(float[] vertices){
         this.vertices = vertices;
     }
 
-    public float[] getTexcoords() {
+    public float[] getTexcoords(){
         return texcoords;
     }
 
-    public void setTexcoords(float[] texcoords) {
+    public void setTexcoords(float[] texcoords){
         this.texcoords = texcoords;
     }
 
-    public byte[] getColors() {
+    public byte[] getColors(){
         return colors;
     }
 
-    public void setColors(byte[] colors) {
+    public void setColors(byte[] colors){
         this.colors = colors;
     }
 
-    public int[] getIndices_GL11() {
+    public int[] getIndices_GL11(){
         return indices_GL11;
     }
 
-    public void setIndices_GL11(int[] indices_GL11) {
+    public void setIndices_GL11(int[] indices_GL11){
         this.indices_GL11 = indices_GL11;
     }
 
-    public short[] getIndices_ES20() {
+    public short[] getIndices_ES20(){
         return indices_ES20;
     }
 
-    public void setIndices_ES20(short[] indices_ES20) {
+    public void setIndices_ES20(short[] indices_ES20){
         this.indices_ES20 = indices_ES20;
     }
 
-    public int getVaoId() {
+    public int getVaoId(){
         return vaoId;
     }
 
-    public void setVaoId(int vaoId) {
+    public void setVaoId(int vaoId){
         this.vaoId = vaoId;
     }
 
-    public int[] getVboId() {
+    public int[] getVboId(){
         return vboId;
     }
 
-    public void setVboId(int[] vboId) {
+    public void setVboId(int[] vboId){
         this.vboId = vboId;
     }
 }

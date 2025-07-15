@@ -5,7 +5,7 @@ import com.raylib.java.raymath.Vector2;
 import static com.raylib.java.core.input.Keyboard.*;
 import static com.raylib.java.core.input.Mouse.MouseButton.MOUSE_BUTTON_MIDDLE;
 
-public class CameraData {
+public class CameraData{
 
     public int
             MoveFront = KEY_W,
@@ -32,7 +32,7 @@ public class CameraData {
         playerEyesPosition = 1.85f;
         angle = new Vector2();
         moveControl = new int[]{
-                MoveFront, MoveBack, MoveLeft, MoveRight, MoveUp, MoveDown
+            MoveFront, MoveBack, MoveLeft, MoveRight, MoveUp, MoveDown
         };
     }
 

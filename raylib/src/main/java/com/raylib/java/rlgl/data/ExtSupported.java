@@ -1,7 +1,7 @@
 package com.raylib.java.rlgl.data;
 
-public class ExtSupported {
-
+public class ExtSupported{
+    
     public boolean vao;                           // VAO support (OpenGL ES2 could not support VAO extension) (GL_ARB_vertex_array_object)
     public boolean instancing;                    // Instancing supported (GL_ANGLE_instanced_arrays, GL_EXT_draw_instanced + GL_EXT_instanced_arrays)
     public boolean texNPOT;                       // NPOT textures full support (GL_ARB_texture_non_power_of_two, GL_OES_texture_npot)
@@ -84,68 +84,68 @@ public class ExtSupported {
         this.texCompETC2 = texCompETC2;
     }
 
-    public boolean isTexCompPVRT() {
+    public boolean isTexCompPVRT(){
         return texCompPVRT;
     }
 
-    public void setTexCompPVRT(boolean texCompPVRT) {
+    public void setTexCompPVRT(boolean texCompPVRT){
         this.texCompPVRT = texCompPVRT;
     }
 
-    public boolean isTexCompASTC() {
+    public boolean isTexCompASTC(){
         return texCompASTC;
     }
 
-    public void setTexCompASTC(boolean texCompASTC) {
+    public void setTexCompASTC(boolean texCompASTC){
         this.texCompASTC = texCompASTC;
     }
 
-    public boolean isTexMirrorClamp() {
+    public boolean isTexMirrorClamp(){
         return texMirrorClamp;
     }
 
-    public void setTexMirrorClamp(boolean texMirrorClamp) {
+    public void setTexMirrorClamp(boolean texMirrorClamp){
         this.texMirrorClamp = texMirrorClamp;
     }
 
-    public boolean isTexAnisoFilter() {
+    public boolean isTexAnisoFilter(){
         return texAnisoFilter;
     }
 
-    public void setTexAnisoFilter(boolean texAnisoFilter) {
+    public void setTexAnisoFilter(boolean texAnisoFilter){
         this.texAnisoFilter = texAnisoFilter;
     }
 
-    public boolean isComputeShader() {
+    public boolean isComputeShader(){
         return computeShader;
     }
 
-    public void setComputeShader(boolean computeShader) {
+    public void setComputeShader(boolean computeShader){
         this.computeShader = computeShader;
     }
 
-    public boolean isSsbo() {
+    public boolean isSsbo(){
         return ssbo;
     }
 
-    public void setSsbo(boolean ssbo) {
+    public void setSsbo(boolean ssbo){
         this.ssbo = ssbo;
     }
 
-    public float getMaxAnisotropyLevel() {
+    public float getMaxAnisotropyLevel(){
         return maxAnisotropyLevel;
     }
 
-    public void setMaxAnisotropyLevel(float maxAnisotropyLevel) {
+    public void setMaxAnisotropyLevel(float maxAnisotropyLevel){
         this.maxAnisotropyLevel = maxAnisotropyLevel;
     }
 
-    public int getMaxDepthBits() {
+    public int getMaxDepthBits(){
         return maxDepthBits;
     }
 
-    public void setMaxDepthBits(int maxDepthBits) {
+    public void setMaxDepthBits(int maxDepthBits){
         this.maxDepthBits = maxDepthBits;
     }
-
+    
 }
