@@ -132,7 +132,7 @@ public class Lwjgl3Preferences implements Preferences {
 
     @Override
     public Map<String, ?> get() {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         for (Entry<Object, Object> val : properties.entrySet()) {
             if (val.getValue() instanceof Boolean)
                 map.put((String) val.getKey(), Boolean.parseBoolean((String) val.getValue()));

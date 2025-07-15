@@ -47,7 +47,7 @@ public class LwjglAWTCanvas implements Application {
     final ApplicationListener listener;
     final Array<Runnable> runnables = new Array();
     final Array<Runnable> executedRunnables = new Array();
-    final Array<LifecycleListener> lifecycleListeners = new Array<LifecycleListener>();
+    final Array<LifecycleListener> lifecycleListeners = new Array<>();
     final String logTag = "LwjglAWTCanvas";
     LwjglGraphics graphics;
     OpenALLwjglAudio audio;
