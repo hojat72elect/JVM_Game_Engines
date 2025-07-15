@@ -45,20 +45,84 @@ import java.util.Arrays;
 
 public class rText {
 
+    /**********************************************************************************************
+     *
+     *   rtext - Basic functions to load fonts and draw text
+     *
+     *   CONFIGURATION:
+     *
+     *   #define SUPPORT_MODULE_RTEXT
+     *       rtext module is included in the build
+     *
+     *   #define SUPPORT_FILEFORMAT_FNT
+     *   #define SUPPORT_FILEFORMAT_TTF
+     *       Selected desired fileformats to be supported for loading. Some of those formats are
+     *       supported by default, to remove support, just comment unrequired #define in this module
+     *
+     *   #define SUPPORT_DEFAULT_FONT
+     *       Load default raylib font on initialization to be used by DrawText() and MeasureText().
+     *       If no default font loaded, DrawTextEx() and MeasureTextEx() are required.
+     *
+     *   #define TEXTSPLIT_MAX_TEXT_BUFFER_LENGTH
+     *       TextSplit() function static buffer max size
+     *
+     *   #define MAX_TEXTSPLIT_COUNT
+     *       TextSplit() function static substrings pointers array (pointing to static buffer)
+     *
+     *
+     *   DEPENDENCIES:
+     *       stb_truetype  - Load TTF file and rasterize characters data
+     *       stb_rect_pack - Rectangles packing algorithms, required for font atlas generation
+     *
+     *
+     *   LICENSE: zlib/libpng
+     *
+     *   Copyright (c) 2013-2022 Ramon Santamaria (@raysan5)
+     *
+     *   This software is provided "as-is", without any express or implied warranty. In no event
+     *   will the authors be held liable for any damages arising from the use of this software.
+     *
+     *   Permission is granted to anyone to use this software for any purpose, including commercial
+     *   applications, and to alter it and redistribute it freely, subject to the following restrictions:
+     *
+     *     1. The origin of this software must not be misrepresented; you must not claim that you
+     *     wrote the original software. If you use this software in a product, an acknowledgment
+     *     in the product documentation would be appreciated but is not required.
+     *
+     *     2. Altered source versions must be plainly marked as such, and must not be misrepresented
+     *     as being the original software.
+     *
+     *     3. This notice may not be removed or altered from any source distribution.
+     *
+     **********************************************************************************************/
+
+    public static class FontType { // Font type, defines generation method
+
+        public final static int
+                FONT_DEFAULT = 0,       // Default font generation, anti-aliased
+                FONT_BITMAP = 1,                 // Bitmap font generation, no anti-aliasing
+                FONT_SDF = 2;                    // SDF font generation, requires external shader
+    }
+
     final int MAX_TEXTFORMAT_BUFFERS = 4;             // Maximum number of static buffers for text formatting
     final int GLYPH_NOTFOUND_CHAR_FALLBACK = 63;      // Character used if requested codepoint is not found: '?'
+    private int next;
+
     // Default values for ttf font generation
     final int FONT_TTF_DEFAULT_SIZE = 32;          // TTF font generation default char size (char-height)
     final int FONT_TTF_DEFAULT_NUMCHARS = 95;      // TTF font generation default charset: 95 glyphs (ASCII 32..126)
     final int FONT_TTF_DEFAULT_FIRST_CHAR = 32;    // TTF font generation default first char for image sprite font (32-Space)
     final int FONT_TTF_DEFAULT_CHARS_PADDING = 4;  // TTF font generation default chars padding
     final int MAX_GLYPHS_FROM_IMAGE = 256;         // Maximum number of glyphs supported on image scan
+
     final int MAX_TEXT_UNICODE_CHARS = 512;        // Maximum number of unicode codepoints: GetCodepoints()
     final int MAX_TEXTSPLIT_COUNT = 128;           // Maximum number of substrings to split: TextSplit()
-    private final Raylib context;
+
     int codepointByteCount;
+
     Font defaultFont;
-    private int next;
+    private final Raylib context;
+
     public rText(Raylib raylib) {
         this.context = raylib;
 
@@ -708,8 +772,9 @@ public class rText {
                     byte[] fcData = font.glyphs[i].image.getData();
                     // Copy pixel data from fc.data to atlas
                     for (int y = 0; y < font.glyphs[i].image.height; y++) {
-                        if (font.glyphs[i].image.width >= 0)
-                            System.arraycopy(fcData, y * font.glyphs[i].image.width + 0, atlasData, (offsetY + y) * atlas.width + (offsetX + x), font.glyphs[i].image.width);
+                        for (int x = 0; x < font.glyphs[i].image.width; x++) {
+                            atlasData[(offsetY + y) * atlas.width + (offsetX + x)] = fcData[y * font.glyphs[i].image.width + x];
+                        }
                     }
 
                     // Fill chars rectangles in atlas info
@@ -1134,7 +1199,7 @@ public class rText {
                 }
 
                 if (font.glyphs[index].advanceX == 0) {
-                    textOffsetX += (font.recs[index].width * scaleFactor + spacing);
+                    textOffsetX += ((float) font.recs[index].width * scaleFactor + spacing);
                 } else {
                     textOffsetX += ((float) font.glyphs[index].advanceX * scaleFactor + spacing);
                 }
@@ -1256,13 +1321,13 @@ public class rText {
         return Integer.parseInt(text);
     }
 
+    //TextCopy
+    //can't really copy from one memory address to another...
+
     // Check if two text string are equal
     public boolean TextIsEqual(String text1, String text2) {
         return text1.equals(text2);
     }
-
-    //TextCopy
-    //can't really copy from one memory address to another...
 
     // Get a piece of a text string
     public String TextSubtext(String text, int position, int length) {
@@ -1736,64 +1801,5 @@ public class rText {
         }
 
         return font;
-    }
-
-    /**********************************************************************************************
-     *
-     *   rtext - Basic functions to load fonts and draw text
-     *
-     *   CONFIGURATION:
-     *
-     *   #define SUPPORT_MODULE_RTEXT
-     *       rtext module is included in the build
-     *
-     *   #define SUPPORT_FILEFORMAT_FNT
-     *   #define SUPPORT_FILEFORMAT_TTF
-     *       Selected desired fileformats to be supported for loading. Some of those formats are
-     *       supported by default, to remove support, just comment unrequired #define in this module
-     *
-     *   #define SUPPORT_DEFAULT_FONT
-     *       Load default raylib font on initialization to be used by DrawText() and MeasureText().
-     *       If no default font loaded, DrawTextEx() and MeasureTextEx() are required.
-     *
-     *   #define TEXTSPLIT_MAX_TEXT_BUFFER_LENGTH
-     *       TextSplit() function static buffer max size
-     *
-     *   #define MAX_TEXTSPLIT_COUNT
-     *       TextSplit() function static substrings pointers array (pointing to static buffer)
-     *
-     *
-     *   DEPENDENCIES:
-     *       stb_truetype  - Load TTF file and rasterize characters data
-     *       stb_rect_pack - Rectangles packing algorithms, required for font atlas generation
-     *
-     *
-     *   LICENSE: zlib/libpng
-     *
-     *   Copyright (c) 2013-2022 Ramon Santamaria (@raysan5)
-     *
-     *   This software is provided "as-is", without any express or implied warranty. In no event
-     *   will the authors be held liable for any damages arising from the use of this software.
-     *
-     *   Permission is granted to anyone to use this software for any purpose, including commercial
-     *   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-     *
-     *     1. The origin of this software must not be misrepresented; you must not claim that you
-     *     wrote the original software. If you use this software in a product, an acknowledgment
-     *     in the product documentation would be appreciated but is not required.
-     *
-     *     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-     *     as being the original software.
-     *
-     *     3. This notice may not be removed or altered from any source distribution.
-     *
-     **********************************************************************************************/
-
-    public static class FontType { // Font type, defines generation method
-
-        public final static int
-                FONT_DEFAULT = 0,       // Default font generation, anti-aliased
-                FONT_BITMAP = 1,                 // Bitmap font generation, no anti-aliasing
-                FONT_SDF = 2;                    // SDF font generation, requires external shader
     }
 }
