@@ -1,4 +1,4 @@
-package com.raylib.java.game
+package com.raylib.java.examples
 
 import com.raylib.java.Raylib
 import com.raylib.java.core.Color
