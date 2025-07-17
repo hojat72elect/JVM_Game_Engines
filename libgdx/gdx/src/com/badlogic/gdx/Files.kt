@@ -1,13 +1,12 @@
-package com.badlogic.gdx;
+package com.badlogic.gdx
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.files.FileHandle
+import  com.badlogic.gdx.utils.GdxRuntimeException
 
 /**
- * Provides standard access to the filesystem, classpath, Android app storage (internal and external), and Android assets
- * directory.
+ * Provides standard access to the filesystem, classpath, Android app storage (internal and external), and Android assets directory.
  */
-public interface Files {
+interface Files {
     /**
      * Returns a handle representing a file or directory.
      *
@@ -15,63 +14,63 @@ public interface Files {
      * @throws GdxRuntimeException if the type is classpath or internal and the file does not exist.
      * @see FileType
      */
-    FileHandle getFileHandle(String path, FileType type);
+    fun getFileHandle(path: String, type: FileType): FileHandle?
 
     /**
-     * Convenience method that returns a {@link FileType#Classpath} file handle.
+     * Convenience method that returns a [FileType.Classpath] file handle.
      */
-    FileHandle classpath(String path);
+    fun classpath(path: String): FileHandle?
 
     /**
-     * Convenience method that returns a {@link FileType#Internal} file handle.
+     * Convenience method that returns a [FileType.Internal] file handle.
      */
-    FileHandle internal(String path);
+    fun internal(path: String): FileHandle?
 
     /**
-     * Convenience method that returns a {@link FileType#External} file handle.
+     * Convenience method that returns a [FileType.External] file handle.
      */
-    FileHandle external(String path);
+    fun external(path: String): FileHandle?
 
     /**
-     * Convenience method that returns a {@link FileType#Absolute} file handle.
+     * Convenience method that returns a [FileType.Absolute] file handle.
      */
-    FileHandle absolute(String path);
+    fun absolute(path: String): FileHandle?
 
     /**
-     * Convenience method that returns a {@link FileType#Local} file handle.
+     * Convenience method that returns a [FileType.Local] file handle.
      */
-    FileHandle local(String path);
+    fun local(path: String): FileHandle?
 
     /**
      * Returns the external storage path directory. This is the app external storage on Android and the home directory of the
      * current user on the desktop.
      */
-    String getExternalStoragePath();
+    val externalStoragePath: String?
 
     /**
      * Returns true if the external storage is ready for file IO.
      */
-    boolean isExternalStorageAvailable();
+    val isExternalStorageAvailable: Boolean
 
     /**
      * Returns the local storage path directory. This is the private files directory on Android and the directory of the jar on
      * the desktop.
      */
-    String getLocalStoragePath();
+    val localStoragePath: String?
 
     /**
      * Returns true if the local storage is ready for file IO.
      */
-    boolean isLocalStorageAvailable();
+    val isLocalStorageAvailable: Boolean
 
     /**
      * Indicates how to resolve a path to a file.
      */
-    enum FileType {
+    enum class FileType {
         /**
          * Path relative to the root of the classpath. Classpath files are always readonly. Note that classpath files are not
-         * compatible with some functionality on Android, such as {@link Audio#newSound(FileHandle)} and
-         * {@link Audio#newMusic(FileHandle)}.
+         * compatible with some functionality on Android, such as [Audio.newSound] and
+         * [Audio.newMusic].
          */
         Classpath,
 
