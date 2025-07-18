@@ -27,7 +27,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class StageTest extends GdxTest implements InputProcessor {
     private static final int NUM_GROUPS = 4;
-    private static final int NUM_SPRITES = (int) Math.sqrt(150 / NUM_GROUPS);
+    private static final int NUM_SPRITES = (int) Math.sqrt(150F / NUM_GROUPS);
     private static final float SPACING = 5;
     private final Vector2 stageCoords = new Vector2();
     ShapeRenderer renderer;

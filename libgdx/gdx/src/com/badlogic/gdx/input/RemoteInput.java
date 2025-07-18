@@ -437,14 +437,11 @@ public class RemoteInput implements Runnable, Input {
 
     @Override
     public long getCurrentEventTime() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public void getRotationMatrix(float[] matrix) {
-        // TODO Auto-generated method stub
-
     }
 
     public interface RemoteInputListener {

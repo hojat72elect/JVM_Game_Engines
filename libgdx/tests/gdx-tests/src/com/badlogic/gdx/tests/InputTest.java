@@ -10,21 +10,7 @@ public class InputTest extends GdxTest implements InputProcessor {
 
     @Override
     public void create() {
-// Gdx.input = new RemoteInput();
         Gdx.input.setInputProcessor(this);
-// Gdx.input.setCursorCatched(true);
-//
-// Gdx.input.getTextInput(new Input.TextInputListener() {
-// @Override
-// public void input(String text) {
-// Gdx.app.log("Input test", "Input value: " + text);
-// }
-//
-// @Override
-// public void canceled() {
-// Gdx.app.log("Input test", "Canceled input text");
-// }
-// }, "Title", "Text", "Placeholder");
     }
 
     @Override
@@ -41,10 +27,6 @@ public class InputTest extends GdxTest implements InputProcessor {
                 Gdx.app.log("Input Test", "delta[" + i + "]: " + Gdx.input.getDeltaX(i) + ", " + Gdx.input.getDeltaY(i));
             }
         }
-// Gdx.input.setCursorPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-// if(Gdx.input.isTouched()) {
-// Gdx.app.log("Input Test", "is touched");
-// }
     }
 
     @Override
