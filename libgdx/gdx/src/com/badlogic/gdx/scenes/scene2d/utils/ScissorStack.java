@@ -8,7 +8,8 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A stack of {@link Rectangle} objects to be used for clipping via {@link GL20#glScissor(int, int, int, int)}. When a new
@@ -18,7 +19,7 @@ import com.badlogic.gdx.utils.Null;
 public class ScissorStack {
     static final Rectangle viewport = new Rectangle();
     static Vector3 tmp = new Vector3();
-    private static final Array<Rectangle> scissors = new Array<Rectangle>();
+    private static final Array<Rectangle> scissors = new Array<>();
 
     /**
      * Pushes a new scissor {@link Rectangle} onto the stack, merging it with the current top of the stack. The minimal area of
@@ -78,7 +79,7 @@ public class ScissorStack {
     /**
      * @return null if there are no scissors.
      */
-    @Null
+    @Nullable
     public static Rectangle peekScissors() {
         if (scissors.size == 0) return null;
         return scissors.peek();
@@ -141,11 +142,10 @@ public class ScissorStack {
     public static Rectangle getViewport() {
         if (scissors.size == 0) {
             viewport.set(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            return viewport;
         } else {
             Rectangle scissor = scissors.peek();
             viewport.set(scissor);
-            return viewport;
         }
+        return viewport;
     }
 }

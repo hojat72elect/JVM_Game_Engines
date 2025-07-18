@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class PerformanceCounters {
     private final static float nano2seconds = MathUtils.nanoToSec;
-    public final Array<PerformanceCounter> counters = new Array<PerformanceCounter>();
+    public final Array<PerformanceCounter> counters = new Array<>();
     private long lastTick = 0L;
 
     public PerformanceCounter add(final String name, final int windowSize) {

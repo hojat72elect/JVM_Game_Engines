@@ -9,6 +9,8 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.audio.AudioDevice;
@@ -84,7 +86,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
      * {@inheritDoc}
      */
     @Override
-    public Music newMusic(FileHandle file) {
+    public Music newMusic(@NonNull FileHandle file) {
         AndroidFileHandle aHandle = (AndroidFileHandle) file;
 
         MediaPlayer mediaPlayer = createMediaPlayer();
@@ -124,6 +126,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
         return true;
     }
 
+    @NonNull
     @Override
     public String[] getAvailableOutputDevices() {
         return new String[0];
@@ -157,7 +160,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
      * {@inheritDoc}
      */
     @Override
-    public Sound newSound(FileHandle file) {
+    public Sound newSound(@NonNull FileHandle file) {
         AndroidSound androidSound;
         AndroidFileHandle aHandle = (AndroidFileHandle) file;
         if (aHandle.type() == FileType.Internal) {

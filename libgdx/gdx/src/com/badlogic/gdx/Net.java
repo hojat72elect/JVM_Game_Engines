@@ -9,8 +9,9 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pool.Poolable;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -48,7 +49,7 @@ public interface Net {
      * @param httpResponseListener The {@link HttpResponseListener} to call once the HTTP response is ready to be processed. Could
      *                             be null, in that case no listener is called.
      */
-    void sendHttpRequest(HttpRequest httpRequest, @Null HttpResponseListener httpResponseListener);
+    void sendHttpRequest(HttpRequest httpRequest, @Nullable HttpResponseListener httpResponseListener);
 
     void cancelHttpRequest(HttpRequest httpRequest);
 
@@ -298,7 +299,7 @@ public interface Net {
         private boolean includeCredentials = false;
 
         public HttpRequest() {
-            this.headers = new HashMap<String, String>();
+            this.headers = new HashMap<>();
         }
 
         /**

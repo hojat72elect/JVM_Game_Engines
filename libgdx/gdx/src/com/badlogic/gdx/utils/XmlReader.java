@@ -8,6 +8,8 @@ package com.badlogic.gdx.utils;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -137,7 +139,7 @@ public class XmlReader {
     }
 
     public Element parse(char[] data, int offset, int length) {
-        int cs, p = offset, pe = length;
+        int cs, p = offset;
 
         int s = 0;
         String attributeName = null;
@@ -151,7 +153,7 @@ public class XmlReader {
         // line 7 "XmlReader.java"
         {
             int _klen;
-            int _trans = 0;
+            int _trans;
             int _acts;
             int _nacts;
             int _keys;
@@ -161,13 +163,9 @@ public class XmlReader {
             while (true) {
                 switch (_goto_targ) {
                     case 0:
-                        if (p == pe) {
+                        if (p == length) {
                             _goto_targ = 4;
-                            continue _goto;
-                        }
-                        if (cs == 0) {
-                            _goto_targ = 5;
-                            continue _goto;
+                            continue;
                         }
                     case 1:
                         _match:
@@ -179,8 +177,7 @@ public class XmlReader {
                                 int _lower = _keys;
                                 int _mid;
                                 int _upper = _keys + _klen - 1;
-                                while (true) {
-                                    if (_upper < _lower) break;
+                                while (_upper >= _lower) {
 
                                     _mid = _lower + ((_upper - _lower) >> 1);
                                     if (data[p] < _xml_trans_keys[_mid])
@@ -201,8 +198,7 @@ public class XmlReader {
                                 int _lower = _keys;
                                 int _mid;
                                 int _upper = _keys + (_klen << 1) - 2;
-                                while (true) {
-                                    if (_upper < _lower) break;
+                                while (_upper >= _lower) {
 
                                     _mid = _lower + (((_upper - _lower) >> 1) & ~1);
                                     if (data[p] < _xml_trans_keys[_mid])
@@ -260,7 +256,7 @@ public class XmlReader {
                                             {
                                                 cs = 15;
                                                 _goto_targ = 2;
-                                                if (true) continue _goto;
+                                                continue _goto;
                                             }
                                         }
                                         hasBody = true;
@@ -275,10 +271,9 @@ public class XmlReader {
                                         {
                                             cs = 15;
                                             _goto_targ = 2;
-                                            if (true) continue _goto;
+                                            continue _goto;
                                         }
                                     }
-                                    break;
                                     case 3:
                                         // line 132 "XmlReader.rl"
                                     {
@@ -286,17 +281,16 @@ public class XmlReader {
                                         {
                                             cs = 15;
                                             _goto_targ = 2;
-                                            if (true) continue _goto;
+                                            continue _goto;
                                         }
                                     }
-                                    break;
                                     case 4:
                                         // line 136 "XmlReader.rl"
                                     {
                                         if (hasBody) {
                                             cs = 15;
                                             _goto_targ = 2;
-                                            if (true) continue _goto;
+                                            continue _goto;
                                         }
                                     }
                                     break;
@@ -365,11 +359,11 @@ public class XmlReader {
                     case 2:
                         if (cs == 0) {
                             _goto_targ = 5;
-                            continue _goto;
+                            continue;
                         }
-                        if (++p != pe) {
+                        if (++p != length) {
                             _goto_targ = 1;
-                            continue _goto;
+                            continue;
                         }
                     case 4:
                     case 5:
@@ -382,12 +376,12 @@ public class XmlReader {
 
         entitiesText = null;
 
-        if (p < pe) {
+        if (p < length) {
             int lineNumber = 1;
             for (int i = 0; i < p; i++)
                 if (data[i] == '\n') lineNumber++;
             throw new SerializationException(
-                    "Error parsing XML on line " + lineNumber + " near: " + new String(data, p, Math.min(32, pe - p)));
+                    "Error parsing XML on line " + lineNumber + " near: " + new String(data, p, Math.min(32, length - p)));
         } else if (elements.size != 0) {
             Element element = elements.peek();
             elements.clear();
@@ -412,12 +406,19 @@ public class XmlReader {
         current.setAttribute(name, value);
     }
 
-    protected @Null String entity(String name) {
-        if (name.equals("lt")) return "<";
-        if (name.equals("gt")) return ">";
-        if (name.equals("amp")) return "&";
-        if (name.equals("apos")) return "'";
-        if (name.equals("quot")) return "\"";
+    protected @Nullable String entity(String name) {
+        switch (name) {
+            case "lt":
+                return "<";
+            case "gt":
+                return ">";
+            case "amp":
+                return "&";
+            case "apos":
+                return "'";
+            case "quot":
+                return "\"";
+        }
         if (name.startsWith("#x")) return Character.toString((char) Integer.parseInt(name.substring(2), 16));
         return null;
     }
@@ -541,12 +542,12 @@ public class XmlReader {
                     buffer.append('\"');
                 }
             }
-            if (children == null && (text == null || text.length() == 0))
+            if (children == null && (text == null || text.isEmpty()))
                 buffer.append("/>");
             else {
                 buffer.append(">\n");
                 String childIndent = indent + '\t';
-                if (text != null && text.length() > 0) {
+                if (text != null && !text.isEmpty()) {
                     buffer.append(childIndent);
                     buffer.append(text);
                     buffer.append('\n');
@@ -569,7 +570,7 @@ public class XmlReader {
          * @param name the name of the child {@link Element}
          * @return the first child having the given name or null, does not recurse
          */
-        public @Null Element getChildByName(String name) {
+        public @Nullable Element getChildByName(String name) {
             if (children == null) return null;
             for (int i = 0; i < children.size; i++) {
                 Element element = children.get(i);
@@ -587,7 +588,7 @@ public class XmlReader {
          * @param name the name of the child {@link Element}
          * @return the first child having the given name or null, recurses
          */
-        public @Null Element getChildByNameRecursive(String name) {
+        public @Nullable Element getChildByNameRecursive(String name) {
             if (children == null) return null;
             for (int i = 0; i < children.size; i++) {
                 Element element = children.get(i);
@@ -608,7 +609,7 @@ public class XmlReader {
          * @return the children with the given name or an empty {@link Array}
          */
         public Array<Element> getChildrenByName(String name) {
-            Array<Element> result = new Array<Element>();
+            Array<Element> result = new Array<>();
             if (children == null) return result;
             for (int i = 0; i < children.size; i++) {
                 Element child = children.get(i);
@@ -622,7 +623,7 @@ public class XmlReader {
          * @return the children with the given name or an empty {@link Array}
          */
         public Array<Element> getChildrenByNameRecursively(String name) {
-            Array<Element> result = new Array<Element>();
+            Array<Element> result = new Array<>();
             getChildrenByNameRecursively(name, result);
             return result;
         }

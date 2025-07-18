@@ -12,10 +12,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Region;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.StreamUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.util.Comparator;
@@ -138,7 +139,7 @@ public class TextureAtlas implements Disposable {
      * Returns the first region found with the specified name. This method uses string comparison to find the region, so the
      * result should be cached rather than calling this method multiple times.
      */
-    public @Null AtlasRegion findRegion(String name) {
+    public @Nullable AtlasRegion findRegion(String name) {
         for (int i = 0, n = regions.size; i < n; i++)
             if (regions.get(i).name.equals(name)) return regions.get(i);
         return null;
@@ -148,7 +149,7 @@ public class TextureAtlas implements Disposable {
      * Returns the first region found with the specified name and index. This method uses string comparison to find the region, so
      * the result should be cached rather than calling this method multiple times.
      */
-    public @Null AtlasRegion findRegion(String name, int index) {
+    public @Nullable AtlasRegion findRegion(String name, int index) {
         for (int i = 0, n = regions.size; i < n; i++) {
             AtlasRegion region = regions.get(i);
             if (!region.name.equals(name)) continue;
@@ -191,7 +192,7 @@ public class TextureAtlas implements Disposable {
      * find the region and constructs a new sprite, so the result should be cached rather than calling this method multiple
      * times.
      */
-    public @Null Sprite createSprite(String name) {
+    public @Nullable Sprite createSprite(String name) {
         for (int i = 0, n = regions.size; i < n; i++)
             if (regions.get(i).name.equals(name)) return newSprite(regions.get(i));
         return null;
@@ -203,7 +204,7 @@ public class TextureAtlas implements Disposable {
      *
      * @see #createSprite(String)
      */
-    public @Null Sprite createSprite(String name, int index) {
+    public @Nullable Sprite createSprite(String name, int index) {
         for (int i = 0, n = regions.size; i < n; i++) {
             AtlasRegion region = regions.get(i);
             if (region.index != index) continue;
@@ -247,7 +248,7 @@ public class TextureAtlas implements Disposable {
      * ninepatch splits. This method uses string comparison to find the region and constructs a new ninepatch, so the result should
      * be cached rather than calling this method multiple times.
      */
-    public @Null NinePatch createPatch(String name) {
+    public @Nullable NinePatch createPatch(String name) {
         for (int i = 0, n = regions.size; i < n; i++) {
             AtlasRegion region = regions.get(i);
             if (region.name.equals(name)) {
@@ -291,7 +292,7 @@ public class TextureAtlas implements Disposable {
             load(packFile, imagesDir, flip);
         }
 
-        static private int readEntry(String[] entry, @Null String line) {
+        static private int readEntry(String[] entry, @Nullable String line) {
             if (line == null) return 0;
             line = line.trim();
             if (line.length() == 0) return 0;
@@ -378,29 +379,23 @@ public class TextureAtlas implements Disposable {
                     region.originalHeight = Integer.parseInt(entry[2]);
                 }
             });
-            regionFields.put("offsets", new Field<Region>() {
-                public void parse(Region region) {
-                    region.offsetX = Integer.parseInt(entry[1]);
-                    region.offsetY = Integer.parseInt(entry[2]);
-                    region.originalWidth = Integer.parseInt(entry[3]);
-                    region.originalHeight = Integer.parseInt(entry[4]);
-                }
+            regionFields.put("offsets", region -> {
+                region.offsetX = Integer.parseInt(entry[1]);
+                region.offsetY = Integer.parseInt(entry[2]);
+                region.originalWidth = Integer.parseInt(entry[3]);
+                region.originalHeight = Integer.parseInt(entry[4]);
             });
-            regionFields.put("rotate", new Field<Region>() {
-                public void parse(Region region) {
-                    String value = entry[1];
-                    if (value.equals("true"))
-                        region.degrees = 90;
-                    else if (!value.equals("false")) //
-                        region.degrees = Integer.parseInt(value);
-                    region.rotate = region.degrees == 90;
-                }
+            regionFields.put("rotate", region -> {
+                String value = entry[1];
+                if (value.equals("true"))
+                    region.degrees = 90;
+                else if (!value.equals("false")) //
+                    region.degrees = Integer.parseInt(value);
+                region.rotate = region.degrees == 90;
             });
-            regionFields.put("index", new Field<Region>() {
-                public void parse(Region region) {
-                    region.index = Integer.parseInt(entry[1]);
-                    if (region.index != -1) hasIndexes[0] = true;
-                }
+            regionFields.put("index", region -> {
+                region.index = Integer.parseInt(entry[1]);
+                if (region.index != -1) hasIndexes[0] = true;
             });
 
             BufferedReader reader = packFile.reader(1024);
@@ -408,28 +403,26 @@ public class TextureAtlas implements Disposable {
             try {
                 line = reader.readLine();
                 // Ignore empty lines before first entry.
-                while (line != null && line.trim().length() == 0)
+                while (line != null && line.trim().isEmpty())
                     line = reader.readLine();
                 // Header entries.
                 while (true) {
-                    if (line == null || line.trim().length() == 0) break;
+                    if (line == null || line.trim().isEmpty()) break;
                     if (readEntry(entry, line) == 0) break; // Silently ignore all header fields.
                     line = reader.readLine();
                 }
                 // Page and region entries.
                 Page page = null;
                 Array<Object> names = null, values = null;
-                while (true) {
-                    if (line == null) break;
-                    if (line.trim().length() == 0) {
+                while (line != null) {
+                    if (line.trim().isEmpty()) {
                         page = null;
                         line = reader.readLine();
                     } else if (page == null) {
                         page = new Page();
                         page.name = line;
                         page.textureFile = imagesDir.child(line);
-                        while (true) {
-                            if (readEntry(entry, line = reader.readLine()) == 0) break;
+                        while (readEntry(entry, line = reader.readLine()) != 0) {
                             Field field = pageFields.get(entry[0]);
                             if (field != null) field.parse(page); // Silently ignore unknown page fields.
                         }
@@ -511,11 +504,11 @@ public class TextureAtlas implements Disposable {
             /**
              * May be null if this page isn't associated with a file. In that case, {@link #texture} must be set.
              */
-            public @Null FileHandle textureFile;
+            public @Nullable FileHandle textureFile;
             /**
              * May be null if the texture is not yet loaded.
              */
-            public @Null Texture texture;
+            public @Nullable Texture texture;
             public float width, height;
             public boolean useMipMaps;
             public Format format = Format.RGBA8888;
@@ -533,11 +526,11 @@ public class TextureAtlas implements Disposable {
             public int degrees;
             public boolean rotate;
             public int index = -1;
-            public @Null String[] names;
-            public @Null int[][] values;
+            public @Nullable String[] names;
+            public @Nullable int[][] values;
             public boolean flip;
 
-            public @Null int[] findValue(String name) {
+            public @Nullable int[] findValue(String name) {
                 if (names != null) {
                     for (int i = 0, n = names.length; i < n; i++)
                         if (name.equals(names[i])) return values[i];
@@ -615,12 +608,12 @@ public class TextureAtlas implements Disposable {
         /**
          * Names for name/value pairs other than the fields provided on this class, each entry corresponding to {@link #values}.
          */
-        public @Null String[] names;
+        public @Nullable String[] names;
 
         /**
          * Values for name/value pairs other than the fields provided on this class, each entry corresponding to {@link #names}.
          */
-        public @Null int[][] values;
+        public @Nullable int[][] values;
 
         public AtlasRegion(Texture texture, int x, int y, int width, int height) {
             super(texture, x, y, width, height);
@@ -655,7 +648,7 @@ public class TextureAtlas implements Disposable {
         }
 
         @Override
-        /** Flips the region, adjusting the offset so the image appears to be flipped as if no whitespace has been removed for
+        /* Flips the region, adjusting the offset so the image appears to be flipped as if no whitespace has been removed for
          * packing. */
         public void flip(boolean x, boolean y) {
             super.flip(x, y);
@@ -679,7 +672,7 @@ public class TextureAtlas implements Disposable {
             return rotate ? packedWidth : packedHeight;
         }
 
-        public @Null int[] findValue(String name) {
+        public @Nullable int[] findValue(String name) {
             if (names != null) {
                 for (int i = 0, n = names.length; i < n; i++)
                     if (name.equals(names[i])) return values[i];

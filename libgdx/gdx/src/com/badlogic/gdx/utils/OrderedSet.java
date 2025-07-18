@@ -1,5 +1,7 @@
 package com.badlogic.gdx.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.NoSuchElementException;
 
 /**
@@ -141,6 +143,7 @@ public class OrderedSet<T> extends ObjectSet<T> {
         return items;
     }
 
+    @NotNull
     public OrderedSetIterator<T> iterator() {
         if (Collections.allocateIterators) return new OrderedSetIterator(this);
         if (iterator1 == null) {

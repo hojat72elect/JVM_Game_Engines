@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 
@@ -35,7 +37,7 @@ public class AsynchronousAndroidAudio extends DefaultAndroidAudio {
     }
 
     @Override
-    public Sound newSound(FileHandle file) {
+    public Sound newSound(@NonNull FileHandle file) {
         Sound sound = super.newSound(file);
         return new AsynchronousSound(sound, handler);
     }

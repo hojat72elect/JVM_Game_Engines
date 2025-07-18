@@ -17,6 +17,8 @@
 
 package com.badlogic.gdx.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Arrays;
 
 /**
@@ -115,7 +117,7 @@ public class StringBuilder implements Appendable, CharSequence {
 
     private void enlargeBuffer(int min) {
         int newSize = (chars.length >> 1) + chars.length + 2;
-        char[] newData = new char[min > newSize ? min : newSize];
+        char[] newData = new char[Math.max(min, newSize)];
         System.arraycopy(chars, 0, newData, 0, length);
         chars = newData;
     }
@@ -254,7 +256,7 @@ public class StringBuilder implements Appendable, CharSequence {
     public void ensureCapacity(int min) {
         if (min > chars.length) {
             int twice = (chars.length << 1) + 2;
-            enlargeBuffer(twice > min ? twice : min);
+            enlargeBuffer(Math.max(twice, min));
         }
     }
 
@@ -354,7 +356,7 @@ public class StringBuilder implements Appendable, CharSequence {
             return;
         }
         int a = length + size, b = (chars.length << 1) + 2;
-        int newSize = a > b ? a : b;
+        int newSize = Math.max(a, b);
         char[] newData = new char[newSize];
         System.arraycopy(chars, 0, newData, 0, index);
         // index == count case is no-op
@@ -707,7 +709,7 @@ public class StringBuilder implements Appendable, CharSequence {
                     start = i - 1;
                 }
             }
-            return start < length ? start : length;
+            return Math.min(start, length);
         }
         return -1;
     }
@@ -1430,7 +1432,7 @@ public class StringBuilder implements Appendable, CharSequence {
         return true;
     }
 
-    public boolean equalsIgnoreCase(@Null StringBuilder other) {
+    public boolean equalsIgnoreCase(@Nullable StringBuilder other) {
         if (this == other) return true;
         if (other == null) return false;
         int length = this.length;
@@ -1444,7 +1446,7 @@ public class StringBuilder implements Appendable, CharSequence {
         return true;
     }
 
-    public boolean equalsIgnoreCase(@Null String other) {
+    public boolean equalsIgnoreCase(@Nullable String other) {
         if (other == null) return false;
         int length = this.length;
         if (length != other.length()) return false;

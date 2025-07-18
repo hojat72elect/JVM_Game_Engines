@@ -2,6 +2,9 @@ package com.badlogic.gdx.utils;
 
 import static com.badlogic.gdx.utils.ObjectSet.tableSize;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -315,7 +318,7 @@ public class ObjectFloatMap<K> implements Iterable<ObjectFloatMap.Entry<K>> {
      * Returns the key for the specified value, or null if it is not in the map. Note this traverses the entire map and compares
      * every value, which may be an expensive operation.
      */
-    public @Null K findKey(float value) {
+    public @Nullable K findKey(float value) {
         K[] keyTable = this.keyTable;
         float[] valueTable = this.valueTable;
         for (int i = valueTable.length - 1; i >= 0; i--) {
@@ -329,7 +332,7 @@ public class ObjectFloatMap<K> implements Iterable<ObjectFloatMap.Entry<K>> {
      * Returns the key for the specified value, or null if it is not in the map. Note this traverses the entire map and compares
      * every value, which may be an expensive operation.
      */
-    public @Null K findKey(float value, float epsilon) {
+    public @Nullable K findKey(float value, float epsilon) {
         K[] keyTable = this.keyTable;
         float[] valueTable = this.valueTable;
         for (int i = valueTable.length - 1; i >= 0; i--) {
@@ -432,6 +435,7 @@ public class ObjectFloatMap<K> implements Iterable<ObjectFloatMap.Entry<K>> {
         return buffer.toString();
     }
 
+    @NotNull
     public Entries<K> iterator() {
         return entries();
     }
@@ -569,7 +573,7 @@ public class ObjectFloatMap<K> implements Iterable<ObjectFloatMap.Entry<K>> {
     }
 
     static public class Entries<K> extends MapIterator<K> implements Iterable<Entry<K>>, Iterator<Entry<K>> {
-        Entry<K> entry = new Entry<K>();
+        Entry<K> entry = new Entry<>();
 
         public Entries(ObjectFloatMap<K> map) {
             super(map);
@@ -594,6 +598,7 @@ public class ObjectFloatMap<K> implements Iterable<ObjectFloatMap.Entry<K>> {
             return hasNext;
         }
 
+        @NotNull
         public Entries<K> iterator() {
             return this;
         }
@@ -661,6 +666,7 @@ public class ObjectFloatMap<K> implements Iterable<ObjectFloatMap.Entry<K>> {
             return key;
         }
 
+        @NotNull
         public Keys<K> iterator() {
             return this;
         }
@@ -669,7 +675,7 @@ public class ObjectFloatMap<K> implements Iterable<ObjectFloatMap.Entry<K>> {
          * Returns a new array containing the remaining keys.
          */
         public Array<K> toArray() {
-            return toArray(new Array<K>(true, map.size));
+            return toArray(new Array<>(true, map.size));
         }
 
         /**

@@ -1,5 +1,7 @@
 package com.badlogic.gdx.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.io.Writer;
 
@@ -110,7 +112,7 @@ public class XmlWriter extends Writer {
         writer.close();
     }
 
-    public void write(char[] cbuf, int off, int len) throws IOException {
+    public void write(@NotNull char[] cbuf, int off, int len) throws IOException {
         startElementContent();
         writer.write(cbuf, off, len);
     }

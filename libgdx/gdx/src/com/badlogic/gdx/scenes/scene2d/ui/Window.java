@@ -14,7 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A table that can be dragged and act as a modal window. The top padding is used as the window's title height.
@@ -78,8 +79,8 @@ public class Window extends Table {
             private void updateEdge(float x, float y) {
                 float border = resizeBorder / 2f;
                 float width = getWidth(), height = getHeight();
-                float padTop = getPadTop(), padLeft = getPadLeft(), padBottom = getPadBottom(), padRight = getPadRight();
-                float left = padLeft, right = width - padRight, bottom = padBottom;
+                float padTop = getPadTop(), padRight = getPadRight();
+                float left = getPadLeft(), right = width - padRight, bottom = getPadBottom();
                 edge = 0;
                 if (isResizable && x >= left - border && x <= right + border && y >= bottom - border) {
                     if (x < left + border) edge |= Align.left;
@@ -263,7 +264,7 @@ public class Window extends Table {
         drawTitleTable = false; // Avoid drawing the title table again in drawChildren.
     }
 
-    public @Null Actor hit(float x, float y, boolean touchable) {
+    public @Nullable Actor hit(float x, float y, boolean touchable) {
         if (!isVisible()) return null;
         Actor hit = super.hit(x, y, touchable);
         if (hit == null && isModal && (!touchable || getTouchable() == Touchable.enabled)) return this;
@@ -331,15 +332,15 @@ public class Window extends Table {
      * The style for a window, see {@link Window}.
      */
     static public class WindowStyle {
-        public @Null Drawable background;
+        public @Nullable Drawable background;
         public BitmapFont titleFont;
-        public @Null Color titleFontColor = new Color(1, 1, 1, 1);
-        public @Null Drawable stageBackground;
+        public @Nullable Color titleFontColor = new Color(1, 1, 1, 1);
+        public @Nullable Drawable stageBackground;
 
         public WindowStyle() {
         }
 
-        public WindowStyle(BitmapFont titleFont, Color titleFontColor, @Null Drawable background) {
+        public WindowStyle(BitmapFont titleFont, Color titleFontColor, @Nullable Drawable background) {
             this.titleFont = titleFont;
             this.titleFontColor.set(titleFontColor);
             this.background = background;

@@ -1,7 +1,8 @@
 package com.badlogic.gdx.scenes.scene2d;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * EventListener for low-level input events. Unpacks {@link InputEvent}s and calls the appropriate method. By default the methods
@@ -121,7 +122,7 @@ public class InputListener implements EventListener {
      * @param fromActor May be null.
      * @see InputEvent
      */
-    public void enter(InputEvent event, float x, float y, int pointer, @Null Actor fromActor) {
+    public void enter(InputEvent event, float x, float y, int pointer, @Nullable Actor fromActor) {
     }
 
     /**
@@ -131,7 +132,7 @@ public class InputListener implements EventListener {
      * @param toActor May be null.
      * @see InputEvent
      */
-    public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+    public void exit(InputEvent event, float x, float y, int pointer, @Nullable Actor toActor) {
     }
 
     /**

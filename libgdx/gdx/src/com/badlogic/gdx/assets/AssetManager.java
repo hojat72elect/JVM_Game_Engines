@@ -37,7 +37,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.Logger;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
@@ -47,6 +46,8 @@ import com.badlogic.gdx.utils.UBJsonReader;
 import com.badlogic.gdx.utils.async.AsyncExecutor;
 import com.badlogic.gdx.utils.async.ThreadUtils;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Loads and stores assets like textures, bitmapfonts, tile maps, sounds, music and so on.
@@ -146,7 +147,7 @@ public class AssetManager implements Disposable {
      * @param required true to throw GdxRuntimeException if the asset is not loaded, else null is returned
      * @return the asset or null if it is not loaded and required is false
      */
-    public synchronized @Null <T> T get(String fileName, boolean required) {
+    public synchronized @Nullable <T> T get(String fileName, boolean required) {
         Class<T> type = assetTypes.get(fileName);
         if (type != null) {
             ObjectMap<String, RefCountedContainer> assetsByType = assets.get(type);
@@ -165,7 +166,7 @@ public class AssetManager implements Disposable {
      * @param required true to throw GdxRuntimeException if the asset is not loaded, else null is returned
      * @return the asset or null if it is not loaded and required is false
      */
-    public synchronized @Null <T> T get(String fileName, Class<T> type, boolean required) {
+    public synchronized @Nullable <T> T get(String fileName, Class<T> type, boolean required) {
         ObjectMap<String, RefCountedContainer> assetsByType = assets.get(type);
         if (assetsByType != null) {
             RefCountedContainer assetContainer = assetsByType.get(fileName);
@@ -688,8 +689,6 @@ public class AssetManager implements Disposable {
 
     /**
      * Handles a runtime/loading error in {@link #update()} by optionally invoking the {@link AssetErrorListener}.
-     *
-     * @param t
      */
     private void handleTaskError(Throwable t) {
         log.error("Error loading asset.", t);
@@ -843,8 +842,6 @@ public class AssetManager implements Disposable {
 
     /**
      * Returns the reference count of an asset.
-     *
-     * @param fileName
      */
     public synchronized int getReferenceCount(String fileName) {
         Class type = assetTypes.get(fileName);
@@ -854,8 +851,6 @@ public class AssetManager implements Disposable {
 
     /**
      * Sets the reference count of an asset.
-     *
-     * @param fileName
      */
     public synchronized void setReferenceCount(String fileName, int refCount) {
         Class type = assetTypes.get(fileName);

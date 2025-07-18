@@ -11,21 +11,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.Cullable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A group with a single child that sizes and positions the child using constraints. This provides layout similar to a
  * {@link Table} with a single cell but is more lightweight.
  */
 public class Container<T extends Actor> extends WidgetGroup {
-    private @Null T actor;
+    private @Nullable T actor;
     private Value minWidth = Value.minWidth, minHeight = Value.minHeight;
     private Value prefWidth = Value.prefWidth, prefHeight = Value.prefHeight;
     private Value maxWidth = Value.zero, maxHeight = Value.zero;
     private Value padTop = Value.zero, padLeft = Value.zero, padBottom = Value.zero, padRight = Value.zero;
     private float fillX, fillY;
     private int align;
-    private @Null Drawable background;
+    private @Nullable Drawable background;
     private boolean clip;
     private boolean round = true;
 
@@ -37,7 +38,7 @@ public class Container<T extends Actor> extends WidgetGroup {
         setTransform(false);
     }
 
-    public Container(@Null T actor) {
+    public Container(@Nullable T actor) {
         this();
         setActor(actor);
     }
@@ -83,7 +84,7 @@ public class Container<T extends Actor> extends WidgetGroup {
      *
      * @param background If null, the background will be cleared and padding removed.
      */
-    public void setBackground(@Null Drawable background, boolean adjustPadding) {
+    public void setBackground(@Nullable Drawable background, boolean adjustPadding) {
         if (this.background == background) return;
         this.background = background;
         if (adjustPadding) {
@@ -98,12 +99,12 @@ public class Container<T extends Actor> extends WidgetGroup {
     /**
      * @see #setBackground(Drawable)
      */
-    public Container<T> background(@Null Drawable background) {
+    public Container<T> background(@Nullable Drawable background) {
         setBackground(background);
         return this;
     }
 
-    public @Null Drawable getBackground() {
+    public @Nullable Drawable getBackground() {
         return background;
     }
 
@@ -112,7 +113,7 @@ public class Container<T extends Actor> extends WidgetGroup {
      *
      * @see #setBackground(Drawable, boolean)
      */
-    public void setBackground(@Null Drawable background) {
+    public void setBackground(@Nullable Drawable background) {
         setBackground(background, true);
     }
 
@@ -173,14 +174,14 @@ public class Container<T extends Actor> extends WidgetGroup {
     /**
      * @return May be null.
      */
-    public @Null T getActor() {
+    public @Nullable T getActor() {
         return actor;
     }
 
     /**
      * @param actor May be null.
      */
-    public void setActor(@Null T actor) {
+    public void setActor(@Nullable T actor) {
         if (actor == this) throw new IllegalArgumentException("actor cannot be the Container.");
         if (actor == this.actor) return;
         if (this.actor != null) super.removeActor(this.actor);
@@ -838,7 +839,7 @@ public class Container<T extends Actor> extends WidgetGroup {
         invalidate();
     }
 
-    public @Null Actor hit(float x, float y, boolean touchable) {
+    public @Nullable Actor hit(float x, float y, boolean touchable) {
         if (clip) {
             if (touchable && getTouchable() == Touchable.disabled) return null;
             if (x < 0 || x >= getWidth() || y < 0 || y >= getHeight()) return null;

@@ -13,9 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
@@ -43,7 +44,7 @@ public class Table extends WidgetGroup {
      * Value that is the top padding of the table's background.
      */
     static public Value backgroundTop = new Value() {
-        public float get(@Null Actor context) {
+        public float get(@Nullable Actor context) {
             Drawable background = ((Table) context).background;
             return background == null ? 0 : background.getTopHeight();
         }
@@ -52,7 +53,7 @@ public class Table extends WidgetGroup {
      * Value that is the left padding of the table's background.
      */
     static public Value backgroundLeft = new Value() {
-        public float get(@Null Actor context) {
+        public float get(@Nullable Actor context) {
             Drawable background = ((Table) context).background;
             return background == null ? 0 : background.getLeftWidth();
         }
@@ -61,7 +62,7 @@ public class Table extends WidgetGroup {
      * Value that is the bottom padding of the table's background.
      */
     static public Value backgroundBottom = new Value() {
-        public float get(@Null Actor context) {
+        public float get(@Nullable Actor context) {
             Drawable background = ((Table) context).background;
             return background == null ? 0 : background.getBottomHeight();
         }
@@ -70,7 +71,7 @@ public class Table extends WidgetGroup {
      * Value that is the right padding of the table's background.
      */
     static public Value backgroundRight = new Value() {
-        public float get(@Null Actor context) {
+        public float get(@Nullable Actor context) {
             Drawable background = ((Table) context).background;
             return background == null ? 0 : background.getRightWidth();
         }
@@ -83,7 +84,7 @@ public class Table extends WidgetGroup {
     int align = Align.center;
     Debug debug = Debug.none;
     Array<DebugRect> debugRects;
-    @Null
+    @Nullable
     Drawable background;
     boolean round = true;
     private int columns, rows;
@@ -97,7 +98,7 @@ public class Table extends WidgetGroup {
     private float[] columnWidth, rowHeight;
     private float[] expandWidth, expandHeight;
     private boolean clip;
-    private @Null Skin skin;
+    private @Nullable Skin skin;
 
     public Table() {
         this(null);
@@ -106,7 +107,7 @@ public class Table extends WidgetGroup {
     /**
      * Creates a table with a skin, which is required to use {@link #add(CharSequence)} or {@link #add(CharSequence, String)}.
      */
-    public Table(@Null Skin skin) {
+    public Table(@Nullable Skin skin) {
         this.skin = skin;
 
         cellDefaults = obtainCell();
@@ -158,7 +159,7 @@ public class Table extends WidgetGroup {
     /**
      * @see #setBackground(Drawable)
      */
-    public Table background(@Null Drawable background) {
+    public Table background(@Nullable Drawable background) {
         setBackground(background);
         return this;
     }
@@ -171,7 +172,7 @@ public class Table extends WidgetGroup {
         return this;
     }
 
-    public @Null Drawable getBackground() {
+    public @Nullable Drawable getBackground() {
         return background;
     }
 
@@ -189,7 +190,7 @@ public class Table extends WidgetGroup {
     /**
      * @param background May be null to clear the background.
      */
-    public void setBackground(@Null Drawable background) {
+    public void setBackground(@Nullable Drawable background) {
         if (this.background == background) return;
         float padTopOld = getPadTop(), padLeftOld = getPadLeft(), padBottomOld = getPadBottom(), padRightOld = getPadRight();
         this.background = background; // The default pad values use the background's padding.
@@ -200,7 +201,7 @@ public class Table extends WidgetGroup {
             invalidate();
     }
 
-    public @Null Actor hit(float x, float y, boolean touchable) {
+    public @Nullable Actor hit(float x, float y, boolean touchable) {
         if (clip) {
             if (touchable && getTouchable() == Touchable.disabled) return null;
             if (x < 0 || x >= getWidth() || y < 0 || y >= getHeight()) return null;
@@ -243,7 +244,7 @@ public class Table extends WidgetGroup {
     /**
      * Adds a new cell to the table with the specified actor.
      */
-    public <T extends Actor> Cell<T> add(@Null T actor) {
+    public <T extends Actor> Cell<T> add(@Nullable T actor) {
         Cell<T> cell = obtainCell();
         cell.actor = actor;
 
@@ -304,7 +305,7 @@ public class Table extends WidgetGroup {
      * Adds a new cell with a label. This may only be called if a skin has been set with {@link Table#Table(Skin)} or
      * {@link #setSkin(Skin)}.
      */
-    public Cell<Label> add(@Null CharSequence text) {
+    public Cell<Label> add(@Nullable CharSequence text) {
         if (skin == null) throw new IllegalStateException("Table must have a skin set to use this method.");
         return add(new Label(text, skin));
     }
@@ -313,7 +314,7 @@ public class Table extends WidgetGroup {
      * Adds a new cell with a label. This may only be called if a skin has been set with {@link Table#Table(Skin)} or
      * {@link #setSkin(Skin)}.
      */
-    public Cell<Label> add(@Null CharSequence text, String labelStyleName) {
+    public Cell<Label> add(@Nullable CharSequence text, String labelStyleName) {
         if (skin == null) throw new IllegalStateException("Table must have a skin set to use this method.");
         return add(new Label(text, skin.get(labelStyleName, LabelStyle.class)));
     }
@@ -322,7 +323,7 @@ public class Table extends WidgetGroup {
      * Adds a new cell with a label. This may only be called if a skin has been set with {@link Table#Table(Skin)} or
      * {@link #setSkin(Skin)}.
      */
-    public Cell<Label> add(@Null CharSequence text, String fontName, @Null Color color) {
+    public Cell<Label> add(@Nullable CharSequence text, String fontName, @Nullable Color color) {
         if (skin == null) throw new IllegalStateException("Table must have a skin set to use this method.");
         return add(new Label(text, new LabelStyle(skin.getFont(fontName), color)));
     }
@@ -331,7 +332,7 @@ public class Table extends WidgetGroup {
      * Adds a new cell with a label. This may only be called if a skin has been set with {@link Table#Table(Skin)} or
      * {@link #setSkin(Skin)}.
      */
-    public Cell<Label> add(@Null CharSequence text, String fontName, String colorName) {
+    public Cell<Label> add(@Nullable CharSequence text, String fontName, String colorName) {
         if (skin == null) throw new IllegalStateException("Table must have a skin set to use this method.");
         return add(new Label(text, new LabelStyle(skin.getFont(fontName), skin.getColor(colorName))));
     }
@@ -348,11 +349,10 @@ public class Table extends WidgetGroup {
      *
      * @param actors May be null or empty to add a stack without any actors.
      */
-    public Cell<Stack> stack(@Null Actor... actors) {
+    public Cell<Stack> stack(@Nullable Actor... actors) {
         Stack stack = new Stack();
         if (actors != null) {
-            for (int i = 0, n = actors.length; i < n; i++)
-                stack.addActor(actors[i]);
+            for (Actor actor : actors) stack.addActor(actor);
         }
         return add(stack);
     }
@@ -470,7 +470,7 @@ public class Table extends WidgetGroup {
     /**
      * Returns the cell for the specified actor in this table, or null.
      */
-    public @Null <T extends Actor> Cell<T> getCell(T actor) {
+    public @Nullable <T extends Actor> Cell<T> getCell(T actor) {
         if (actor == null) throw new IllegalArgumentException("actor cannot be null.");
         Object[] cells = this.cells.items;
         for (int i = 0, n = this.cells.size; i < n; i++) {
@@ -1386,24 +1386,18 @@ public class Table extends WidgetGroup {
     /**
      * @return The skin that was passed to this table in its constructor, or null if none was given.
      */
-    public @Null Skin getSkin() {
+    public @Nullable Skin getSkin() {
         return skin;
     }
 
-    public void setSkin(@Null Skin skin) {
+    public void setSkin(@Nullable Skin skin) {
         this.skin = skin;
     }
 
-    /**
-     *
-     */
     public enum Debug {
         none, all, table, cell, actor
     }
 
-    /**
-     *
-     */
     static public class DebugRect extends Rectangle {
         static Pool<DebugRect> pool = Pools.get(DebugRect.class);
         Color color;

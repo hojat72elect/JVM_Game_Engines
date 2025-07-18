@@ -11,7 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -629,7 +630,7 @@ public class TexturePacker {
         writer.write("  index: " + rect.index + "\n");
     }
 
-    private @Null String getRepeatValue() {
+    private @Nullable String getRepeatValue() {
         if (settings.wrapX == TextureWrap.Repeat && settings.wrapY == TextureWrap.Repeat) return "xy";
         if (settings.wrapX == TextureWrap.Repeat && settings.wrapY == TextureWrap.ClampToEdge) return "x";
         if (settings.wrapX == TextureWrap.ClampToEdge && settings.wrapY == TextureWrap.Repeat) return "y";

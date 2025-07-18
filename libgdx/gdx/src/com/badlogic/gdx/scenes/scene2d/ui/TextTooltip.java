@@ -2,33 +2,34 @@ package com.badlogic.gdx.scenes.scene2d.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A tooltip that shows a label.
  */
 public class TextTooltip extends Tooltip<Label> {
-    public TextTooltip(@Null String text, Skin skin) {
+    public TextTooltip(@Nullable String text, Skin skin) {
         this(text, TooltipManager.getInstance(), skin.get(TextTooltipStyle.class));
     }
 
-    public TextTooltip(@Null String text, Skin skin, String styleName) {
+    public TextTooltip(@Nullable String text, Skin skin, String styleName) {
         this(text, TooltipManager.getInstance(), skin.get(styleName, TextTooltipStyle.class));
     }
 
-    public TextTooltip(@Null String text, TextTooltipStyle style) {
+    public TextTooltip(@Nullable String text, TextTooltipStyle style) {
         this(text, TooltipManager.getInstance(), style);
     }
 
-    public TextTooltip(@Null String text, TooltipManager manager, Skin skin) {
+    public TextTooltip(@Nullable String text, TooltipManager manager, Skin skin) {
         this(text, manager, skin.get(TextTooltipStyle.class));
     }
 
-    public TextTooltip(@Null String text, TooltipManager manager, Skin skin, String styleName) {
+    public TextTooltip(@Nullable String text, TooltipManager manager, Skin skin, String styleName) {
         this(text, manager, skin.get(styleName, TextTooltipStyle.class));
     }
 
-    public TextTooltip(@Null String text, final TooltipManager manager, TextTooltipStyle style) {
+    public TextTooltip(@Nullable String text, final TooltipManager manager, TextTooltipStyle style) {
         super(null, manager);
 
         container.setActor(newLabel(text, style.label));
@@ -58,7 +59,7 @@ public class TextTooltip extends Tooltip<Label> {
      */
     static public class TextTooltipStyle {
         public LabelStyle label;
-        public @Null Drawable background;
+        public @Nullable Drawable background;
         /**
          * 0 means don't wrap.
          */
@@ -67,7 +68,7 @@ public class TextTooltip extends Tooltip<Label> {
         public TextTooltipStyle() {
         }
 
-        public TextTooltipStyle(LabelStyle label, @Null Drawable background) {
+        public TextTooltipStyle(LabelStyle label, @Nullable Drawable background) {
             this.label = label;
             this.background = background;
         }

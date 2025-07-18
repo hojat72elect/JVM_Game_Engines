@@ -11,8 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Disableable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pools;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A button is a {@link Table} with a checked state and additional {@link ButtonStyle style} fields for pressed, unpressed, and
@@ -72,15 +73,15 @@ public class Button extends Table implements Disableable {
         initialize();
     }
 
-    public Button(@Null Drawable up) {
+    public Button(@Nullable Drawable up) {
         this(new ButtonStyle(up, null, null));
     }
 
-    public Button(@Null Drawable up, @Null Drawable down) {
+    public Button(@Nullable Drawable up, @Nullable Drawable down) {
         this(new ButtonStyle(up, down, null));
     }
 
-    public Button(@Null Drawable up, @Null Drawable down, @Null Drawable checked) {
+    public Button(@Nullable Drawable up, @Nullable Drawable down, @Nullable Drawable checked) {
         this(new ButtonStyle(up, down, checked));
     }
 
@@ -175,14 +176,14 @@ public class Button extends Table implements Disableable {
     /**
      * @return May be null.
      */
-    public @Null ButtonGroup getButtonGroup() {
+    public @Nullable ButtonGroup getButtonGroup() {
         return buttonGroup;
     }
 
     /**
      * Returns appropriate background drawable from the style based on the current button state.
      */
-    protected @Null Drawable getBackgroundDrawable() {
+    protected @Nullable Drawable getBackgroundDrawable() {
         if (isDisabled() && style.disabled != null) return style.disabled;
         if (isPressed()) {
             if (isChecked() && style.checkedDown != null) return style.checkedDown;
@@ -210,7 +211,7 @@ public class Button extends Table implements Disableable {
 
         setBackground(getBackgroundDrawable());
 
-        float offsetX = 0, offsetY = 0;
+        float offsetX, offsetY;
         if (isPressed() && !isDisabled()) {
             offsetX = style.pressedOffsetX;
             offsetY = style.pressedOffsetY;
@@ -267,14 +268,14 @@ public class Button extends Table implements Disableable {
      * The style for a button, see {@link Button}.
      */
     static public class ButtonStyle {
-        public @Null Drawable up, down, over, focused, disabled;
-        public @Null Drawable checked, checkedOver, checkedDown, checkedFocused;
+        public @Nullable Drawable up, down, over, focused, disabled;
+        public @Nullable Drawable checked, checkedOver, checkedDown, checkedFocused;
         public float pressedOffsetX, pressedOffsetY, unpressedOffsetX, unpressedOffsetY, checkedOffsetX, checkedOffsetY;
 
         public ButtonStyle() {
         }
 
-        public ButtonStyle(@Null Drawable up, @Null Drawable down, @Null Drawable checked) {
+        public ButtonStyle(@Nullable Drawable up, @Nullable Drawable down, @Nullable Drawable checked) {
             this.up = up;
             this.down = down;
             this.checked = checked;

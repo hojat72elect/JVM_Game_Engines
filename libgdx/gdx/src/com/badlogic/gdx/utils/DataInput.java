@@ -1,5 +1,7 @@
 package com.badlogic.gdx.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +46,7 @@ public class DataInput extends DataInputStream {
      *
      * @return May be null.
      */
-    public @Null String readString() throws IOException {
+    public @Nullable String readString() throws IOException {
         int charCount = readInt(true);
         switch (charCount) {
             case 0:

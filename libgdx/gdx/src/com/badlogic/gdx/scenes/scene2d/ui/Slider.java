@@ -10,8 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pools;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A slider is a horizontal indicator that allows a user to set a value. The slider has a range (min, max) and a stepping between
@@ -79,11 +80,11 @@ public class Slider extends ProgressBar {
                 calculatePositionAndValue(x, y);
             }
 
-            public void enter(InputEvent event, float x, float y, int pointer, @Null Actor fromActor) {
+            public void enter(InputEvent event, float x, float y, int pointer, @Nullable Actor fromActor) {
                 if (pointer == -1) mouseOver = true;
             }
 
-            public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+            public void exit(InputEvent event, float x, float y, int pointer, @Nullable Actor toActor) {
                 if (pointer == -1) mouseOver = false;
             }
         });
@@ -101,7 +102,7 @@ public class Slider extends ProgressBar {
         return mouseOver;
     }
 
-    protected @Null Drawable getBackgroundDrawable() {
+    protected @Nullable Drawable getBackgroundDrawable() {
         SliderStyle style = (SliderStyle) super.getStyle();
         if (disabled && style.disabledBackground != null) return style.disabledBackground;
         if (isDragging() && style.backgroundDown != null) return style.backgroundDown;
@@ -109,7 +110,7 @@ public class Slider extends ProgressBar {
         return style.background;
     }
 
-    protected @Null Drawable getKnobDrawable() {
+    protected @Nullable Drawable getKnobDrawable() {
         SliderStyle style = (SliderStyle) super.getStyle();
         if (disabled && style.disabledKnob != null) return style.disabledKnob;
         if (isDragging() && style.knobDown != null) return style.knobDown;
@@ -174,8 +175,7 @@ public class Slider extends ProgressBar {
     protected float snap(float value) {
         if (snapValues == null || snapValues.length == 0) return value;
         float bestDiff = -1, bestValue = 0;
-        for (int i = 0; i < snapValues.length; i++) {
-            float snapValue = snapValues[i];
+        for (float snapValue : snapValues) {
             float diff = Math.abs(value - snapValue);
             if (diff <= threshold) {
                 if (bestDiff == -1 || diff < bestDiff) {
@@ -192,7 +192,7 @@ public class Slider extends ProgressBar {
      *
      * @param values May be null to disable snapping.
      */
-    public void setSnapToValues(float threshold, @Null float... values) {
+    public void setSnapToValues(float threshold, @Nullable float... values) {
         if (values != null && values.length == 0) throw new IllegalArgumentException("values cannot be empty.");
         this.snapValues = values;
         this.threshold = threshold;
@@ -205,11 +205,11 @@ public class Slider extends ProgressBar {
      * @deprecated Use {@link #setSnapToValues(float, float...)}.
      */
     @Deprecated
-    public void setSnapToValues(@Null float[] values, float threshold) {
+    public void setSnapToValues(@Nullable float[] values, float threshold) {
         setSnapToValues(threshold, values);
     }
 
-    public @Null float[] getSnapToValues() {
+    public @Nullable float[] getSnapToValues() {
         return snapValues;
     }
 
@@ -252,15 +252,15 @@ public class Slider extends ProgressBar {
      * The style for a slider, see {@link Slider}.
      */
     static public class SliderStyle extends ProgressBarStyle {
-        public @Null Drawable backgroundOver, backgroundDown;
-        public @Null Drawable knobOver, knobDown;
-        public @Null Drawable knobBeforeOver, knobBeforeDown;
-        public @Null Drawable knobAfterOver, knobAfterDown;
+        public @Nullable Drawable backgroundOver, backgroundDown;
+        public @Nullable Drawable knobOver, knobDown;
+        public @Nullable Drawable knobBeforeOver, knobBeforeDown;
+        public @Nullable Drawable knobAfterOver, knobAfterDown;
 
         public SliderStyle() {
         }
 
-        public SliderStyle(@Null Drawable background, @Null Drawable knob) {
+        public SliderStyle(@Nullable Drawable background, @Nullable Drawable knob) {
             super(background, knob);
         }
 

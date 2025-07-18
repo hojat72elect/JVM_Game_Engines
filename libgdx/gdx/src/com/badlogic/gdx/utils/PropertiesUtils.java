@@ -313,9 +313,9 @@ public final class PropertiesUtils {
         int lastIndex = 0;
         while (curIndex < len) {
             char c = comment.charAt(curIndex);
-            if (c > '\u00ff' || c == '\n' || c == '\r') {
+            if (c > 'ÿ' || c == '\n' || c == '\r') {
                 if (lastIndex != curIndex) writer.write(comment.substring(lastIndex, curIndex));
-                if (c > '\u00ff') {
+                if (c > 'ÿ') {
                     String hex = Integer.toHexString(c);
                     writer.write("\\u");
                     for (int j = 0; j < 4 - hex.length(); j++) {

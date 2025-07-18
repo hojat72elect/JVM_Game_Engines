@@ -2,6 +2,9 @@ package com.badlogic.gdx.utils;
 
 import static com.badlogic.gdx.utils.ObjectSet.tableSize;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -297,7 +300,7 @@ public class ObjectLongMap<K> implements Iterable<ObjectLongMap.Entry<K>> {
      * Returns the key for the specified value, or null if it is not in the map. Note this traverses the entire map and compares
      * every value, which may be an expensive operation.
      */
-    public @Null K findKey(long value) {
+    public @Nullable K findKey(long value) {
         K[] keyTable = this.keyTable;
         long[] valueTable = this.valueTable;
         for (int i = valueTable.length - 1; i >= 0; i--) {
@@ -400,6 +403,7 @@ public class ObjectLongMap<K> implements Iterable<ObjectLongMap.Entry<K>> {
         return buffer.toString();
     }
 
+    @NotNull
     public Entries<K> iterator() {
         return entries();
     }
@@ -537,7 +541,7 @@ public class ObjectLongMap<K> implements Iterable<ObjectLongMap.Entry<K>> {
     }
 
     static public class Entries<K> extends MapIterator<K> implements Iterable<Entry<K>>, Iterator<Entry<K>> {
-        Entry<K> entry = new Entry<K>();
+        Entry<K> entry = new Entry<>();
 
         public Entries(ObjectLongMap<K> map) {
             super(map);
@@ -562,6 +566,7 @@ public class ObjectLongMap<K> implements Iterable<ObjectLongMap.Entry<K>> {
             return hasNext;
         }
 
+        @NotNull
         public Entries<K> iterator() {
             return this;
         }
@@ -629,6 +634,7 @@ public class ObjectLongMap<K> implements Iterable<ObjectLongMap.Entry<K>> {
             return key;
         }
 
+        @NotNull
         public Keys<K> iterator() {
             return this;
         }
@@ -637,7 +643,7 @@ public class ObjectLongMap<K> implements Iterable<ObjectLongMap.Entry<K>> {
          * Returns a new array containing the remaining keys.
          */
         public Array<K> toArray() {
-            return toArray(new Array<K>(true, map.size));
+            return toArray(new Array<>(true, map.size));
         }
 
         /**

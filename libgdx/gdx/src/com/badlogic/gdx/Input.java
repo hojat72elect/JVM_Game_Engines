@@ -623,24 +623,6 @@ public interface Input {
         public static final int NUMPAD_RIGHT_PAREN = 163;
         public static final int NUM_LOCK = 143;
 
-// public static final int BACKTICK = 0;
-// public static final int TILDE = 0;
-// public static final int UNDERSCORE = 0;
-// public static final int DOT = 0;
-// public static final int BREAK = 0;
-// public static final int PIPE = 0;
-// public static final int EXCLAMATION = 0;
-// public static final int QUESTIONMARK = 0;
-
-        // ` | VK_BACKTICK
-// ~ | VK_TILDE
-// : | VK_COLON
-// _ | VK_UNDERSCORE
-// . | VK_DOT
-// (break) | VK_BREAK
-// | | VK_PIPE
-// ! | VK_EXCLAMATION
-// ? | VK_QUESTION
         public static final int COLON = 243;
         public static final int F1 = 131;
         public static final int F2 = 132;
@@ -1034,7 +1016,7 @@ public interface Input {
          * lazily intialized in {@link Keys#valueOf(String)}
          */
         private static void initializeKeyNames() {
-            keyNames = new ObjectIntMap<String>();
+            keyNames = new ObjectIntMap<>();
             for (int i = 0; i < 256; i++) {
                 String name = toString(i);
                 if (name != null) keyNames.put(name, i);

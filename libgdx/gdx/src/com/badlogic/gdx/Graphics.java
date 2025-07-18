@@ -301,8 +301,6 @@ public interface Graphics {
      * be recreated in order for the changes to take effect. Consult the documentation for the backend in use for more information.
      * <p>
      * Supported on all GDX desktop backends.
-     *
-     * @param resizable
      */
     void setResizable(boolean resizable);
 

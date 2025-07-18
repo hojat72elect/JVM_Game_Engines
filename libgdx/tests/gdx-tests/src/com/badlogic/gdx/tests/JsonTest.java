@@ -9,10 +9,11 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonSkimmer;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.badlogic.gdx.utils.LongMap;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.reflect.ArrayReflection;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,11 +32,6 @@ public class JsonTest extends GdxTest {
 
     public void create() {
         json = new Json();
-
-// json.fromJson(Test1.class, //
-// "{byteArrayField:[-1\n,-2]}"
-// );
-// if (true) return;
 
         Test1 test = new Test1();
         test.booleanField = true;
@@ -66,10 +62,10 @@ public class JsonTest extends GdxTest {
         test.objectArray = new Array();
         test.objectArray.add("meow");
         test.objectArray.add(new Test1());
-        test.longMap = new LongMap<String>(4);
+        test.longMap = new LongMap<>(4);
         test.longMap.put(42L, "The Answer");
         test.longMap.put(0x9E3779B97F4A7C15L, "Golden Ratio");
-        test.stringFloatMap = new ObjectFloatMap<String>(4);
+        test.stringFloatMap = new ObjectFloatMap<>(4);
         test.stringFloatMap.put("point one", 0.1f);
         test.stringFloatMap.put("point double oh seven", 0.007f);
         test.someEnum = SomeEnum.b;
@@ -197,7 +193,7 @@ public class JsonTest extends GdxTest {
             }
 
             @Override
-            protected void push(@Null String name, boolean object) {
+            protected void push(@Nullable String name, boolean object) {
                 indent();
                 if (object)
                     System.out.println(name != null ? name + ": {" : "{");

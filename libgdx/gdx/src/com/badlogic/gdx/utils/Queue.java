@@ -2,6 +2,9 @@ package com.badlogic.gdx.utils;
 
 import com.badlogic.gdx.utils.reflect.ArrayReflection;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -60,7 +63,7 @@ public class Queue<T> implements Iterable<T> {
      *
      * @param object can be null
      */
-    public void addLast(@Null T object) {
+    public void addLast(@Nullable T object) {
         T[] values = this.values;
 
         if (size == values.length) {
@@ -81,7 +84,7 @@ public class Queue<T> implements Iterable<T> {
      * @param object can be null
      * @see #addLast(Object)
      */
-    public void addFirst(@Null T object) {
+    public void addFirst(@Nullable T object) {
         T[] values = this.values;
 
         if (size == values.length) {
@@ -369,6 +372,7 @@ public class Queue<T> implements Iterable<T> {
      * If {@link Collections#allocateIterators} is false, the same iterator instance is returned each time this method is called.
      * Use the {@link QueueIterator} constructor for nested or multithreaded iteration.
      */
+    @NotNull
     public Iterator<T> iterator() {
         if (Collections.allocateIterators) return new QueueIterator(this, true);
         if (iterable == null) iterable = new QueueIterable(this);
@@ -528,6 +532,7 @@ public class Queue<T> implements Iterable<T> {
             index = 0;
         }
 
+        @NotNull
         public Iterator<T> iterator() {
             return this;
         }
@@ -552,15 +557,12 @@ public class Queue<T> implements Iterable<T> {
         /**
          * @see Collections#allocateIterators
          */
+        @NotNull
         public Iterator<T> iterator() {
             if (Collections.allocateIterators) return new QueueIterator(queue, allowRemove);
-// lastAcquire.getBuffer().setLength(0);
-// new Throwable().printStackTrace(new java.io.PrintWriter(lastAcquire));
             if (iterator1 == null) {
                 iterator1 = new QueueIterator(queue, allowRemove);
                 iterator2 = new QueueIterator(queue, allowRemove);
-// iterator1.iterable = this;
-// iterator2.iterable = this;
             }
             if (!iterator1.valid) {
                 iterator1.index = 0;

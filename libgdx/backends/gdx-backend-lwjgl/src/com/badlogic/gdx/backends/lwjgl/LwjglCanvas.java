@@ -14,10 +14,10 @@ import com.badlogic.gdx.backends.lwjgl.audio.LwjglAudio;
 import com.badlogic.gdx.backends.lwjgl.audio.OpenALLwjglAudio;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Clipboard;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Os;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.Display;
 
@@ -302,7 +302,7 @@ public class LwjglCanvas implements LwjglApplicationBase {
         return true;
     }
 
-    protected void postedException(Throwable ex, @Null Throwable caller) {
+    protected void postedException(Throwable ex, @Nullable Throwable caller) {
         if (caller == null) throw new RuntimeException(ex);
         StringWriter buffer = new StringWriter(1024);
         caller.printStackTrace(new PrintWriter(buffer));

@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Implementation of Tony Hoare's quickselect algorithm. Running time is generally O(n), but worst case is O(n^2) Pivot choice is
  * median of three method, providing better performance than a random pivot for partially sorted data.
- * http://en.wikipedia.org/wiki/Quickselect
+ * <a href="http://en.wikipedia.org/wiki/Quickselect">look here</a>.
  */
 public class QuickSelect<T> {
     private T[] array;

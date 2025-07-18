@@ -19,9 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 2D scene graph node. An actor has a position, rectangular size, origin, scale, rotation, Z index, and color. The position
@@ -46,18 +47,18 @@ public class Actor {
     private final DelayedRemovalArray<EventListener> listeners = new DelayedRemovalArray(0);
     private final DelayedRemovalArray<EventListener> captureListeners = new DelayedRemovalArray(0);
     private final Array<Action> actions = new Array(0);
-    @Null
+    @Nullable
     Group parent;
     float x, y;
     float width, height;
     float originX, originY;
     float scaleX = 1, scaleY = 1;
     float rotation;
-    private @Null Stage stage;
-    private @Null String name;
+    private @Nullable Stage stage;
+    private @Nullable String name;
     private Touchable touchable = Touchable.enabled;
     private boolean visible = true, debug;
-    private @Null Object userObject;
+    private @Nullable Object userObject;
 
     /**
      * Draws the actor. The batch is configured to draw in the parent's coordinate system.
@@ -207,7 +208,7 @@ public class Actor {
      * @param touchable If true, hit detection will respect the {@link #setTouchable(Touchable) touchability}.
      * @see Touchable
      */
-    public @Null Actor hit(float x, float y, boolean touchable) {
+    public @Nullable Actor hit(float x, float y, boolean touchable) {
         if (touchable && this.touchable != Touchable.enabled) return null;
         if (!isVisible()) return null;
         return x >= 0 && x < width && y >= 0 && y < height ? this : null;
@@ -277,7 +278,7 @@ public class Actor {
     /**
      * @param action May be null, in which case nothing is done.
      */
-    public void removeAction(@Null Action action) {
+    public void removeAction(@Nullable Action action) {
         if (action != null && actions.removeValue(action, true)) action.setActor(null);
     }
 
@@ -320,7 +321,7 @@ public class Actor {
     /**
      * Returns the stage that this actor is currently in, or null if not in a stage.
      */
-    public @Null Stage getStage() {
+    public @Nullable Stage getStage() {
         return stage;
     }
 
@@ -329,7 +330,7 @@ public class Actor {
      *
      * @param stage May be null if the actor or any ascendant is no longer in a stage.
      */
-    protected void setStage(Stage stage) {
+    protected void setStage(@Nullable Stage stage) {
         this.stage = stage;
     }
 
@@ -362,7 +363,7 @@ public class Actor {
      * Returns this actor or the first ascendant of this actor that is assignable with the specified type, or null if none were
      * found.
      */
-    public @Null <T extends Actor> T firstAscendant(Class<T> type) {
+    public @Nullable <T extends Actor> T firstAscendant(Class<T> type) {
         if (type == null) throw new IllegalArgumentException("actor cannot be null.");
         Actor actor = this;
         do {
@@ -382,7 +383,7 @@ public class Actor {
     /**
      * Returns the parent actor, or null if not in a group.
      */
-    public @Null Group getParent() {
+    public @Nullable Group getParent() {
         return parent;
     }
 
@@ -391,7 +392,7 @@ public class Actor {
      *
      * @param parent May be null if the actor has been removed from the parent.
      */
-    protected void setParent(@Null Group parent) {
+    protected void setParent(@Nullable Group parent) {
         this.parent = parent;
     }
 
@@ -489,14 +490,14 @@ public class Actor {
     /**
      * Returns an application specific object for convenience, or null.
      */
-    public @Null Object getUserObject() {
+    public @Nullable Object getUserObject() {
         return userObject;
     }
 
     /**
      * Sets an application specific object for convenience.
      */
-    public void setUserObject(@Null Object userObject) {
+    public void setUserObject(@Nullable Object userObject) {
         this.userObject = userObject;
     }
 
@@ -888,7 +889,7 @@ public class Actor {
      * @return May be null.
      * @see #setName(String)
      */
-    public @Null String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -898,7 +899,7 @@ public class Actor {
      * @param name May be null.
      * @see Group#findActor(String)
      */
-    public void setName(@Null String name) {
+    public void setName(@Nullable String name) {
         this.name = name;
     }
 
@@ -1092,7 +1093,7 @@ public class Actor {
      *
      * @throws IllegalArgumentException if the specified actor is not an ascendant of this actor.
      */
-    public Vector2 localToAscendantCoordinates(@Null Actor ascendant, Vector2 localCoords) {
+    public Vector2 localToAscendantCoordinates(@Nullable Actor ascendant, Vector2 localCoords) {
         Actor actor = this;
         do {
             actor.localToParentCoordinates(localCoords);

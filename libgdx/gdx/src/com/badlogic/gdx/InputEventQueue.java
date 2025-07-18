@@ -1,8 +1,9 @@
 package com.badlogic.gdx;
 
 import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.NumberUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Queues events that are later passed to an {@link InputProcessor}.
@@ -22,7 +23,7 @@ public class InputEventQueue {
     private final IntArray processingQueue = new IntArray();
     private long currentEventTime;
 
-    public void drain(@Null InputProcessor processor) {
+    public void drain(@Nullable InputProcessor processor) {
         synchronized (this) {
             if (processor == null) {
                 queue.clear();
@@ -81,12 +82,8 @@ public class InputEventQueue {
                     i += q[i];
                     break;
                 case KEY_DOWN:
-                    i++;
-                    break;
-                case KEY_UP:
-                    i++;
-                    break;
                 case KEY_TYPED:
+                case KEY_UP:
                     i++;
                     break;
                 case TOUCH_DOWN:

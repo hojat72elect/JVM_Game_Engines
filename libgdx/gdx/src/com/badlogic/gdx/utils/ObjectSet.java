@@ -2,6 +2,9 @@ package com.badlogic.gdx.utils;
 
 import com.badlogic.gdx.math.MathUtils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -90,8 +93,9 @@ public class ObjectSet<T> implements Iterable<T> {
         size = set.size;
     }
 
+    @SafeVarargs
     static public <T> ObjectSet<T> with(T... array) {
-        ObjectSet<T> set = new ObjectSet<T>();
+        ObjectSet<T> set = new ObjectSet<>();
         set.addAll(array);
         return set;
     }
@@ -160,7 +164,8 @@ public class ObjectSet<T> implements Iterable<T> {
         addAll(array.items, offset, length);
     }
 
-    public boolean addAll(T... array) {
+    @SafeVarargs
+    public final boolean addAll(T... array) {
         return addAll(array, 0, array.length);
     }
 
@@ -175,8 +180,7 @@ public class ObjectSet<T> implements Iterable<T> {
     public void addAll(ObjectSet<T> set) {
         ensureCapacity(set.size);
         T[] keyTable = set.keyTable;
-        for (int i = 0, n = keyTable.length; i < n; i++) {
-            T key = keyTable[i];
+        for (T key : keyTable) {
             if (key != null) add(key);
         }
     }
@@ -269,15 +273,14 @@ public class ObjectSet<T> implements Iterable<T> {
         return locateKey(key) >= 0;
     }
 
-    public @Null T get(T key) {
+    public @Nullable T get(T key) {
         int i = locateKey(key);
         return i < 0 ? null : keyTable[i];
     }
 
     public T first() {
         T[] keyTable = this.keyTable;
-        for (int i = 0, n = keyTable.length; i < n; i++)
-            if (keyTable[i] != null) return keyTable[i];
+        for (T t : keyTable) if (t != null) return t;
         throw new IllegalStateException("ObjectSet is empty.");
     }
 
@@ -310,8 +313,7 @@ public class ObjectSet<T> implements Iterable<T> {
     public int hashCode() {
         int h = size;
         T[] keyTable = this.keyTable;
-        for (int i = 0, n = keyTable.length; i < n; i++) {
-            T key = keyTable[i];
+        for (T key : keyTable) {
             if (key != null) h += key.hashCode();
         }
         return h;
@@ -322,8 +324,7 @@ public class ObjectSet<T> implements Iterable<T> {
         ObjectSet other = (ObjectSet) obj;
         if (other.size != size) return false;
         T[] keyTable = this.keyTable;
-        for (int i = 0, n = keyTable.length; i < n; i++)
-            if (keyTable[i] != null && !other.contains(keyTable[i])) return false;
+        for (T t : keyTable) if (t != null && !other.contains(t)) return false;
         return true;
     }
 
@@ -357,6 +358,7 @@ public class ObjectSet<T> implements Iterable<T> {
      * If {@link Collections#allocateIterators} is false, the same iterator instance is returned each time this method is called.
      * Use the {@link ObjectSetIterator} constructor for nested or multithreaded iteration.
      */
+    @NotNull
     public ObjectSetIterator<T> iterator() {
         if (Collections.allocateIterators) return new ObjectSetIterator(this);
         if (iterator1 == null) {
@@ -437,6 +439,7 @@ public class ObjectSet<T> implements Iterable<T> {
             return key;
         }
 
+        @NotNull
         public ObjectSetIterator<K> iterator() {
             return this;
         }
@@ -454,7 +457,7 @@ public class ObjectSet<T> implements Iterable<T> {
          * Returns a new array containing the remaining values.
          */
         public Array<K> toArray() {
-            return toArray(new Array<K>(true, set.size));
+            return toArray(new Array<>(true, set.size));
         }
     }
 }

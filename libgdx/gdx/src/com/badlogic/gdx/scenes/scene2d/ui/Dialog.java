@@ -16,8 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
-import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.ObjectMap;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Displays a dialog, which is a window with a title, a content table, and a button table. Methods are provided to add a label to
@@ -36,7 +37,7 @@ public class Dialog extends Window {
     boolean cancelHide;
     Actor previousKeyboardFocus, previousScrollFocus;
     FocusListener focusListener;
-    private @Null Skin skin;
+    private @Nullable Skin skin;
 
     public Dialog(String title, Skin skin) {
         super(title, skin.get(WindowStyle.class));
@@ -120,7 +121,7 @@ public class Dialog extends Window {
     /**
      * Adds a label to the content table. The dialog must have been constructed with a skin to use this method.
      */
-    public Dialog text(@Null String text) {
+    public Dialog text(@Nullable String text) {
         if (skin == null)
             throw new IllegalStateException("This method may only be used if the dialog was constructed with a Skin.");
         return text(text, skin.get(LabelStyle.class));
@@ -129,7 +130,7 @@ public class Dialog extends Window {
     /**
      * Adds a label to the content table.
      */
-    public Dialog text(@Null String text, LabelStyle labelStyle) {
+    public Dialog text(@Nullable String text, LabelStyle labelStyle) {
         return text(new Label(text, labelStyle));
     }
 
@@ -145,7 +146,7 @@ public class Dialog extends Window {
      * Adds a text button to the button table. Null will be passed to {@link #result(Object)} if this button is clicked. The
      * dialog must have been constructed with a skin to use this method.
      */
-    public Dialog button(@Null String text) {
+    public Dialog button(@Nullable String text) {
         return button(text, null);
     }
 
@@ -154,7 +155,7 @@ public class Dialog extends Window {
      *
      * @param object The object that will be passed to {@link #result(Object)} if this button is clicked. May be null.
      */
-    public Dialog button(@Null String text, @Null Object object) {
+    public Dialog button(@Nullable String text, @Nullable Object object) {
         if (skin == null)
             throw new IllegalStateException("This method may only be used if the dialog was constructed with a Skin.");
         return button(text, object, skin.get(TextButtonStyle.class));
@@ -165,7 +166,7 @@ public class Dialog extends Window {
      *
      * @param object The object that will be passed to {@link #result(Object)} if this button is clicked. May be null.
      */
-    public Dialog button(@Null String text, @Null Object object, TextButtonStyle buttonStyle) {
+    public Dialog button(@Nullable String text, @Nullable Object object, TextButtonStyle buttonStyle) {
         return button(new TextButton(text, buttonStyle), object);
     }
 
@@ -181,7 +182,7 @@ public class Dialog extends Window {
      *
      * @param object The object that will be passed to {@link #result(Object)} if this button is clicked. May be null.
      */
-    public Dialog button(Button button, @Null Object object) {
+    public Dialog button(Button button, @Nullable Object object) {
         buttonTable.add(button);
         setObject(button, object);
         return this;
@@ -194,7 +195,7 @@ public class Dialog extends Window {
      *
      * @param action May be null.
      */
-    public Dialog show(Stage stage, @Null Action action) {
+    public Dialog show(Stage stage, @Nullable Action action) {
         clearActions();
         removeCaptureListener(ignoreTouchDown);
 
@@ -233,7 +234,7 @@ public class Dialog extends Window {
      * @param action If null, the dialog is removed immediately. Otherwise, the dialog is removed when the action completes. The
      *               dialog will not respond to touch down events during the action.
      */
-    public void hide(@Null Action action) {
+    public void hide(@Nullable Action action) {
         Stage stage = getStage();
         if (stage != null) {
             removeListener(focusListener);
@@ -260,7 +261,7 @@ public class Dialog extends Window {
         hide(fadeOut(0.4f, Interpolation.fade));
     }
 
-    public void setObject(Actor actor, @Null Object object) {
+    public void setObject(Actor actor, @Nullable Object object) {
         values.put(actor, object);
     }
 
@@ -269,7 +270,7 @@ public class Dialog extends Window {
      *
      * @see Keys
      */
-    public Dialog key(final int keycode, final @Null Object object) {
+    public Dialog key(final int keycode, final @Nullable Object object) {
         addListener(new InputListener() {
             public boolean keyDown(InputEvent event, int keycode2) {
                 if (keycode == keycode2) {
@@ -293,7 +294,7 @@ public class Dialog extends Window {
      *
      * @param object The object specified when the button was added.
      */
-    protected void result(@Null Object object) {
+    protected void result(@Nullable Object object) {
     }
 
     public void cancel() {

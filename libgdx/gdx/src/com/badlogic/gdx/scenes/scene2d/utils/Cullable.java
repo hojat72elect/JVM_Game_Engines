@@ -1,7 +1,8 @@
 package com.badlogic.gdx.scenes.scene2d.utils;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Allows a parent to set the area that is visible on a child actor to allow the child to cull when drawing itself. This must
@@ -11,5 +12,5 @@ public interface Cullable {
     /**
      * @param cullingArea The culling area in the child actor's coordinates.
      */
-    void setCullingArea(@Null Rectangle cullingArea);
+    void setCullingArea(@Nullable Rectangle cullingArea);
 }

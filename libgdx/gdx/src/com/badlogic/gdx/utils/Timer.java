@@ -291,11 +291,7 @@ public class Timer {
         final Array<Timer> instances = new Array(1);
         final Array<Task> postedTasks = new Array(2);
         final Array<Task> runTasks = new Array(2);
-        private final Runnable runPostedTasks = new Runnable() {
-            public void run() {
-                runPostedTasks();
-            }
-        };
+        private final Runnable runPostedTasks = this::runPostedTasks;
         Timer instance;
         long pauseTimeMillis;
 

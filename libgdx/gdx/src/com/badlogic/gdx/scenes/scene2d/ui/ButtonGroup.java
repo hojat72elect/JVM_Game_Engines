@@ -1,7 +1,8 @@
 package com.badlogic.gdx.scenes.scene2d.ui;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Null;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Manages a group of buttons to enforce a minimum and maximum number of checked buttons. This enables "radio button"
@@ -20,6 +21,7 @@ public class ButtonGroup<T extends Button> {
         minCheckCount = 1;
     }
 
+    @SafeVarargs
     public ButtonGroup(T... buttons) {
         minCheckCount = 0;
         add(buttons);
@@ -36,10 +38,10 @@ public class ButtonGroup<T extends Button> {
         button.setChecked(shouldCheck);
     }
 
-    public void add(T... buttons) {
+    @SafeVarargs
+    public final void add(T... buttons) {
         if (buttons == null) throw new IllegalArgumentException("buttons cannot be null.");
-        for (int i = 0, n = buttons.length; i < n; i++)
-            add(buttons[i]);
+        for (T button : buttons) add(button);
     }
 
     public void remove(T button) {
@@ -49,10 +51,10 @@ public class ButtonGroup<T extends Button> {
         checkedButtons.removeValue(button, true);
     }
 
-    public void remove(T... buttons) {
+    @SafeVarargs
+    public final void remove(T... buttons) {
         if (buttons == null) throw new IllegalArgumentException("buttons cannot be null.");
-        for (int i = 0, n = buttons.length; i < n; i++)
-            remove(buttons[i]);
+        for (T button : buttons) remove(button);
     }
 
     public void clear() {
@@ -110,7 +112,7 @@ public class ButtonGroup<T extends Button> {
     /**
      * @return The first checked button, or null.
      */
-    public @Null T getChecked() {
+    public @Nullable T getChecked() {
         if (checkedButtons.size > 0) return checkedButtons.get(0);
         return null;
     }

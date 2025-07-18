@@ -1,5 +1,7 @@
 package com.badlogic.gdx.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Iterator;
 
 /**
@@ -90,11 +92,12 @@ public interface Predicate<T> {
          * If {@link Collections#allocateIterators} is false, the same iterator instance is returned each time this method is
          * called. Use the {@link Predicate.PredicateIterator} constructor for nested or multithreaded iteration.
          */
+        @NotNull
         @Override
         public Iterator<T> iterator() {
-            if (Collections.allocateIterators) return new PredicateIterator<T>(iterable.iterator(), predicate);
+            if (Collections.allocateIterators) return new PredicateIterator<>(iterable.iterator(), predicate);
             if (iterator == null)
-                iterator = new PredicateIterator<T>(iterable.iterator(), predicate);
+                iterator = new PredicateIterator<>(iterable.iterator(), predicate);
             else
                 iterator.set(iterable.iterator(), predicate);
             return iterator;
