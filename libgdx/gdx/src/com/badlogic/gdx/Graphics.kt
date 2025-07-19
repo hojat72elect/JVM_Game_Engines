@@ -32,7 +32,7 @@ import com.badlogic.gdx.graphics.glutils.VertexBufferObject
  * [BitmapFont], [Batch] and so on. All these classes are managed, meaning they don't need to be reloaded on a context
  * loss. Explore the `com.badlogic.gdx.graphics` package for more classes that might come in handy.
  */
-interface NewGraphics {
+interface Graphics {
     /**
      * Returns whether OpenGL ES 3.0 is available. If it is you can get an instance of [GL30] via [.getGL30] to
      * access OpenGL ES 3.0 functionality. Note that this functionality will only be available if you instructed the
@@ -398,7 +398,7 @@ interface NewGraphics {
      * @param refreshRate the refresh rate in Hertz
      * @param bitsPerPixel the number of bits per pixel, may exclude alpha
      */
-    class DisplayMode(val width: Int, val height: Int, val refreshRate: Int, val bitsPerPixel: Int) {
+    open class DisplayMode(@JvmField val width: Int, @JvmField val height: Int, @JvmField val refreshRate: Int, @JvmField val bitsPerPixel: Int) {
         override fun toString(): String {
             return width.toString() + "x" + height + ", bpp: " + bitsPerPixel + ", hz: " + refreshRate
         }
@@ -407,7 +407,7 @@ interface NewGraphics {
     /**
      * Describes a monitor
      */
-    data class Monitor(val virtualX: Int, val virtualY: Int, val name: String)
+    open class Monitor(@JvmField val virtualX: Int, @JvmField val virtualY: Int, val name: String)
 
     /**
      * Class describing the bits per pixel, depth buffer precision, stencil precision and number of MSAA samples.
