@@ -263,35 +263,35 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
             case Keyboard.KEY_GRAVE:
                 return Input.Keys.GRAVE;
             case Keyboard.KEY_MULTIPLY:
-                return Keys.NUMPAD_MULTIPLY;
+                return Input.Keys.NUMPAD_MULTIPLY;
             case Keyboard.KEY_PAUSE:
-                return Keys.PAUSE;
+                return Input.Keys.PAUSE;
             case Keyboard.KEY_CAPITAL:
-                return Keys.CAPS_LOCK;
+                return Input.Keys.CAPS_LOCK;
             case Keyboard.KEY_SYSRQ:
-                return Keys.PRINT_SCREEN;
+                return Input.Keys.PRINT_SCREEN;
             case Keyboard.KEY_SCROLL:
-                return Keys.SCROLL_LOCK;
+                return Input.Keys.SCROLL_LOCK;
             case Keyboard.KEY_NUMLOCK:
-                return Keys.NUM_LOCK;
+                return Input.Keys.NUM_LOCK;
             case Keyboard.KEY_DECIMAL:
-                return Keys.NUMPAD_DOT;
+                return Input.Keys.NUMPAD_DOT;
             case Keyboard.KEY_DIVIDE:
-                return Keys.NUMPAD_DIVIDE;
+                return Input.Keys.NUMPAD_DIVIDE;
             case Keyboard.KEY_LMETA:
                 return Input.Keys.SYM;
             case Keyboard.KEY_RMETA:
                 return Input.Keys.SYM;
             case Keyboard.KEY_NUMPADEQUALS:
-                return Keys.NUMPAD_EQUALS;
+                return Input.Keys.NUMPAD_EQUALS;
             case Keyboard.KEY_AT:
                 return Input.Keys.AT;
             case Keyboard.KEY_EQUALS:
                 return Input.Keys.EQUALS;
             case Keyboard.KEY_NUMPADCOMMA:
-                return Keys.NUMPAD_COMMA;
+                return Input.Keys.NUMPAD_COMMA;
             case Keyboard.KEY_NUMPADENTER:
-                return Keys.NUMPAD_ENTER;
+                return Input.Keys.NUMPAD_ENTER;
             case Keyboard.KEY_0:
                 return Input.Keys.NUM_0;
             case Keyboard.KEY_1:
@@ -391,7 +391,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
             case Keyboard.KEY_PERIOD:
                 return Input.Keys.PERIOD;
             case Keyboard.KEY_ADD:
-                return Keys.NUMPAD_ADD;
+                return Input.Keys.NUMPAD_ADD;
             case Keyboard.KEY_SEMICOLON:
                 return Input.Keys.SEMICOLON;
             case Keyboard.KEY_LSHIFT:
@@ -421,7 +421,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
             case Keyboard.KEY_BACK:
                 return Input.Keys.DEL;
             case Keyboard.KEY_SUBTRACT:
-                return Keys.NUMPAD_SUBTRACT;
+                return Input.Keys.NUMPAD_SUBTRACT;
             case Keyboard.KEY_APOSTROPHE:
                 return Input.Keys.APOSTROPHE;
             case Keyboard.KEY_F1:
@@ -495,11 +495,11 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     }
 
     private int toGdxButton(int button) {
-        if (button == 0) return Buttons.LEFT;
-        if (button == 1) return Buttons.RIGHT;
-        if (button == 2) return Buttons.MIDDLE;
-        if (button == 3) return Buttons.BACK;
-        if (button == 4) return Buttons.FORWARD;
+        if (button == 0) return Input.Buttons.LEFT;
+        if (button == 1) return Input.Buttons.RIGHT;
+        if (button == 2) return Input.Buttons.MIDDLE;
+        if (button == 3) return Input.Buttons.BACK;
+        if (button == 4) return Input.Buttons.FORWARD;
         return -1;
     }
 
@@ -581,10 +581,10 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
                 long time = Keyboard.getEventNanoseconds();
                 if (Keyboard.getEventKeyState() || (keyCode == 0 && keyChar != 0 && Character.isDefined(keyChar))) {
                     switch (keyCode) {
-                        case Keys.DEL:
+                        case Input.Keys.DEL:
                             keyChar = 8;
                             break;
-                        case Keys.FORWARD_DEL:
+                        case Input.Keys.FORWARD_DEL:
                             keyChar = 127;
                             break;
                     }
@@ -644,15 +644,15 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
 
     private int toLwjglButton(int button) {
         switch (button) {
-            case Buttons.LEFT:
+            case Input.Buttons.LEFT:
                 return 0;
-            case Buttons.RIGHT:
+            case Input.Buttons.RIGHT:
                 return 1;
-            case Buttons.MIDDLE:
+            case Input.Buttons.MIDDLE:
                 return 2;
-            case Buttons.BACK:
+            case Input.Buttons.BACK:
                 return 3;
-            case Buttons.FORWARD:
+            case Input.Buttons.FORWARD:
                 return 4;
         }
         return 0;

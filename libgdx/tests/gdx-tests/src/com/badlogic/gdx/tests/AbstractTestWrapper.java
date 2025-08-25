@@ -78,7 +78,7 @@ public abstract class AbstractTestWrapper extends GdxTest {
         Gdx.input = new InputWrapper(Gdx.input) {
             @Override
             public boolean keyUp(int keycode) {
-                if (keycode == Keys.ESCAPE) {
+                if (keycode == Input.Keys.ESCAPE) {
                     if (test != null) {
                         Gdx.app.log("GdxTestGwt", "Exiting current test.");
                         dispose = true;

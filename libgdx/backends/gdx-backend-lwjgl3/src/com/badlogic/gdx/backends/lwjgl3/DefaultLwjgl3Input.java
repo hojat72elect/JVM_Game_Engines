@@ -530,7 +530,7 @@ public class DefaultLwjgl3Input extends AbstractInput implements Lwjgl3Input {
             case GLFW.GLFW_KEY_F25:
                 return Input.Keys.UNKNOWN;
             case GLFW.GLFW_KEY_NUM_LOCK:
-                return Keys.NUM_LOCK;
+                return Input.Keys.NUM_LOCK;
             case GLFW.GLFW_KEY_KP_0:
                 return Input.Keys.NUMPAD_0;
             case GLFW.GLFW_KEY_KP_1:

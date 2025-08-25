@@ -271,7 +271,7 @@ public class RemoteInput implements Runnable, Input {
 
     @Override
     public boolean isKeyPressed(int key) {
-        if (key == Input.Keys.ANY_KEY) {
+        if (key == Keys.INSTANCE.getANY_KEY()) {
             return keyCount > 0;
         }
         if (key < 0 || key > 255) {
@@ -282,7 +282,7 @@ public class RemoteInput implements Runnable, Input {
 
     @Override
     public boolean isKeyJustPressed(int key) {
-        if (key == Input.Keys.ANY_KEY) {
+        if (key == Keys.INSTANCE.getANY_KEY()) {
             return keyJustPressed;
         }
         if (key < 0 || key > 255) {

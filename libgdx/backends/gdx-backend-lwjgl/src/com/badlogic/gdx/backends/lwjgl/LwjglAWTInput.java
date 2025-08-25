@@ -251,7 +251,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 
     @Override
     public synchronized boolean isKeyPressed(int key) {
-        if (key == Input.Keys.ANY_KEY) {
+        if (key == Input.Keys.INSTANCE.getANY_KEY()) {
             return pressedKeyCount > 0;
         }
         if (key < 0 || key > 255) {
@@ -262,7 +262,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 
     @Override
     public synchronized boolean isKeyJustPressed(int key) {
-        if (key == Input.Keys.ANY_KEY) {
+        if (key == Input.Keys.INSTANCE.getANY_KEY()) {
             return keyJustPressed;
         }
         if (key < 0 || key > 255) {
@@ -683,13 +683,13 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
             case java.awt.event.KeyEvent.VK_MINUS:
                 return Input.Keys.MINUS;
             case java.awt.event.KeyEvent.VK_SUBTRACT:
-                return Keys.NUMPAD_SUBTRACT;
+                return Input.Keys.NUMPAD_SUBTRACT;
             case java.awt.event.KeyEvent.VK_PERIOD:
                 return Input.Keys.PERIOD;
             case java.awt.event.KeyEvent.VK_PLUS:
                 return Input.Keys.PLUS;
             case java.awt.event.KeyEvent.VK_ADD:
-                return Keys.NUMPAD_ADD;
+                return Input.Keys.NUMPAD_ADD;
             case java.awt.event.KeyEvent.VK_SEMICOLON:
                 return Input.Keys.SEMICOLON;
             case java.awt.event.KeyEvent.VK_SHIFT:

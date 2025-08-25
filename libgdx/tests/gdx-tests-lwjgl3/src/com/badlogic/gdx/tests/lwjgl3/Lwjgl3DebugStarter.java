@@ -56,13 +56,13 @@ public class Lwjgl3DebugStarter {
 
                     @Override
                     public boolean keyDown(int keycode) {
-                        System.out.println("Key down: " + Keys.toString(keycode));
+                        System.out.println("Key down: " + Keys.INSTANCE.toString(keycode));
                         return false;
                     }
 
                     @Override
                     public boolean keyUp(int keycode) {
-                        System.out.println("Key up: " + Keys.toString(keycode));
+                        System.out.println("Key up: " + Keys.INSTANCE.toString(keycode));
                         return false;
                     }
 
