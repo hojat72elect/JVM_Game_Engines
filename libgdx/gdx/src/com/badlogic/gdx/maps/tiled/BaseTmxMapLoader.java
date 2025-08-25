@@ -752,7 +752,7 @@ public abstract class BaseTmxMapLoader<P extends BaseTmxMapLoader.Parameters> ex
         tileSet.putTile(tileId, tile);
     }
 
-    public static class Parameters extends AssetLoaderParameters<TiledMap> {
+    public static class Parameters extends AssetLoaderParameters {
         /**
          * generate mipmaps?
          **/

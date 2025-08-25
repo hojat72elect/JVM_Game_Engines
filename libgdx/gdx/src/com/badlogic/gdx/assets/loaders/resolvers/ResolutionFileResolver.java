@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This {@link FileHandleResolver} uses a given list of {@link Resolution}s to determine the best match based on the current back
  * buffer size. An example of how this resolver works:
@@ -59,23 +61,21 @@ public class ResolutionFileResolver implements FileHandleResolver {
         // Prefer the shortest side.
         Resolution best = descriptors[0];
         if (w < h) {
-            for (int i = 0, n = descriptors.length; i < n; i++) {
-                Resolution other = descriptors[i];
+            for (Resolution other : descriptors) {
                 if (w >= other.portraitWidth && other.portraitWidth >= best.portraitWidth && h >= other.portraitHeight
-                        && other.portraitHeight >= best.portraitHeight) best = descriptors[i];
+                        && other.portraitHeight >= best.portraitHeight) best = other;
             }
         } else {
-            for (int i = 0, n = descriptors.length; i < n; i++) {
-                Resolution other = descriptors[i];
+            for (Resolution other : descriptors) {
                 if (w >= other.portraitHeight && other.portraitHeight >= best.portraitHeight && h >= other.portraitWidth
-                        && other.portraitWidth >= best.portraitWidth) best = descriptors[i];
+                        && other.portraitWidth >= best.portraitWidth) best = other;
             }
         }
         return best;
     }
 
     @Override
-    public FileHandle resolve(String fileName) {
+    public FileHandle resolve(@NotNull String fileName) {
         Resolution bestResolution = choose(descriptors);
         FileHandle originalHandle = new FileHandle(fileName);
         FileHandle handle = baseResolver.resolve(resolve(originalHandle, bestResolution.folder));
@@ -86,7 +86,7 @@ public class ResolutionFileResolver implements FileHandleResolver {
     protected String resolve(FileHandle originalHandle, String suffix) {
         String parentString = "";
         FileHandle parent = originalHandle.parent();
-        if (parent != null && !parent.name().equals("")) {
+        if (parent != null && !parent.name().isEmpty()) {
             parentString = parent + "/";
         }
         return parentString + suffix + "/" + originalHandle.name();

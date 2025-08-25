@@ -26,7 +26,7 @@ public class AssetDescriptor<T> {
         this(file, assetType, null);
     }
 
-    public AssetDescriptor(String fileName, Class<T> assetType, AssetLoaderParameters<T> params) {
+    public AssetDescriptor(String fileName, Class<T> assetType, AssetLoaderParameters params) {
         this.fileName = fileName;
         this.type = assetType;
         this.params = params;
@@ -35,7 +35,7 @@ public class AssetDescriptor<T> {
     /**
      * Creates an AssetDescriptor with an already resolved name.
      */
-    public AssetDescriptor(FileHandle file, Class<T> assetType, AssetLoaderParameters<T> params) {
+    public AssetDescriptor(FileHandle file, Class<T> assetType, AssetLoaderParameters params) {
         this.fileName = file.path();
         this.file = file;
         this.type = assetType;
@@ -44,9 +44,8 @@ public class AssetDescriptor<T> {
 
     @Override
     public String toString() {
-        String sb = fileName +
+        return fileName +
                 ", " +
                 type.getName();
-        return sb;
     }
 }

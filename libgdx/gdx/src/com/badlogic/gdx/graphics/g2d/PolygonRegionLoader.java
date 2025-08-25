@@ -111,7 +111,7 @@ public class PolygonRegionLoader extends SynchronousAssetLoader<PolygonRegion, P
         throw new GdxRuntimeException("Polygon shape not found: " + file);
     }
 
-    public static class PolygonRegionParameters extends AssetLoaderParameters<PolygonRegion> {
+    public static class PolygonRegionParameters extends AssetLoaderParameters {
 
         /**
          * what the line starts with that contains the file name of the texture for this {@code PolygonRegion}

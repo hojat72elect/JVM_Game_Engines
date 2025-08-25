@@ -70,7 +70,6 @@ class AssetLoadingTask implements AsyncTask<Void> {
      * {@link AsynchronousAssetLoader#loadSync(AssetManager, String, FileHandle, AssetLoaderParameters)}.
      *
      * @return true in case the asset was fully loaded, false otherwise
-     * @throws GdxRuntimeException
      */
     public boolean update() {
         if (loader instanceof SynchronousAssetLoader)
@@ -129,7 +128,7 @@ class AssetLoadingTask implements AsyncTask<Void> {
      */
     public void unload() {
         if (loader instanceof AsynchronousAssetLoader)
-            ((AsynchronousAssetLoader) loader).unloadAsync(manager, assetDesc.fileName, resolve(loader, assetDesc), assetDesc.params);
+            ((AsynchronousAssetLoader) loader).unloadAsync();
     }
 
     private FileHandle resolve(AssetLoader loader, AssetDescriptor assetDesc) {

@@ -42,7 +42,7 @@ public class FreetypeFontLoader extends AsynchronousAssetLoader<BitmapFont, Free
         return deps;
     }
 
-    public static class FreeTypeFontLoaderParameter extends AssetLoaderParameters<BitmapFont> {
+    public static class FreeTypeFontLoaderParameter extends AssetLoaderParameters {
         /**
          * the name of the TTF file to be used to load the font
          **/

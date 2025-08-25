@@ -68,8 +68,6 @@ public interface Music extends Disposable {
     /**
      * Sets the volume of this music stream. The volume must be given in the range [0,1] with 0 being silent and 1 being the
      * maximum volume.
-     *
-     * @param volume
      */
     void setVolume(float volume);
 
@@ -95,13 +93,6 @@ public interface Music extends Disposable {
      * Needs to be called when the Music is no longer needed.
      */
     void dispose();
-
-    /**
-     * Register a callback to be invoked when the end of a music stream has been reached during playback.
-     *
-     * @param listener the callback that will be run.
-     */
-    void setOnCompletionListener(OnCompletionListener listener);
 
     /**
      * Interface definition for a callback to be invoked when playback of a music stream has completed.

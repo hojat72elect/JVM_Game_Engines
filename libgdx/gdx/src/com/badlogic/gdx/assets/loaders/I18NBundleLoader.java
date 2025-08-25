@@ -66,13 +66,9 @@ public class I18NBundleLoader extends AsynchronousAssetLoader<I18NBundle, I18NBu
         return null;
     }
 
-    static public class I18NBundleParameter extends AssetLoaderParameters<I18NBundle> {
+    static public class I18NBundleParameter extends AssetLoaderParameters {
         public final Locale locale;
         public final String encoding;
-
-        public I18NBundleParameter() {
-            this(null, null);
-        }
 
         public I18NBundleParameter(Locale locale) {
             this(locale, null);

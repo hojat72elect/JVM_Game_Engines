@@ -685,7 +685,7 @@ public class FlameMain extends JFrame implements AssetErrorListener {
         return null;
     }
 
-    public <T> T load(String resource, Class<T> type, AssetLoader loader, AssetLoaderParameters<T> params) {
+    public <T> T load(String resource, Class<T> type, AssetLoader loader, AssetLoaderParameters params) {
         String resolvedPath = resource.replaceAll("\\\\", "/");
         boolean exist = assetManager.isLoaded(resolvedPath, type);
         T oldAsset = null;
@@ -695,7 +695,7 @@ public class FlameMain extends JFrame implements AssetErrorListener {
                 assetManager.unload(resolvedPath);
         }
 
-        AssetLoader<T, AssetLoaderParameters<T>> currentLoader = assetManager.getLoader(type);
+        AssetLoader<T, AssetLoaderParameters> currentLoader = assetManager.getLoader(type);
         if (loader != null) assetManager.setLoader(type, loader);
 
         assetManager.setLoader(ParticleEffect.class, new ParticleEffectLoader(new FileHandleResolver() {

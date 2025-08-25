@@ -31,12 +31,10 @@ public class CubemapLoader extends AsynchronousAssetLoader<Cubemap, CubemapLoade
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, CubemapParameter parameter) {
         info.filename = fileName;
         if (parameter == null || parameter.cubemapData == null) {
-            Format format = null;
             boolean genMipMaps = false;
             info.cubemap = null;
 
             if (parameter != null) {
-                format = parameter.format;
                 info.cubemap = parameter.cubemap;
             }
 
@@ -77,7 +75,7 @@ public class CubemapLoader extends AsynchronousAssetLoader<Cubemap, CubemapLoade
         Cubemap cubemap;
     }
 
-    static public class CubemapParameter extends AssetLoaderParameters<Cubemap> {
+    static public class CubemapParameter extends AssetLoaderParameters {
         /**
          * the format of the final Texture. Uses the source images format if null
          **/

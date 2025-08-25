@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 
-public abstract class SynchronousAssetLoader<T, P extends AssetLoaderParameters<T>> extends AssetLoader<T, P> {
+public abstract class SynchronousAssetLoader<T, P extends AssetLoaderParameters> extends AssetLoader<T, P> {
     public SynchronousAssetLoader(FileHandleResolver resolver) {
         super(resolver);
     }

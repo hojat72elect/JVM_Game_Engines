@@ -35,7 +35,7 @@ public class ParticleEffectLoader extends SynchronousAssetLoader<ParticleEffect,
         Array<AssetDescriptor> deps = null;
         if (param != null && param.atlasFile != null) {
             deps = new Array();
-            deps.add(new AssetDescriptor<TextureAtlas>(param.atlasFile, TextureAtlas.class));
+            deps.add(new AssetDescriptor<>(param.atlasFile, TextureAtlas.class));
         }
         return deps;
     }
@@ -44,7 +44,7 @@ public class ParticleEffectLoader extends SynchronousAssetLoader<ParticleEffect,
      * Parameter to be passed to {@link AssetManager#load(String, Class, AssetLoaderParameters)} if additional configuration is
      * necessary for the {@link ParticleEffect}.
      */
-    public static class ParticleEffectParameter extends AssetLoaderParameters<ParticleEffect> {
+    public static class ParticleEffectParameter extends AssetLoaderParameters {
         /**
          * Atlas file name.
          */

@@ -135,7 +135,7 @@ public class ParticleEffectLoader
         return null;
     }
 
-    public static class ParticleEffectLoadParameter extends AssetLoaderParameters<ParticleEffect> {
+    public static class ParticleEffectLoadParameter extends AssetLoaderParameters {
         Array<ParticleBatch<?>> batches;
 
         public ParticleEffectLoadParameter(Array<ParticleBatch<?>> batches) {
@@ -143,7 +143,7 @@ public class ParticleEffectLoader
         }
     }
 
-    public static class ParticleEffectSaveParameter extends AssetLoaderParameters<ParticleEffect> {
+    public static class ParticleEffectSaveParameter extends AssetLoaderParameters {
         /**
          * Optional parameters, but should be present to correctly load the settings
          */

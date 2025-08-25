@@ -66,9 +66,4 @@ public class MockMusic implements Music {
     public void dispose() {
 
     }
-
-    @Override
-    public void setOnCompletionListener(OnCompletionListener listener) {
-
-    }
 }

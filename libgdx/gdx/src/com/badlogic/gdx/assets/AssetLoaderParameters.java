@@ -1,6 +1,6 @@
 package com.badlogic.gdx.assets;
 
-public class AssetLoaderParameters<T> {
+public class AssetLoaderParameters {
 
     public LoadedCallback loadedCallback;
 

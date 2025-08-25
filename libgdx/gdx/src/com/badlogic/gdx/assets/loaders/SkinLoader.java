@@ -30,8 +30,7 @@ public class SkinLoader extends AsynchronousAssetLoader<Skin, SkinLoader.SkinPar
         Array<AssetDescriptor> deps = new Array();
         if (parameter == null || parameter.textureAtlasPath == null)
             deps.add(new AssetDescriptor(file.pathWithoutExtension() + ".atlas", TextureAtlas.class));
-        else if (parameter.textureAtlasPath != null)
-            deps.add(new AssetDescriptor(parameter.textureAtlasPath, TextureAtlas.class));
+        else deps.add(new AssetDescriptor(parameter.textureAtlasPath, TextureAtlas.class));
         return deps;
     }
 
@@ -72,21 +71,9 @@ public class SkinLoader extends AsynchronousAssetLoader<Skin, SkinLoader.SkinPar
         return new Skin(atlas);
     }
 
-    static public class SkinParameter extends AssetLoaderParameters<Skin> {
+    static public class SkinParameter extends AssetLoaderParameters {
         public final String textureAtlasPath;
         public final ObjectMap<String, Object> resources;
-
-        public SkinParameter() {
-            this(null, null);
-        }
-
-        public SkinParameter(ObjectMap<String, Object> resources) {
-            this(null, resources);
-        }
-
-        public SkinParameter(String textureAtlasPath) {
-            this(textureAtlasPath, null);
-        }
 
         public SkinParameter(String textureAtlasPath, ObjectMap<String, Object> resources) {
             this.textureAtlasPath = textureAtlasPath;

@@ -20,17 +20,8 @@ import com.badlogic.gdx.utils.Array;
  */
 public class ShaderProgramLoader extends AsynchronousAssetLoader<ShaderProgram, ShaderProgramLoader.ShaderProgramParameter> {
 
-    private String vertexFileSuffix = ".vert";
-    private String fragmentFileSuffix = ".frag";
-
     public ShaderProgramLoader(FileHandleResolver resolver) {
         super(resolver);
-    }
-
-    public ShaderProgramLoader(FileHandleResolver resolver, String vertexFileSuffix, String fragmentFileSuffix) {
-        super(resolver);
-        this.vertexFileSuffix = vertexFileSuffix;
-        this.fragmentFileSuffix = fragmentFileSuffix;
     }
 
     @Override
@@ -49,6 +40,8 @@ public class ShaderProgramLoader extends AsynchronousAssetLoader<ShaderProgram, 
             if (parameter.vertexFile != null) vertFileName = parameter.vertexFile;
             if (parameter.fragmentFile != null) fragFileName = parameter.fragmentFile;
         }
+        String vertexFileSuffix = ".vert";
+        String fragmentFileSuffix = ".frag";
         if (vertFileName == null && fileName.endsWith(fragmentFileSuffix)) {
             vertFileName = fileName.substring(0, fileName.length() - fragmentFileSuffix.length()) + vertexFileSuffix;
         }
@@ -72,7 +65,7 @@ public class ShaderProgramLoader extends AsynchronousAssetLoader<ShaderProgram, 
         return shaderProgram;
     }
 
-    static public class ShaderProgramParameter extends AssetLoaderParameters<ShaderProgram> {
+    static public class ShaderProgramParameter extends AssetLoaderParameters {
         /**
          * File name to be used for the vertex program instead of the default determined by the file name used to submit this asset
          * to AssetManager.

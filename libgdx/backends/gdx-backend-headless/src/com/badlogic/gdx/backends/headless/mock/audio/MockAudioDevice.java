@@ -24,11 +24,6 @@ public class MockAudioDevice implements AudioDevice {
     }
 
     @Override
-    public int getLatency() {
-        return 0;
-    }
-
-    @Override
     public void dispose() {
 
     }

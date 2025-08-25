@@ -155,11 +155,6 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
     }
 
     @Override
-    public void setOnCompletionListener(OnCompletionListener listener) {
-        onCompletionListener = listener;
-    }
-
-    @Override
     public void onCompletion(MediaPlayer mp) {
         if (onCompletionListener != null) {
             Gdx.app.postRunnable(() -> {

@@ -211,10 +211,6 @@ public class OpenALAudioDevice implements AudioDevice {
         return channels == 1;
     }
 
-    public int getLatency() {
-        return (int) ((float) bufferSize / bytesPerSample / channels * bufferCount);
-    }
-
     @Override
     public void pause() {
         // A buffer underflow will cause the source to stop.

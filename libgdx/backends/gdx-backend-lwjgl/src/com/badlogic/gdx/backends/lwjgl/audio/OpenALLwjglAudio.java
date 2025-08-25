@@ -337,11 +337,6 @@ public class OpenALLwjglAudio implements LwjglAudio {
             }
 
             @Override
-            public int getLatency() {
-                return 0;
-            }
-
-            @Override
             public void dispose() {
             }
 

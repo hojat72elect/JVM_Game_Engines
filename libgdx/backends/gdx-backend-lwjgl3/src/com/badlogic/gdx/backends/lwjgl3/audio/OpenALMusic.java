@@ -305,10 +305,6 @@ public abstract class OpenALMusic implements Music {
         onCompletionListener = null;
     }
 
-    public void setOnCompletionListener(OnCompletionListener listener) {
-        onCompletionListener = listener;
-    }
-
     public int getSourceId() {
         return sourceID;
     }

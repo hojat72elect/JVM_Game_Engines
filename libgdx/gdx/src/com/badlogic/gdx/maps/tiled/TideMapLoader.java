@@ -290,7 +290,7 @@ public class TideMapLoader extends SynchronousAssetLoader<TiledMap, TideMapLoade
         }
     }
 
-    public static class Parameters extends AssetLoaderParameters<TiledMap> {
+    public static class Parameters extends AssetLoaderParameters {
 
     }
 }

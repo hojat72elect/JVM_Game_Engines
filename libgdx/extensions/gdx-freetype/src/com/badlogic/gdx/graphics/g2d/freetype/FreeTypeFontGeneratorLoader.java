@@ -40,6 +40,6 @@ public class FreeTypeFontGeneratorLoader
         return null;
     }
 
-    static public class FreeTypeFontGeneratorParameters extends AssetLoaderParameters<FreeTypeFontGenerator> {
+    static public class FreeTypeFontGeneratorParameters extends AssetLoaderParameters {
     }
 }

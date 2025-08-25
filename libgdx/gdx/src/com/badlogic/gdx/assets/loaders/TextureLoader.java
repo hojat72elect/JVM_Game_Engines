@@ -73,7 +73,7 @@ public class TextureLoader extends AsynchronousAssetLoader<Texture, TextureLoade
         Texture texture;
     }
 
-    static public class TextureParameter extends AssetLoaderParameters<Texture> {
+    static public class TextureParameter extends AssetLoaderParameters {
         /**
          * the format of the final Texture. Uses the source images format if null
          **/
