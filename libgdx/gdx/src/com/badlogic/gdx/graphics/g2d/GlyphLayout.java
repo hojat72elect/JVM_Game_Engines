@@ -168,7 +168,7 @@ public class GlyphLayout implements Poolable {
                         }
                         // Fall through.
                     default:
-                        continue outer;
+                        continue;
                 }
             }
 

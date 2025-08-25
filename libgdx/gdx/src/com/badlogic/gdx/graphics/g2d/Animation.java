@@ -16,12 +16,8 @@ import com.badlogic.gdx.utils.reflect.ArrayReflection;
  */
 public class Animation<T> {
 
-    /**
-     * Length must not be modified without updating {@link #animationDuration}. See {@link #setKeyFrames(T[])}.
-     */
     T[] keyFrames;
-    private float frameDuration;
-    private float animationDuration;
+    private final float frameDuration;
     private int lastFrameNumber;
     private float lastStateTime;
     private PlayMode playMode = PlayMode.NORMAL;
@@ -100,7 +96,6 @@ public class Animation<T> {
      * Animation instance represents, e.g. running, jumping and so on using the mode specified by {@link #setPlayMode(PlayMode)}
      * method.
      *
-     * @param stateTime
      * @return the frame of animation for the given state time.
      */
     public T getKeyFrame(float stateTime) {
@@ -163,16 +158,9 @@ public class Animation<T> {
         return keyFrames;
     }
 
-    protected void setKeyFrames(T... keyFrames) {
+    @SafeVarargs
+    protected final void setKeyFrames(T... keyFrames) {
         this.keyFrames = keyFrames;
-        this.animationDuration = keyFrames.length * frameDuration;
-    }
-
-    /**
-     * Returns the animation play mode.
-     */
-    public PlayMode getPlayMode() {
-        return playMode;
     }
 
     /**
@@ -182,41 +170,6 @@ public class Animation<T> {
      */
     public void setPlayMode(PlayMode playMode) {
         this.playMode = playMode;
-    }
-
-    /**
-     * Whether the animation would be finished if played without looping (PlayMode#NORMAL), given the state time.
-     *
-     * @param stateTime
-     * @return whether the animation is finished.
-     */
-    public boolean isAnimationFinished(float stateTime) {
-        int frameNumber = (int) (stateTime / frameDuration);
-        return keyFrames.length - 1 < frameNumber;
-    }
-
-    /**
-     * @return the duration of a frame in seconds
-     */
-    public float getFrameDuration() {
-        return frameDuration;
-    }
-
-    /**
-     * Sets duration a frame will be displayed.
-     *
-     * @param frameDuration in seconds
-     */
-    public void setFrameDuration(float frameDuration) {
-        this.frameDuration = frameDuration;
-        this.animationDuration = keyFrames.length * frameDuration;
-    }
-
-    /**
-     * @return the duration of the entire animation, number of frames times frame duration, in seconds
-     */
-    public float getAnimationDuration() {
-        return animationDuration;
     }
 
     /**

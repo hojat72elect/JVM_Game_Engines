@@ -2,7 +2,6 @@ package com.badlogic.gdx.graphics.g2d;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -25,7 +24,6 @@ public class ParticleEffect implements Disposable {
     protected float xSizeScale = 1f;
     protected float ySizeScale = 1f;
     protected float motionScale = 1f;
-    private BoundingBox bounds;
     private boolean ownsTexture;
 
     public ParticleEffect() {
@@ -119,11 +117,6 @@ public class ParticleEffect implements Disposable {
             emitters.get(i).setPosition(x, y);
     }
 
-    public void setFlip(boolean flipX, boolean flipY) {
-        for (int i = 0, n = emitters.size; i < n; i++)
-            emitters.get(i).setFlip(flipX, flipY);
-    }
-
     public void flipY() {
         for (int i = 0, n = emitters.size; i < n; i++)
             emitters.get(i).flipY();
@@ -131,26 +124,6 @@ public class ParticleEffect implements Disposable {
 
     public Array<ParticleEmitter> getEmitters() {
         return emitters;
-    }
-
-    /**
-     * Returns the emitter with the specified name, or null.
-     */
-    public ParticleEmitter findEmitter(String name) {
-        for (int i = 0, n = emitters.size; i < n; i++) {
-            ParticleEmitter emitter = emitters.get(i);
-            if (emitter.getName().equals(name)) return emitter;
-        }
-        return null;
-    }
-
-    /**
-     * Allocates all emitters particles. See {@link com.badlogic.gdx.graphics.g2d.ParticleEmitter#preAllocateParticles()}
-     */
-    public void preAllocateParticles() {
-        for (ParticleEmitter emitter : emitters) {
-            emitter.preAllocateParticles();
-        }
     }
 
     public void save(Writer output) throws IOException {
@@ -182,11 +155,10 @@ public class ParticleEffect implements Disposable {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(input), 512);
-            while (true) {
+            do {
                 ParticleEmitter emitter = newEmitter(reader);
                 emitters.add(emitter);
-                if (reader.readLine() == null) break;
-            }
+            } while (reader.readLine() != null);
         } catch (IOException ex) {
             throw new GdxRuntimeException("Error loading effect: " + effectFile, ex);
         } finally {
@@ -194,15 +166,11 @@ public class ParticleEffect implements Disposable {
         }
     }
 
-    public void loadEmitterImages(TextureAtlas atlas) {
-        loadEmitterImages(atlas, null);
-    }
-
     public void loadEmitterImages(TextureAtlas atlas, String atlasPrefix) {
         for (int i = 0, n = emitters.size; i < n; i++) {
             ParticleEmitter emitter = emitters.get(i);
             if (emitter.getImagePaths().size == 0) continue;
-            Array<Sprite> sprites = new Array<Sprite>();
+            Array<Sprite> sprites = new Array<>();
             for (String imagePath : emitter.getImagePaths()) {
                 String imageName = new File(imagePath.replace('\\', '/')).getName();
                 int lastDotIndex = imageName.lastIndexOf('.');
@@ -218,11 +186,11 @@ public class ParticleEffect implements Disposable {
 
     public void loadEmitterImages(FileHandle imagesDir) {
         ownsTexture = true;
-        ObjectMap<String, Sprite> loadedSprites = new ObjectMap<String, Sprite>(emitters.size);
+        ObjectMap<String, Sprite> loadedSprites = new ObjectMap<>(emitters.size);
         for (int i = 0, n = emitters.size; i < n; i++) {
             ParticleEmitter emitter = emitters.get(i);
             if (emitter.getImagePaths().size == 0) continue;
-            Array<Sprite> sprites = new Array<Sprite>();
+            Array<Sprite> sprites = new Array<>();
             for (String imagePath : emitter.getImagePaths()) {
                 String imageName = new File(imagePath.replace('\\', '/')).getName();
                 Sprite sprite = loadedSprites.get(imageName);
@@ -262,32 +230,11 @@ public class ParticleEffect implements Disposable {
     }
 
     /**
-     * Returns the bounding box for all active particles. z axis will always be zero.
-     */
-    public BoundingBox getBoundingBox() {
-        if (bounds == null) bounds = new BoundingBox();
-
-        BoundingBox bounds = this.bounds;
-        bounds.inf();
-        for (ParticleEmitter emitter : this.emitters)
-            bounds.ext(emitter.getBoundingBox());
-        return bounds;
-    }
-
-    /**
      * Permanently scales all the size and motion parameters of all the emitters in this effect. If this effect originated from a
      * {@link ParticleEffectPool}, the scale will be reset when it is returned to the pool.
      */
     public void scaleEffect(float scaleFactor) {
         scaleEffect(scaleFactor, scaleFactor, scaleFactor);
-    }
-
-    /**
-     * Permanently scales all the size and motion parameters of all the emitters in this effect. If this effect originated from a
-     * {@link ParticleEffectPool}, the scale will be reset when it is returned to the pool.
-     */
-    public void scaleEffect(float scaleFactor, float motionScaleFactor) {
-        scaleEffect(scaleFactor, scaleFactor, motionScaleFactor);
     }
 
     /**
@@ -311,7 +258,6 @@ public class ParticleEffect implements Disposable {
      * IMPORTANT: If set to false and if the next object to use this Batch expects alpha blending, you are responsible for setting
      * the Batch's blend function to (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA) before that next object is drawn.
      *
-     * @param cleanUpBlendFunction
      */
     public void setEmittersCleanUpBlendFunction(boolean cleanUpBlendFunction) {
         for (int i = 0, n = emitters.size; i < n; i++) {

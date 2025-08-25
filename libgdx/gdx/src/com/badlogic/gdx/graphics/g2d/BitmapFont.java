@@ -205,13 +205,6 @@ public class BitmapFont implements Disposable {
         load(data);
     }
 
-    static int indexOf(CharSequence text, char ch, int start) {
-        final int n = text.length();
-        for (; start < n; start++)
-            if (text.charAt(start) == ch) return start;
-        return n;
-    }
-
     protected void load(BitmapFontData data) {
         for (Glyph[] page : data.glyphs) {
             if (page == null) continue;
@@ -451,13 +444,6 @@ public class BitmapFont implements Disposable {
      */
     public BitmapFontData getData() {
         return data;
-    }
-
-    /**
-     * @return whether the texture is owned by the font, font disposes the texture itself if true
-     */
-    public boolean ownsTexture() {
-        return ownsTexture;
     }
 
     /**
@@ -871,28 +857,28 @@ public class BitmapFont implements Disposable {
             if (offsetX > 0) {
                 x -= offsetX;
                 if (x < 0) {
-                    glyph.width += x;
-                    glyph.xoffset -= x;
+                    glyph.width += (int) x;
+                    glyph.xoffset -= (int) x;
                     x = 0;
                 }
                 x2 -= offsetX;
                 if (x2 > regionWidth) {
-                    glyph.width -= x2 - regionWidth;
+                    glyph.width -= (int) (x2 - regionWidth);
                     x2 = regionWidth;
                 }
             }
             if (offsetY > 0) {
                 y -= offsetY;
                 if (y < 0) {
-                    glyph.height += y;
+                    glyph.height += (int) y;
                     if (glyph.height < 0) glyph.height = 0;
                     y = 0;
                 }
                 y2 -= offsetY;
                 if (y2 > regionHeight) {
                     float amount = y2 - regionHeight;
-                    glyph.height -= amount;
-                    glyph.yoffset += amount;
+                    glyph.height -= (int) amount;
+                    glyph.yoffset += (int) amount;
                     y2 = regionHeight;
                 }
             }

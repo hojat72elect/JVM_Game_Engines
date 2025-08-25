@@ -46,10 +46,6 @@ public class BitmapFontCache {
      */
     private int[] tempGlyphCount;
 
-    public BitmapFontCache(BitmapFont font) {
-        this(font, font.usesIntegerPositions());
-    }
-
     /**
      * @param integer If true, rendering positions will be at integer values to avoid filtering artifacts.
      */
@@ -148,29 +144,6 @@ public class BitmapFontCache {
     }
 
     /**
-     * Sets the alpha component of all text currently in the cache. Does not affect subsequently added text.
-     */
-    public void setAlphas(float alpha) {
-        int alphaBits = ((int) (254 * alpha)) << 24;
-        float prev = 0, newColor = 0;
-        for (int j = 0, length = pageVertices.length; j < length; j++) {
-            float[] vertices = pageVertices[j];
-            for (int i = 2, n = idx[j]; i < n; i += 5) {
-                float c = vertices[i];
-                if (c == prev && i != 2) {
-                    vertices[i] = newColor;
-                } else {
-                    prev = c;
-                    int rgba = NumberUtils.floatToIntColor(c);
-                    rgba = (rgba & 0x00FFFFFF) | alphaBits;
-                    newColor = NumberUtils.intToFloatColor(rgba);
-                    vertices[i] = newColor;
-                }
-            }
-        }
-    }
-
-    /**
      * Sets the color of all text currently in the cache. Does not affect subsequently added text.
      */
     public void setColors(float color) {
@@ -186,14 +159,6 @@ public class BitmapFontCache {
      */
     public void setColors(Color tint) {
         setColors(tint.toFloatBits());
-    }
-
-    /**
-     * Sets the color of all text currently in the cache. Does not affect subsequently added text.
-     */
-    public void setColors(float r, float g, float b, float a) {
-        int intBits = ((int) (255 * a) << 24) | ((int) (255 * b) << 16) | ((int) (255 * g) << 8) | ((int) (255 * r));
-        setColors(NumberUtils.intToFloatColor(intBits));
     }
 
     /**
@@ -603,18 +568,9 @@ public class BitmapFontCache {
 
     /**
      * Specifies whether to use integer positions or not. Default is to use them so filtering doesn't kick in as badly.
-     *
-     * @param use
      */
     public void setUseIntegerPositions(boolean use) {
         this.integer = use;
-    }
-
-    /**
-     * @return whether this font uses integer positions for drawing.
-     */
-    public boolean usesIntegerPositions() {
-        return integer;
     }
 
     public float[] getVertices() {
@@ -627,9 +583,5 @@ public class BitmapFontCache {
 
     public int getVertexCount(int page) {
         return idx[page];
-    }
-
-    public Array<GlyphLayout> getLayouts() {
-        return layouts;
     }
 }

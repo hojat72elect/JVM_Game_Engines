@@ -257,14 +257,6 @@ public interface Batch extends Disposable {
      */
     void setBlendFunctionSeparate(int srcFuncColor, int dstFuncColor, int srcFuncAlpha, int dstFuncAlpha);
 
-    int getBlendSrcFunc();
-
-    int getBlendDstFunc();
-
-    int getBlendSrcFuncAlpha();
-
-    int getBlendDstFuncAlpha();
-
     /**
      * Returns the current projection matrix. Changing this within {@link #begin()}/{@link #end()} results in undefined
      * behaviour.

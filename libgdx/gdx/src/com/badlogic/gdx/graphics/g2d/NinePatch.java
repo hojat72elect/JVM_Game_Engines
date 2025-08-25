@@ -443,32 +443,6 @@ public class NinePatch {
         this.bottomHeight = bottomHeight;
     }
 
-    public float getMiddleWidth() {
-        return middleWidth;
-    }
-
-    /**
-     * Set the width of the middle column of the patch. At render time, this is implicitly the requested render-width of the
-     * entire nine patch, minus the left and right width. This value is only used for computing the {@link #getTotalWidth() default
-     * total width}.
-     */
-    public void setMiddleWidth(float middleWidth) {
-        this.middleWidth = middleWidth;
-    }
-
-    public float getMiddleHeight() {
-        return middleHeight;
-    }
-
-    /**
-     * Set the height of the middle row of the patch. At render time, this is implicitly the requested render-height of the entire
-     * nine patch, minus the top and bottom height. This value is only used for computing the {@link #getTotalHeight() default
-     * total height}.
-     */
-    public void setMiddleHeight(float middleHeight) {
-        this.middleHeight = middleHeight;
-    }
-
     public float getTotalWidth() {
         return leftWidth + middleWidth + rightWidth;
     }

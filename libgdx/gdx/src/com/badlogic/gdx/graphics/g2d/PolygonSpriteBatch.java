@@ -1245,26 +1245,6 @@ public class PolygonSpriteBatch implements PolygonBatch {
     }
 
     @Override
-    public int getBlendSrcFunc() {
-        return blendSrcFunc;
-    }
-
-    @Override
-    public int getBlendDstFunc() {
-        return blendDstFunc;
-    }
-
-    @Override
-    public int getBlendSrcFuncAlpha() {
-        return blendSrcFuncAlpha;
-    }
-
-    @Override
-    public int getBlendDstFuncAlpha() {
-        return blendDstFuncAlpha;
-    }
-
-    @Override
     public void dispose() {
         mesh.dispose();
         if (ownsShader && shader != null) shader.dispose();

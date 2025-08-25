@@ -73,12 +73,4 @@ public abstract class FileHandleStream extends FileHandle {
     public void moveTo(FileHandle dest) {
         throw new UnsupportedOperationException();
     }
-
-    public void emptyDirectory() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void emptyDirectory(boolean preserveTree) {
-        throw new UnsupportedOperationException();
-    }
 }

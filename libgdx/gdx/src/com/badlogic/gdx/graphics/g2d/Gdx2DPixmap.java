@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -24,7 +22,6 @@ public class Gdx2DPixmap implements Disposable {
     public static final int GDX2D_SCALE_LINEAR = 1;
 
     public static final int GDX2D_BLEND_NONE = 0;
-    public static final int GDX2D_BLEND_SRC_OVER = 1;
     long basePtr;
     int width;
     int height;
@@ -61,29 +58,6 @@ public class Gdx2DPixmap implements Disposable {
         }
     }
 
-    public Gdx2DPixmap(InputStream in, int requestedFormat) throws IOException {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(1024);
-        byte[] buffer = new byte[1024];
-        int readBytes = 0;
-
-        while ((readBytes = in.read(buffer)) != -1) {
-            bytes.write(buffer, 0, readBytes);
-        }
-
-        buffer = bytes.toByteArray();
-        pixelPtr = load(nativeData, buffer, 0, buffer.length);
-        if (pixelPtr == null) throw new IOException("Error loading pixmap: " + getFailureReason());
-
-        basePtr = nativeData[0];
-        width = (int) nativeData[1];
-        height = (int) nativeData[2];
-        format = (int) nativeData[3];
-
-        if (requestedFormat != 0 && requestedFormat != format) {
-            convert(requestedFormat);
-        }
-    }
-
     /**
      * @throws GdxRuntimeException if allocation failed.
      */
@@ -92,14 +66,6 @@ public class Gdx2DPixmap implements Disposable {
         if (pixelPtr == null) throw new GdxRuntimeException(
                 "Unable to allocate memory for pixmap: " + width + "x" + height + ", " + getFormatString(format));
 
-        this.basePtr = nativeData[0];
-        this.width = (int) nativeData[1];
-        this.height = (int) nativeData[2];
-        this.format = (int) nativeData[3];
-    }
-
-    public Gdx2DPixmap(ByteBuffer pixelPtr, long[] nativeData) {
-        this.pixelPtr = pixelPtr;
         this.basePtr = nativeData[0];
         this.width = (int) nativeData[1];
         this.height = (int) nativeData[2];
@@ -136,22 +102,6 @@ public class Gdx2DPixmap implements Disposable {
                 return GL20.GL_UNSIGNED_SHORT_4_4_4_4;
             default:
                 throw new GdxRuntimeException("unknown format: " + format);
-        }
-    }
-
-    public static Gdx2DPixmap newPixmap(InputStream in, int requestedFormat) {
-        try {
-            return new Gdx2DPixmap(in, requestedFormat);
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    public static Gdx2DPixmap newPixmap(int width, int height, int format) {
-        try {
-            return new Gdx2DPixmap(width, height, format);
-        } catch (IllegalArgumentException e) {
-            return null;
         }
     }
 
