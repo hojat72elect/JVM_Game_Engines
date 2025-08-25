@@ -65,7 +65,7 @@ public final class ScreenUtils {
         Gdx.gl.glClearColor(r, g, b, a);
         int mask = GL20.GL_COLOR_BUFFER_BIT;
         if (clearDepth) mask = mask | GL20.GL_DEPTH_BUFFER_BIT;
-        if (applyAntialiasing && Gdx.graphics.getBufferFormat().coverageSampling)
+        if (applyAntialiasing && Gdx.graphics.getBufferFormat().getCoverageSampling())
             mask = mask | GL20.GL_COVERAGE_BUFFER_BIT_NV;
         Gdx.gl.glClear(mask);
     }
