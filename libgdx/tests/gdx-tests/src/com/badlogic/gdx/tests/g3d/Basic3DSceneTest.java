@@ -21,12 +21,12 @@ public class Basic3DSceneTest extends GdxTest implements ApplicationListener {
     public CameraInputController camController;
     public ModelBatch modelBatch;
     public AssetManager assets;
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public Array<ModelInstance> instances = new Array<>();
     public Environment lights;
     public boolean loading;
 
-    public Array<ModelInstance> blocks = new Array<ModelInstance>();
-    public Array<ModelInstance> invaders = new Array<ModelInstance>();
+    public Array<ModelInstance> blocks = new Array<>();
+    public Array<ModelInstance> invaders = new Array<>();
     public ModelInstance ship;
     public ModelInstance space;
 

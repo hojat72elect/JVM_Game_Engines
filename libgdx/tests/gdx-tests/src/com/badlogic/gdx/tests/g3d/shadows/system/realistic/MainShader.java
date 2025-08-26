@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Attributes;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.attributes.DirectionalLightsAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.SpotLightsAttribute;
@@ -126,7 +125,6 @@ public class MainShader extends DefaultShader {
     @Override
     protected void bindLights(final Renderable renderable, final Attributes attributes) {
         super.bindLights(renderable, attributes);
-        final Environment environment = renderable.environment;
 
         bindDirectionalShadows(attributes);
         bindSpotShadows(attributes);

@@ -21,7 +21,7 @@ public class ModelTest extends BaseG3dHudTest {
     private final BoundingBox bounds = new BoundingBox();
     protected Environment environment;
     protected String currentlyLoading;
-    ObjectMap<ModelInstance, AnimationController> animationControllers = new ObjectMap<ModelInstance, AnimationController>();
+    ObjectMap<ModelInstance, AnimationController> animationControllers = new ObjectMap<>();
 
     @Override
     public void create() {
@@ -68,7 +68,7 @@ public class ModelTest extends BaseG3dHudTest {
 
     @Override
     protected void onLoaded() {
-        if (currentlyLoading == null || currentlyLoading.length() == 0) return;
+        if (currentlyLoading == null || currentlyLoading.isEmpty()) return;
 
         instances.clear();
         animationControllers.clear();

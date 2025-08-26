@@ -30,7 +30,6 @@ public class Animation3DTest extends BaseG3dHudTest {
     final static int idle = 1;
     final static int walk = 2;
     final static int back = 3;
-    final static int attack = 4;
     final AnimationController.Transform trTmp = new AnimationController.Transform();
     final AnimationController.Transform trForward = new AnimationController.Transform();
     final AnimationController.Transform trBackward = new AnimationController.Transform();
@@ -48,7 +47,6 @@ public class Animation3DTest extends BaseG3dHudTest {
     ModelBatch shadowBatch;
     Environment lights;
     int status = 0;
-    float angle = 0f;
 
     @Override
     public void create() {

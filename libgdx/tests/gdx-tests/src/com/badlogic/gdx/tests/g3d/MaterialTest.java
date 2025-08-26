@@ -21,8 +21,6 @@ import com.badlogic.gdx.tests.utils.GdxTest;
 
 public class MaterialTest extends GdxTest {
 
-    float angleY = 0;
-
     Model model, backModel;
     ModelInstance modelInstance;
     ModelInstance background;

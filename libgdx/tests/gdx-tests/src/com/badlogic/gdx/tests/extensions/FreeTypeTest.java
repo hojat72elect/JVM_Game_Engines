@@ -3,11 +3,9 @@ package com.badlogic.gdx.tests.extensions;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -21,12 +19,6 @@ public class FreeTypeTest extends GdxTest {
     public void create() {
         boolean flip = false;
         batch = new SpriteBatch();
-        if (flip) {
-            OrthographicCamera cam = new OrthographicCamera();
-            cam.setToOrtho(flip);
-            cam.update();
-            batch.setProjectionMatrix(cam.combined);
-        }
         font = new BitmapFont(Gdx.files.internal("data/lsans-15.fnt"), flip);
         FileHandle fontFile = Gdx.files.internal("data/lsans.ttf");
 
@@ -36,13 +28,7 @@ public class FreeTypeTest extends GdxTest {
         parameter.size = 15;
         parameter.flip = flip;
         parameter.genMipMaps = true;
-        // parameter.shadowOffsetX = 1;
-        // parameter.shadowOffsetY = 1;
-        // parameter.shadowColor = Color.GREEN;
-        // parameter.borderWidth = 1f;
-        // parameter.borderColor = Color.PURPLE;
 
-        FreeTypeBitmapFontData fontData = generator.generateData(parameter);
         ftFont = generator.generateFont(parameter);
         generator.dispose();
     }

@@ -23,7 +23,7 @@ public class AABBNearFarAnalyzer implements NearFarAnalyzer {
     /**
      * list of Renderables to be rendered in the current batch
      **/
-    protected final Array<Renderable> renderables = new Array<Renderable>();
+    protected final Array<Renderable> renderables = new Array<>();
     /**
      * Objects used for computation
      */
@@ -45,7 +45,7 @@ public class AABBNearFarAnalyzer implements NearFarAnalyzer {
             }
         }
 
-        computeResult(bb1, camera);
+        computeResult(camera);
         renderablesPool.flush();
         renderables.clear();
     }
@@ -70,10 +70,9 @@ public class AABBNearFarAnalyzer implements NearFarAnalyzer {
     /**
      * Compute final result.
      *
-     * @param bb     BoundingBox encompassing instances
      * @param camera Camera to compute
      */
-    protected void computeResult(BoundingBox bb, Camera camera) {
+    protected void computeResult(Camera camera) {
         // Radius
         float radius = bb1.getDimensions(tmpV).len() * 0.5f;
 
@@ -95,7 +94,7 @@ public class AABBNearFarAnalyzer implements NearFarAnalyzer {
 
     // @TODO Merge renderable pools (ModelBatch)
     protected static class RenderablePool extends Pool<Renderable> {
-        protected Array<Renderable> obtained = new Array<Renderable>();
+        protected Array<Renderable> obtained = new Array<>();
 
         @Override
         protected Renderable newObject() {

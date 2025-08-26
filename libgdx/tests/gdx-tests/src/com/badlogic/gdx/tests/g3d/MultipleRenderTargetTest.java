@@ -66,8 +66,8 @@ public class MultipleRenderTargetTest extends GdxTest {
     ModelCache modelCache;
     ModelInstance floorInstance;
     ModelInstance cannon;
-    Array<Light> lights = new Array<Light>();
-    Array<Renderable> renderables = new Array<Renderable>();
+    Array<Light> lights = new Array<>();
+    Array<Renderable> renderables = new Array<>();
     RenderablePool renerablePool = new RenderablePool();
     float track;
 
@@ -316,7 +316,7 @@ public class MultipleRenderTargetTest extends GdxTest {
         verts[i++] = 1f;
         verts[i++] = 0;
         verts[i++] = 0f;
-        verts[i++] = 1f;
+        verts[i] = 1f;
 
         Mesh mesh = new Mesh(true, 4, 0, new VertexAttribute(VertexAttributes.Usage.Position, 3, ShaderProgram.POSITION_ATTRIBUTE),
                 new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2, ShaderProgram.TEXCOORD_ATTRIBUTE + "0")
@@ -453,7 +453,7 @@ public class MultipleRenderTargetTest extends GdxTest {
     }
 
     protected static class RenderablePool extends Pool<Renderable> {
-        protected Array<Renderable> obtained = new Array<Renderable>();
+        protected Array<Renderable> obtained = new Array<>();
 
         @Override
         protected Renderable newObject() {

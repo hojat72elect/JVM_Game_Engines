@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Cubemap;
 import com.badlogic.gdx.graphics.Cubemap.CubemapSide;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,7 +28,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entries;
 
-import java.util.EnumSet;
 import java.util.Set;
 
 /**
@@ -47,15 +45,15 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
     /**
      * Cameras linked with spot lights
      */
-    protected ObjectMap<SpotLight, LightProperties> spotCameras = new ObjectMap<SpotLight, LightProperties>();
+    protected ObjectMap<SpotLight, LightProperties> spotCameras = new ObjectMap<>();
     /**
      * Cameras linked with directional lights
      */
-    protected ObjectMap<DirectionalLight, LightProperties> dirCameras = new ObjectMap<DirectionalLight, LightProperties>();
+    protected ObjectMap<DirectionalLight, LightProperties> dirCameras = new ObjectMap<>();
     /**
      * Cameras linked with point lights
      */
-    protected ObjectMap<PointLight, PointLightProperties> pointCameras = new ObjectMap<PointLight, PointLightProperties>();
+    protected ObjectMap<PointLight, PointLightProperties> pointCameras = new ObjectMap<>();
     /**
      * Analyzer of near and far for spot and point lights
      */
@@ -151,43 +149,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
     @Override
     public abstract int getPassQuantity();
 
-    @Override
-    public ShaderProvider getPassShaderProvider(int n) {
-        return passShaderProviders[n];
-    }
-
-    @Override
-    public ShaderProvider getShaderProvider() {
-        return mainShaderProvider;
-    }
-
-    @Override
-    public void addLight(SpotLight spot) {
-        PerspectiveCamera camera = new PerspectiveCamera(spot.cutoffAngle, 0, 0);
-        camera.position.set(spot.position);
-        camera.direction.set(spot.direction);
-        camera.near = 1;
-        camera.far = 100;
-        camera.up.set(camera.direction.y, camera.direction.z, camera.direction.x);
-
-        spotCameras.put(spot, new LightProperties(camera));
-    }
-
-    @Override
-    public void addLight(DirectionalLight dir) {
-        OrthographicCamera camera = new OrthographicCamera();
-        camera.direction.set(dir.direction);
-        camera.near = 1;
-        camera.far = 100;
-
-        dirCameras.put(dir, new LightProperties(camera));
-    }
-
-    @Override
-    public void addLight(PointLight point) {
-        addLight(point, EnumSet.of(CubemapSide.PositiveX, CubemapSide.NegativeX, CubemapSide.PositiveY, CubemapSide.NegativeY,
-                CubemapSide.PositiveZ, CubemapSide.NegativeZ));
-    }
 
     @Override
     public void addLight(PointLight point, Set<CubemapSide> sides) {
@@ -209,20 +170,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
         pointCameras.put(point, plProperty);
     }
 
-    @Override
-    public void removeLight(SpotLight spot) {
-        spotCameras.remove(spot);
-    }
-
-    @Override
-    public void removeLight(DirectionalLight dir) {
-        dirCameras.remove(dir);
-    }
-
-    @Override
-    public void removeLight(PointLight point) {
-        pointCameras.remove(point);
-    }
 
     @Override
     public boolean hasLight(SpotLight spot) {
@@ -234,10 +181,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
         return dirCameras.containsKey(dir);
     }
 
-    @Override
-    public boolean hasLight(PointLight point) {
-        return pointCameras.containsKey(point);
-    }
 
     @Override
     public void update() {
@@ -427,10 +370,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
         return spotCameras;
     }
 
-    public ObjectMap<PointLight, PointLightProperties> getPointCameras() {
-        return pointCameras;
-    }
-
     public Texture getTexture(int n) {
         if (n >= getPassQuantity()) throw new GdxRuntimeException("Can't get texture " + n);
         return frameBuffers[n].getColorBufferTexture();
@@ -442,10 +381,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
 
     public BaseLight getCurrentLight() {
         return currentLight;
-    }
-
-    public int getCurrentPass() {
-        return currentPass;
     }
 
     @Override
@@ -473,6 +408,6 @@ public abstract class BaseShadowSystem implements ShadowSystem, Disposable {
      * This class handles LightProperties for each side of PointLight.
      */
     public static class PointLightProperties {
-        public ObjectMap<CubemapSide, LightProperties> properties = new ObjectMap<CubemapSide, LightProperties>(6);
+        public ObjectMap<CubemapSide, LightProperties> properties = new ObjectMap<>(6);
     }
 }

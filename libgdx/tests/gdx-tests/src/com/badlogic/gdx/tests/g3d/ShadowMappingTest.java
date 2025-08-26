@@ -89,13 +89,4 @@ public class ShadowMappingTest extends GdxTest {
     public boolean needsGL20() {
         return true;
     }
-
-    public void resume() {
-    }
-
-    public void resize(int width, int height) {
-    }
-
-    public void pause() {
-    }
 }

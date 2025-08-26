@@ -12,8 +12,8 @@ import java.io.IOException;
 public class ShaderLoader {
     final static StringBuilder stringBuilder = new StringBuilder();
     public FileHandle root;
-    public ObjectMap<String, ObjectMap<String, String>> snippets = new ObjectMap<String, ObjectMap<String, String>>();
-    private final Array<String> includes = new Array<String>();
+    private final Array<String> includes = new Array<>();
+    public ObjectMap<String, ObjectMap<String, String>> snippets = new ObjectMap<>();
 
     public ShaderLoader(FileHandle root) {
         this.root = root;
@@ -60,12 +60,10 @@ public class ShaderLoader {
             if (((idx = line.indexOf("#include")) == 0) && ((idx = line.indexOf("\"", idx)) > 0)
                     && ((jdx = line.indexOf("\"", ++idx)) > idx)) {
                 String name = line.substring(idx, jdx);
-                if (name.length() > 0) {
-                    if (name.charAt(0) == ':') name = currentFile + name;
-                    if (!includes.contains(name, false)) {
-                        includes.add(name);
-                        load(out, name);
-                    }
+                if (name.charAt(0) == ':') name = currentFile + name;
+                if (!includes.contains(name, false)) {
+                    includes.add(name);
+                    load(out, name);
                 }
             } else
                 out.append(line.trim()).append("\r\n");
@@ -73,7 +71,7 @@ public class ShaderLoader {
     }
 
     protected ObjectMap<String, String> parse(final FileHandle file) {
-        ObjectMap<String, String> result = new ObjectMap<String, String>();
+        ObjectMap<String, String> result = new ObjectMap<>();
         BufferedReader reader = file.reader(1024);
         String line;
         String snipName = "";
@@ -82,7 +80,7 @@ public class ShaderLoader {
         try {
             while ((line = reader.readLine()) != null) {
                 if (line.length() > 3 && line.charAt(0) == '[' && (idx = line.indexOf(']')) > 1) {
-                    if (snipName.length() > 0 || stringBuilder.length() > 0)
+                    if (!snipName.isEmpty() || stringBuilder.length() > 0)
                         result.put(snipName, stringBuilder.toString());
                     stringBuilder.setLength(0);
                     snipName = line.substring(1, idx);
@@ -92,7 +90,7 @@ public class ShaderLoader {
         } catch (IOException e) {
             throw new GdxRuntimeException(e);
         }
-        if (snipName.length() > 0 || stringBuilder.length() > 0) result.put(snipName, stringBuilder.toString());
+        if (!snipName.isEmpty() || stringBuilder.length() > 0) result.put(snipName, stringBuilder.toString());
         return result;
     }
 

@@ -34,10 +34,6 @@ public class ClassicalShadowSystem extends FirstPassBaseShadowSystem {
     protected boolean firstCallPass2;
     protected int nbCall = 0;
 
-    public ClassicalShadowSystem() {
-        super();
-    }
-
     public ClassicalShadowSystem(NearFarAnalyzer nearFarAnalyzer, ShadowMapAllocator allocator,
                                  DirectionalAnalyzer directionalAnalyzer, LightFilter lightFilter) {
         super(nearFarAnalyzer, allocator, directionalAnalyzer, lightFilter);

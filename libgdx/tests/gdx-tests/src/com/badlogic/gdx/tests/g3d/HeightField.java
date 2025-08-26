@@ -104,23 +104,11 @@ public class HeightField implements Disposable {
     private final Vector3 tmpV6 = new Vector3();
     private final Vector3 tmpV7 = new Vector3();
     private final Vector3 tmpV8 = new Vector3();
-    private final Vector3 tmpV9 = new Vector3();
     private final Color tmpC = new Color();
 
     public HeightField(boolean isStatic, final Pixmap map, boolean smooth, int attributes) {
         this(isStatic, map.getWidth(), map.getHeight(), smooth, attributes);
         set(map);
-    }
-
-    public HeightField(boolean isStatic, final ByteBuffer colorData, final Pixmap.Format format, int width, int height,
-                       boolean smooth, int attributes) {
-        this(isStatic, width, height, smooth, attributes);
-        set(colorData, format);
-    }
-
-    public HeightField(boolean isStatic, final float[] data, int width, int height, boolean smooth, int attributes) {
-        this(isStatic, width, height, smooth, attributes);
-        set(data);
     }
 
     public HeightField(boolean isStatic, int width, int height, boolean smooth, int attributes) {
@@ -159,7 +147,7 @@ public class HeightField implements Disposable {
         if (data.remaining() < (width * height * bytesPerColor)) throw new GdxRuntimeException("Incorrect map size");
 
         final int startPos = data.position();
-        byte[] source = null;
+        byte[] source;
         int sourceOffset = 0;
         if (data.hasArray() && !data.isReadOnly()) {
             source = data.array();
@@ -282,20 +270,7 @@ public class HeightField implements Disposable {
         return out;
     }
 
-    public Vector3 getWeightedNormalAt(Vector3 out, int x, int y) {
-// This commented code is based on http://www.flipcode.com/archives/Calculating_Vertex_Normals_for_Height_Maps.shtml
-// Note that this approach only works for a heightfield on the XZ plane with a magnitude on the y axis
-// float sx = data[(x < width - 1 ? x + 1 : x) + y * width] + data[(x > 0 ? x-1 : x) + y * width];
-// if (x == 0 || x == (width - 1))
-// sx *= 2f;
-// float sy = data[(y < height - 1 ? y + 1 : y) * width + x] + data[(y > 0 ? y-1 : y) * width + x];
-// if (y == 0 || y == (height - 1))
-// sy *= 2f;
-// float xScale = (corner11.x - corner00.x) / (width - 1f);
-// float zScale = (corner11.z - corner00.z) / (height - 1f);
-// float yScale = magnitude.len();
-// out.set(-sx * yScale, 2f * xScale, sy*yScale*xScale / zScale).nor();
-// return out;
+    public void getWeightedNormalAt(Vector3 out, int x, int y) {
 
 // The following approach weights the normal of the four triangles (half quad) surrounding the position.
 // A more accurate approach would be to weight the normal of the actual triangles.
@@ -327,7 +302,6 @@ public class HeightField implements Disposable {
             out.scl(1f / (float) faces);
         else
             out.set(magnitude).nor();
-        return out;
     }
 
     protected void setVertex(int index, VertexInfo info) {

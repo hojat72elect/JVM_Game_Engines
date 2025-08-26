@@ -78,14 +78,13 @@ public class GL30Texture3DTest extends GdxTest {
     @Override
     public void create() {
         int size = 8;
-        int w = size, h = size, d = size;
-        CustomTexture3DData data = new CustomTexture3DData(w, h, d, 0, GL30.GL_RGBA, GL30.GL_RGBA8, GL30.GL_UNSIGNED_BYTE);
+        CustomTexture3DData data = new CustomTexture3DData(size, size, size, 0, GL30.GL_RGBA, GL30.GL_RGBA8, GL30.GL_UNSIGNED_BYTE);
         IntBuffer buffer = data.getPixels().asIntBuffer();
         Color c = new Color(Color.BLACK);
-        for (int z = 0; z < d; z++) {
-            for (int y = 0; y < h; y++) {
-                for (int x = 0; x < w; x++) {
-                    buffer.put(c.set(x / (float) (w - 1), y / (float) (h - 1), z / (float) (d - 1), 1).toIntBits());
+        for (int z = 0; z < size; z++) {
+            for (int y = 0; y < size; y++) {
+                for (int x = 0; x < size; x++) {
+                    buffer.put(c.set(x / (float) (size - 1), y / (float) (size - 1), z / (float) (size - 1), 1).toIntBits());
                 }
             }
         }

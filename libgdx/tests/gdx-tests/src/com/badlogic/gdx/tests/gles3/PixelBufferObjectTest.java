@@ -38,11 +38,11 @@ public class PixelBufferObjectTest extends GdxTest {
 
         batch.begin();
         if (demo1.isTextureReady()) {
-            batch.draw(demo1.getTexture(), 0, 0, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+            batch.draw(demo1.getTexture(), 0, 0, Gdx.graphics.getWidth() / 2F, Gdx.graphics.getHeight() / 2F);
         }
         if (demo2.isTextureReady()) {
-            batch.draw(demo2.getTexture(), Gdx.graphics.getWidth() / 2, 0, Gdx.graphics.getWidth() / 2,
-                    Gdx.graphics.getHeight() / 2);
+            batch.draw(demo2.getTexture(), Gdx.graphics.getWidth() / 2F, 0, Gdx.graphics.getWidth() / 2F,
+                    Gdx.graphics.getHeight() / 2F);
         }
         batch.end();
     }
@@ -68,23 +68,20 @@ public class PixelBufferObjectTest extends GdxTest {
             lock = new ReentrantLock();
             lock.lock();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // load the pixmap in order to get header information
-                    pixmap = new Pixmap(Gdx.files.internal("data/badlogic.jpg"));
-                    pixmapSizeBytes = pixmap.getWidth() * pixmap.getHeight() * 3;
-                    pixmapReady = true;
+            new Thread(() -> {
+                // load the pixmap in order to get header information
+                pixmap = new Pixmap(Gdx.files.internal("data/badlogic.jpg"));
+                pixmapSizeBytes = pixmap.getWidth() * pixmap.getHeight() * 3;
+                pixmapReady = true;
 
-                    // wait for PBO initialization (need to be done in GLThread)
-                    lock.lock();
+                // wait for PBO initialization (need to be done in GLThread)
+                lock.lock();
 
-                    // Transfer data from pixmap to PBO
-                    ByteBuffer data = pixmap.getPixels();
-                    data.rewind();
-                    BufferUtils.copy(data, mappedBuffer, pixmapSizeBytes);
-                    pboTransferComplete = true;
-                }
+                // Transfer data from pixmap to PBO
+                ByteBuffer data = pixmap.getPixels();
+                data.rewind();
+                BufferUtils.copy(data, mappedBuffer, pixmapSizeBytes);
+                pboTransferComplete = true;
             }).start();
         }
 

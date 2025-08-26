@@ -16,16 +16,12 @@ public class FixedShadowMapAllocator implements ShadowMapAllocator {
     /**
      * Helpers to choose shadow map quality
      */
-    public static final int QUALITY_MIN = 1024;
     public static final int QUALITY_MED = 2048;
-    public static final int QUALITY_MAX = 4096;
 
     /**
      * Helpers to choose number of supported shadows
      */
-    public static final int QUANTITY_MAP_MIN = 4;
     public static final int QUANTITY_MAP_MED = 16;
-    public static final int QUANTITY_MAP_MAX = 32;
 
     /**
      * Shadow map size (Width = Height)
@@ -67,13 +63,6 @@ public class FixedShadowMapAllocator implements ShadowMapAllocator {
     @Override
     public int getHeight() {
         return size;
-    }
-
-    /**
-     * @return Quantity of supported regions.
-     */
-    public int getMapQuantity() {
-        return mapQuantity;
     }
 
     @Override

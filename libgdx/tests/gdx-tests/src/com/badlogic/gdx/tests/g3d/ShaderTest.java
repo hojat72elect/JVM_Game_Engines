@@ -31,7 +31,7 @@ public class ShaderTest extends GdxTest {
     public CameraInputController camController;
     public ModelBatch modelBatch;
     public Model model;
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public Array<ModelInstance> instances = new Array<>();
     public TestAttribute testAttribute1, testAttribute2;
     private float counter;
 
@@ -194,7 +194,7 @@ public class ShaderTest extends GdxTest {
 
             if (!program.isCompiled()) throw new GdxRuntimeException("Couldn't compile shader " + program.getLog());
             String log = program.getLog();
-            if (log.length() > 0) Gdx.app.error("ShaderTest", "Shader compilation log: " + log);
+            if (!log.isEmpty()) Gdx.app.error("ShaderTest", "Shader compilation log: " + log);
         }
 
         @Override

@@ -29,8 +29,6 @@ import com.badlogic.gdx.tests.utils.GdxTest;
  */
 public class MaterialEmissiveTest extends GdxTest {
 
-    float angleY = 0;
-
     Model model, backModel;
     ModelInstance modelInstance;
     ModelInstance background;
@@ -42,8 +40,6 @@ public class MaterialEmissiveTest extends GdxTest {
     TextureAttribute emissiveTextureAttribute;
     ColorAttribute emissiveColorAttribute;
     BlendingAttribute blendingAttribute;
-
-    Material material;
 
     Texture diffuseTexture;
     Texture emissiveTexture;

@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -29,10 +28,9 @@ public class SkeletonTest extends BaseG3dHudTest {
             return new Vector3();
         }
     };
-    private final static Quaternion tmpQ = new Quaternion();
     protected String currentlyLoading;
     ShapeRenderer shapeRenderer;
-    ObjectMap<ModelInstance, AnimationController> animationControllers = new ObjectMap<ModelInstance, AnimationController>();
+    ObjectMap<ModelInstance, AnimationController> animationControllers = new ObjectMap<>();
 
     @Override
     public void create() {

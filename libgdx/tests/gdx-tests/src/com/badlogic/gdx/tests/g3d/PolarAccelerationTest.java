@@ -14,8 +14,6 @@ import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.SpawnInfluencer;
 import com.badlogic.gdx.graphics.g3d.particles.renderers.BillboardRenderer;
 import com.badlogic.gdx.graphics.g3d.particles.values.CylinderSpawnShapeValue;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -26,9 +24,6 @@ import com.badlogic.gdx.utils.Array;
 
 public class PolarAccelerationTest extends BaseG3dTest {
     public static final String DEFAULT_PARTICLE = "data/pre_particle.png", DEFAULT_SKIN = "data/uiskin.json";
-    Quaternion tmpQuaternion = new Quaternion();
-    Matrix4 tmpMatrix = new Matrix4(), tmpMatrix4 = new Matrix4();
-    Vector3 tmpVector = new Vector3();
 
     // Simulation
     Array<ParticleController> emitters;
@@ -45,7 +40,7 @@ public class PolarAccelerationTest extends BaseG3dTest {
     @Override
     public void create() {
         super.create();
-        emitters = new Array<ParticleController>();
+        emitters = new Array<>();
         assets.load(DEFAULT_PARTICLE, Texture.class);
         assets.load(DEFAULT_SKIN, Skin.class);
         loading = true;
@@ -126,11 +121,9 @@ public class PolarAccelerationTest extends BaseG3dTest {
         polarAcceleration.isGlobal = false;
         dynamicsInfluencer.velocities.add(polarAcceleration);
 
-        ParticleController ret = new ParticleController("Billboard Controller", emitter,
+        return new ParticleController("Billboard Controller", emitter,
                 new BillboardRenderer(billboardParticleBatch), new RegionInfluencer.Single(particleTexture), spawnSource,
                 dynamicsInfluencer);
-
-        return ret;
     }
 
     @Override

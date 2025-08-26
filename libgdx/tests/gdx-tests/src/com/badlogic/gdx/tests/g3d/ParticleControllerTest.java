@@ -49,7 +49,7 @@ public class ParticleControllerTest extends BaseG3dTest {
     @Override
     public void create() {
         super.create();
-        emitters = new Array<ParticleController>();
+        emitters = new Array<>();
         assets.load(DEFAULT_PARTICLE, Texture.class);
         assets.load(DEFAULT_SKIN, Skin.class);
         loading = true;

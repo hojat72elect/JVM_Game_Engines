@@ -21,7 +21,6 @@ import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.glutils.FacedCubemapData;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -34,17 +33,13 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.StringBuilder;
 
 public class ShaderCollectionTest extends BaseG3dHudTest {
-    /**
-     * Desktop only: Set this to an absolute path to load the shader files from an alternative location.
-     */
-    final static String hotLoadFolder = null;
+
     /**
      * Desktop only: Set this to an absolute path to save the generated shader files.
      */
     final static String tempFolder = System.getProperty("java.io.tmp");
     final Vector3 dirLightRotAxis = new Vector3(-1, -1, -1).nor();
     private final Vector3 tmpV = new Vector3();
-    private final Quaternion tmpQ = new Quaternion();
     private final BoundingBox bounds = new BoundingBox();
     protected String[] shaders = new String[]{"<default>", "depth", "gouraud", "phong", "normal", "fur", "cubemap", "reflect",
             "test"};
@@ -58,7 +53,7 @@ public class ShaderCollectionTest extends BaseG3dHudTest {
     protected FileHandle shaderRoot;
     protected ModelBatch shaderBatch;
     protected CollapsableWindow shadersWindow, materialsWindow, environmentsWindow;
-    protected ObjectMap<ModelInstance, AnimationController> animationControllers = new ObjectMap<ModelInstance, AnimationController>();
+    protected ObjectMap<ModelInstance, AnimationController> animationControllers = new ObjectMap<>();
     protected String currentModel = null;
     protected String currentMaterial = null;
     protected boolean loadingMaterial = false;
@@ -82,8 +77,7 @@ public class ShaderCollectionTest extends BaseG3dHudTest {
 
         onModelClicked("g3d/shapes/teapot.g3dj");
 
-        shaderRoot = (hotLoadFolder != null && Gdx.app.getType() == ApplicationType.Desktop) ? Gdx.files.absolute(hotLoadFolder)
-                : Gdx.files.internal("data/g3d/shaders");
+        shaderRoot = Gdx.files.internal("data/g3d/shaders");
     }
 
     @Override
@@ -196,7 +190,7 @@ public class ShaderCollectionTest extends BaseG3dHudTest {
 
     @Override
     protected void onLoaded() {
-        if (currentlyLoading == null || currentlyLoading.length() == 0) return;
+        if (currentlyLoading == null || currentlyLoading.isEmpty()) return;
 
         if (loadingMaterial) {
             loadingMaterial = false;

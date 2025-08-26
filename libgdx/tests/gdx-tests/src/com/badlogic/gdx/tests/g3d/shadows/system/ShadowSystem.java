@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.environment.SpotLight;
-import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 
 import java.util.Set;
 
@@ -73,40 +72,6 @@ public interface ShadowSystem {
      */
     int getPassQuantity();
 
-    /**
-     * Return shaderProvider of the pass n
-     *
-     * @return ShaderProvider
-     */
-    ShaderProvider getPassShaderProvider(int n);
-
-    /**
-     * Return shaderProvider used for main rendering
-     *
-     * @return ShaderProvider
-     */
-    ShaderProvider getShaderProvider();
-
-    /**
-     * Add spot light in shadow system
-     *
-     * @param spot SpotLight to add in the ShadowSystem
-     */
-    void addLight(SpotLight spot);
-
-    /**
-     * Add directional light in shadow system
-     *
-     * @param dir DirectionalLight to add in the ShadowSystem
-     */
-    void addLight(DirectionalLight dir);
-
-    /**
-     * Add point light in shadow system
-     *
-     * @param point PointLight to add in the ShadowSystem
-     */
-    void addLight(PointLight point);
 
     /**
      * Add point light in shadow system
@@ -116,26 +81,6 @@ public interface ShadowSystem {
      */
     void addLight(PointLight point, Set<CubemapSide> sides);
 
-    /**
-     * Remove light from the shadowSystem
-     *
-     * @param spot SpotLight to remove in the ShadowSystem
-     */
-    void removeLight(SpotLight spot);
-
-    /**
-     * Remove light from the shadowSystem
-     *
-     * @param dir DirectionalLight to remove in the ShadowSystem
-     */
-    void removeLight(DirectionalLight dir);
-
-    /**
-     * Remove light from the shadowSystem
-     *
-     * @param point PointLight to remove in the ShadowSystem
-     */
-    void removeLight(PointLight point);
 
     /**
      * @param spot SpotLight to check
@@ -150,21 +95,12 @@ public interface ShadowSystem {
     boolean hasLight(DirectionalLight dir);
 
     /**
-     * @param point PointLight to check
-     * @return true if light analyzed
-     */
-    boolean hasLight(PointLight point);
-
-    /**
      * Update shadowSystem
      */
     void update();
 
     /**
      * Begin shadow system with main camera and renderable providers.
-     *
-     * @param camera
-     * @param renderableProviders
      */
     <T extends RenderableProvider> void begin(Camera camera, Iterable<T> renderableProviders);
 

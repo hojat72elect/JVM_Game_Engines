@@ -18,9 +18,7 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -28,14 +26,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.StringBuilder;
 
-/**
- *
- */
 public class Benchmark3DTest extends BaseG3dHudTest {
 
-    private final Vector3 tmpV = new Vector3();
-    private final Quaternion tmpQ = new Quaternion();
-    private final BoundingBox bounds = new BoundingBox();
     protected Environment environment;
     protected Label vertexCountLabel, textureBindsLabel, shaderSwitchesLabel, drawCallsLabel, glCallsLabel, lightsLabel;
     protected CheckBox lightingCheckBox, lightsCheckBox;
@@ -206,7 +198,7 @@ public class Benchmark3DTest extends BaseG3dHudTest {
 
     @Override
     protected void onLoaded() {
-        if (currentlyLoading == null || currentlyLoading.length() == 0) return;
+        if (currentlyLoading == null || currentlyLoading.isEmpty()) return;
 
         final ModelInstance instance = new ModelInstance(assets.get(currentlyLoading, Model.class));
         instance.transform = new Matrix4().idt();

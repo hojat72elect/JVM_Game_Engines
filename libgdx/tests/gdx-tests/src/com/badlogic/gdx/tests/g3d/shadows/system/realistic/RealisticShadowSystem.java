@@ -22,10 +22,6 @@ public class RealisticShadowSystem extends FirstPassBaseShadowSystem {
      */
     public static final int PASS_QUANTITY = 1;
 
-    public RealisticShadowSystem() {
-        super();
-    }
-
     public RealisticShadowSystem(NearFarAnalyzer nearFarAnalyzer, ShadowMapAllocator allocator,
                                  DirectionalAnalyzer directionalAnalyzer, LightFilter lightFilter) {
         super(nearFarAnalyzer, allocator, directionalAnalyzer, lightFilter);

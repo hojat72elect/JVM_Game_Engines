@@ -22,7 +22,6 @@ public class HeightMapTest extends BaseG3dTest {
     HeightField field;
     Renderable ground;
     Environment environment;
-    boolean morph = true;
     Texture texture;
 
     @Override
@@ -34,7 +33,6 @@ public class HeightMapTest extends BaseG3dTest {
 
         texture = new Texture(Gdx.files.internal("data/badlogic.jpg"));
 
-        int w = 20, h = 20;
         Pixmap data = new Pixmap(Gdx.files.internal("data/g3d/heightmap.png"));
         field = new HeightField(true, data, true, Usage.Position | Usage.Normal | Usage.ColorUnpacked | Usage.TextureCoordinates);
         data.dispose();

@@ -17,14 +17,12 @@ public class DefaultTextureBinderTest extends GdxTest {
     private static final int numTextures = 64;
     private DefaultTextureBinder binderLRU;
     private Array<Texture> textures;
-    private DefaultTextureBinder binderRR;
     private IntIntMap map;
 
     @Override
     public void create() {
         binderLRU = new DefaultTextureBinder(DefaultTextureBinder.LRU, 0, 4);
-        binderRR = new DefaultTextureBinder(DefaultTextureBinder.ROUNDROBIN, 0, 4);
-        textures = new Array<Texture>();
+        textures = new Array<>();
         map = new IntIntMap();
         for (int i = 0; i < numTextures; i++) {
             textures.add(new Texture(16, 16, Format.RGBA8888));
@@ -66,7 +64,7 @@ public class DefaultTextureBinderTest extends GdxTest {
 
         binderLRU.end();
 
-        printBindings(4);
+        printBindings();
     }
 
     private void assertBinding(int... b) {
@@ -82,8 +80,8 @@ public class DefaultTextureBinderTest extends GdxTest {
         }
     }
 
-    private void printBindings(int n) {
-        for (int i = 0; i < n; i++) {
+    private void printBindings() {
+        for (int i = 0; i < 4; i++) {
             Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0 + i);
             IntBuffer buffer = BufferUtils.newIntBuffer(16);
             Gdx.gl.glGetIntegerv(GL20.GL_TEXTURE_BINDING_2D, buffer);

@@ -29,7 +29,7 @@ public abstract class BaseG3dTest extends GdxTest {
     public Model axesModel;
     public ModelInstance axesInstance;
     public boolean showAxes = true;
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public Array<ModelInstance> instances = new Array<>();
     protected boolean loading = false;
 
     @Override
