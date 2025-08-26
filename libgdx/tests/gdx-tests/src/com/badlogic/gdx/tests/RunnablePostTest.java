@@ -11,15 +11,12 @@ public class RunnablePostTest extends GdxTest {
     private static final String TAG = "RunnablePostTest";
     static boolean expectIt = false;
 
-    static private final Thread.UncaughtExceptionHandler exHandler = new Thread.UncaughtExceptionHandler() {
-        @Override
-        public void uncaughtException(Thread t, Throwable e) {
-            if (expectIt) {
-                Gdx.app.log(TAG, "PASSED: " + e.getMessage());
-            } else {
-                Gdx.app.log(TAG, "FAILED!  Unexpected exception received.");
-                e.printStackTrace(System.err);
-            }
+    static private final Thread.UncaughtExceptionHandler exHandler = (t, e) -> {
+        if (expectIt) {
+            Gdx.app.log(TAG, "PASSED: " + e.getMessage());
+        } else {
+            Gdx.app.log(TAG, "FAILED!  Unexpected exception received.");
+            e.printStackTrace(System.err);
         }
     };
 
@@ -31,11 +28,8 @@ public class RunnablePostTest extends GdxTest {
     public void render() {
         if (Gdx.input.justTouched()) {
             expectIt = true;
-            Gdx.app.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    throw new RuntimeException("This is a test of the uncaught exception handler.");
-                }
+            Gdx.app.postRunnable(() -> {
+                throw new RuntimeException("This is a test of the uncaught exception handler.");
             });
         }
     }

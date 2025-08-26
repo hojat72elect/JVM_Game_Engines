@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -44,7 +43,6 @@ public class ProjectiveTextureTest extends GdxTest {
     Skin skin;
     InputMultiplexer multiplexer = new InputMultiplexer();
     PerspectiveCamController controller;
-    ImmediateModeRenderer20 renderer;
 
     float angle = 0;
     Vector3 position = new Vector3();

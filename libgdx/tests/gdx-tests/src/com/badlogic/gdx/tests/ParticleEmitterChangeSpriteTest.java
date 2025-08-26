@@ -31,14 +31,14 @@ public class ParticleEmitterChangeSpriteTest extends GdxTest {
         atlas = new TextureAtlas("data/particles.atlas");
 
         int spriteCount = atlas.getRegions().size;
-        sprites = new Array<Sprite>(spriteCount);
+        sprites = new Array<>(spriteCount);
         for (TextureRegion region : atlas.getRegions()) {
             sprites.add(new Sprite(region));
         }
 
         effect = new ParticleEffect();
         effect.load(Gdx.files.internal("data/test.p"), Gdx.files.internal("data"));
-        effect.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        effect.setPosition(Gdx.graphics.getWidth() / 2F, Gdx.graphics.getHeight() / 2F);
         // Of course, a ParticleEffect is normally just used, without messing around with its emitters.
         emitters = new Array(effect.getEmitters());
         effect.getEmitters().clear();
@@ -54,7 +54,7 @@ public class ParticleEmitterChangeSpriteTest extends GdxTest {
             public boolean touchDown(int x, int y, int pointer, int newParam) {
                 ParticleEmitter emitter = emitters.get(emitterIndex);
                 currentSprite = (currentSprite + 1) % sprites.size;
-                emitter.setSprites(new Array<Sprite>(new Sprite[]{sprites.get(currentSprite)}));
+                emitter.setSprites(new Array<>(new Sprite[]{sprites.get(currentSprite)}));
                 return false;
             }
         };

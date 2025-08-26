@@ -35,16 +35,17 @@ public class SelectTest extends GdxTest {
     private static boolean quiet;
     private static final PerformanceCounter allPerf = new PerformanceCounter("all");
 
-    public static void correctnessTest(int runs, int k) {
-        String msg = String.format("[%d runs with %dx%d dummy game units] - ", runs, player.size, enemy.size);
+    public static void correctnessTest(int runs) {
+        @SuppressWarnings("DefaultLocale") String msg = String.format("[%d runs with %dx%d dummy game units] - ", runs, player.size, enemy.size);
         verify = true;
-        test(runs, k);
+        test(runs);
         print(msg + "VERIFIED");
     }
 
-    public static void performanceTest(int runs, int k) {
+    @SuppressWarnings("DefaultLocale")
+    public static void performanceTest(int runs) {
         verify = false;
-        test(runs, k);
+        test(runs);
         String msg = String.format("[%d runs with %dx%d dummy game units] - ", runs, player.size, enemy.size);
         print(msg + String.format("avg: %.5f, min/max: %.4f/%.4f, total time: %.3f (ms), made %d comparisons", allPerf.time.min,
                 allPerf.time.max, allPerf.time.average * 1000, allPerf.time.total * 1000, comparisonsMade));
@@ -87,7 +88,7 @@ public class SelectTest extends GdxTest {
         }
     }
 
-    public static void test(int runs, int k) {
+    public static void test(int runs) {
         // k = kth order statistic
         comparisonsMade = 0;
         perf.reset();
@@ -96,7 +97,7 @@ public class SelectTest extends GdxTest {
         enemy.shuffle();
         player.shuffle();
         for (int i = 0; i < runs; i++) {
-            getKthNearestEnemy(quiet, k);
+            getKthNearestEnemy(quiet);
         }
     }
 
@@ -109,13 +110,12 @@ public class SelectTest extends GdxTest {
         }
     }
 
-    public static void getKthNearestEnemy(boolean silent, int k) {
-        Dummy kthDummy = null;
+    @SuppressWarnings("DefaultLocale")
+    public static void getKthNearestEnemy(boolean silent) {
+
         perf.reset();
         allPerf.start();
-        for (Dummy d : player) {
-            Dummy found = d.getKthNearestEnemy(k);
-        }
+
         allPerf.stop();
         allPerf.tick();
         if (silent) return;
@@ -135,8 +135,8 @@ public class SelectTest extends GdxTest {
     }
 
     public static Array<Dummy> createDummies(int n) {
-        float variance = 20;
-        Array<Dummy> dummies = new Array<Dummy>();
+
+        Array<Dummy> dummies = new Array<>();
         for (int i = 0; i < n; i++) {
             Dummy d = new Dummy();
             dummies.add(d);
@@ -164,20 +164,20 @@ public class SelectTest extends GdxTest {
         quiet = true;
         allRandom();
         print("VERIFY CORRECTNESS FIND LOWEST RANKED");
-        correctnessTest(runs, 1);
+        correctnessTest(runs);
         print("VERIFY CORRECTNESS FIND MIDDLE RANKED");
-        correctnessTest(runs, enemy.size / 2);
+        correctnessTest(runs);
         print("VERIFY CORRECTNESS FIND HIGHEST RANKED");
-        correctnessTest(runs, enemy.size);
+        correctnessTest(runs);
 
         runs = 1000;
         quiet = true;
         print("BENCHMARK FIND LOWEST RANKED");
-        performanceTest(runs, 1);
+        performanceTest(runs);
         print("BENCHMARK FIND MIDDLE RANKED");
-        performanceTest(runs, enemy.size / 2);
+        performanceTest(runs);
         print("BENCHMARK FIND HIGHEST RANKED");
-        performanceTest(runs, enemy.size);
+        performanceTest(runs);
 
         print("TEST CONSISTENCY FOR LOWEST RANKED");
         consistencyTest(runs, 1);
@@ -221,7 +221,6 @@ public class SelectTest extends GdxTest {
             perf.start();
             originDummy = this;
             Dummy found = enemy.selectRanked(distComp, k);
-            // print(this + " found enemy: " + found);
             perf.stop();
             perf.tick();
             if (verify) {
@@ -244,6 +243,7 @@ public class SelectTest extends GdxTest {
             }
         }
 
+        @SuppressWarnings("DefaultLocale")
         @Override
         public String toString() {
             return String.format("Dummy at: %.2f, %.2f", pos.x, pos.y);

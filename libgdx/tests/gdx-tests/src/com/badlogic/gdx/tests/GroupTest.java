@@ -50,11 +50,11 @@ public class GroupTest extends GdxTest {
 
         region = new TextureRegion(new Texture(Gdx.files.internal("data/group-debug.png")));
 
-        group2 = new TestGroup("group2");
+        group2 = new TestGroup();
         group2.setTransform(true);
         stage.addActor(group2);
 
-        group1 = new TestGroup("group1");
+        group1 = new TestGroup();
         group1.setTransform(true);
         group2.addActor(group1);
 
@@ -172,10 +172,8 @@ public class GroupTest extends GdxTest {
         Vector2 localToParentCoordinates = new Vector2();
         float testX = 25;
         float testY = 25;
-        private final String name;
 
-        public TestGroup(String name) {
-            this.name = name;
+        public TestGroup() {
 
             addListener(new InputListener() {
                 public boolean mouseMoved(InputEvent event, float x, float y) {

@@ -6,16 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.tests.utils.GdxTest;
 
-import java.nio.IntBuffer;
-
 public class SpriteBatchRotationTest extends GdxTest {
     SpriteBatch spriteBatch;
     Texture texture;
-    // Font font;
     float angle = 0;
     float scale = 1;
     float vScale = 1;
-    IntBuffer pixelBuffer;
 
     @Override
     public void render() {

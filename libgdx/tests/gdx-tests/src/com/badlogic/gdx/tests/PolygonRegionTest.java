@@ -26,8 +26,6 @@ public class PolygonRegionTest extends GdxTest {
     PolygonRegion region;
     PolygonRegion region2;
 
-    boolean usePolygonBatch = true;
-
     @Override
     public void create() {
         texture = new Texture(Gdx.files.internal("data/tree.png"));
@@ -84,7 +82,7 @@ public class PolygonRegionTest extends GdxTest {
         batch.dispose();
     }
 
-    public class PolygonRegionDebugRenderer implements Disposable {
+    public static class PolygonRegionDebugRenderer implements Disposable {
         ShapeRenderer renderer;
 
         public PolygonRegionDebugRenderer() {
@@ -96,7 +94,6 @@ public class PolygonRegionTest extends GdxTest {
 
             float[] vertices = region.getVertices();
             short[] triangles = region.getTriangles();
-            float[] textureCoords = region.getTextureCoords();
 
             // bottom left and top right corner points relative to origin
             final float worldOriginX = x + originX;

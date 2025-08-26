@@ -58,19 +58,19 @@ public class MatrixJNITest extends GdxTest {
         Matrix4.mulVec(mat1.val, fvec);
         Matrix4.mulVec(mat1.val, fvecs, 0, 3, 5);
         check(vec, fvec);
-        check(vec, fvecs, 3, 5);
+        check(vec, fvecs, 3);
 
         vec.prj(mat1);
         Matrix4.prj(mat1.val, fvec);
         Matrix4.prj(mat1.val, fvecs, 0, 3, 5);
         check(vec, fvec);
-        check(vec, fvecs, 3, 5);
+        check(vec, fvecs, 3);
 
         vec.rot(mat1);
         Matrix4.rot(mat1.val, fvec);
         Matrix4.rot(mat1.val, fvecs, 0, 3, 5);
         check(vec, fvec);
-        check(vec, fvecs, 3, 5);
+        check(vec, fvecs, 3);
 
         if (mat1.det() != Matrix4.det(mat1.val)) throw new GdxRuntimeException("det doesn't work");
 
@@ -142,8 +142,7 @@ public class MatrixJNITest extends GdxTest {
             throw new GdxRuntimeException("vectors are not equal");
     }
 
-    private void check(Vector3 vec, float[] fvec, int numVecs, int stride) {
-        int offset = 0;
+    private void check(Vector3 vec, float[] fvec, int numVecs) {
         for (int i = 0; i < numVecs; i++) {
             if (vec.x != fvec[0] || vec.y != fvec[1] || vec.z != fvec[2])
                 throw new GdxRuntimeException("vectors are not equal");

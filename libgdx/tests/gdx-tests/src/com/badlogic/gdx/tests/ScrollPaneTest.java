@@ -19,21 +19,17 @@ import com.badlogic.gdx.tests.utils.GdxTest;
 
 public class ScrollPaneTest extends GdxTest {
     private Stage stage;
-    private Table container;
 
     public void create() {
         stage = new Stage();
         Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
-        // Gdx.graphics.setVSync(false);
-
-        container = new Table();
+        Table container = new Table();
         stage.addActor(container);
         container.setFillParent(true);
 
         Table table = new Table();
-        // table.debug();
 
         final ScrollPane scroll = new ScrollPane(table, skin);
 
@@ -111,9 +107,6 @@ public class ScrollPaneTest extends GdxTest {
 
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-
-        // Gdx.gl.glViewport(100, 100, width - 200, height - 200);
-        // stage.setViewport(800, 600, false, 100, 100, width - 200, height - 200);
     }
 
     public void dispose() {

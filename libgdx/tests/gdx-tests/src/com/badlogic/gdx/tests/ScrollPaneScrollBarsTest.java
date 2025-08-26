@@ -18,11 +18,10 @@ import com.badlogic.gdx.utils.Array;
  * Test switch of scroll bars + knobs from right to left, and bottom to top
  */
 public class ScrollPaneScrollBarsTest extends GdxTest {
-    Array<ScrollPane> scrollPanes = new Array<ScrollPane>();
+    Array<ScrollPane> scrollPanes = new Array<>();
     boolean doFade = true;
     boolean doOnTop = true;
     private Stage stage;
-    private Table bottomLeft, bottomRight, topLeft, topRight, horizOnlyTop, horizOnlyBottom, vertOnlyLeft, vertOnlyRight;
 
     public void create() {
         float width = Gdx.graphics.getWidth();
@@ -72,53 +71,53 @@ public class ScrollPaneScrollBarsTest extends GdxTest {
         float contWidth = width / 2 - gap * 1.5f;
         float contHeight = height / 4.5f - gap * 1.25f;
 
-        bottomLeft = new Table();
+        Table bottomLeft = new Table();
         bottomLeft.setPosition(x, y);
         bottomLeft.setSize(contWidth, contHeight);
         stage.addActor(bottomLeft);
 
-        bottomRight = new Table();
+        Table bottomRight = new Table();
         bottomRight.setSize(contWidth, contHeight);
         x = bottomLeft.getX() + bottomLeft.getWidth() + gap;
         bottomRight.setPosition(x, y);
         stage.addActor(bottomRight);
 
-        topLeft = new Table();
+        Table topLeft = new Table();
         topLeft.setSize(contWidth, contHeight);
         x = bottomLeft.getX();
         y = bottomLeft.getY() + bottomLeft.getHeight() + gap;
         topLeft.setPosition(x, y);
         stage.addActor(topLeft);
 
-        topRight = new Table();
+        Table topRight = new Table();
         topRight.setSize(contWidth, contHeight);
         x = bottomRight.getX();
         y = topLeft.getY();
         topRight.setPosition(x, y);
         stage.addActor(topRight);
 
-        horizOnlyTop = new Table();
+        Table horizOnlyTop = new Table();
         horizOnlyTop.setSize(contWidth, contHeight);
         x = topRight.getX();
         y = topRight.getY() + topRight.getHeight() + gap;
         horizOnlyTop.setPosition(x, y);
         stage.addActor(horizOnlyTop);
 
-        horizOnlyBottom = new Table();
+        Table horizOnlyBottom = new Table();
         horizOnlyBottom.setSize(contWidth, contHeight);
         x = topLeft.getX();
         y = topLeft.getY() + topLeft.getHeight() + gap;
         horizOnlyBottom.setPosition(x, y);
         stage.addActor(horizOnlyBottom);
 
-        vertOnlyLeft = new Table();
+        Table vertOnlyLeft = new Table();
         vertOnlyLeft.setSize(contWidth, contHeight);
         x = horizOnlyBottom.getX();
         y = horizOnlyBottom.getY() + horizOnlyBottom.getHeight() + gap;
         vertOnlyLeft.setPosition(x, y);
         stage.addActor(vertOnlyLeft);
 
-        vertOnlyRight = new Table();
+        Table vertOnlyRight = new Table();
         vertOnlyRight.setSize(contWidth, contHeight);
         x = horizOnlyTop.getX();
         y = horizOnlyTop.getY() + horizOnlyTop.getHeight() + gap;
@@ -228,8 +227,6 @@ public class ScrollPaneScrollBarsTest extends GdxTest {
 
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        // Gdx.gl.glViewport(100, 100, width - 200, height - 200);
-        // stage.setViewport(800, 600, false, 100, 100, width - 200, height - 200);
     }
 
     public void dispose() {

@@ -59,8 +59,8 @@ public class InverseKinematicsTest extends GdxTest {
 
         renderer.begin(ShapeType.Point);
         renderer.setColor(1, 0, 0, 1);
-        for (int i = 0; i < bones.length; i++) {
-            renderer.point(bones[i].position.x, bones[i].position.y, 0);
+        for (Bone bone : bones) {
+            renderer.point(bone.position.x, bone.position.y, 0);
         }
         renderer.end();
     }

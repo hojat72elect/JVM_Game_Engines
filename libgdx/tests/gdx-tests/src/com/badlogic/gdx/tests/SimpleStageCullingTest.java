@@ -44,7 +44,7 @@ public class SimpleStageCullingTest extends GdxTest {
 
         // populate the stage with some actors and groups.
         for (int i = 0; i < 5000; i++) {
-            Actor img = new CullableActor("img" + i, texture, (OrthographicCamera) stage.getCamera());
+            Actor img = new CullableActor(texture, (OrthographicCamera) stage.getCamera());
             img.setX((float) Math.random() * 480 * 10);
             img.setY((float) Math.random() * 320 * 10);
             stage.addActor(img);
@@ -83,7 +83,7 @@ public class SimpleStageCullingTest extends GdxTest {
      * We need to extend a base actor class so we can add the culling in the render method. We also add a method to get the stage
      * coordinates of the actor so we can cull it against the camera's view volume.
      */
-    private class CullableActor extends Image {
+    private static class CullableActor extends Image {
         /**
          * the camera to test against
          **/
@@ -98,7 +98,7 @@ public class SimpleStageCullingTest extends GdxTest {
         Rectangle actorRect = new Rectangle();
         Rectangle camRect = new Rectangle();
 
-        public CullableActor(String name, Texture texture, OrthographicCamera camera) {
+        public CullableActor(Texture texture, OrthographicCamera camera) {
             super(new TextureRegion(texture));
             setAlign(Align.center);
             setScaling(Scaling.none);

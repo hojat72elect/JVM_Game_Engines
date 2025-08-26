@@ -17,14 +17,11 @@ public class GLProfilerErrorTest extends GdxTest {
     GLProfiler glProfiler;
 
     String message = "GLProfiler is currently disabled";
-    final GLErrorListener customListener = new GLErrorListener() {
-        @Override
-        public void onError(int error) {
-            if (error == GL20.GL_INVALID_VALUE) {
-                message = "Correctly raised GL_INVALID_VALUE";
-            } else {
-                message = "Raised error but something unexpected: " + error;
-            }
+    final GLErrorListener customListener = error -> {
+        if (error == GL20.GL_INVALID_VALUE) {
+            message = "Correctly raised GL_INVALID_VALUE";
+        } else {
+            message = "Raised error but something unexpected: " + error;
         }
     };
     boolean makeGlError = false;
@@ -60,7 +57,7 @@ public class GLProfilerErrorTest extends GdxTest {
 
         int x = 10;
         int y = Gdx.graphics.getHeight() - 10;
-        y -= font.draw(batch, "e - Enable debugging\n" + "d - Disable debugging\n" + "l - Test log error listener\n"
+        y -= (int) font.draw(batch, "e - Enable debugging\n" + "d - Disable debugging\n" + "l - Test log error listener\n"
                         + "t - Test throw error listener\n" + "c - Test custom listener\n\n" + "Expected error: GL_INVALID_VALUE (0x501, 1281)",
                 x, y
         ).height;

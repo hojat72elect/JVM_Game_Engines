@@ -45,7 +45,7 @@ public class PixmapPackerIOTest extends GdxTest {
         shapeRenderer = new ShapeRenderer();
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 0);
+        camera.position.set(Gdx.graphics.getWidth() / 2F, Gdx.graphics.getHeight() / 2F, 0);
         camera.update();
 
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -87,7 +87,7 @@ public class PixmapPackerIOTest extends GdxTest {
         pixmap5.dispose();
 
         packer.updateTextureAtlas(atlas, TextureFilter.Nearest, TextureFilter.Nearest, false);
-        textureRegions = new Array<TextureRegion>();
+        textureRegions = new Array<>();
         packer.updateTextureRegions(textureRegions, TextureFilter.Nearest, TextureFilter.Nearest, false);
         Gdx.app.log("PixmapPackerTest", "Number of updated textures: " + atlas.getTextures().size);
         Gdx.input.setInputProcessor(new InputAdapter() {

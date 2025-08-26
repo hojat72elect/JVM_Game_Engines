@@ -46,17 +46,10 @@ public class ScrollPane2Test extends GdxTest {
 
         ScrollPane pane = new ScrollPane(mytable, skin);
         pane.setScrollingDisabled(true, false);
-        // pane.setCancelTouchFocus(false);
-        if (false) {
-            // This sizes the pane to the size of it's contents.
-            pane.pack();
-            // Then the height is hardcoded, leaving the pane the width of it's contents.
-            pane.setHeight(Gdx.graphics.getHeight());
-        } else {
-            // This shows a hardcoded size.
-            pane.setWidth(300);
-            pane.setHeight(Gdx.graphics.getHeight());
-        }
+
+        // This shows a hardcoded size.
+        pane.setWidth(300);
+        pane.setHeight(Gdx.graphics.getHeight());
 
         stage.addActor(pane);
     }

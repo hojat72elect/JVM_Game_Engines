@@ -167,7 +167,7 @@ public class KTXTest extends GdxTest {
         float w = s * image.getWidth(), h = s * image.getHeight() / 2, x = -w / 2, y = -h / 2;
         batch.setShader(null);
         batch.disableBlending();
-        batch.draw(image, -pw / 2, -ph / 2, pw, ph, 0, 1, 1, 0);
+        batch.draw(image, -pw / 2F, -ph / 2F, pw, ph, 0, 1, 1, 0);
         batch.setShader(etc1aShader);
         batch.enableBlending();
         batch.draw(image, x, y, w, h, 0, 0.5f, 1, 0);
@@ -186,14 +186,5 @@ public class KTXTest extends GdxTest {
 
     public boolean needsGL20() {
         return true;
-    }
-
-    public void resume() {
-    }
-
-    public void resize(int width, int height) {
-    }
-
-    public void pause() {
     }
 }

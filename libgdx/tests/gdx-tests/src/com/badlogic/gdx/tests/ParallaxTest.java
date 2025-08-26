@@ -45,26 +45,21 @@ public class ParallaxTest extends GdxTest {
     public void render() {
         ScreenUtils.clear(242 / 255.0f, 210 / 255.0f, 111 / 255.0f, 1);
 
-        // keep camera in foreground layer bounds
-        boolean updateCamera = false;
+
         if (camera.position.x < -1024 + camera.viewportWidth / 2) {
             camera.position.x = -1024 + (int) (camera.viewportWidth / 2);
-            updateCamera = true;
         }
 
         if (camera.position.x > 1024 - camera.viewportWidth / 2) {
             camera.position.x = 1024 - (int) (camera.viewportWidth / 2);
-            updateCamera = true;
         }
 
         if (camera.position.y < 0) {
             camera.position.y = 0;
-            updateCamera = true;
         }
         // arbitrary height of scene
         if (camera.position.y > 400 - camera.viewportHeight / 2) {
             camera.position.y = 400 - (int) (camera.viewportHeight / 2);
-            updateCamera = true;
         }
 
         // background layer, no parallax, centered around origin
@@ -98,7 +93,7 @@ public class ParallaxTest extends GdxTest {
         batch.end();
     }
 
-    class ParallaxCamera extends OrthographicCamera {
+    static class ParallaxCamera extends OrthographicCamera {
         Matrix4 parallaxView = new Matrix4();
         Matrix4 parallaxCombined = new Matrix4();
         Vector3 tmp = new Vector3();

@@ -28,11 +28,6 @@ public class FullscreenTest extends GdxTest {
     }
 
     @Override
-    public void resume() {
-
-    }
-
-    @Override
     public void render() {
         ScreenUtils.clear(0, 0, 0, 1);
 

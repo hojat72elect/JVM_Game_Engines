@@ -59,16 +59,15 @@ public class ProjectTest extends GdxTest {
 
         modelBatch.begin(cam);
 
-        int visible = 0;
-        for (int i = 0; i < instances.length; i++) {
-            instances[i].transform.getTranslation(tmp);
+
+        for (ModelInstance instance : instances) {
+            instance.transform.getTranslation(tmp);
             if (cam.frustum.sphereInFrustum(tmp, 1)) {
-                ((ColorAttribute) instances[i].materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
-                visible++;
+                ((ColorAttribute) instance.materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
             } else {
-                ((ColorAttribute) instances[i].materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.RED);
+                ((ColorAttribute) instance.materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.RED);
             }
-            modelBatch.render(instances[i]);
+            modelBatch.render(instance);
         }
         modelBatch.end();
 
@@ -77,8 +76,8 @@ public class ProjectTest extends GdxTest {
 
         Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
         batch.begin();
-        for (int i = 0; i < instances.length; i++) {
-            instances[i].transform.getTranslation(tmp);
+        for (ModelInstance instance : instances) {
+            instance.transform.getTranslation(tmp);
             cam.project(tmp);
             if (tmp.z < 0) continue;
             batch.draw(logo, tmp.x, tmp.y);

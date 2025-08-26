@@ -27,7 +27,7 @@ public class PolygonSpriteTest extends GdxTest {
     PolygonRegion region;
     Rectangle bounds;
 
-    Array<PolygonSprite> sprites = new Array<PolygonSprite>();
+    Array<PolygonSprite> sprites = new Array<>();
 
     @Override
     public void create() {

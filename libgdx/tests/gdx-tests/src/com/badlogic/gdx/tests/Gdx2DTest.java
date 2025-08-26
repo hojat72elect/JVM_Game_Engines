@@ -41,9 +41,6 @@ public class Gdx2DTest extends GdxTest {
                 pixelColor = 0xffffff12;
                 break;
             case Gdx2DPixmap.GDX2D_FORMAT_RGB565:
-                clearColor = Color.rgba8888(1, 0, 0, 1);
-                pixelColor = Color.rgba8888(0, 0, 1, 1);
-                break;
             case Gdx2DPixmap.GDX2D_FORMAT_RGB888:
                 clearColor = Color.rgba8888(1, 0, 0, 1);
                 pixelColor = Color.rgba8888(0, 0, 1, 1);
@@ -98,7 +95,7 @@ public class Gdx2DTest extends GdxTest {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        sprites = new ArrayList<Sprite>();
+        sprites = new ArrayList<>();
         Gdx2DPixmap[] pixmaps = testPixmaps();
 
         Gdx2DPixmap composite = new Gdx2DPixmap(512, 256, Gdx2DPixmap.GDX2D_FORMAT_RGBA8888);

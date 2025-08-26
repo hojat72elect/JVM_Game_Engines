@@ -29,7 +29,6 @@ public class FramebufferToTextureTest extends GdxTest {
     SpriteBatch batch;
     BitmapFont font;
     Color clearColor = new Color(0.2f, 0.2f, 0.2f, 1);
-    float angle = 0;
 
     @Override
     public void create() {

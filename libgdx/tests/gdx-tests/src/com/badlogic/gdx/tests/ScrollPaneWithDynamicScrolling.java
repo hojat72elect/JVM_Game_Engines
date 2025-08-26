@@ -17,17 +17,12 @@ public class ScrollPaneWithDynamicScrolling extends GdxTest {
     ScrollPane scrollPane;
     int count;
     private Stage stage;
-    private Table container;
 
     public void create() {
         stage = new Stage();
         Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
         Gdx.input.setInputProcessor(stage);
-
         dynamicLabel = new Label("Chat box begin here", skin);
-
-        float chatWidth = 200;
-        float controlHeight = 300;
 
         scrollPane = new ScrollPane(dynamicLabel, skin);
 

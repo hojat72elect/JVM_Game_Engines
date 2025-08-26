@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.glutils.FloatFrameBuffer;
@@ -20,7 +19,6 @@ public class FloatTextureTest extends GdxTest {
     FrameBuffer fb;
     FloatFrameBuffer ffb;
     ShaderProgram fbshader, shader;
-    Texture texture;
     Mesh quad, screenQuad;
     OrthographicCamera screenCamera;
 
@@ -29,7 +27,6 @@ public class FloatTextureTest extends GdxTest {
         fb = new FrameBuffer(Format.RGBA8888, 200, 100, false);
         ffb = new FloatFrameBuffer(200, 100, false);
 
-        // @off
         String vertexShader =
                 "attribute vec4 a_position; "
                         + "varying vec2 v_position; "
@@ -84,7 +81,6 @@ public class FloatTextureTest extends GdxTest {
                         + "    else if (v_texCoords.y > 0.55)"
                         + "        gl_FragColor = getValue(texture2D(u_ffbtex, v_texCoords)); "
                         + "}";
-        // @on
 
         shader = new ShaderProgram(vertexShader, fragmentShader);
         createQuad();

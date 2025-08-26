@@ -2,7 +2,6 @@ package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,7 +13,6 @@ public class LabelScaleTest extends GdxTest {
     Skin skin;
     Stage stage;
     SpriteBatch batch;
-    Actor root;
 
     @Override
     public void create() {

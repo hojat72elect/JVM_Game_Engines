@@ -15,10 +15,6 @@ public class SimpleAnimationTest extends GdxTest {
     private float currentFrameTime;
     private Vector2 position;
     private Texture texture;
-    private Animation<TextureRegion> downWalk;
-    private Animation<TextureRegion> leftWalk;
-    private Animation<TextureRegion> rightWalk;
-    private Animation<TextureRegion> upWalk;
     private SpriteBatch spriteBatch;
 
     @Override
@@ -26,16 +22,9 @@ public class SimpleAnimationTest extends GdxTest {
         Gdx.input.setInputProcessor(this);
         texture = new Texture(Gdx.files.internal("data/animation.png"));
         TextureRegion[][] regions = TextureRegion.split(texture, 32, 48);
-        TextureRegion[] downWalkReg = regions[0];
         TextureRegion[] leftWalkReg = regions[1];
-        TextureRegion[] rightWalkReg = regions[2];
-        TextureRegion[] upWalkReg = regions[3];
-        downWalk = new Animation<TextureRegion>(ANIMATION_SPEED, downWalkReg);
-        leftWalk = new Animation<TextureRegion>(ANIMATION_SPEED, leftWalkReg);
-        rightWalk = new Animation<TextureRegion>(ANIMATION_SPEED, rightWalkReg);
-        upWalk = new Animation<TextureRegion>(ANIMATION_SPEED, upWalkReg);
 
-        currentWalk = leftWalk;
+        currentWalk = new Animation<>(ANIMATION_SPEED, leftWalkReg);
         currentFrameTime = 0.0f;
 
         spriteBatch = new SpriteBatch();

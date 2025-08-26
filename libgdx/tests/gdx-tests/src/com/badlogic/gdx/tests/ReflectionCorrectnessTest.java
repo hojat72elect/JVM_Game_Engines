@@ -6,23 +6,6 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 
 public class ReflectionCorrectnessTest extends GdxTest {
 
-    // Trigger generation of reflection information
-    public AbstractInterfaceStatic abstractInterfaceStatic;
-    public AbstractAnnotationStatic abstractAnnotationStatic;
-    public StaticEnum staticEnum;
-
-    public AbstractInterfaceStatic[] AbstractInterfaceStatic() {
-        return null;
-    }
-
-    public AbstractAnnotationStatic[] AbstractAnnotationStatic() {
-        return null;
-    }
-
-    public StaticEnum[] StaticEnum() {
-        return null;
-    }
-
     public void create() {
         testIntClass();
         testIntArrayClass();
@@ -207,11 +190,6 @@ public class ReflectionCorrectnessTest extends GdxTest {
 
         public Expectation mStatic() {
             isStatic = true;
-            return this;
-        }
-
-        public Expectation mAbstract() {
-            isAbstract = true;
             return this;
         }
 

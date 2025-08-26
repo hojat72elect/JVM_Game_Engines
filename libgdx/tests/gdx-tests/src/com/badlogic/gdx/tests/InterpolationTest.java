@@ -79,8 +79,8 @@ public class InterpolationTest extends GdxTest {
 
         // see how many fields are actually interpolations (for safety; other fields may be added with future)
         int interpolationMembers = 0;
-        for (int i = 0; i < interpolationFields.length; i++)
-            if (ClassReflection.isAssignableFrom(Interpolation.class, interpolationFields[i].getDeclaringClass()))
+        for (Field interpolationField : interpolationFields)
+            if (ClassReflection.isAssignableFrom(Interpolation.class, interpolationField.getDeclaringClass()))
                 interpolationMembers++;
 
         // get interpolation names
@@ -130,7 +130,7 @@ public class InterpolationTest extends GdxTest {
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        float bottomLeftX = Gdx.graphics.getWidth() / 2 - graphSize / 2, bottomLeftY = Gdx.graphics.getHeight() / 2 - graphSize / 2;
+        float bottomLeftX = Gdx.graphics.getWidth() / 2F - graphSize / 2, bottomLeftY = Gdx.graphics.getHeight() / 2F - graphSize / 2;
 
         // only show up to two decimals
         String text = String.valueOf(duration);

@@ -9,14 +9,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.tests.utils.GdxTest;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MultitouchTest extends GdxTest {
     ShapeRenderer renderer;
     ScreenViewport viewport;
     OrthographicCamera camera;
-    long startTime = TimeUtils.nanoTime();
 
     Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.WHITE, Color.PINK, Color.ORANGE, Color.YELLOW, Color.MAGENTA,
             Color.CYAN, Color.LIGHT_GRAY, Color.GRAY, Color.DARK_GRAY};

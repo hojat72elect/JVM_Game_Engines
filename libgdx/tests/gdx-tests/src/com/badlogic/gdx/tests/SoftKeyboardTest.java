@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.CharArray;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Shows how to pull up the softkeyboard and process input from it.
  */
@@ -90,9 +92,17 @@ public class SoftKeyboardTest extends GdxTest {
             return chars.size;
         }
 
+        @NotNull
+        @Override
+        public String toString() {
+            // Convert the CharArray to a String; if chars is empty, this will return an empty String, which is non-null.
+            return new String(chars.items, 0, chars.size);
+        }
+
+        @NotNull
         @Override
         public CharSequence subSequence(int arg0, int arg1) {
-            return null;
+            return "";
         }
     }
 }

@@ -88,12 +88,6 @@ public class Scene2dTest extends GdxTest {
 
         final TextButton button = new TextButton("Fancy Background", skin);
 
-// button.addListener(new ClickListener() {
-// public void clicked (InputEvent event, float x, float y) {
-// System.out.println("click! " + x + " " + y);
-// }
-// });
-
         button.addListener(new ActorGestureListener() {
             public boolean longPress(Actor actor, float x, float y) {
                 System.out.println("long press " + x + ", " + y);
@@ -118,36 +112,13 @@ public class Scene2dTest extends GdxTest {
             }
         });
 
-// button.addListener(new ChangeListener() {
-// public void changed (ChangeEvent event, Actor actor) {
-// // event.cancel();
-// }
-// });
 
         button.setPosition(50, 50);
         stage.addActor(button);
 
-// List select = new List(skin);
-// select.setBounds(200, 200, 100, 100);
-// select.setItems(new Object[] {1, 2, 3, 4, 5});
-// stage.addActor(select);
-
-// stage.addListener(new ChangeListener() {
-// public void changed (ChangeEvent event, Actor actor) {
-// System.out.println(actor);
-// }
-// });
-
         meow.setDuration(2);
 
-        actor.addAction(forever(sequence(moveBy(50, 0, 2), moveBy(-50, 0, 2), run(new Runnable() {
-            public void run() {
-                actor.setZIndex(0);
-            }
-        }))));
-        // actor.addAction(parallel(rotateBy(90, 2), rotateBy(90, 2)));
-        // actor.addAction(parallel(moveTo(250, 250, 2, elasticOut), color(RED, 6), delay(0.5f), rotateTo(180, 5, swing)));
-        // actor.addAction(forever(sequence(scaleTo(2, 2, 0.5f), scaleTo(1, 1, 0.5f), delay(0.5f))));
+        actor.addAction(forever(sequence(moveBy(50, 0, 2), moveBy(-50, 0, 2), run(() -> actor.setZIndex(0)))));
 
         patch = new TiledDrawable(skin.getRegion("default-round"));
 

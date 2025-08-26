@@ -10,25 +10,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.tests.utils.PerspectiveCamController;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class SimpleDecalTest extends GdxTest {
-    private static final int NUM_DECALS = 3;
     DecalBatch batch;
-    Array<Decal> decals = new Array<Decal>();
+    Array<Decal> decals = new Array<>();
     PerspectiveCamera camera;
     PerspectiveCamController controller;
     FPSLogger logger = new FPSLogger();
-    Vector3 dir = new Vector3();
-    private final boolean billboard = true;
 
     public void create() {
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
 
         camera = new PerspectiveCamera(45, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.near = 1;
@@ -71,14 +65,7 @@ public class SimpleDecalTest extends GdxTest {
         camera.update();
         for (int i = 0; i < decals.size; i++) {
             Decal decal = decals.get(i);
-            if (billboard) {
-                // billboarding for ortho cam :)
-// dir.set(-camera.direction.x, -camera.direction.y, -camera.direction.z);
-// decal.setRotation(dir, Vector3.Y);
-
-                // billboarding for perspective cam
-                decal.lookAt(camera.position, camera.up);
-            }
+            decal.lookAt(camera.position, camera.up);
             batch.add(decal);
         }
         batch.flush();

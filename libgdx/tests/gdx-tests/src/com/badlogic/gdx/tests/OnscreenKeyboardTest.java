@@ -47,7 +47,7 @@ public class OnscreenKeyboardTest extends GdxTest implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
-        if (character == '\b' && text.length() >= 1) {
+        if (character == '\b' && !text.isEmpty()) {
             text = text.substring(0, text.length() - 1);
         } else if (character == '\n') {
             Gdx.input.setOnscreenKeyboardVisible(false);

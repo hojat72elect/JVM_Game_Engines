@@ -60,7 +60,7 @@ public class MusicTest extends GdxTest {
             }
         });
 
-        musicBox = new SelectBox<Song>(skin);
+        musicBox = new SelectBox<>(skin);
         musicBox.setItems(Song.values());
         musicBox.addListener(new ChangeListener() {
             @Override
@@ -178,11 +178,6 @@ public class MusicTest extends GdxTest {
         sliderUpdating = false;
         stage.act();
         stage.draw();
-
-// if(music.isPlaying()){
-// time += Gdx.graphics.getDeltaTime();
-// System.out.println("realtime: " + time + " music time: " + currentPosition);
-// }
     }
 
     @Override

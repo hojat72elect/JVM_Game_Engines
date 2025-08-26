@@ -1,7 +1,6 @@
 package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.InputStringValidator;
 import com.badlogic.gdx.Input.OnscreenKeyboardType;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.NativeInputConfiguration;
@@ -26,11 +25,10 @@ import com.badlogic.gdx.tests.utils.GdxTest;
 public class NativeInputTest extends GdxTest {
 
     private Stage stage;
-    private Skin skin;
 
     public void create() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
         Table table = new Table();
         table.addListener(new ClickListener() {
@@ -94,12 +92,7 @@ public class NativeInputTest extends GdxTest {
                 if (useCustomAutocompleteButton.isChecked())
                     configuration.setAutoComplete(new String[]{"Hello", "Hillo", "Hellale", "Dog", "Dogfood"});
                 if (maxLengthSlider.getValue() != 0) configuration.setMaxLength((int) maxLengthSlider.getValue());
-                if (useValidatorButton.isChecked()) configuration.setValidator(new InputStringValidator() {
-                    @Override
-                    public boolean validate(String toCheck) {
-                        return !toCheck.contains("!");
-                    }
-                });
+                if (useValidatorButton.isChecked()) configuration.setValidator(toCheck -> !toCheck.contains("!"));
                 configuration.setTextInputWrapper(new TextInputWrapper() {
                     @Override
                     public String getText() {

@@ -92,7 +92,7 @@ public class JsonTest extends GdxTest {
         // It would be nice to have IntIntMap look like IntMap<Integer> does, below.
 
         // IntMap gets special treatment and is written as a kind of map.
-        test.intsToIntsBoxed = new IntMap<Integer>();
+        test.intsToIntsBoxed = new IntMap<>();
         test.intsToIntsBoxed.put(102, 14);
         test.intsToIntsBoxed.put(107, 1);
         test.intsToIntsBoxed.put(10, 2);
@@ -117,9 +117,9 @@ public class JsonTest extends GdxTest {
             sum += e.value + 1;
         }
         // also iterate over an Array, which does not have any problems
-        String concat = "";
+        StringBuilder concat = new StringBuilder();
         for (String s : test.stringArray) {
-            concat += s;
+            concat.append(s);
         }
         // by round-tripping again, we verify that the Entries is correctly skipped
         roundTrip(test);
@@ -128,10 +128,10 @@ public class JsonTest extends GdxTest {
         for (IntIntMap.Entry e : test.intsToIntsUnboxed) {
             sum2 += e.value + 1;
         }
-        String concat2 = "";
+        StringBuilder concat2 = new StringBuilder();
         // also check the Array again
         for (String s : test.stringArray) {
-            concat2 += s;
+            concat2.append(s);
         }
 
         System.out.println("before: " + sum + ", after: " + sum2);
@@ -258,15 +258,13 @@ public class JsonTest extends GdxTest {
         System.out.println("Success!");
     }
 
-    private String roundTrip(Object object) {
+    private void roundTrip(Object object) {
         String text = json.toJson(object);
         System.out.println(text);
         test(text, object);
 
         text = json.prettyPrint(object, 130);
         test(text, object);
-
-        return text;
     }
 
     private void testObjectGraph(TestMapGraph object, String typeName) {
@@ -462,9 +460,9 @@ public class JsonTest extends GdxTest {
     }
 
     public static class TestMapGraph {
-        public Map<String, String> map = new HashMap<String, String>();
-        public ObjectMap<String, String> objectMap = new ObjectMap<String, String>();
-        public ArrayMap<String, String> arrayMap = new ArrayMap<String, String>();
+        public Map<String, String> map = new HashMap<>();
+        public ObjectMap<String, String> objectMap = new ObjectMap<>();
+        public ArrayMap<String, String> arrayMap = new ArrayMap<>();
 
         public TestMapGraph() {
             map.put("a", "b");

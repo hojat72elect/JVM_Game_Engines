@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.tests.utils.GdxTest;
 import com.badlogic.gdx.utils.Array;
@@ -27,7 +26,7 @@ public class SortedSpriteTest extends GdxTest {
     /**
      * array of sprites
      **/
-    Array<MySprite> sprites = new Array<MySprite>();
+    Array<MySprite> sprites = new Array<>();
     /**
      * a comparator, we keep it around so the GC shuts up
      **/
@@ -38,8 +37,7 @@ public class SortedSpriteTest extends GdxTest {
         // create the SpriteBatch
         batch = new SpriteBatch();
 
-        // load a texture, usually you dispose of this
-        // eventually.
+        // load a texture, usually you dispose of this eventually.
         texture = new Texture("data/badlogicsmall.jpg");
 
         // create 100 sprites, tinted red, from dark to light.
@@ -88,42 +86,18 @@ public class SortedSpriteTest extends GdxTest {
      * Sprite based class that adds a z-coordinate for depth sorting. Note that allt he constructors were auto-generated in
      * Eclipse (alt + shift + s, c).
      */
-    public class MySprite extends Sprite {
+    public static class MySprite extends Sprite {
         public float z;
-
-        public MySprite() {
-            super();
-        }
-
-        public MySprite(Sprite sprite) {
-            super(sprite);
-        }
-
-        public MySprite(Texture texture, int srcX, int srcY, int srcWidth, int srcHeight) {
-            super(texture, srcX, srcY, srcWidth, srcHeight);
-        }
-
-        public MySprite(Texture texture, int srcWidth, int srcHeight) {
-            super(texture, srcWidth, srcHeight);
-        }
 
         public MySprite(Texture texture) {
             super(texture);
-        }
-
-        public MySprite(TextureRegion region, int srcX, int srcY, int srcWidth, int srcHeight) {
-            super(region, srcX, srcY, srcWidth, srcHeight);
-        }
-
-        public MySprite(TextureRegion region) {
-            super(region);
         }
     }
 
     /**
      * Comparator used for sorting, sorts in ascending order (biggset z to smallest z).
      */
-    public class MySpriteComparator implements Comparator<MySprite> {
+    public static class MySpriteComparator implements Comparator<MySprite> {
         @Override
         public int compare(MySprite sprite1, MySprite sprite2) {
             return (sprite2.z - sprite1.z) > 0 ? 1 : -1;

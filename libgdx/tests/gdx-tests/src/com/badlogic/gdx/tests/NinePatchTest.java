@@ -2,7 +2,6 @@ package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -15,26 +14,25 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class NinePatchTest extends GdxTest {
-    private final long start = System.currentTimeMillis();
+
     private final Color filterColor = new Color();
     private final Color oldColor = new Color();
-    private OrthographicCamera camera;
     private SpriteBatch b;
-    private final Array<TestPatch> ninePatches = new Array<TestPatch>(10);
+    private final Array<TestPatch> ninePatches = new Array<>(10);
     private float timePassed = 0;
 
     // Make a new 'pixmapSize' square texture region with 'patchSize' patches in it. Each patch is a different color.
-    static TextureRegion newPatchPix(int patchSize, int pixmapSize) {
+    static TextureRegion newPatchPix(int pixmapSize) {
         final int pixmapDim = MathUtils.nextPowerOfTwo(pixmapSize);
 
         Pixmap p = new Pixmap(pixmapDim, pixmapDim, Pixmap.Format.RGBA8888);
         p.setColor(1, 1, 1, 0);
         p.fill();
 
-        for (int x = 0; x < pixmapSize; x += patchSize) {
-            for (int y = 0; y < pixmapSize; y += patchSize) {
+        for (int x = 0; x < pixmapSize; x += 8) {
+            for (int y = 0; y < pixmapSize; y += 8) {
                 p.setColor(x / (float) pixmapSize, y / (float) pixmapSize, 1.0f, 1.0f);
-                p.fillRectangle(x, y, patchSize, patchSize);
+                p.fillRectangle(x, y, 8, 8);
             }
         }
 
@@ -45,7 +43,7 @@ public class NinePatchTest extends GdxTest {
     static NinePatch newDegenerateNinePatch() {
         final int patchSize = 8;
         final int pixmapSize = patchSize * 3;
-        TextureRegion tr = newPatchPix(patchSize, pixmapSize);
+        TextureRegion tr = newPatchPix(pixmapSize);
         return new NinePatch(tr);
     }
 
@@ -53,7 +51,7 @@ public class NinePatchTest extends GdxTest {
     static NinePatch newNinePatch() {
         final int patchSize = 8;
         final int pixmapSize = patchSize * 3;
-        TextureRegion tr = newPatchPix(patchSize, pixmapSize);
+        TextureRegion tr = newPatchPix(pixmapSize);
 
         return new NinePatch(tr, patchSize, patchSize, patchSize, patchSize);
     }
@@ -62,7 +60,7 @@ public class NinePatchTest extends GdxTest {
     static NinePatch newULQuadPatch() {
         final int patchSize = 8;
         final int pixmapSize = patchSize * 2;
-        TextureRegion tr = newPatchPix(patchSize, pixmapSize);
+        TextureRegion tr = newPatchPix(pixmapSize);
 
         return new NinePatch(tr, patchSize, 0, patchSize, 0);
     }
@@ -136,8 +134,7 @@ public class NinePatchTest extends GdxTest {
         b.begin();
         final int sz = ninePatches.size;
         final int XGAP = 10;
-        final int pheight = (int) ((screenHeight * 0.5f) / ((sz + 1) / 2));
-        int x = XGAP;
+        final int pheight = (int) ((screenHeight * 0.5f) / ((sz + 1) / 2F));
         int y = 10;
 
         // Test that batch color is applied to NinePatch
@@ -150,11 +147,11 @@ public class NinePatchTest extends GdxTest {
             int pwidth = (int) (0.44f * screenWidth);
 
             final NinePatch np1 = ninePatches.get(i).ninePatch;
-            np1.draw(b, x, y, pwidth, pheight);
+            np1.draw(b, XGAP, y, pwidth, pheight);
 
             if (i + 1 < sz) {
                 final NinePatch np2 = ninePatches.get(i + 1).ninePatch;
-                final int x2 = x + pwidth + XGAP;
+                final int x2 = XGAP + pwidth + XGAP;
                 final int pwidth2 = screenWidth - XGAP - x2;
 
                 np2.draw(b, x2, y, pwidth2, pheight);
@@ -168,18 +165,10 @@ public class NinePatchTest extends GdxTest {
         oldColor.set(np.getColor());
         filterColor.set(0.3f, 0.3f, 0.3f, 1.0f);
         np.setColor(filterColor);
-        np.draw(b, x, y, 100, 30);
+        np.draw(b, XGAP, y, 100, 30);
         np.setColor(oldColor);
 
         b.end();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        float ratio = ((float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight());
-        int h = 10;
-        int w = (int) (h * ratio);
-        camera = new OrthographicCamera(w, h);
     }
 
     /**

@@ -51,7 +51,7 @@ public class IntersectorOverlapConvexPolygonsTest extends GdxTest {
         camera.viewportHeight = 6;
     }
 
-    private void update(float deltaTime) {
+    private void update() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             Intersector.overlapConvexPolygons(shape1, shape2, mtv);
             float x = shape1.getX() + (mtv.normal.x * mtv.depth);
@@ -74,7 +74,7 @@ public class IntersectorOverlapConvexPolygonsTest extends GdxTest {
 
     @Override
     public void render() {
-        update(Gdx.graphics.getDeltaTime());
+        update();
         camera.update();
         ScreenUtils.clear(0f, 0f, 0f, 0f, true);
         shapeRenderer.setProjectionMatrix(camera.combined);

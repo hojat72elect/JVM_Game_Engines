@@ -3,7 +3,6 @@ package com.badlogic.gdx.tests;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,15 +18,11 @@ public class SpriteBatchShaderTest extends GdxTest {
 
     Texture texture;
     Texture texture2;
-    // Font font;
     SpriteBatch spriteBatch;
     int[] coords = new int[SPRITES * 2];
     int[] coords2 = new int[SPRITES * 2];
 
     Color col = new Color(1, 1, 1, 0.6f);
-
-    Mesh mesh;
-    float[] vertices = new float[SPRITES * 6 * (2 + 2 + 4)];
 
     @Override
     public void render() {
@@ -35,11 +30,11 @@ public class SpriteBatchShaderTest extends GdxTest {
         gl.glClearColor(0.7f, 0.7f, 0.7f, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        float begin = 0;
-        float end = 0;
-        float draw1 = 0;
-        float draw2 = 0;
-        float drawText = 0;
+        float begin;
+        float end;
+        float draw1;
+        float draw2;
+        float drawText;
 
         long start = TimeUtils.nanoTime();
         spriteBatch.begin();
@@ -58,9 +53,6 @@ public class SpriteBatchShaderTest extends GdxTest {
         draw2 = (TimeUtils.nanoTime() - start) / 1000000000.0f;
 
         start = TimeUtils.nanoTime();
-// spriteBatch.drawText(font, "Question?", 100, 300, Color.RED);
-// spriteBatch.drawText(font, "and another this is a test", 200, 100, Color.WHITE);
-// spriteBatch.drawText(font, "all hail and another this is a test", 200, 200, Color.WHITE);
         drawText = (TimeUtils.nanoTime() - start) / 1000000000.0f;
 
         start = TimeUtils.nanoTime();
