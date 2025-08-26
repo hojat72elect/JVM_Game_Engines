@@ -60,7 +60,6 @@ public class BulletTestCollection extends GdxTest implements InputProcessor, Ges
 
     private Application app = null;
 
-    private BitmapFont font;
     private Stage hud;
     private Label fpsLabel;
     private Label titleLabel;
@@ -91,7 +90,7 @@ public class BulletTestCollection extends GdxTest implements InputProcessor, Ges
         cameraController.translateTarget = false;
         Gdx.input.setInputProcessor(new InputMultiplexer(cameraController, this, new GestureDetector(this)));
 
-        font = new BitmapFont(Gdx.files.internal("data/lsans-15.fnt"), false);
+        BitmapFont font = new BitmapFont(Gdx.files.internal("data/lsans-15.fnt"), false);
         hud = new Stage();
         hud.addActor(fpsLabel = new Label(" ", new Label.LabelStyle(font, Color.WHITE)));
         fpsLabel.setPosition(0, 0);

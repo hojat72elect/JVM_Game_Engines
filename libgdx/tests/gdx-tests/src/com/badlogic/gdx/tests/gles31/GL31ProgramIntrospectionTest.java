@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.BufferUtils;
 import java.nio.IntBuffer;
 
 /**
- * see https://www.khronos.org/opengl/wiki/Program_Introspection#Interface_query
+ * see <a href="https://www.khronos.org/opengl/wiki/Program_Introspection#Interface_query">Open GL docs</a>
  */
 @GdxTestConfig(requireGL31 = true)
 public class GL31ProgramIntrospectionTest extends GdxTest {

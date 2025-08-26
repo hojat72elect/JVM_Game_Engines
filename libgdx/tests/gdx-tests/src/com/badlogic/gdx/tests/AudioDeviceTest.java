@@ -49,27 +49,24 @@ public class AudioDeviceTest extends GdxTest {
         if (thread == null) {
             final int samplingFrequency = 44100;
             final AudioDevice device = Gdx.app.getAudio().newAudioDevice(samplingFrequency, false);
-            thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final float waveFrequency = 440;
-                    float[] samples = new float[1024];
-                    long playedFrames = 0;
-                    while (!stop) {
-                        for (int i = 0; i < samples.length; i += 2) {
-                            float time = (float) playedFrames / (float) samplingFrequency;
-                            float wave = (float) Math.sin(time * waveFrequency * Math.PI * 2.0);
-                            float pan = wavePanValue * .5f + .5f;
-                            samples[i] = wave * (1 - pan);
-                            samples[i + 1] = wave * pan;
-                            playedFrames++;
-                        }
-
-                        device.writeSamples(samples, 0, samples.length);
+            thread = new Thread(() -> {
+                final float waveFrequency = 440;
+                float[] samples = new float[1024];
+                long playedFrames = 0;
+                while (!stop) {
+                    for (int i = 0; i < samples.length; i += 2) {
+                        float time = (float) playedFrames / (float) samplingFrequency;
+                        float wave = (float) Math.sin(time * waveFrequency * Math.PI * 2.0);
+                        float pan1 = wavePanValue * .5f + .5f;
+                        samples[i] = wave * (1 - pan1);
+                        samples[i + 1] = wave * pan1;
+                        playedFrames++;
                     }
 
-                    device.dispose();
+                    device.writeSamples(samples, 0, samples.length);
                 }
+
+                device.dispose();
             });
             thread.start();
         }

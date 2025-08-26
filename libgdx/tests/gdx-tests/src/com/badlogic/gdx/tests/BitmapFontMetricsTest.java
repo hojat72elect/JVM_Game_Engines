@@ -42,7 +42,6 @@ public class BitmapFontMetricsTest extends GdxTest {
         font.setColor(Color.RED);
 
         float x = 100, y = 100;
-        float alignmentWidth;
 
         smallFont.setColor(Color.BLACK);
         smallFont.draw(spriteBatch, "draw position", 20, viewHeight);

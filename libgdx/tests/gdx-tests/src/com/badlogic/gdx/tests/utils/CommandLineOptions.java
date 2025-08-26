@@ -22,21 +22,29 @@ public class CommandLineOptions {
     public boolean logGLErrors = false;
 
     public CommandLineOptions(String[] argv) {
-        Array<String> args = new Array<String>(argv);
+        Array<String> args = new Array<>(argv);
         for (String arg : args) {
             if (arg.startsWith("-")) {
-                if (arg.equals("--gl30"))
-                    gl30 = true;
-                else if (arg.equals("--gl31"))
-                    gl31 = true;
-                else if (arg.equals("--gl32"))
-                    gl32 = true;
-                else if (arg.equals("--glErrors"))
-                    logGLErrors = true;
-                else if (arg.equals("--angle"))
-                    angle = true;
-                else
-                    System.err.println("skip unrecognized option " + arg);
+                switch (arg) {
+                    case "--gl30":
+                        gl30 = true;
+                        break;
+                    case "--gl31":
+                        gl31 = true;
+                        break;
+                    case "--gl32":
+                        gl32 = true;
+                        break;
+                    case "--glErrors":
+                        logGLErrors = true;
+                        break;
+                    case "--angle":
+                        angle = true;
+                        break;
+                    default:
+                        System.err.println("skip unrecognized option " + arg);
+                        break;
+                }
             } else {
                 startupTestName = arg;
             }

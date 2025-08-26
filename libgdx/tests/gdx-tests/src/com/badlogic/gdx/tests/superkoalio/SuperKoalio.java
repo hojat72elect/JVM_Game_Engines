@@ -35,7 +35,6 @@ public class SuperKoalio extends GdxTest {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private Texture koalaTexture;
     private Animation<TextureRegion> stand;
     private Animation<TextureRegion> walk;
     private Animation<TextureRegion> jump;
@@ -46,14 +45,14 @@ public class SuperKoalio extends GdxTest {
             return new Rectangle();
         }
     };
-    private final Array<Rectangle> tiles = new Array<Rectangle>();
+    private final Array<Rectangle> tiles = new Array<>();
     private boolean debug = false;
     private ShapeRenderer debugRenderer;
 
     @Override
     public void create() {
         // load the koala frames, split them, and assign them to Animations
-        koalaTexture = new Texture("data/maps/tiled/super-koalio/koalio.png");
+        Texture koalaTexture = new Texture("data/maps/tiled/super-koalio/koalio.png");
         TextureRegion[] regions = TextureRegion.split(koalaTexture, 18, 26)[0];
         stand = new Animation(0, regions[0]);
         jump = new Animation(0, regions[1]);
@@ -103,7 +102,7 @@ public class SuperKoalio extends GdxTest {
         renderer.render();
 
         // render the koala
-        renderKoala(deltaTime);
+        renderKoala();
 
         // render debug rectangles
         if (debug) renderDebug();
@@ -246,7 +245,7 @@ public class SuperKoalio extends GdxTest {
         }
     }
 
-    private void renderKoala(float deltaTime) {
+    private void renderKoala() {
         // based on the koala state, get the animation frame
         TextureRegion frame = null;
         switch (koala.state) {
@@ -292,10 +291,6 @@ public class SuperKoalio extends GdxTest {
             }
         }
         debugRenderer.end();
-    }
-
-    @Override
-    public void dispose() {
     }
 
     /**

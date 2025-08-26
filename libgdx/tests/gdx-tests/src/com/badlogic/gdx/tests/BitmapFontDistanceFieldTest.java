@@ -61,7 +61,7 @@ public class BitmapFontDistanceFieldTest extends GdxTest {
         x += drawFont(regularFont, "Regular font\nLinear filter", true, false, 0, x);
         x += drawFont(regularFont, "Regular font\nCustom shader", true, true, 1.0f, x);
         x += drawFont(distanceFieldFont, "Distance field\nCustom shader", true, true, 1 / 8f, x);
-        x += drawFont(distanceFieldFont, "Distance field\nShowing distance field", false, false, 0, x);
+        drawFont(distanceFieldFont, "Distance field\nShowing distance field", false, false, 0, x);
 
         spriteBatch.end();
     }
@@ -74,7 +74,7 @@ public class BitmapFontDistanceFieldTest extends GdxTest {
         spriteBatch.setShader(null);
         descriptionFont.draw(spriteBatch, description, x, y);
         spriteBatch.flush();
-        y += 10 + 2 * descriptionFont.getLineHeight();
+        y += (int) (10 + 2 * descriptionFont.getLineHeight());
 
         // set filters for each page
         TextureFilter minFilter = linearFiltering ? TextureFilter.MipMapLinearNearest : TextureFilter.Nearest;
@@ -97,14 +97,10 @@ public class BitmapFontDistanceFieldTest extends GdxTest {
                 distanceFieldShader.setSmoothing(smoothing / scale);
             }
             font.draw(spriteBatch, layout, x, y);
-            y += font.getLineHeight();
+            y += (int) font.getLineHeight();
             spriteBatch.flush();
         }
         return (int) Math.ceil(maxWidth);
-    }
-
-    private float getBaselineShift(float shift) {
-        return shift;
     }
 
     @Override

@@ -72,7 +72,7 @@ public class BitmapFontTest extends GdxTest {
 
     @Override
     public void render() {
-        // red.a = (red.a + Gdx.graphics.getDeltaTime() * 0.1f) % 1;
+
 
         int viewHeight = Gdx.graphics.getHeight();
 
@@ -94,12 +94,7 @@ public class BitmapFontTest extends GdxTest {
             renderer.end();
 
             spriteBatch.begin();
-            String text = "your new";
-            // text = "How quickly da[RED]ft jumping zebras vex.";
-            // text = "Another font wrap is-sue, this time with multiple whitespace characters.";
-            // text = "test with AGWlWi AGWlWi issue";
-            // text = "AA BB \nEE"; // When wrapping after BB, there should not be a blank line before EE.
-            text = "[BLUE]A[]A BB [#00f000]EE[] T [GREEN]e[]   \r\r[PINK]\n\nV[][YELLOW]a bb[] ([CYAN]5[]FFFurz)\nV[PURPLE]a[]\nVa\n[PURPLE]V[]a";
+            String text = "[BLUE]A[]A BB [#00f000]EE[] T [GREEN]e[]   \r\r[PINK]\n\nV[][YELLOW]a bb[] ([CYAN]5[]FFFurz)\nV[PURPLE]a[]\nVa\n[PURPLE]V[]a";
             if (true) { // Test wrap.
                 layout.setText(font, text, 0, text.length(), font.getColor(), w, Align.center, true, null);
             } else { // Test truncation.
@@ -142,7 +137,7 @@ public class BitmapFontTest extends GdxTest {
             label.setStyle(label.getStyle());
             label.setText("How quickly [RED]daft[] jumping zebras vex.");
             label.setWrap(true);
-// label.setEllipsis(true);
+
             label.setAlignment(Align.center, Align.right);
             label.setWidth(Gdx.input.getX() - label.getX());
             label.setHeight(label.getPrefHeight());

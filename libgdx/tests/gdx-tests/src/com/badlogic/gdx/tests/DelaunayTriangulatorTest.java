@@ -44,8 +44,6 @@ public class DelaunayTriangulatorTest extends GdxTest {
     }
 
     void triangulate() {
-        // seed = 4139368480425561099l;
-        // seed = 6559652580366669361l;
         MathUtils.random.setSeed(seed);
 
         int pointCount = 100;

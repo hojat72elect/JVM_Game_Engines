@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.nio.IntBuffer;
 
 /**
- * see https://www.khronos.org/opengl/wiki/Vertex_Rendering#Indirect_rendering
+ * see <a href="https://www.khronos.org/opengl/wiki/Vertex_Rendering#Indirect_rendering">OpenGL docs</a>
  * <p>
  * Example of indirect commands. Note that commands could be defined directly in GPU via a comput shader. Also note that multi
  * draw (glMultiDrawArraysIndirect) requires an extension to GLES 3.1

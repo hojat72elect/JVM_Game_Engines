@@ -30,7 +30,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class BigMeshTest extends GdxTest {
 
-    private final Array<RenderableProvider> renderableProviders = new Array<RenderableProvider>();
+    private final Array<RenderableProvider> renderableProviders = new Array<>();
     private Camera camera;
     private ModelBatch batch;
 
@@ -51,7 +51,6 @@ public class BigMeshTest extends GdxTest {
 
         final VertexAttributes attributes = new VertexAttributes(VertexAttribute.Position(), VertexAttribute.Normal(),
                 VertexAttribute.TexCoords(0));
-        final long attributesMask = attributes.getMask();
 
         ModelBuilder mb = new ModelBuilder();
 
@@ -100,7 +99,7 @@ public class BigMeshTest extends GdxTest {
     }
 
     private void trace(RenderableProvider rp, String label) {
-        Array<Renderable> renderables = new Array<Renderable>();
+        Array<Renderable> renderables = new Array<>();
         Pool<Renderable> pool = new RenderablePool();
         rp.getRenderables(renderables, pool);
         System.out.println(label + ":");

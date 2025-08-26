@@ -14,11 +14,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * see https://www.khronos.org/opengl/wiki/Debug_Output
+ * see <a href="https://www.khronos.org/opengl/wiki/Debug_Output">open gl docs</a>
  */
 @GdxTestConfig(requireGL32 = true)
 public class GL32DebugControlTest extends GdxTest {
@@ -113,12 +112,7 @@ public class GL32DebugControlTest extends GdxTest {
         /**
          * callback debug message version
          */
-        public static final DebugProc loggingCallback = new DebugProc() {
-            @Override
-            public void onMessage(int source, int type, int id, int severity, String message) {
-                GLDebug.log(source, type, id, severity, message);
-            }
-        };
+        public static final DebugProc loggingCallback = GLDebug::log;
         /**
          * can only be used when {@link #setCallback(DebugProc)} is set to null.
          */
@@ -153,19 +147,15 @@ public class GL32DebugControlTest extends GdxTest {
         }
 
         public static void insertApplicationMessage(int type, int id, int severity, String message) {
-            insertMessage(GL32.GL_DEBUG_SOURCE_APPLICATION, type, id, severity, message);
+            insertMessage(type, id, severity, message);
         }
 
-        public static void insertThirdPartyMessage(int type, int id, int severity, String message) {
-            insertMessage(GL32.GL_DEBUG_SOURCE_THIRD_PARTY, type, id, severity, message);
-        }
-
-        private static void insertMessage(int source, int type, int id, int severity, String message) {
+        private static void insertMessage(int type, int id, int severity, String message) {
             if (message.length() + 1 > maxMessageLength) {
                 Gdx.app.error("GLDebug", "user message too long, it will be truncated");
                 message = message.substring(0, maxMessageLength - 1);
             }
-            Gdx.gl32.glDebugMessageInsert(source, type, id, severity, message);
+            Gdx.gl32.glDebugMessageInsert(GL32.GL_DEBUG_SOURCE_APPLICATION, type, id, severity, message);
         }
 
         public static void enableAll(boolean enabled) {

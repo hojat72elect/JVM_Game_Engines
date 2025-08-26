@@ -22,7 +22,6 @@ import java.util.Arrays;
 
 public class FilesTest extends GdxTest {
     String message = "";
-    boolean success;
     BitmapFont font;
     SpriteBatch batch;
 
@@ -157,12 +156,12 @@ public class FilesTest extends GdxTest {
         try {
             handle.delete();
             fail();
-        } catch (Exception expected) {
+        } catch (Exception ignored) {
         }
         try {
             handle.list();
             fail();
-        } catch (Exception expected) {
+        } catch (Exception ignored) {
         }
         try {
             handle.read().close();
@@ -186,7 +185,7 @@ public class FilesTest extends GdxTest {
         try {
             handle.delete();
             fail("Shouldn't be able to delete internal file");
-        } catch (Exception expected) {
+        } catch (Exception ignored) {
         }
         if (handle.list().length != 0) fail("File length shouldn't be 0");
         if (Gdx.app.getType() != ApplicationType.Android) {
@@ -287,7 +286,7 @@ public class FilesTest extends GdxTest {
         if (handle.list().length != 0) fail();
         if (!handle.name().equals("meow")) fail();
         if (!handle.nameWithoutExtension().equals("meow")) fail();
-        if (!handle.extension().equals("")) fail();
+        if (!handle.extension().isEmpty()) fail();
         handle.deleteDirectory();
         if (handle.exists()) fail();
         if (handle.isDirectory()) fail();
@@ -357,7 +356,7 @@ public class FilesTest extends GdxTest {
         if (handle.list().length != 0) fail();
         if (!handle.name().equals("meow")) fail();
         if (!handle.nameWithoutExtension().equals("meow")) fail();
-        if (!handle.extension().equals("")) fail();
+        if (!handle.extension().isEmpty()) fail();
         handle.deleteDirectory();
         if (handle.exists()) fail();
         if (handle.isDirectory()) fail();
@@ -427,7 +426,7 @@ public class FilesTest extends GdxTest {
         if (handle.list().length != 0) fail();
         if (!handle.name().equals("meow")) fail();
         if (!handle.nameWithoutExtension().equals("meow")) fail();
-        if (!handle.extension().equals("")) fail();
+        if (!handle.extension().isEmpty()) fail();
         handle.deleteDirectory();
         if (handle.exists()) fail();
         if (handle.isDirectory()) fail();

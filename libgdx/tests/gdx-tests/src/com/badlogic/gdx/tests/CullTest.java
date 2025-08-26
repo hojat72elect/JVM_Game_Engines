@@ -52,8 +52,6 @@ public class CullTest extends GdxTest implements ApplicationListener {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
-        // Gdx.graphics.setVSync(true);
-        // Gdx.app.log("CullTest", "" + Gdx.graphics.getBufferFormat().toString());
     }
 
     @Override
@@ -68,15 +66,15 @@ public class CullTest extends GdxTest implements ApplicationListener {
         modelBatch.begin(cam);
 
         int visible = 0;
-        for (int i = 0; i < instances.length; i++) {
-            instances[i].transform.getTranslation(pos);
+        for (ModelInstance instance : instances) {
+            instance.transform.getTranslation(pos);
             if (cam.frustum.sphereInFrustum(pos, 1)) {
-                ((ColorAttribute) instances[i].materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
+                ((ColorAttribute) instance.materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
                 visible++;
             } else {
-                ((ColorAttribute) instances[i].materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.RED);
+                ((ColorAttribute) instance.materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.RED);
             }
-            modelBatch.render(instances[i]);
+            modelBatch.render(instance);
         }
         modelBatch.end();
 

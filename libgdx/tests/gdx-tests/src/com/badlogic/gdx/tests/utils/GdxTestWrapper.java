@@ -2,7 +2,6 @@ package com.badlogic.gdx.tests.utils;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.profiling.GLErrorListener;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
 
 public class GdxTestWrapper implements ApplicationListener {
@@ -20,12 +19,7 @@ public class GdxTestWrapper implements ApplicationListener {
         if (logGLErrors) {
             Gdx.app.log("GLProfiler", "profiler enabled");
             GLProfiler profiler = new GLProfiler(Gdx.graphics);
-            profiler.setListener(new GLErrorListener() {
-                @Override
-                public void onError(int error) {
-                    Gdx.app.error("GLProfiler", "error " + error);
-                }
-            });
+            profiler.setListener(error -> Gdx.app.error("GLProfiler", "error " + error));
             profiler.enable();
         }
         app.create();

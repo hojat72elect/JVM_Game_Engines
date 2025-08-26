@@ -188,7 +188,7 @@ public class CollisionPlaygroundTest extends GdxTest implements ApplicationListe
         return new ModelInstance(mb.end());
     }
 
-    abstract class Shape {
+    abstract static class Shape {
         ModelInstance instance;
 
         abstract boolean isColliding(Frustum frustum);
@@ -280,7 +280,7 @@ public class CollisionPlaygroundTest extends GdxTest implements ApplicationListe
         }
     }
 
-    class OBB extends Shape {
+    static class OBB extends Shape {
         private final OrientedBoundingBox obb;
 
         OBB() {

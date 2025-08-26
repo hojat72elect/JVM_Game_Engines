@@ -97,7 +97,7 @@ public class Box2DTest extends GdxTest implements InputProcessor {
     /**
      * our boxes
      **/
-    private final ArrayList<Body> boxes = new ArrayList<Body>();
+    private final ArrayList<Body> boxes = new ArrayList<>();
     /**
      * our mouse joint
      **/
@@ -182,40 +182,28 @@ public class Box2DTest extends GdxTest implements InputProcessor {
 
         createBoxes();
 
-        Array<Fixture> fixtures = new Array<Fixture>();
+        Array<Fixture> fixtures = new Array<>();
         world.getFixtures(fixtures);
 
         // You can savely ignore the rest of this method :)
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
-// System.out.println("begin contact");
+
             }
 
             @Override
             public void endContact(Contact contact) {
-// System.out.println("end contact");
+
             }
 
             @Override
             public void preSolve(Contact contact, Manifold oldManifold) {
-// Manifold.ManifoldType type = oldManifold.getType();
-// Vector2 localPoint = oldManifold.getLocalPoint();
-// Vector2 localNormal = oldManifold.getLocalNormal();
-// int pointCount = oldManifold.getPointCount();
-// ManifoldPoint[] points = oldManifold.getPoints();
-// System.out.println("pre solve, " + type +
-// ", point: " + localPoint +
-// ", local normal: " + localNormal +
-// ", #points: " + pointCount +
-// ", [" + points[0] + ", " + points[1] + "]");
             }
 
             @Override
             public void postSolve(Contact contact, ContactImpulse impulse) {
-// float[] ni = impulse.getNormalImpulses();
-// float[] ti = impulse.getTangentImpulses();
-// System.out.println("post solve, normal impulses: " + ni[0] + ", " + ni[1] + ", tangent impulses: " + ti[0] + ", " + ti[1]);
+
             }
         });
     }
@@ -265,7 +253,7 @@ public class Box2DTest extends GdxTest implements InputProcessor {
         camera.update();
 
         // next we render the ground body
-        renderBox(groundBody, 50, 1);
+        renderBox(groundBody);
 
         // next we render each box via the SpriteBatch.
         // for this we have to set the projection matrix of the
@@ -322,7 +310,7 @@ public class Box2DTest extends GdxTest implements InputProcessor {
         batch.end();
     }
 
-    private void renderBox(Body body, float halfWidth, float halfHeight) {
+    private void renderBox(Body body) {
         // get the bodies center and angle in world coordinates
         Vector2 pos = body.getWorldCenter();
         float angle = body.getAngle();
@@ -335,7 +323,7 @@ public class Box2DTest extends GdxTest implements InputProcessor {
         renderer.begin(ShapeType.Line);
         renderer.setTransformMatrix(transform);
         renderer.setColor(1, 1, 1, 1);
-        renderer.rect(-halfWidth, -halfHeight, halfWidth * 2, halfHeight * 2);
+        renderer.rect(-(float) 50, -(float) 1, (float) 50 * 2, (float) 1 * 2);
         renderer.end();
     }
 

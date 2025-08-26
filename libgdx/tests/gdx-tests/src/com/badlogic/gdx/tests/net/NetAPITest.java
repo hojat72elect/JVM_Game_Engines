@@ -169,12 +169,9 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
 
         final int statusCode = httpResponse.getStatus().getStatusCode();
         // We are not in main thread right now so we need to post to main thread for ui updates
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                statusLabel.setText("HTTP Request status: " + statusCode);
-                setButtonDisabled(false);
-            }
+        Gdx.app.postRunnable(() -> {
+            statusLabel.setText("HTTP Request status: " + statusCode);
+            setButtonDisabled(false);
         });
 
         if (statusCode != 200) {
@@ -185,24 +182,14 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
 
         if (clickedButton == btnDownloadImage) {
             final byte[] rawImageBytes = httpResponse.getResult();
-            Gdx.app.postRunnable(new Runnable() {
-                public void run() {
-                    Pixmap pixmap = new Pixmap(rawImageBytes, 0, rawImageBytes.length);
-                    texture = new Texture(pixmap);
-                }
+            Gdx.app.postRunnable(() -> {
+                Pixmap pixmap = new Pixmap(rawImageBytes, 0, rawImageBytes.length);
+                texture = new Texture(pixmap);
             });
         } else if (clickedButton == btnDownloadLarge) {
-            Gdx.app.postRunnable(new Runnable() {
-                public void run() {
-                    text = "Retrieving large file...";
-                }
-            });
+            Gdx.app.postRunnable(() -> text = "Retrieving large file...");
             final byte[] rawFileBytes = httpResponse.getResult();
-            Gdx.app.postRunnable(new Runnable() {
-                public void run() {
-                    text = "Retrieved large file: " + rawFileBytes.length;
-                }
-            });
+            Gdx.app.postRunnable(() -> text = "Retrieved large file: " + rawFileBytes.length);
         } else {
             setText(httpResponse);
         }
@@ -210,11 +197,7 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
 
     void setText(HttpResponse httpResponse) {
         final String newText = httpResponse.getResultAsString();
-        Gdx.app.postRunnable(new Runnable() {
-            public void run() {
-                text = newText;
-            }
-        });
+        Gdx.app.postRunnable(() -> text = newText);
     }
 
     void setButtonDisabled(boolean disabled) {
@@ -265,12 +248,10 @@ public class NetAPITest extends GdxTest implements HttpResponseListener {
 
     @Override
     public void cancelled() {
-        Gdx.app.postRunnable(new Runnable() {
-            public void run() {
-                setButtonDisabled(false);
-                Gdx.app.log("NetAPITest", "HTTP request cancelled");
-                statusLabel.setText("HTTP request cancelled");
-            }
+        Gdx.app.postRunnable(() -> {
+            setButtonDisabled(false);
+            Gdx.app.log("NetAPITest", "HTTP request cancelled");
+            statusLabel.setText("HTTP request cancelled");
         });
     }
 }

@@ -24,7 +24,7 @@ public class Bresenham2Test extends GdxTest {
     /**
      * If any of the green pixels this draws are still visible after Bresenham2's line is drawn, then the implementation in
      * Bresenham2 is wrong. <br>
-     * This is almost exactly taken from http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#Java ; only the Swing/AWT
+     * This is almost exactly taken from <a href="http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#Java">Bresenham Line Algorithm</a> ; only the Swing/AWT
      * code was changed to use Pixmap here. The Rosetta Code version doesn't use pooling for its points, so the algorithm in
      * Bresenham2 should be more efficient, but this can be used as a reference implementation that's probably been picked over and
      * run many times.

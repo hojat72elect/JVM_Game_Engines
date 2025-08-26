@@ -161,7 +161,7 @@ public class OrientedBoundingBoxTest extends GdxTest implements ApplicationListe
         return super.keyUp(keycode);
     }
 
-    class Box {
+    static class Box {
         private final OrientedBoundingBox orientedBoundingBox;
         public Model model;
         public ModelInstance instance;

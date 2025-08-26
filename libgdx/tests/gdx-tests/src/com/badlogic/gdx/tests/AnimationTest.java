@@ -25,13 +25,13 @@ public class AnimationTest extends GdxTest {
         texture = new Texture(Gdx.files.internal("data/walkanim.png"));
         TextureRegion[] leftWalkFrames = TextureRegion.split(texture, 64, 64)[0];
         Array<TextureRegion> rightWalkFrames = new Array(TextureRegion.class);
-        for (int i = 0; i < leftWalkFrames.length; i++) {
-            TextureRegion frame = new TextureRegion(leftWalkFrames[i]);
+        for (TextureRegion leftWalkFrame : leftWalkFrames) {
+            TextureRegion frame = new TextureRegion(leftWalkFrame);
             frame.flip(true, false);
             rightWalkFrames.add(frame);
         }
-        leftWalk = new Animation<TextureRegion>(0.25f, leftWalkFrames);
-        rightWalk = new Animation<TextureRegion>(0.25f, rightWalkFrames);
+        leftWalk = new Animation<>(0.25f, leftWalkFrames);
+        rightWalk = new Animation<>(0.25f, rightWalkFrames);
 
         TextureRegion[] rightRegions = rightWalk.getKeyFrames(); // testing backing array type
         TextureRegion firstRightRegion = rightRegions[0];
@@ -51,16 +51,15 @@ public class AnimationTest extends GdxTest {
     public void render() {
         ScreenUtils.clear(0.1f, 0f, 0.25f, 1f);
         batch.begin();
-        for (int i = 0; i < cavemen.length; i++) {
-            Caveman caveman = cavemen[i];
+        for (Caveman caveman : cavemen) {
             TextureRegion frame = caveman.headsLeft ? leftWalk.getKeyFrame(caveman.stateTime, true)
                     : rightWalk.getKeyFrame(caveman.stateTime, true);
             batch.draw(frame, caveman.pos.x, caveman.pos.y);
         }
         batch.end();
 
-        for (int i = 0; i < cavemen.length; i++) {
-            cavemen[i].update(Gdx.graphics.getDeltaTime());
+        for (Caveman caveman : cavemen) {
+            caveman.update(Gdx.graphics.getDeltaTime());
         }
 
         fpsLog.log();
@@ -72,7 +71,7 @@ public class AnimationTest extends GdxTest {
         texture.dispose();
     }
 
-    class Caveman {
+    static class Caveman {
         static final float VELOCITY = 20;
         public final Vector2 pos;
         public final boolean headsLeft;

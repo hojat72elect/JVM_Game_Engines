@@ -19,7 +19,7 @@ public class DecalTest extends GdxTest {
     public static final int INITIAL_RENDERED = 100;
     Texture egg;
     Texture wheel;
-    LinkedList<Decal> toRender = new LinkedList<Decal>();
+    LinkedList<Decal> toRender = new LinkedList<>();
     DecalBatch batch;
     float timePassed = 0;
     int frames = 0;
@@ -28,7 +28,6 @@ public class DecalTest extends GdxTest {
     int idx = 0;
     float w;
     float h;
-    private final boolean willItBlend_that_is_the_question = true;
 
     @Override
     public void create() {
@@ -87,8 +86,7 @@ public class DecalTest extends GdxTest {
                 float factor = fps.getMean() / (float) TARGET_FPS;
                 int target = (int) (toRender.size() * factor);
                 if (fps.getMean() > TARGET_FPS) {
-                    int start = toRender.size();
-                    for (int i = start; toRender.size() < target; i++) {
+                    while (toRender.size() < target) {
                         toRender.add(makeDecal());
                     }
                     fps.clear();
@@ -117,6 +115,7 @@ public class DecalTest extends GdxTest {
 
     private Decal makeDecal() {
         Decal sprite = null;
+        boolean willItBlend_that_is_the_question = true;
         switch (idx % 2) {
             case 0:
                 sprite = Decal.newDecal(new TextureRegion(egg), willItBlend_that_is_the_question);

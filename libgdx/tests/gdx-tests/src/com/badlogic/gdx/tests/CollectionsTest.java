@@ -104,9 +104,9 @@ public class CollectionsTest extends GdxTest {
         }
     }
 
-    private void set(String fieldName, Object object, Object value) {
+    private void set(Object object) {
         try {
-            ClassReflection.getField(object.getClass(), fieldName).set(object, value);
+            ClassReflection.getField(object.getClass(), "ordered").set(object, false);
         } catch (Throwable ex) {
             throw new GdxRuntimeException(ex);
         }
@@ -174,14 +174,14 @@ public class CollectionsTest extends GdxTest {
         assertEquals(map, otherMap);
 
         int[] clear = {0, 1, 2, 3, keys.length - 1, keys.length, keys.length + 1, 10, 1000};
-        for (int i = 0, n = clear.length; i < n; i++) {
+        for (int j : clear) {
             for (int ii = 0, nn = keys.length; ii < nn; ii++) {
                 invoke("put", map, keys[ii], values[ii]);
                 invoke("put", otherMap, keys[ii], values[ii]);
             }
             assertEquals(map, otherMap);
 
-            invoke("clear", map, clear[i]);
+            invoke("clear", map, j);
             otherMap = newInstance(mapClass);
             assertEquals(map, otherMap);
         }
@@ -280,16 +280,14 @@ public class CollectionsTest extends GdxTest {
     private void testArray(Class<?> arrayClass, Object[] values) {
         System.out.println(arrayClass);
         Object array = newInstance(arrayClass);
-        for (int i = 0; i < values.length; i++)
-            invoke("add", array, values[i]);
+        for (Object value : values) invoke("add", array, value);
         Object otherArray = newInstance(arrayClass);
-        for (int i = 0; i < values.length; i++)
-            invoke("add", otherArray, values[i]);
+        for (Object value : values) invoke("add", otherArray, value);
         assertEquals(array, otherArray);
         Object unorderedArray = newInstance(arrayClass);
-        set("ordered", unorderedArray, false);
+        set(unorderedArray);
         Object otherUnorderedArray = newInstance(arrayClass);
-        set("ordered", otherUnorderedArray, false);
+        set(otherUnorderedArray);
         assertEquals(unorderedArray, unorderedArray);
         assertNotEquals(unorderedArray, otherUnorderedArray);
     }
@@ -297,11 +295,9 @@ public class CollectionsTest extends GdxTest {
     private void testSet(Class<?> setClass, Object[] values) {
         System.out.println(setClass);
         Object set = newInstance(setClass);
-        for (int i = 0, n = values.length; i < n; i++)
-            invoke("add", set, values[i]);
+        for (Object value : values) invoke("add", set, value);
         Object otherSet = newInstance(setClass);
-        for (int i = 0, n = values.length; i < n; i++)
-            invoke("add", otherSet, values[i]);
+        for (Object value : values) invoke("add", otherSet, value);
         Object thirdSet = newInstance(setClass);
         for (int i = 0, n = values.length; i < n; i++)
             invoke("add", thirdSet, values[n - i - 1]);
@@ -330,9 +326,8 @@ public class CollectionsTest extends GdxTest {
         hm.put("test", null);
 
         ObjectMap.Entries s = hm.entries();
-        Iterator i = s.iterator();
-        while (i.hasNext()) {
-            ObjectMap.Entry m = (ObjectMap.Entry) i.next();
+        for (Object o : s) {
+            ObjectMap.Entry m = (ObjectMap.Entry) o;
             assertEquals(hm.containsKey(m.key), true);
             assertEquals(hm.containsValue(m.value, false), true);
         }
@@ -356,7 +351,7 @@ public class CollectionsTest extends GdxTest {
             }
         }
 
-        Object[] values = { // @off
+        Object[] values = {
                 44.683983f, new Node(44.683983f),
                 160.47682f, new Node(160.47682f),
                 95.038086f, new Node(95.038086f),
@@ -465,12 +460,12 @@ public class CollectionsTest extends GdxTest {
                 1547.9089f, new Node(1547.9089f),
                 1481.2589f, new Node(1481.2589f),
                 1430.7216f, new Node(1430.7216f)
-        }; // @on
+        };
         HashMap<Float, Node> m = new HashMap(values.length);
         for (int i = 0, n = values.length; i < n; i += 2)
             m.put((Float) values[i], (Node) values[i + 1]);
 
-        BinaryHeap<Node> h = new BinaryHeap<Node>();
+        BinaryHeap<Node> h = new BinaryHeap<>();
 
         h.add(m.get(44.683983f));
         if (h.pop().getValue() != 44.683983f) throw new RuntimeException("Should be 44.683983");

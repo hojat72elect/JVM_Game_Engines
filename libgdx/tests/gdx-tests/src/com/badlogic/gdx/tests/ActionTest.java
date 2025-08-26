@@ -24,14 +24,6 @@ public class ActionTest extends GdxTest {
         img.setOrigin(50, 50);
         img.setPosition(100, 100);
 
-        // img.addAction(forever(sequence(delay(1.0f), new Action() {
-        // public boolean act (float delta) {
-        // System.out.println(1);
-        // img.clearActions();
-        // return true;
-        // }
-        // })));
-
         img.addAction(Actions.moveBy(100, 0, 2));
         img.addAction(Actions.after(Actions.scaleTo(2, 2, 2)));
 
