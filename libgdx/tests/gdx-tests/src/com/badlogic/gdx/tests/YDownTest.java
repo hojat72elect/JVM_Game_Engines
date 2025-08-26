@@ -117,7 +117,7 @@ public class YDownTest extends GdxTest {
     /**
      * A very simple actor implementation that does not obey rotation/scale/origin set on the actor. Allows dragging of the actor.
      */
-    public class MyActor extends Actor {
+    public static class MyActor extends Actor {
         TextureRegion region;
         float lastX;
         float lastY;

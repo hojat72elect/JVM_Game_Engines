@@ -23,7 +23,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -157,13 +156,10 @@ public class UITest extends GdxTest {
         window.add(fpsLabel).colspan(4);
         window.pack();
 
-        // stage.addActor(new Button("Behind Window", skin));
         stage.addActor(window);
 
-        textfield.setTextFieldListener(new TextFieldListener() {
-            public void keyTyped(TextField textField, char key) {
-                if (key == '\n') textField.getOnscreenKeyboard().show(false);
-            }
+        textfield.setTextFieldListener((textField, key) -> {
+            if (key == '\n') textField.getOnscreenKeyboard().show(false);
         });
 
         slider.addListener(new ChangeListener() {

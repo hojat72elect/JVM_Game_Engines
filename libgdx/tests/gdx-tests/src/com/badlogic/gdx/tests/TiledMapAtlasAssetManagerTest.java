@@ -1,8 +1,6 @@
 package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -21,10 +19,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class TiledMapAtlasAssetManagerTest extends GdxTest {
 
     String errorMessage;
-    private TiledMap map;
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
     private AssetManager assetManager;
     private BitmapFont font;
     private SpriteBatch batch;
@@ -40,7 +36,7 @@ public class TiledMapAtlasAssetManagerTest extends GdxTest {
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();
@@ -52,12 +48,7 @@ public class TiledMapAtlasAssetManagerTest extends GdxTest {
         params.textureMagFilter = TextureFilter.Linear;
 
         assetManager = new AssetManager();
-        assetManager.setErrorListener(new AssetErrorListener() {
-            @Override
-            public void error(AssetDescriptor asset, Throwable throwable) {
-                errorMessage = throwable.getMessage();
-            }
-        });
+        assetManager.setErrorListener((asset, throwable) -> errorMessage = throwable.getMessage());
 
         assetManager.setLoader(TiledMap.class, new AtlasTmxMapLoader(new InternalFileHandleResolver()));
         assetManager.load(fileName, TiledMap.class);
@@ -69,7 +60,7 @@ public class TiledMapAtlasAssetManagerTest extends GdxTest {
         camera.update();
         assetManager.update(16);
         if (renderer == null && assetManager.isLoaded(fileName)) {
-            map = assetManager.get(fileName);
+            TiledMap map = assetManager.get(fileName);
             renderer = new OrthogonalTiledMapRenderer(map, 1f / 32f);
         } else if (renderer != null) {
             renderer.setView(camera);

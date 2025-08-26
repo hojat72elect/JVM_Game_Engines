@@ -2,7 +2,6 @@ package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
@@ -21,8 +20,6 @@ public class TiledMapAnimationLoadingTest extends GdxTest {
 
     private TiledMap map;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
-    private BitmapFont font;
     private SpriteBatch batch;
 
     @Override
@@ -35,10 +32,8 @@ public class TiledMapAnimationLoadingTest extends GdxTest {
         camera.zoom = 1f;
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
-
-        font = new BitmapFont();
         batch = new SpriteBatch();
         map = new TmxMapLoader().load("data/maps/tiled-animations/test-load-animations.tmx");
 

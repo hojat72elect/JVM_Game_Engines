@@ -28,7 +28,7 @@ public class TileTest extends GdxTest {
     @Override
     public void create() {
         cam = new OrthographicCamera(480, 320);
-        cam.position.set(WIDTH * 32 / 2, HEIGHT * 32 / 2, 0);
+        cam.position.set(WIDTH * 32F / 2, HEIGHT * 32F / 2, 0);
         camController = new OrthoCamController(cam);
         Gdx.input.setInputProcessor(camController);
 

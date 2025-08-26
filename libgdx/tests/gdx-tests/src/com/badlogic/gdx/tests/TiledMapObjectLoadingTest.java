@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -35,7 +34,6 @@ public class TiledMapObjectLoadingTest extends GdxTest {
     private TiledMap map;
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
     private BitmapFont font;
     private SpriteBatch batch;
     private String loadingStatus;
@@ -50,13 +48,12 @@ public class TiledMapObjectLoadingTest extends GdxTest {
         camera.zoom = .5f;
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();
         batch = new SpriteBatch();
         map = new TmxMapLoader().load("data/maps/tiled-objects/test-load-mapobjects.tmx");
-        MapProperties properties = map.getProperties();
         shapeRenderer = new ShapeRenderer();
 
         // Test get objects by type (adding circle manually because it doesn't exists in Tiledmap editor)

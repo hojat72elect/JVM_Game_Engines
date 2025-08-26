@@ -56,30 +56,28 @@ public class TiledDrawableTest extends GdxTest {
         final float clusterWidth = Math.max(13, (inputX - leftSpacingX - (2 * spacingX)) / 3f);
         final float clusterHeight = Math.max(13, (inputY - bottomSpacing - (2 * spacingY)) / 3f);
 
-        final float leftX = leftSpacingX;
         final float centerX = leftSpacingX + spacingX + clusterWidth;
         final float rightX = leftSpacingX + (2 * spacingX) + (2 * clusterWidth);
         final float topY = bottomSpacing + (2 * spacingY) + (2 * clusterHeight);
         final float centerY = bottomSpacing + spacingY + clusterHeight;
-        final float bottomY = bottomSpacing;
 
-        drawTiledDrawableCluster(batch, leftX, topY, clusterWidth, clusterHeight, Align.topLeft);
+        drawTiledDrawableCluster(batch, leftSpacingX, topY, clusterWidth, clusterHeight, Align.topLeft);
         drawTiledDrawableCluster(batch, centerX, topY, clusterWidth, clusterHeight, Align.top);
         drawTiledDrawableCluster(batch, rightX, topY, clusterWidth, clusterHeight, Align.topRight);
 
-        drawTiledDrawableCluster(batch, leftX, centerY, clusterWidth, clusterHeight, Align.left);
+        drawTiledDrawableCluster(batch, leftSpacingX, centerY, clusterWidth, clusterHeight, Align.left);
         drawTiledDrawableCluster(batch, centerX, centerY, clusterWidth, clusterHeight, Align.center);
         drawTiledDrawableCluster(batch, rightX, centerY, clusterWidth, clusterHeight, Align.right);
 
-        drawTiledDrawableCluster(batch, leftX, bottomY, clusterWidth, clusterHeight, Align.bottomLeft);
-        drawTiledDrawableCluster(batch, centerX, bottomY, clusterWidth, clusterHeight, Align.bottom);
-        drawTiledDrawableCluster(batch, rightX, bottomY, clusterWidth, clusterHeight, Align.bottomRight);
+        drawTiledDrawableCluster(batch, leftSpacingX, bottomSpacing, clusterWidth, clusterHeight, Align.bottomLeft);
+        drawTiledDrawableCluster(batch, centerX, bottomSpacing, clusterWidth, clusterHeight, Align.bottom);
+        drawTiledDrawableCluster(batch, rightX, bottomSpacing, clusterWidth, clusterHeight, Align.bottomRight);
 
         batch.end();
     }
 
-    private final void drawTiledDrawableCluster(Batch batch, float x, float y, float clusterWidth, float clusterHeight,
-                                                int align) {
+    private void drawTiledDrawableCluster(Batch batch, float x, float y, float clusterWidth, float clusterHeight,
+                                          int align) {
         tiledDrawable.setAlign(align);
         tiledDrawable.draw(batch, x, y, clusterWidth, clusterHeight);
         font.draw(batch, Align.toString(align), x, y - 5);

@@ -2,17 +2,13 @@ package com.badlogic.gdx.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.tests.utils.GdxTest;
 
@@ -24,22 +20,11 @@ public class TableLayoutTest extends GdxTest {
         Gdx.input.setInputProcessor(stage);
         Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-        Label nameLabel = new Label("Name:", skin);
-        TextField nameText = new TextField("", skin);
-        Label addressLabel = new Label("Address:", skin);
-        TextField addressText = new TextField("", skin);
-
         Table table = new Table();
         stage.addActor(table);
         table.setSize(260, 195);
         table.setPosition(190, 142);
-        // table.align(Align.right | Align.bottom);
-
         table.debug();
-
-        TextureRegion upRegion = skin.getRegion("default-slider-knob");
-        TextureRegion downRegion = skin.getRegion("default-slider-knob");
-        BitmapFont buttonFont = skin.getFont("default-font");
 
         TextButton button = new TextButton("Button 1", skin);
         button.addListener(new InputListener() {
@@ -49,7 +34,6 @@ public class TableLayoutTest extends GdxTest {
             }
         });
         table.add(button);
-        // table.setTouchable(Touchable.disabled);
 
         Table table2 = new Table();
         stage.addActor(table2);

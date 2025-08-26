@@ -45,12 +45,7 @@ public class SwingLwjglTest extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new SwingLwjglTest();
-            }
-        });
+        SwingUtilities.invokeLater(SwingLwjglTest::new);
     }
 
     @Override

@@ -40,11 +40,11 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
     private void renderNormal() {
         ScreenUtils.clear(0.7f, 0.7f, 0.7f, 1);
 
-        float begin = 0;
-        float end = 0;
-        float draw1 = 0;
-        float draw2 = 0;
-        float drawText = 0;
+        float begin;
+        float end;
+        float draw1;
+        float draw2;
+        float drawText;
 
         angle += ROTATION_SPEED * Gdx.graphics.getDeltaTime();
         scale += SCALE_SPEED * Gdx.graphics.getDeltaTime();
@@ -73,10 +73,6 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
         draw2 = (TimeUtils.nanoTime() - start) / 1000000000.0f;
 
         start = TimeUtils.nanoTime();
-// spriteBatch.drawText(font, "Question?", 100, 300, Color.RED);
-// spriteBatch.drawText(font, "and another this is a test", 200, 100, Color.WHITE);
-// spriteBatch.drawText(font, "all hail and another this is a test", 200, 200, Color.WHITE);
-// spriteBatch.drawText(font, "normal fps: " + Gdx.graphics.getFramesPerSecond(), 10, 30, Color.RED);
         drawText = (TimeUtils.nanoTime() - start) / 1000000000.0f;
 
         start = TimeUtils.nanoTime();
@@ -95,11 +91,11 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
     private void renderSprites() {
         ScreenUtils.clear(0.7f, 0.7f, 0.7f, 1);
 
-        float begin = 0;
-        float end = 0;
-        float draw1 = 0;
-        float draw2 = 0;
-        float drawText = 0;
+        float begin;
+        float end;
+        float draw1;
+        float draw2;
+        float drawText;
 
         long start = TimeUtils.nanoTime();
         spriteBatch.begin();
@@ -133,10 +129,6 @@ public class SpriteBatchTest extends GdxTest implements InputProcessor {
         draw2 = (TimeUtils.nanoTime() - start) / 1000000000.0f;
 
         start = TimeUtils.nanoTime();
-// spriteBatch.drawText(font, "Question?", 100, 300, Color.RED);
-// spriteBatch.drawText(font, "and another this is a test", 200, 100, Color.WHITE);
-// spriteBatch.drawText(font, "all hail and another this is a test", 200, 200, Color.WHITE);
-// spriteBatch.drawText(font, "Sprite fps: " + Gdx.graphics.getFramesPerSecond(), 10, 30, Color.RED);
         drawText = (TimeUtils.nanoTime() - start) / 1000000000.0f;
 
         start = TimeUtils.nanoTime();

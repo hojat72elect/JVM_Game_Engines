@@ -24,7 +24,6 @@ public class TextAreaTest3 extends GdxTest {
     TextArea textArea;
     private Stage stage;
     private Skin skin;
-    private TextField.TextFieldStyle styleDefault;
     private TextField.TextFieldStyle styleLSans15;
     private TextField.TextFieldStyle styleLSans32;
     private TextField.TextFieldStyle styleFont;
@@ -33,7 +32,7 @@ public class TextAreaTest3 extends GdxTest {
     public void create() {
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
         // default font in the skin has line height == text height, so its impossible to see updated selection/cursor rendering
-        styleDefault = skin.get(TextField.TextFieldStyle.class);
+        TextField.TextFieldStyle styleDefault = skin.get(TextField.TextFieldStyle.class);
         // nearest so its easier to see whats going on
         styleDefault.font.getRegion().getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         styleDefault.font.getData().setLineHeight(styleDefault.font.getData().lineHeight * 2);

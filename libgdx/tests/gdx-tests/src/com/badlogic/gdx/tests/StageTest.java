@@ -38,7 +38,6 @@ public class StageTest extends GdxTest implements InputProcessor {
     BitmapFont font;
     boolean rotateSprites = false;
     boolean scaleSprites = false;
-    float angle;
     Array<Actor> sprites = new Array();
     float scale = 1;
     float vScale = 1;
@@ -140,8 +139,8 @@ public class StageTest extends GdxTest implements InputProcessor {
 
     private void fillGroup(Group group, Texture texture) {
         float advance = 32 + SPACING;
-        for (int y = 0; y < NUM_SPRITES * advance; y += advance)
-            for (int x = 0; x < NUM_SPRITES * advance; x += advance) {
+        for (int y = 0; y < NUM_SPRITES * advance; y += (int) advance)
+            for (int x = 0; x < NUM_SPRITES * advance; x += (int) advance) {
                 Image img = new Image(new TextureRegion(texture));
                 img.setAlign(Align.center);
                 img.setScaling(Scaling.none);

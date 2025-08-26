@@ -17,7 +17,6 @@ public class TiledMapDirectLoaderTest extends GdxTest {
     private TiledMap map;
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
     private BitmapFont font;
     private SpriteBatch batch;
 
@@ -30,7 +29,7 @@ public class TiledMapDirectLoaderTest extends GdxTest {
         camera.setToOrtho(false, (w / h) * 10, 10);
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();

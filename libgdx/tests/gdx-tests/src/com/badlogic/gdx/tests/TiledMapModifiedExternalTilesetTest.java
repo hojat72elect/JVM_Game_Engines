@@ -16,7 +16,6 @@ public class TiledMapModifiedExternalTilesetTest extends GdxTest {
     private TiledMap map;
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
     private BitmapFont font;
     private SpriteBatch batch;
 
@@ -30,7 +29,7 @@ public class TiledMapModifiedExternalTilesetTest extends GdxTest {
         camera.position.set(10.0f, 2.5f, 0.0f);
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();

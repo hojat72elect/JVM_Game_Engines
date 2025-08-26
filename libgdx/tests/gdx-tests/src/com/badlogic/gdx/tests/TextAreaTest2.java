@@ -21,13 +21,13 @@ public class TextAreaTest2 extends GdxTest {
 
         // Create a string that perfectly fills the float array used in the textarea float array
         FloatArray dummyArray = new FloatArray();
-        String limit = "";
+        StringBuilder limit = new StringBuilder();
         // Minus one, because TextField adds a magic char
         for (int i = 0; i < dummyArray.items.length - 1; i++) {
-            limit += "a";
+            limit.append("a");
         }
 
-        TextArea textArea = new TextArea(limit, skin);
+        TextArea textArea = new TextArea(limit.toString(), skin);
         textArea.setX(10);
         textArea.setY(10);
         textArea.setWidth(200);

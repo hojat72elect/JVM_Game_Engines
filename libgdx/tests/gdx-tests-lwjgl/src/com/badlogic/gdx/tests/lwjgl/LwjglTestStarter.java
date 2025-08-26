@@ -16,8 +16,6 @@ import com.badlogic.gdx.utils.SharedLibraryLoader;
 
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -127,17 +125,14 @@ public class LwjglTestStarter extends JFrame {
 
             final Preferences prefs = new LwjglPreferences(
                     new FileHandle(new LwjglFiles().getExternalStoragePath() + ".prefs/lwjgl-tests"));
-            list.setSelectedValue(prefs.getString("last", null), true);
+            list.setSelectedValue(prefs.getString("last", ""), true);
 
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String testName = (String) list.getSelectedValue();
-                    prefs.putString("last", testName);
-                    prefs.flush();
-                    dispose();
-                    runTest(testName);
-                }
+            button.addActionListener(e -> {
+                String testName = (String) list.getSelectedValue();
+                prefs.putString("last", testName);
+                prefs.flush();
+                dispose();
+                runTest(testName);
             });
 
             add(pane, BorderLayout.CENTER);

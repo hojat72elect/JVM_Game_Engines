@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.tests.utils.GdxTest;
 
+import org.jetbrains.annotations.NotNull;
+
 public class TextInputDialogTest extends GdxTest {
     String message;
     SpriteBatch batch;
@@ -29,7 +31,7 @@ public class TextInputDialogTest extends GdxTest {
         if (Gdx.input.justTouched()) {
             Gdx.input.getTextInput(new TextInputListener() {
                 @Override
-                public void input(String text) {
+                public void input(@NotNull String text) {
                     message = "message: " + text + ", type: " + Input.OnscreenKeyboardType.values()[inputType]
                             + ", touch screen for new dialog";
                 }

@@ -16,11 +16,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class TideMapAssetManagerTest extends GdxTest {
 
-    private TiledMap map;
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
-    private AssetManager assetManager;
     private BitmapFont font;
     private SpriteBatch batch;
 
@@ -34,17 +31,17 @@ public class TideMapAssetManagerTest extends GdxTest {
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        assetManager = new AssetManager();
+        AssetManager assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TideMapLoader(new InternalFileHandleResolver()));
         assetManager.load("data/maps/tide/Map01.tide", TiledMap.class);
         assetManager.finishLoading();
-        map = assetManager.get("data/maps/tide/Map01.tide");
+        TiledMap map = assetManager.get("data/maps/tide/Map01.tide");
         renderer = new OrthogonalTiledMapRenderer(map, 1f / 32f);
     }
 

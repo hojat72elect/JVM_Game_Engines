@@ -179,7 +179,7 @@ public class VBOWithVAOPerformanceTest extends GdxTest {
         vertArray[currentIndex++] = b;
         vertArray[currentIndex++] = a;
         vertArray[currentIndex++] = 0;
-        vertArray[currentIndex++] = 1;
+        vertArray[currentIndex] = 1;
     }
 
     @Override

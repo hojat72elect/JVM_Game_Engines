@@ -11,13 +11,13 @@ import com.badlogic.gdx.tests.utils.GdxTest;
 public class SpriteCacheOffsetTest extends GdxTest implements InputProcessor {
     private final int tileMapWidth = 10;
     private final int tileMapHeight = 5;
-    private final int tileSize = 32;
     private SpriteCache cache;
     private Texture texture;
 
     public void create() {
         texture = new Texture(Gdx.files.internal("data/badlogicsmall.jpg"));
         Sprite sprite = new Sprite(texture);
+        int tileSize = 32;
         sprite.setSize(tileSize, tileSize);
 
         cache = new SpriteCache(1000, false);

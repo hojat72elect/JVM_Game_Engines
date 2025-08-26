@@ -32,7 +32,6 @@ public class TiledMapLayerOffsetTest extends GdxTest {
     private TiledMap map;
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
     private AssetManager assetManager;
     private BitmapFont font;
     private SpriteBatch batch;
@@ -49,7 +48,7 @@ public class TiledMapLayerOffsetTest extends GdxTest {
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();

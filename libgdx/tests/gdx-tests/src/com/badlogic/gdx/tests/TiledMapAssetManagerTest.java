@@ -37,11 +37,8 @@ public class TiledMapAssetManagerTest extends GdxTest {
     private static final String TILE_PROPERTY_VALUE = "tileCustomValue";
     private static final String LAYER_PROPERTY_VALUE = "layerCustomValue";
 
-    private TiledMap map;
     private TiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private OrthoCamController cameraController;
-    private AssetManager assetManager;
     private BitmapFont font;
     private SpriteBatch batch;
 
@@ -55,17 +52,17 @@ public class TiledMapAssetManagerTest extends GdxTest {
         camera.zoom = 2;
         camera.update();
 
-        cameraController = new OrthoCamController(camera);
+        OrthoCamController cameraController = new OrthoCamController(camera);
         Gdx.input.setInputProcessor(cameraController);
 
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        assetManager = new AssetManager();
+        AssetManager assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         assetManager.load("data/maps/tiled/isometric_grass_and_water.tmx", TiledMap.class);
         assetManager.finishLoading();
-        map = assetManager.get("data/maps/tiled/isometric_grass_and_water.tmx");
+        TiledMap map = assetManager.get("data/maps/tiled/isometric_grass_and_water.tmx");
         renderer = new IsometricTiledMapRenderer(map, 1f / 64f);
 
         String mapCustomValue = map.getProperties().get(MAP_PROPERTY_NAME, String.class);

@@ -36,8 +36,6 @@ public class StageDebugTest extends GdxTest {
         stage1.getCamera().position.set(100, 100, 0);
 
         Group group = new Group();
-        // group.setBounds(0, 0, 10, 10);
-        // group.setOrigin(25, 50);
         group.setRotation(10);
         group.setScale(1.2f);
         stage1.addActor(group);
@@ -105,7 +103,7 @@ public class StageDebugTest extends GdxTest {
         }
     }
 
-    class DebugActor extends Actor {
+    static class DebugActor extends Actor {
         @Override
         public void draw(Batch batch, float parentAlpha) {
             batch.draw(textureRegion, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(),

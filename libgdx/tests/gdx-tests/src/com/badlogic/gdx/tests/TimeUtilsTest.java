@@ -34,11 +34,6 @@ public class TimeUtilsTest extends GdxTest {
         assertAbsoluteEqual(TimeUtils.millisToNanos(oneSecondMillis), oneSecondNanos, "One Second Comparison, Millis -> Nanos");
     }
 
-    @Override
-    public void render() {
-
-    }
-
     private void failTest(String testName) {
         throw new GdxRuntimeException("FAILED TEST: [" + testName + "]");
     }

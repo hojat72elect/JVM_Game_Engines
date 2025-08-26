@@ -3,8 +3,6 @@ package com.badlogic.gdx.tests;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -27,14 +25,8 @@ public class TableTest extends GdxTest {
     public void create() {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-
         texture = new Texture(Gdx.files.internal("data/badlogic.jpg"));
-        TextureRegion region = new TextureRegion(texture);
-
-        NinePatch patch = skin.getPatch("default-round");
-
         Label label = new Label("This is some text.", skin);
 
         root = new Table() {
@@ -43,7 +35,6 @@ public class TableTest extends GdxTest {
             }
         };
         stage.addActor(root);
-        // root.setTransform(true);
 
         Table table = new Table();
         table.setTransform(true);
@@ -54,24 +45,19 @@ public class TableTest extends GdxTest {
         table.add(label);
         table.add(new TextButton("Text Button", skin));
         table.pack();
-        // table.debug();
         table.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("click!");
             }
         });
-// root.addActor(table);
 
         TextButton button = new TextButton("Text Button", skin);
         Table table2 = new Table();
-        // table2.debug()
         table2.add(button);
         table2.setTransform(true);
         table2.setScaleX(1.5f);
         table2.setOrigin(table2.getPrefWidth() / 2, table2.getPrefHeight() / 2);
 
-        // Test colspan with expandX.
-        // root.setPosition(10, 10);
         root.debug();
         root.setFillParent(true);
         root.add(new Label("meow meow meow meow meow meow meow meow meow meow meow meow", skin)).colspan(3).expandX();
@@ -80,9 +66,6 @@ public class TableTest extends GdxTest {
         root.add(new TextButton("Text Button", skin));
         root.add(new TextButton("Toggle Button", skin.get("toggle", TextButtonStyle.class)));
         root.add(new CheckBox("meow meow meow meow meow meow meow meow", skin));
-        // root.pack();
-        // root.add(new Button(new Image(region), skin));
-        // root.add(new LabelButton("Toggley", skin.getStyle("toggle", LabelButtonStyle.class)));
     }
 
     @Override
@@ -96,9 +79,6 @@ public class TableTest extends GdxTest {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-// root.width = width;
-// root.height = height;
-// root.invalidate();
     }
 
     @Override

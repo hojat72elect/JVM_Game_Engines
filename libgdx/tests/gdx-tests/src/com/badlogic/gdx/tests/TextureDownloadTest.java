@@ -28,7 +28,7 @@ public class TextureDownloadTest extends GdxTest {
             private int download(byte[] out, String url) {
                 InputStream in = null;
                 try {
-                    HttpURLConnection conn = null;
+                    HttpURLConnection conn;
                     conn = (HttpURLConnection) new URL(url).openConnection();
                     conn.setDoInput(true);
                     conn.setDoOutput(false);
@@ -64,12 +64,7 @@ public class TextureDownloadTest extends GdxTest {
                     potPixmap.setBlending(Blending.None);
                     potPixmap.drawPixmap(pixmap, 0, 0, 0, 0, pixmap.getWidth(), pixmap.getHeight());
                     pixmap.dispose();
-                    Gdx.app.postRunnable(new Runnable() {
-                        @Override
-                        public void run() {
-                            image = new TextureRegion(new Texture(potPixmap), 0, 0, originalWidth, originalHeight);
-                        }
-                    });
+                    Gdx.app.postRunnable(() -> image = new TextureRegion(new Texture(potPixmap), 0, 0, originalWidth, originalHeight));
                 }
             }
         }).start();

@@ -32,12 +32,11 @@ public class TextureAtlasTest extends GdxTest {
         atlas = new TextureAtlas(Gdx.files.internal("data/pack.atlas"));
         jumpAtlas = new TextureAtlas(Gdx.files.internal("data/jump.txt"));
 
-        jumpAnimation = new Animation<TextureRegion>(0.25f, jumpAtlas.findRegions("ALIEN_JUMP_"));
+        jumpAnimation = new Animation<>(0.25f, jumpAtlas.findRegions("ALIEN_JUMP_"));
 
         badlogic = atlas.createSprite("badlogicslice");
         badlogic.setPosition(50, 50);
 
-        // badlogicSmall = atlas.createSprite("badlogicsmall");
         badlogicSmall = atlas.createSprite("badlogicsmall-rotated");
         badlogicSmall.setPosition(10, 10);
 
@@ -77,11 +76,7 @@ public class TextureAtlasTest extends GdxTest {
         renderer.end();
 
         batch.begin();
-        // badlogic.draw(batch);
-        // star.draw(batch);
-        // font.draw(batch, "This font was packed!", 26, 65);
         badlogicSmall.draw(batch);
-        // batch.draw(jumpAnimation.getKeyFrame(time, true), 100, 100);
         batch.end();
     }
 
