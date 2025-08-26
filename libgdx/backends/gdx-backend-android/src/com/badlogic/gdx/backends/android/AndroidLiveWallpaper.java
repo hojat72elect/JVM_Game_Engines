@@ -2,10 +2,8 @@ package com.badlogic.gdx.backends.android;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Debug;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -91,23 +89,6 @@ public class AndroidLiveWallpaper implements AndroidApplicationBase {
         if (AndroidLiveWallpaperService.DEBUG)
             Log.d(AndroidLiveWallpaperService.TAG, " > AndroidLiveWallpaper - onPause()");
 
-        // IMPORTANT!
-        // jw: graphics.pause is never called, graphics.pause works on most devices but not on all..
-        // for example on Samsung Galaxy Tab (GT-P6800) on android 4.0.4 invoking graphics.pause causes "Fatal Signal 11"
-        // near mEglHelper.swap() in GLSurfaceView while processing next onPause event.
-        // See related issue:
-        // http://code.google.com/p/libgdx/issues/detail?id=541
-        // the problem with graphics.pause occurs while using OpenGL 2.0 and original GLSurfaceView while rotating device
-        // in lwp preview
-        // in my opinion it is a bug of android not libgdx, even example Cubic live wallpaper from
-        // Android SDK crashes on affected devices.......... and on some configurations of android emulator too.
-        //
-        // My wallpaper was rejected on Samsung Apps because of this issue, so I decided to disable graphics.pause..
-        // also I moved audio lifecycle methods from AndroidGraphicsLiveWallpaper into this class
-
-        // graphics.pause();
-        // if (AndroidLiveWallpaperService.DEBUG)
-        // Log.d(AndroidLiveWallpaperService.TAG, " > AndroidLiveWallpaper - onPause() application paused!");
         audio.pause();
 
         input.onPause();
@@ -364,39 +345,7 @@ public class AndroidLiveWallpaper implements AndroidApplicationBase {
     }
 
     @Override
-    public void runOnUiThread(Runnable runnable) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-            // The current thread is not the UI thread.
-            // Let's post the runnable to the event queue of the UI thread.
-            new Handler(Looper.getMainLooper()).post(runnable);
-        } else {
-            // The current thread is the UI thread already.
-            // Let's execute the runnable immediately.
-            runnable.run();
-        }
-    }
-
-    @Override
     public void useImmersiveMode(boolean b) {
         throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Notify the wallpaper engine that the significant colors of the wallpaper have changed. This method may be called before
-     * initializing the live wallpaper.
-     *
-     * @param primaryColor   The most visually significant color.
-     * @param secondaryColor The second most visually significant color.
-     * @param tertiaryColor  The third most visually significant color.
-     */
-    public void notifyColorsChanged(Color primaryColor, Color secondaryColor, Color tertiaryColor) {
-        if (Build.VERSION.SDK_INT < 27) return;
-        final Color[] colors = new Color[3];
-        colors[0] = new Color(primaryColor);
-        colors[1] = new Color(secondaryColor);
-        colors[2] = new Color(tertiaryColor);
-        wallpaperColors = colors;
-        AndroidLiveWallpaperService.AndroidWallpaperEngine engine = service.linkedEngine;
-        if (engine != null) engine.notifyColorsChanged();
     }
 }

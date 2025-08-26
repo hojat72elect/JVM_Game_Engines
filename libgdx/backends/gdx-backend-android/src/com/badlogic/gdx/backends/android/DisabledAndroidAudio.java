@@ -1,5 +1,7 @@
 package com.badlogic.gdx.backends.android;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.audio.AudioDevice;
 import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.audio.Music;
@@ -32,12 +34,12 @@ public class DisabledAndroidAudio implements AndroidAudio {
     }
 
     @Override
-    public Sound newSound(FileHandle fileHandle) {
+    public Sound newSound(@NonNull FileHandle fileHandle) {
         throw new GdxRuntimeException("Android audio is not enabled by the application config");
     }
 
     @Override
-    public Music newMusic(FileHandle file) {
+    public Music newMusic(@NonNull FileHandle file) {
         throw new GdxRuntimeException("Android audio is not enabled by the application config");
     }
 
@@ -46,6 +48,7 @@ public class DisabledAndroidAudio implements AndroidAudio {
         return false;
     }
 
+    @NonNull
     @Override
     public String[] getAvailableOutputDevices() {
         return new String[0];

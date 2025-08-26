@@ -7,7 +7,6 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 
@@ -20,7 +19,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +29,12 @@ import java.util.List;
 public class DefaultAndroidAudio implements AndroidAudio {
     private final SoundPool soundPool;
     private final AudioManager manager;
-    private final List<AndroidMusic> musics = new ArrayList<AndroidMusic>();
+    private final List<AndroidMusic> musics = new ArrayList<>();
 
     public DefaultAndroidAudio(Context context, AndroidApplicationConfiguration config) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes audioAttrib = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-            soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(config.maxSimultaneousSounds).build();
-        } else {
-            soundPool = new SoundPool(config.maxSimultaneousSounds, AudioManager.STREAM_MUSIC, 0);// srcQuality: the sample-rate
-            // converter quality. Currently
-            // has no effect. Use 0 for the
-            // default.
-        }
+        AudioAttributes audioAttrib = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+        soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(config.maxSimultaneousSounds).build();
         manager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         if (context instanceof Activity) {
             ((Activity) context).setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -133,30 +124,6 @@ public class DefaultAndroidAudio implements AndroidAudio {
     }
 
     /**
-     * Creates a new Music instance from the provided FileDescriptor. It is the caller's responsibility to close the file
-     * descriptor. It is safe to do so as soon as this call returns.
-     *
-     * @param fd the FileDescriptor from which to create the Music
-     * @see Audio#newMusic(FileHandle)
-     */
-    public Music newMusic(FileDescriptor fd) {
-        MediaPlayer mediaPlayer = createMediaPlayer();
-
-        try {
-            mediaPlayer.setDataSource(fd);
-            mediaPlayer.prepare();
-
-            AndroidMusic music = new AndroidMusic(this, mediaPlayer);
-            synchronized (musics) {
-                musics.add(music);
-            }
-            return music;
-        } catch (Exception ex) {
-            throw new GdxRuntimeException("Error loading audio from FileDescriptor", ex);
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -197,7 +164,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
     public void dispose() {
         synchronized (musics) {
             // gah i hate myself.... music.dispose() removes the music from the list...
-            ArrayList<AndroidMusic> musicsCopy = new ArrayList<AndroidMusic>(musics);
+            ArrayList<AndroidMusic> musicsCopy = new ArrayList<>(musics);
             for (AndroidMusic music : musicsCopy) {
                 music.dispose();
             }
@@ -214,12 +181,8 @@ public class DefaultAndroidAudio implements AndroidAudio {
 
     protected MediaPlayer createMediaPlayer() {
         MediaPlayer mediaPlayer = new MediaPlayer();
-        if (Build.VERSION.SDK_INT <= 21) {
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        } else {
-            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_GAME).build());
-        }
+        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_GAME).build());
         return mediaPlayer;
     }
 }

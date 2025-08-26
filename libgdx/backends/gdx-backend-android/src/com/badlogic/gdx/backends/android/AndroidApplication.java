@@ -38,8 +38,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 
 /**
  * An implementation of the {@link Application} interface for Android. Create an {@link Activity} that derives from this class.
- * In the {@link Activity#onCreate(Bundle)} method call the {@link #initialize(ApplicationListener)} method specifying the
- * configuration for the GLSurfaceView.
+ * In the {@link Activity#onCreate(Bundle)} method.
  */
 public class AndroidApplication extends Activity implements AndroidApplicationBase {
 
@@ -64,17 +63,6 @@ public class AndroidApplication extends Activity implements AndroidApplicationBa
     private int wasFocusChanged = -1;
     private boolean isWaitingForAudio = false;
     private KeyboardHeightProvider keyboardHeightProvider;
-
-    /**
-     * This method has to be called in the {@link Activity#onCreate(Bundle)} method. It sets up all the things necessary to get
-     * input, render via OpenGL and so on. Uses a default {@link AndroidApplicationConfiguration}.
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     **/
-    public void initialize(ApplicationListener listener) {
-        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        initialize(listener, config);
-    }
 
     /**
      * This method has to be called in the {@link Activity#onCreate(Bundle)} method. It sets up all the things necessary to get
@@ -461,24 +449,6 @@ public class AndroidApplication extends Activity implements AndroidApplicationBa
             for (int i = 0; i < androidEventListeners.size; i++) {
                 androidEventListeners.get(i).onActivityResult(requestCode, resultCode, data);
             }
-        }
-    }
-
-    /**
-     * Adds an event listener for Android specific event such as onActivityResult(...).
-     */
-    public void addAndroidEventListener(AndroidEventListener listener) {
-        synchronized (androidEventListeners) {
-            androidEventListeners.add(listener);
-        }
-    }
-
-    /**
-     * Removes an event listener for Android specific event such as onActivityResult(...).
-     */
-    public void removeAndroidEventListener(AndroidEventListener listener) {
-        synchronized (androidEventListeners) {
-            androidEventListeners.removeValue(listener, true);
         }
     }
 

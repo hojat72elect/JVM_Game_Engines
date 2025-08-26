@@ -20,10 +20,6 @@ class AndroidAudioDevice implements AudioDevice {
      **/
     private final boolean isMono;
     /**
-     * the latency in samples
-     **/
-    private final int latency;
-    /**
      * the mighty buffer
      **/
     private short[] buffer = new short[1024];
@@ -36,7 +32,6 @@ class AndroidAudioDevice implements AudioDevice {
                 isMono ? AudioFormat.CHANNEL_OUT_MONO : AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, minSize,
                 AudioTrack.MODE_STREAM);
         track.play();
-        latency = minSize / (isMono ? 1 : 2);
     }
 
     @Override

@@ -18,8 +18,7 @@ import com.badlogic.gdx.graphics.Color;
 /**
  * An implementation of the {@link Application} interface dedicated for android live wallpapers.
  * <p>
- * Derive from this class. In the {@link AndroidLiveWallpaperService#onCreateApplication} method call the
- * {@link AndroidLiveWallpaperService#initialize(ApplicationListener)} method specifying the configuration for the GLSurfaceView.
+ * Derive from this class.
  * You can also use {@link AndroidWallpaperListener} along with {@link ApplicationListener} to respond for wallpaper specific
  * events in your app listener:
  * <p>
@@ -112,14 +111,6 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
     }
 
     /**
-     * Look at {@link AndroidLiveWallpaperService#initialize(ApplicationListener, AndroidApplicationConfiguration)}
-     */
-    public void initialize(ApplicationListener listener) {
-        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        initialize(listener, config);
-    }
-
-    /**
      * This method has to be called in the {@link AndroidLiveWallpaperService#onCreateApplication} method. It sets up all the
      * things necessary to get input, render via OpenGL and so on. You can configure other aspects of the application with the rest
      * of the fields in the {@link AndroidApplicationConfiguration} instance.
@@ -196,11 +187,7 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
         super.finalize();
     }
 
-    // end of lifecycle methods ////////////////////////////////////////////////////////
-
-    public AndroidLiveWallpaper getLiveWallpaper() {
-        return app;
-    }
+    // end of lifecycle methods
 
     public WindowManager getWindowManager() {
         return (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -531,11 +518,6 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
         @Override
         public void onOffsetsChanged(final float xOffset, final float yOffset, final float xOffsetStep, final float yOffsetStep,
                                      final int xPixelOffset, final int yPixelOffset) {
-
-            // it spawns too frequent on some devices - its annoying!
-            // if (DEBUG)
-            // Log.d(TAG, " > AndroidWallpaperEngine - onOffsetChanged(" + xOffset + " " + yOffset + " " + xOffsetStep + " "
-            // + yOffsetStep + " " + xPixelOffset + " " + yPixelOffset + ") " + hashCode() + ", linkedApp: " + (linkedApp != null));
 
             this.offsetsConsumed = false;
             this.xOffset = xOffset;

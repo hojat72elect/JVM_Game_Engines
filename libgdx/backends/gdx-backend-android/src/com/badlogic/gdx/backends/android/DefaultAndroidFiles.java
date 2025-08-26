@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.AssetManager;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -43,7 +45,7 @@ public class DefaultAndroidFiles implements AndroidFiles {
     }
 
     @Override
-    public FileHandle getFileHandle(String path, FileType type) {
+    public FileHandle getFileHandle(@NonNull String path, @NonNull FileType type) {
         FileHandle handle = new AndroidFileHandle(type == FileType.Internal ? assets : null, path, type);
         if (expansionFile != null && type == FileType.Internal) handle = getZipFileHandleIfExists(handle, path);
         return handle;
@@ -64,29 +66,29 @@ public class DefaultAndroidFiles implements AndroidFiles {
     }
 
     @Override
-    public FileHandle classpath(String path) {
+    public FileHandle classpath(@NonNull String path) {
         return new AndroidFileHandle(null, path, FileType.Classpath);
     }
 
     @Override
-    public FileHandle internal(String path) {
+    public FileHandle internal(@NonNull String path) {
         FileHandle handle = new AndroidFileHandle(assets, path, FileType.Internal);
         if (expansionFile != null) handle = getZipFileHandleIfExists(handle, path);
         return handle;
     }
 
     @Override
-    public FileHandle external(String path) {
+    public FileHandle external(@NonNull String path) {
         return new AndroidFileHandle(null, path, FileType.External);
     }
 
     @Override
-    public FileHandle absolute(String path) {
+    public FileHandle absolute(@NonNull String path) {
         return new AndroidFileHandle(null, path, FileType.Absolute);
     }
 
     @Override
-    public FileHandle local(String path) {
+    public FileHandle local(@NonNull String path) {
         return new AndroidFileHandle(null, path, FileType.Local);
     }
 

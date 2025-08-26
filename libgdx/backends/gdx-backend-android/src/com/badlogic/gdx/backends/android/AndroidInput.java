@@ -29,16 +29,6 @@ public interface AndroidInput extends Input, OnTouchListener, OnKeyListener, OnG
     void onDreamingStopped();
 
     /**
-     * Add a custom {@link OnKeyListener}
-     */
-    void addKeyListener(OnKeyListener listener);
-
-    /**
-     * Add a custom {@link OnGenericMotionListener}
-     */
-    void addGenericMotionListener(OnGenericMotionListener listener);
-
-    /**
      * Process all events (touch, key) that have been registered by the listeners so that event processing is synchronous.
      */
     void processEvents();

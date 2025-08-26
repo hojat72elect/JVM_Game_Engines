@@ -19,10 +19,7 @@ import android.widget.PopupWindow;
  */
 public class StandardKeyboardHeightProvider extends PopupWindow implements KeyboardHeightProvider {
 
-    /**
-     * The tag for logging purposes
-     */
-    private final static String TAG = "sample_KeyboardHeightProvider";
+
     /**
      * The cached landscape height of the keyboard
      */
@@ -75,11 +72,7 @@ public class StandardKeyboardHeightProvider extends PopupWindow implements Keybo
         setWidth(0);
         setHeight(android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 
-        popupView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            if (popupView != null) {
-                handleOnGlobalLayout();
-            }
-        });
+        popupView.getViewTreeObserver().addOnGlobalLayoutListener(this::handleOnGlobalLayout);
     }
 
     /**

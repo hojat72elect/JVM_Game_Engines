@@ -3,13 +3,10 @@ package com.badlogic.gdx.backends.android;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.opengl.GLSurfaceView;
 import android.os.Debug;
 import android.os.Handler;
-import android.os.Looper;
 import android.service.dreams.DreamService;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -32,8 +29,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 
 /**
  * An implementation of the {@link Application} interface for Android. Create an {@link Activity} that derives from this class.
- * In the Activity#onCreate(Bundle) method call the {@link #initialize(ApplicationListener)} method specifying the configuration
- * for the {@link GLSurfaceView}.
+ * In the Activity#onCreate(Bundle) method.
  */
 public class AndroidDaydream extends DreamService implements AndroidApplicationBase {
 
@@ -55,17 +51,6 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 
     /**
      * This method has to be called in the Activity#onCreate(Bundle) method. It sets up all the things necessary to get input,
-     * render via OpenGL and so on. Uses a default {@link AndroidApplicationConfiguration}.
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     */
-    public void initialize(ApplicationListener listener) {
-        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        initialize(listener, config);
-    }
-
-    /**
-     * This method has to be called in the Activity#onCreate(Bundle) method. It sets up all the things necessary to get input,
      * render via OpenGL and so on. You can configure other aspects of the application with the rest of the fields in the
      * {@link AndroidApplicationConfiguration} instance.
      *
@@ -74,41 +59,10 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
      *                 etc.).
      */
     public void initialize(ApplicationListener listener, AndroidApplicationConfiguration config) {
-        init(listener, config, false);
+        init(listener, config);
     }
 
-    /**
-     * This method has to be called in the Activity#onCreate(Bundle) method. It sets up all the things necessary to get input,
-     * render via OpenGL and so on. Uses a default {@link AndroidApplicationConfiguration}.
-     * <p>
-     * Note: you have to add the returned view to your layout!
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     * @return the {@link GLSurfaceView} of the application
-     */
-    public View initializeForView(ApplicationListener listener) {
-        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        return initializeForView(listener, config);
-    }
-
-    /**
-     * This method has to be called in the Activity#onCreate(Bundle) method. It sets up all the things necessary to get input,
-     * render via OpenGL and so on. You can configure other aspects of the application with the rest of the fields in the
-     * {@link AndroidApplicationConfiguration} instance.
-     * <p>
-     * Note: you have to add the returned view to your layout!
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     * @param config   the {@link AndroidApplicationConfiguration}, defining various settings of the application (use accelerometer,
-     *                 etc.).
-     * @return the {@link GLSurfaceView} of the application
-     */
-    public View initializeForView(ApplicationListener listener, AndroidApplicationConfiguration config) {
-        init(listener, config, true);
-        return graphics.getView();
-    }
-
-    private void init(ApplicationListener listener, AndroidApplicationConfiguration config, boolean isForView) {
+    private void init(ApplicationListener listener, AndroidApplicationConfiguration config) {
         GdxNativesLoader.load();
         setApplicationLogger(new AndroidApplicationLogger());
         graphics = new AndroidGraphics(this, config,
@@ -148,10 +102,8 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
         Gdx.graphics = this.getGraphics();
         Gdx.net = this.getNet();
 
-        if (!isForView) {
-            setFullscreen(true);
-            setContentView(graphics.getView(), createLayoutParams());
-        }
+        setFullscreen(true);
+        setContentView(graphics.getView(), createLayoutParams());
 
         createWakeLock(config.useWakelock);
 
@@ -407,19 +359,6 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
     protected AndroidFiles createFiles() {
         this.getFilesDir(); // workaround for Android bug #10515463
         return new DefaultAndroidFiles(this.getAssets(), this, true);
-    }
-
-    @Override
-    public void runOnUiThread(Runnable runnable) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-            // The current thread is not the UI thread.
-            // Let's post the runnable to the event queue of the UI thread.
-            new Handler(Looper.getMainLooper()).post(runnable);
-        } else {
-            // The current thread is the UI thread already.
-            // Let's execute the runnable immediately.
-            runnable.run();
-        }
     }
 
     @Override

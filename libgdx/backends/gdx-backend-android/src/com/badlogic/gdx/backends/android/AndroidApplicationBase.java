@@ -42,13 +42,6 @@ public interface AndroidApplicationBase extends Application {
     Array<Runnable> getExecutedRunnables();
 
     /**
-     * Method signifies an intent of the caller to execute some action on the UI Thread.
-     *
-     * @param runnable The runnable to be executed
-     */
-    void runOnUiThread(Runnable runnable);
-
-    /**
      * Method signifies an intent to start an activity, may be the default method of the {@link Activity} class
      *
      * @param intent The {@link Intent} for starting an activity

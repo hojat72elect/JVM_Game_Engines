@@ -4,7 +4,6 @@ import android.content.res.AssetFileDescriptor;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,9 +22,7 @@ import java.util.zip.ZipFile;
 
 public class ZipResourceFile {
 
-    //
     // Read-only access to Zip archives, with minimal heap allocation.
-    //
     static final String LOG_TAG = "zipro";
     static final boolean LOGV = false;
     /*
@@ -54,16 +51,14 @@ public class ZipResourceFile {
     static final int kCDECommentLen = 32; // offset to comment length
     static final int kCDELocalOffset = 42; // offset to local hdr
     static final int kCompressStored = 0; // no compression
-    static final int kCompressDeflated = 8; // standard deflate
+
+    private final HashMap<String, ZipEntryRO> mHashMap = new HashMap<>();
     /*
      * The values we return for ZipEntryRO use 0 as an invalid value, so we want to adjust the hash table index by a fixed amount.
      * Using a large value helps insure that people don't mix & match arguments, e.g. to findEntryByIndex().
      */
-    static final int kZipEntryAdj = 10000;
     /* for reading compressed files */
-    public HashMap<File, ZipFile> mZipFiles = new HashMap<File, ZipFile>();
-    ByteBuffer mLEByteBuffer = ByteBuffer.allocate(4);
-    private final HashMap<String, ZipEntryRO> mHashMap = new HashMap<String, ZipEntryRO>();
+    public HashMap<File, ZipFile> mZipFiles = new HashMap<>();
 
     public ZipResourceFile(String zipFileName) throws IOException {
         addPatchFile(zipFileName);
@@ -74,17 +69,12 @@ public class ZipResourceFile {
         return ((i & 0xff) << 24) + ((i & 0xff00) << 8) + ((i & 0xff0000) >>> 8) + ((i >>> 24) & 0xff);
     }
 
-    // 2-byte number
-    static private int swapEndian(short i) {
-        return ((i & 0x00FF) << 8 | (i & 0xFF00) >>> 8);
-    }
-
     static private int read4LE(RandomAccessFile f) throws IOException {
         return swapEndian(f.readInt());
     }
 
     ZipEntryRO[] getEntriesAt(String path) {
-        Vector<ZipEntryRO> zev = new Vector<ZipEntryRO>();
+        Vector<ZipEntryRO> zev = new Vector<>();
         Collection<ZipEntryRO> values = mHashMap.values();
         if (null == path) path = "";
         int length = path.length();
@@ -99,17 +89,11 @@ public class ZipResourceFile {
         return zev.toArray(entries);
     }
 
-    public ZipEntryRO[] getAllEntries() {
-        Collection<ZipEntryRO> values = mHashMap.values();
-        return values.toArray(new ZipEntryRO[values.size()]);
-    }
-
     /**
      * getAssetFileDescriptor allows for ZipResourceFile to directly feed Android API's that want an fd, offset, and length such
      * as the MediaPlayer. It also allows for the class to be used in a content provider that can feed video players. The file must
      * be stored (non-compressed) in the Zip file for this to work.
      *
-     * @param assetPath
      * @return the asset file descriptor for the file, or null if the file isn't present or is stored compressed
      */
     public AssetFileDescriptor getAssetFileDescriptor(String assetPath) {
@@ -124,9 +108,7 @@ public class ZipResourceFile {
      * getInputStream returns an AssetFileDescriptor.AutoCloseInputStream associated with the asset that is contained in the Zip
      * file, or a standard ZipInputStream if necessary to uncompress the file
      *
-     * @param assetPath
      * @return an input stream for the named asset path, or null if not found
-     * @throws IOException
      */
     public InputStream getInputStream(String assetPath) throws IOException {
         ZipEntryRO entry = mHashMap.get(assetPath);
@@ -135,7 +117,7 @@ public class ZipResourceFile {
                 return entry.getAssetFileDescriptor().createInputStream();
             } else {
                 ZipFile zf = mZipFiles.get(entry.getZipFile());
-                /** read compressed files **/
+                /* read compressed files **/
                 if (null == zf) {
                     zf = new ZipFile(entry.getZipFile(), ZipFile.OPEN_READ);
                     mZipFiles.put(entry.getZipFile(), zf);
@@ -359,15 +341,10 @@ public class ZipResourceFile {
                     pfd = ParcelFileDescriptor.open(mFile, ParcelFileDescriptor.MODE_READ_ONLY);
                     return new AssetFileDescriptor(pfd, getOffset(), mUncompressedLength);
                 } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
             return null;
-        }
-
-        public String getZipFileName() {
-            return mZipFileName;
         }
 
         public File getZipFile() {

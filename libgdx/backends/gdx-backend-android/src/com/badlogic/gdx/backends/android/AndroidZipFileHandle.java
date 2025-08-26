@@ -50,7 +50,7 @@ public class AndroidZipFileHandle extends AndroidFileHandle {
     }
 
     @Override
-    public AssetFileDescriptor getAssetFileDescriptor() throws IOException {
+    public AssetFileDescriptor getAssetFileDescriptor() {
         return expansionFile.getAssetFileDescriptor(getPath());
     }
 

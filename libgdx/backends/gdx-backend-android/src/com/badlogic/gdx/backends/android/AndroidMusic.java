@@ -149,11 +149,6 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
         }
     }
 
-    public float getDuration() {
-        if (player == null) return 0.0f;
-        return player.getDuration() / 1000f;
-    }
-
     @Override
     public void onCompletion(MediaPlayer mp) {
         if (onCompletionListener != null) {

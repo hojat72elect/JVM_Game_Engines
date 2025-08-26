@@ -13,6 +13,8 @@ import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.AbstractGraphics;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -184,7 +186,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
      * {@inheritDoc}
      */
     @Override
-    public void setGL20(GL20 gl20) {
+    public void setGL20(@NonNull GL20 gl20) {
         this.gl20 = gl20;
         if (gl30 == null) {
             Gdx.gl = gl20;
@@ -212,15 +214,13 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
      * {@inheritDoc}
      */
     @Override
-    public void setGL30(GL30 gl30) {
+    public void setGL30(@NonNull GL30 gl30) {
         this.gl30 = gl30;
-        if (gl30 != null) {
-            this.gl20 = gl30;
+        this.gl20 = gl30;
 
-            Gdx.gl = gl20;
-            Gdx.gl20 = gl20;
-            Gdx.gl30 = gl30;
-        }
+        Gdx.gl = gl20;
+        Gdx.gl20 = gl20;
+        Gdx.gl30 = gl30;
     }
 
     @Override
@@ -234,7 +234,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     }
 
     @Override
-    public void setGL31(GL31 gl31) {
+    public void setGL31(@NonNull GL31 gl31) {
 
     }
 
@@ -249,7 +249,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     }
 
     @Override
-    public void setGL32(GL32 gl32) {
+    public void setGL32(@NonNull GL32 gl32) {
 
     }
 
@@ -355,15 +355,15 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     protected void logConfig(EGLConfig config) {
         EGL10 egl = (EGL10) EGLContext.getEGL();
         EGLDisplay display = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
-        int r = getAttrib(egl, display, config, EGL10.EGL_RED_SIZE, 0);
-        int g = getAttrib(egl, display, config, EGL10.EGL_GREEN_SIZE, 0);
-        int b = getAttrib(egl, display, config, EGL10.EGL_BLUE_SIZE, 0);
-        int a = getAttrib(egl, display, config, EGL10.EGL_ALPHA_SIZE, 0);
-        int d = getAttrib(egl, display, config, EGL10.EGL_DEPTH_SIZE, 0);
-        int s = getAttrib(egl, display, config, EGL10.EGL_STENCIL_SIZE, 0);
-        int samples = Math.max(getAttrib(egl, display, config, EGL10.EGL_SAMPLES, 0),
-                getAttrib(egl, display, config, GdxEglConfigChooser.EGL_COVERAGE_SAMPLES_NV, 0));
-        boolean coverageSample = getAttrib(egl, display, config, GdxEglConfigChooser.EGL_COVERAGE_SAMPLES_NV, 0) != 0;
+        int r = getAttrib(egl, display, config, EGL10.EGL_RED_SIZE);
+        int g = getAttrib(egl, display, config, EGL10.EGL_GREEN_SIZE);
+        int b = getAttrib(egl, display, config, EGL10.EGL_BLUE_SIZE);
+        int a = getAttrib(egl, display, config, EGL10.EGL_ALPHA_SIZE);
+        int d = getAttrib(egl, display, config, EGL10.EGL_DEPTH_SIZE);
+        int s = getAttrib(egl, display, config, EGL10.EGL_STENCIL_SIZE);
+        int samples = Math.max(getAttrib(egl, display, config, EGL10.EGL_SAMPLES),
+                getAttrib(egl, display, config, GdxEglConfigChooser.EGL_COVERAGE_SAMPLES_NV));
+        boolean coverageSample = getAttrib(egl, display, config, GdxEglConfigChooser.EGL_COVERAGE_SAMPLES_NV) != 0;
 
         Gdx.app.log(LOG_TAG, "framebuffer: (" + r + ", " + g + ", " + b + ", " + a + ")");
         Gdx.app.log(LOG_TAG, "depthbuffer: (" + d + ")");
@@ -374,11 +374,11 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
         bufferFormat = new BufferFormat(r, g, b, a, d, s, samples, coverageSample);
     }
 
-    private int getAttrib(EGL10 egl, EGLDisplay display, EGLConfig config, int attrib, int defValue) {
+    private int getAttrib(EGL10 egl, EGLDisplay display, EGLConfig config, int attrib) {
         if (egl.eglGetConfigAttrib(display, config, attrib, value)) {
             return value[0];
         }
-        return defValue;
+        return 0;
     }
 
     void resume() {
@@ -551,22 +551,18 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
     public GraphicsType getType() {
         return GraphicsType.AndroidGL;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @NonNull
     @Override
     public GLVersion getGLVersion() {
         return glVersion;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getFramesPerSecond() {
         return fps;
@@ -626,35 +622,41 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     }
 
     @Override
-    public boolean setFullscreenMode(DisplayMode displayMode) {
+    public boolean setFullscreenMode(@NonNull DisplayMode displayMode) {
         return false;
     }
 
+    @NonNull
     @Override
     public Monitor getPrimaryMonitor() {
         return new AndroidMonitor(0, 0, "Primary Monitor");
     }
 
+    @NonNull
     @Override
     public Monitor getMonitor() {
         return getPrimaryMonitor();
     }
 
+    @NonNull
     @Override
     public Monitor[] getMonitors() {
         return new Monitor[]{getPrimaryMonitor()};
     }
 
+    @NonNull
     @Override
-    public DisplayMode[] getDisplayModes(Monitor monitor) {
+    public DisplayMode[] getDisplayModes(@NonNull Monitor monitor) {
         return getDisplayModes();
     }
 
+    @NonNull
     @Override
-    public DisplayMode getDisplayMode(Monitor monitor) {
+    public DisplayMode getDisplayMode(@NonNull Monitor monitor) {
         return getDisplayMode();
     }
 
+    @NonNull
     @Override
     public DisplayMode[] getDisplayModes() {
         return new DisplayMode[]{getDisplayMode()};
@@ -707,7 +709,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(@NonNull String title) {
 
     }
 
@@ -722,6 +724,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 
     }
 
+    @NonNull
     @Override
     public DisplayMode getDisplayMode() {
         Display display;
@@ -739,6 +742,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
         return new AndroidDisplayMode(width, height, refreshRate, bitsPerPixel);
     }
 
+    @NonNull
     @Override
     public BufferFormat getBufferFormat() {
         return bufferFormat;
@@ -753,7 +757,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     }
 
     @Override
-    public boolean supportsExtension(String extension) {
+    public boolean supportsExtension(@NonNull String extension) {
         if (extensions == null) extensions = Gdx.gl.glGetString(GL10.GL_EXTENSIONS);
         return extensions.contains(extension);
     }
@@ -786,27 +790,27 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
     }
 
     @Override
-    public Cursor newCursor(Pixmap pixmap, int xHotspot, int yHotspot) {
+    public Cursor newCursor(@NonNull Pixmap pixmap, int xHotspot, int yHotspot) {
         return null;
     }
 
     @Override
-    public void setCursor(Cursor cursor) {
+    public void setCursor(@NonNull Cursor cursor) {
     }
 
     @Override
-    public void setSystemCursor(SystemCursor systemCursor) {
+    public void setSystemCursor(@NonNull SystemCursor systemCursor) {
         View view = ((AndroidGraphics) app.getGraphics()).getView();
         AndroidCursor.setSystemCursor(view, systemCursor);
     }
 
-    private class AndroidDisplayMode extends DisplayMode {
+    private static class AndroidDisplayMode extends DisplayMode {
         protected AndroidDisplayMode(int width, int height, int refreshRate, int bitsPerPixel) {
             super(width, height, refreshRate, bitsPerPixel);
         }
     }
 
-    private class AndroidMonitor extends Monitor {
+    private static class AndroidMonitor extends Monitor {
         public AndroidMonitor(int virtualX, int virtualY, String name) {
             super(virtualX, virtualY, name);
         }

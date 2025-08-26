@@ -7,11 +7,9 @@ import android.content.res.Configuration;
 import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -78,13 +76,6 @@ public class AndroidFragmentApplication extends Fragment implements AndroidAppli
         this.callbacks = null;
     }
 
-    protected FrameLayout.LayoutParams createLayoutParams() {
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParams.gravity = Gravity.CENTER;
-        return layoutParams;
-    }
-
     protected void createWakeLock(boolean use) {
         if (use) {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -101,22 +92,6 @@ public class AndroidFragmentApplication extends Fragment implements AndroidAppli
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         view.setSystemUiVisibility(code);
-    }
-
-    /**
-     * This method has to be called in the
-     * {@link Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)} method. It sets up all
-     * the things necessary to get input, render via OpenGL and so on. Uses a default {@link AndroidApplicationConfiguration}.
-     * <p/>
-     * Note: you have to return the returned view from the
-     * {@link Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}!
-     *
-     * @param listener the {@link ApplicationListener} implementing the program logic
-     * @return the GLSurfaceView of the application
-     */
-    public View initializeForView(ApplicationListener listener) {
-        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        return initializeForView(listener, config);
     }
 
     /**
@@ -403,11 +378,6 @@ public class AndroidFragmentApplication extends Fragment implements AndroidAppli
     }
 
     @Override
-    public void runOnUiThread(Runnable runnable) {
-        getActivity().runOnUiThread(runnable);
-    }
-
-    @Override
     public SnapshotArray<LifecycleListener> getLifecycleListeners() {
         return lifecycleListeners;
     }
@@ -421,24 +391,6 @@ public class AndroidFragmentApplication extends Fragment implements AndroidAppli
             for (int i = 0; i < androidEventListeners.size; i++) {
                 androidEventListeners.get(i).onActivityResult(requestCode, resultCode, data);
             }
-        }
-    }
-
-    /**
-     * Adds an event listener for Android specific event such as onActivityResult(...).
-     */
-    public void addAndroidEventListener(AndroidEventListener listener) {
-        synchronized (androidEventListeners) {
-            androidEventListeners.add(listener);
-        }
-    }
-
-    /**
-     * Removes an event listener for Android specific event such as onActivityResult(...).
-     */
-    public void removeAndroidEventListener(AndroidEventListener listener) {
-        synchronized (androidEventListeners) {
-            androidEventListeners.removeValue(listener, true);
         }
     }
 

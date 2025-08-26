@@ -1,7 +1,6 @@
 package com.badlogic.gdx.backends.android.surfaceview;
 
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.SystemClock;
 import android.util.Log;
@@ -43,17 +42,11 @@ public class GLSurfaceView20 extends GLSurfaceView {
         super(context);
         GLSurfaceView20.targetGLESVersion = targetGLESVersion;
         this.resolutionStrategy = resolutionStrategy;
-        init(false, 16, 0);
+        init();
     }
 
     public GLSurfaceView20(Context context, ResolutionStrategy resolutionStrategy) {
         this(context, resolutionStrategy, 2);
-    }
-
-    public GLSurfaceView20(Context context, boolean translucent, int depth, int stencil, ResolutionStrategy resolutionStrategy) {
-        super(context);
-        this.resolutionStrategy = resolutionStrategy;
-        init(translucent, depth, stencil);
     }
 
     static boolean checkEglError(String prompt, EGL10 egl) {
@@ -81,7 +74,11 @@ public class GLSurfaceView20 extends GLSurfaceView {
             outAttrs.inputType = DefaultAndroidInput.getAndroidInputType(onscreenKeyboardType);
         }
 
-        BaseInputConnection connection = new BaseInputConnection(this, false) {
+        /*
+         * In Jelly Bean, they don't send key events for delete. Instead, they send beforeLength = 1, afterLength = 0. So,
+         * we'll just simulate what it used to do.
+         */
+        return new BaseInputConnection(GLSurfaceView20.this, false) {
             @Override
             public boolean deleteSurroundingText(int beforeLength, int afterLength) {
                 /*
@@ -89,21 +86,20 @@ public class GLSurfaceView20 extends GLSurfaceView {
                  * we'll just simulate what it used to do.
                  */
                 if (beforeLength == 1 && afterLength == 0) {
-                    sendDownUpKeyEventForBackwardCompatibility(KeyEvent.KEYCODE_DEL);
+                    sendDownUpKeyEventForBackwardCompatibility();
                     return true;
                 }
                 return super.deleteSurroundingText(beforeLength, afterLength);
             }
 
-            private void sendDownUpKeyEventForBackwardCompatibility(final int code) {
+            private void sendDownUpKeyEventForBackwardCompatibility() {
                 final long eventTime = SystemClock.uptimeMillis();
-                super.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, code, 0, 0,
+                super.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL, 0, 0,
                         KeyCharacterMap.VIRTUAL_KEYBOARD, 0, KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
-                super.sendKeyEvent(new KeyEvent(SystemClock.uptimeMillis(), eventTime, KeyEvent.ACTION_UP, code, 0, 0,
+                super.sendKeyEvent(new KeyEvent(SystemClock.uptimeMillis(), eventTime, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL, 0, 0,
                         KeyCharacterMap.VIRTUAL_KEYBOARD, 0, KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
             }
         };
-        return connection;
     }
 
     @Override
@@ -111,16 +107,13 @@ public class GLSurfaceView20 extends GLSurfaceView {
         super.onDetachedFromWindow();
     }
 
-    private void init(boolean translucent, int depth, int stencil) {
+    private void init() {
 
         /*
          * By default, GLSurfaceView() creates a RGB_888 opaque surface. If we want a translucent one, we should change the
          * surface's format here, using PixelFormat.TRANSLUCENT for GL Surfaces is interpreted as any 32-bit surface with alpha by
          * SurfaceFlinger.
          */
-        if (translucent) {
-            this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        }
 
         /*
          * Setup the context factory for 2.0 rendering. See ContextFactory class definition below
@@ -132,7 +125,7 @@ public class GLSurfaceView20 extends GLSurfaceView {
          * config chooser. See ConfigChooser class definition below.
          */
         setEGLConfigChooser(
-                translucent ? new ConfigChooser(8, 8, 8, 8, depth, stencil) : new ConfigChooser(8, 8, 8, 0, depth, stencil));
+                new ConfigChooser(8, 8, 8, 0, 16, 0));
 
         /* Set the renderer responsible for frame rendering */
     }
@@ -219,29 +212,29 @@ public class GLSurfaceView20 extends GLSurfaceView {
 
         public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs) {
             for (EGLConfig config : configs) {
-                int d = findConfigAttrib(egl, display, config, EGL10.EGL_DEPTH_SIZE, 0);
-                int s = findConfigAttrib(egl, display, config, EGL10.EGL_STENCIL_SIZE, 0);
+                int d = findConfigAttrib(egl, display, config, EGL10.EGL_DEPTH_SIZE);
+                int s = findConfigAttrib(egl, display, config, EGL10.EGL_STENCIL_SIZE);
 
                 // We need at least mDepthSize and mStencilSize bits
                 if (d < mDepthSize || s < mStencilSize) continue;
 
                 // We want an *exact* match for red/green/blue/alpha
-                int r = findConfigAttrib(egl, display, config, EGL10.EGL_RED_SIZE, 0);
-                int g = findConfigAttrib(egl, display, config, EGL10.EGL_GREEN_SIZE, 0);
-                int b = findConfigAttrib(egl, display, config, EGL10.EGL_BLUE_SIZE, 0);
-                int a = findConfigAttrib(egl, display, config, EGL10.EGL_ALPHA_SIZE, 0);
+                int r = findConfigAttrib(egl, display, config, EGL10.EGL_RED_SIZE);
+                int g = findConfigAttrib(egl, display, config, EGL10.EGL_GREEN_SIZE);
+                int b = findConfigAttrib(egl, display, config, EGL10.EGL_BLUE_SIZE);
+                int a = findConfigAttrib(egl, display, config, EGL10.EGL_ALPHA_SIZE);
 
                 if (r == mRedSize && g == mGreenSize && b == mBlueSize && a == mAlphaSize) return config;
             }
             return null;
         }
 
-        private int findConfigAttrib(EGL10 egl, EGLDisplay display, EGLConfig config, int attribute, int defaultValue) {
+        private int findConfigAttrib(EGL10 egl, EGLDisplay display, EGLConfig config, int attribute) {
 
             if (egl.eglGetConfigAttrib(display, config, attribute, mValue)) {
                 return mValue[0];
             }
-            return defaultValue;
+            return 0;
         }
 
         private void printConfigs(EGL10 egl, EGLDisplay display, EGLConfig[] configs) {
@@ -279,7 +272,6 @@ public class GLSurfaceView20 extends GLSurfaceView {
                 if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
                     Log.w(TAG, String.format("  %s: %d\n", name, value[0]));
                 } else {
-                    // Log.w(TAG, String.format(" %s: failed\n", name));
                     while (egl.eglGetError() != EGL10.EGL_SUCCESS)
                         ;
                 }
