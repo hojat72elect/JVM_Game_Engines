@@ -170,11 +170,6 @@ public class OpenALAudioDevice implements AudioDevice {
         isPlaying = false;
     }
 
-    public boolean isPlaying() {
-        if (sourceID == -1) return false;
-        return isPlaying;
-    }
-
     public void setVolume(float volume) {
         this.volume = volume;
         if (sourceID != -1) alSourcef(sourceID, AL_GAIN, volume);
@@ -187,14 +182,6 @@ public class OpenALAudioDevice implements AudioDevice {
 
     public void setPosition(float position) {
         renderedSeconds = position;
-    }
-
-    public int getChannels() {
-        return format == AL_FORMAT_STEREO16 ? 2 : 1;
-    }
-
-    public int getRate() {
-        return sampleRate;
     }
 
     public void dispose() {

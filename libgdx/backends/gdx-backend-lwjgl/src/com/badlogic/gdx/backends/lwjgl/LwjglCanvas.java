@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Clipboard;
 import com.badlogic.gdx.utils.Os;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.Display;
@@ -81,11 +82,7 @@ public class LwjglCanvas implements LwjglApplicationBase {
                 scaleY = (float) transform.getScaleY();
 
                 if (SharedLibraryLoader.os == Os.MacOsX) {
-                    EventQueue.invokeLater(new Runnable() {
-                        public void run() {
-                            create();
-                        }
-                    });
+                    EventQueue.invokeLater(() -> create());
                 } else
                     create();
             }
@@ -111,18 +108,12 @@ public class LwjglCanvas implements LwjglApplicationBase {
         canvas.setIgnoreRepaint(true);
 
         graphics = new LwjglGraphics(canvas, config) {
-            public void setTitle(String title) {
+            public void setTitle(@NotNull String title) {
                 super.setTitle(title);
                 LwjglCanvas.this.setTitle(title);
             }
 
-            public boolean setWindowedMode(int width, int height, boolean fullscreen) {
-                if (!super.setWindowedMode(width, height)) return false;
-                if (!fullscreen) LwjglCanvas.this.setDisplayMode(width, height);
-                return true;
-            }
-
-            public boolean setFullscreenMode(DisplayMode displayMode) {
+            public boolean setFullscreenMode(@NotNull DisplayMode displayMode) {
                 if (!super.setFullscreenMode(displayMode)) return false;
                 LwjglCanvas.this.setDisplayMode(displayMode.width, displayMode.height);
                 return true;
@@ -347,26 +338,24 @@ public class LwjglCanvas implements LwjglApplicationBase {
     }
 
     public void stop() {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                if (!running) return;
-                running = false;
-                Array<LifecycleListener> listeners = lifecycleListeners;
-                synchronized (listeners) {
-                    for (LifecycleListener listener : listeners) {
-                        listener.pause();
-                        listener.dispose();
-                    }
+        EventQueue.invokeLater(() -> {
+            if (!running) return;
+            running = false;
+            Array<LifecycleListener> listeners = lifecycleListeners;
+            synchronized (listeners) {
+                for (LifecycleListener listener : listeners) {
+                    listener.pause();
+                    listener.dispose();
                 }
-                listener.pause();
-                listener.dispose();
-                try {
-                    Display.destroy();
-                    if (audio != null) audio.dispose();
-                } catch (Throwable ignored) {
-                }
-                disposed();
             }
+            listener.pause();
+            listener.dispose();
+            try {
+                Display.destroy();
+                if (audio != null) audio.dispose();
+            } catch (Throwable ignored) {
+            }
+            disposed();
         });
     }
 
@@ -457,22 +446,12 @@ public class LwjglCanvas implements LwjglApplicationBase {
 
     @Override
     public void exit() {
-        postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                LwjglCanvas.this.listener.pause();
-                LwjglCanvas.this.listener.dispose();
-                if (audio != null) audio.dispose();
-                System.exit(-1);
-            }
+        postRunnable(() -> {
+            LwjglCanvas.this.listener.pause();
+            LwjglCanvas.this.listener.dispose();
+            if (audio != null) audio.dispose();
+            System.exit(-1);
         });
-    }
-
-    /**
-     * @param cursor May be null.
-     */
-    public void setCursor(Cursor cursor) {
-        this.cursor = cursor;
     }
 
     @Override
@@ -487,14 +466,6 @@ public class LwjglCanvas implements LwjglApplicationBase {
         synchronized (lifecycleListeners) {
             lifecycleListeners.removeValue(listener, true);
         }
-    }
-
-    /**
-     * When true, {@link #postRunnable(Runnable)} keeps the stacktrace (which is an allocation) so it can be included if the
-     * runnable later throws an exception. Default is false.
-     */
-    public void setPostedRunnableStacktraces(boolean postedRunnableStacktraces) {
-        this.postedRunnableStacktraces = postedRunnableStacktraces;
     }
 
     protected Files createFiles() {

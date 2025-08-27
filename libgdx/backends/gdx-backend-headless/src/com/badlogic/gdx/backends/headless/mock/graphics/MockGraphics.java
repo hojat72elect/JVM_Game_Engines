@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.GL32;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * The headless backend does its best to mock elements. This is intended to make code-sharing between server and client as simple
  * as possible.
@@ -46,7 +49,7 @@ public class MockGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL20(GL20 gl20) {
+    public void setGL20(@NotNull GL20 gl20) {
 
     }
 
@@ -56,7 +59,7 @@ public class MockGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL30(GL30 gl30) {
+    public void setGL30(@NotNull GL30 gl30) {
 
     }
 
@@ -66,7 +69,7 @@ public class MockGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL31(GL31 gl31) {
+    public void setGL31(@NotNull GL31 gl31) {
 
     }
 
@@ -76,7 +79,7 @@ public class MockGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL32(GL32 gl32) {
+    public void setGL32(@NotNull GL32 gl32) {
 
     }
 
@@ -115,11 +118,13 @@ public class MockGraphics extends AbstractGraphics {
         return fps;
     }
 
+    @NotNull
     @Override
     public GraphicsType getType() {
         return GraphicsType.Mock;
     }
 
+    @NotNull
     @Override
     public GLVersion getGLVersion() {
         return glVersion;
@@ -150,11 +155,13 @@ public class MockGraphics extends AbstractGraphics {
         return false;
     }
 
+    @NotNull
     @Override
     public DisplayMode[] getDisplayModes() {
         return new DisplayMode[0];
     }
 
+    @Nullable
     @Override
     public DisplayMode getDisplayMode() {
         return null;
@@ -181,7 +188,7 @@ public class MockGraphics extends AbstractGraphics {
     }
 
     @Override
-    public boolean setFullscreenMode(DisplayMode displayMode) {
+    public boolean setFullscreenMode(@NotNull DisplayMode displayMode) {
         return false;
     }
 
@@ -191,7 +198,7 @@ public class MockGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(@NotNull String title) {
 
     }
 
@@ -215,13 +222,14 @@ public class MockGraphics extends AbstractGraphics {
         return targetRenderInterval;
     }
 
+    @Nullable
     @Override
     public BufferFormat getBufferFormat() {
         return null;
     }
 
     @Override
-    public boolean supportsExtension(String extension) {
+    public boolean supportsExtension(@NotNull String extension) {
         return false;
     }
 
@@ -263,40 +271,45 @@ public class MockGraphics extends AbstractGraphics {
     }
 
     @Override
-    public Cursor newCursor(Pixmap pixmap, int xHotspot, int yHotspot) {
+    public Cursor newCursor(@NotNull Pixmap pixmap, int xHotspot, int yHotspot) {
         return null;
     }
 
     @Override
-    public void setCursor(Cursor cursor) {
+    public void setCursor(@NotNull Cursor cursor) {
     }
 
     @Override
-    public void setSystemCursor(SystemCursor systemCursor) {
+    public void setSystemCursor(@NotNull SystemCursor systemCursor) {
     }
 
+    @Nullable
     @Override
     public Monitor getPrimaryMonitor() {
         return null;
     }
 
+    @Nullable
     @Override
     public Monitor getMonitor() {
         return null;
     }
 
+    @Nullable
     @Override
     public Monitor[] getMonitors() {
         return null;
     }
 
+    @Nullable
     @Override
-    public DisplayMode[] getDisplayModes(Monitor monitor) {
+    public DisplayMode[] getDisplayModes(@NotNull Monitor monitor) {
         return null;
     }
 
+    @Nullable
     @Override
-    public DisplayMode getDisplayMode(Monitor monitor) {
+    public DisplayMode getDisplayMode(@NotNull Monitor monitor) {
         return null;
     }
 

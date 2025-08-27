@@ -15,6 +15,7 @@ import com.badlogic.gdx.backends.lwjgl.audio.OpenALLwjglAudio;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Clipboard;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.AWTGLCanvas;
 import org.lwjgl.opengl.Display;
@@ -61,7 +62,7 @@ public class LwjglAWTCanvas implements Application {
     int logLevel = LOG_INFO;
     ApplicationLogger applicationLogger;
     Cursor cursor;
-    Map<String, Preferences> preferences = new HashMap<String, Preferences>();
+    Map<String, Preferences> preferences = new HashMap<>();
 
     public LwjglAWTCanvas(ApplicationListener listener) {
         this(listener, null, null);
@@ -69,10 +70,6 @@ public class LwjglAWTCanvas implements Application {
 
     public LwjglAWTCanvas(ApplicationListener listener, LwjglAWTCanvas sharedContextCanvas) {
         this(listener, null, sharedContextCanvas);
-    }
-
-    public LwjglAWTCanvas(ApplicationListener listener, LwjglApplicationConfiguration config) {
-        this(listener, config, null);
     }
 
     public LwjglAWTCanvas(ApplicationListener listener, LwjglApplicationConfiguration config,
@@ -122,7 +119,7 @@ public class LwjglAWTCanvas implements Application {
 
         graphics = new LwjglGraphics(canvas, config) {
             @Override
-            public void setTitle(String title) {
+            public void setTitle(@NotNull String title) {
                 super.setTitle(title);
                 LwjglAWTCanvas.this.setTitle(title);
             }
@@ -135,7 +132,7 @@ public class LwjglAWTCanvas implements Application {
             }
 
             @Override
-            public boolean setFullscreenMode(DisplayMode displayMode) {
+            public boolean setFullscreenMode(@NotNull DisplayMode displayMode) {
                 if (!super.setFullscreenMode(displayMode)) return false;
                 LwjglAWTCanvas.this.setDisplayMode(displayMode.width, displayMode.height);
                 return true;
@@ -440,12 +437,9 @@ public class LwjglAWTCanvas implements Application {
 
     @Override
     public void exit() {
-        postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                stop();
-                System.exit(-1);
-            }
+        postRunnable(() -> {
+            stop();
+            System.exit(-1);
         });
     }
 
@@ -460,25 +454,6 @@ public class LwjglAWTCanvas implements Application {
         } catch (Throwable ex) {
             exception(ex);
         }
-    }
-
-    /**
-     * Test whether the canvas' context is current.
-     */
-    public boolean isCurrent() {
-        try {
-            return canvas.isCurrent();
-        } catch (Throwable ex) {
-            exception(ex);
-            return false;
-        }
-    }
-
-    /**
-     * @param cursor May be null.
-     */
-    public void setCursor(Cursor cursor) {
-        this.cursor = cursor;
     }
 
     @Override

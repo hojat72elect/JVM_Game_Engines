@@ -9,30 +9,9 @@ import java.awt.Canvas;
 /**
  * An OpenGL surface in an applet.
  */
-@SuppressWarnings("removal")
 public class LwjglApplet extends Applet {
     final Canvas canvas;
     LwjglApplication app;
-
-    public LwjglApplet(final ApplicationListener listener, final LwjglApplicationConfiguration config) {
-        LwjglNativesLoader.load = false;
-        canvas = new Canvas() {
-            public void addNotify() {
-                super.addNotify();
-                app = new LwjglAppletApplication(listener, canvas, config);
-            }
-
-            public void removeNotify() {
-                app.stop();
-                super.removeNotify();
-            }
-        };
-        setLayout(new BorderLayout());
-        canvas.setIgnoreRepaint(true);
-        add(canvas);
-        canvas.setFocusable(true);
-        canvas.requestFocus();
-    }
 
     public LwjglApplet(final ApplicationListener listener) {
         LwjglNativesLoader.load = false;
@@ -59,14 +38,10 @@ public class LwjglApplet extends Applet {
         super.destroy();
     }
 
-    class LwjglAppletApplication extends LwjglApplication {
+    static class LwjglAppletApplication extends LwjglApplication {
 
         public LwjglAppletApplication(ApplicationListener listener, Canvas canvas) {
             super(listener, canvas);
-        }
-
-        public LwjglAppletApplication(ApplicationListener listener, Canvas canvas, LwjglApplicationConfiguration config) {
-            super(listener, config, canvas);
         }
 
         @Override

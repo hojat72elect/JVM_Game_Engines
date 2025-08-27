@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.NativeInputConfiguration;
 import com.badlogic.gdx.utils.IntSet;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -16,6 +17,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.util.Arrays;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -83,13 +85,13 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     }
 
     @Override
-    public void getTextInput(TextInputListener listener, String title, String text, String hint) {
+    public void getTextInput(@NotNull TextInputListener listener, @NotNull String title, @NotNull String text, @NotNull String hint) {
         getTextInput(listener, title, text, hint, OnscreenKeyboardType.Default);
     }
 
     @Override
-    public void getTextInput(final TextInputListener listener, final String title, final String text, final String hint,
-                             OnscreenKeyboardType type) {
+    public void getTextInput(@NotNull final TextInputListener listener, @NotNull final String title, @NotNull final String text, @NotNull final String hint,
+                             @NotNull OnscreenKeyboardType type) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -132,7 +134,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
                     }
 
                     private void updated() {
-                        placeholderLabel.setVisible(textField.getText().length() == 0);
+                        placeholderLabel.setVisible(textField.getText().isEmpty());
                     }
                 });
 
@@ -167,8 +169,8 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
 
                 Object selectedValue = pane.getValue();
 
-                if (selectedValue != null && (selectedValue instanceof Integer)
-                        && ((Integer) selectedValue).intValue() == JOptionPane.OK_OPTION) {
+                if ((selectedValue instanceof Integer)
+                        && (Integer) selectedValue == JOptionPane.OK_OPTION) {
                     listener.input(textField.getText());
                 } else {
                     listener.canceled();
@@ -194,8 +196,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
 
     @Override
     public boolean isTouched() {
-        boolean button = Mouse.isButtonDown(0) || Mouse.isButtonDown(1) || Mouse.isButtonDown(2);
-        return button;
+        return Mouse.isButtonDown(0) || Mouse.isButtonDown(1) || Mouse.isButtonDown(2);
     }
 
     @Override
@@ -235,7 +236,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     }
 
     @Override
-    public void openTextInputField(NativeInputConfiguration configuration) {
+    public void openTextInputField(@NotNull NativeInputConfiguration configuration) {
 
     }
 
@@ -245,7 +246,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     }
 
     @Override
-    public void setKeyboardHeightObserver(KeyboardHeightObserver observer) {
+    public void setKeyboardHeightObserver(@NotNull KeyboardHeightObserver observer) {
 
     }
 
@@ -279,7 +280,6 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
             case Keyboard.KEY_DIVIDE:
                 return Input.Keys.NUMPAD_DIVIDE;
             case Keyboard.KEY_LMETA:
-                return Input.Keys.SYM;
             case Keyboard.KEY_RMETA:
                 return Input.Keys.SYM;
             case Keyboard.KEY_NUMPADEQUALS:
@@ -512,9 +512,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     void updateMouse() {
         if (justTouched) {
             justTouched = false;
-            for (int i = 0; i < justPressedButtons.length; i++) {
-                justPressedButtons[i] = false;
-            }
+            Arrays.fill(justPressedButtons, false);
         }
         if (Mouse.isCreated()) {
             int events = 0;
@@ -561,9 +559,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     void updateKeyboard() {
         if (keyJustPressed) {
             keyJustPressed = false;
-            for (int i = 0; i < justPressedKeys.length; i++) {
-                justPressedKeys[i] = false;
-            }
+            Arrays.fill(justPressedKeys, false);
         }
         if (lastKeyCharPressed != 0) {
             keyRepeatTimer -= deltaTime;
@@ -634,7 +630,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     }
 
     @Override
-    public void vibrate(VibrationType vibrationType) {
+    public void vibrate(@NotNull VibrationType vibrationType) {
     }
 
     @Override
@@ -685,7 +681,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     }
 
     @Override
-    public boolean isPeripheralAvailable(Peripheral peripheral) {
+    public boolean isPeripheralAvailable(@NotNull Peripheral peripheral) {
         return peripheral == Peripheral.HardwareKeyboard;
     }
 
@@ -694,6 +690,7 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
         return 0;
     }
 
+    @NotNull
     @Override
     public Orientation getNativeOrientation() {
         return Orientation.Landscape;
@@ -742,6 +739,6 @@ final public class DefaultLwjglInput extends AbstractInput implements LwjglInput
     }
 
     @Override
-    public void getRotationMatrix(float[] matrix) {
+    public void getRotationMatrix(@NotNull float[] matrix) {
     }
 }

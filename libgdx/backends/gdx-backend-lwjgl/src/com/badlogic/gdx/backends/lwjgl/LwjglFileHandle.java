@@ -16,12 +16,12 @@ public final class LwjglFileHandle extends FileHandle {
     }
 
     public FileHandle child(String name) {
-        if (file.getPath().length() == 0) return new LwjglFileHandle(new File(name), type);
+        if (file.getPath().isEmpty()) return new LwjglFileHandle(new File(name), type);
         return new LwjglFileHandle(new File(file, name), type);
     }
 
     public FileHandle sibling(String name) {
-        if (file.getPath().length() == 0) throw new GdxRuntimeException("Cannot get the sibling of the root.");
+        if (file.getPath().isEmpty()) throw new GdxRuntimeException("Cannot get the sibling of the root.");
         return new LwjglFileHandle(new File(file.getParent(), name), type);
     }
 

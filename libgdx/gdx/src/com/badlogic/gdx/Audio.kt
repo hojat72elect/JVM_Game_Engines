@@ -66,7 +66,7 @@ interface Audio {
      * @return the new Music or null if the Music could not be loaded.
      * @throws GdxRuntimeException in case the music could not be loaded.
      */
-    fun newMusic(file: FileHandle): Music?
+    fun newMusic(file: FileHandle?): Music?
 
     /**
      * Sets a new OutputDevice. The identifier can be retrieved from [Audio.getAvailableOutputDevices]. If null is passed,

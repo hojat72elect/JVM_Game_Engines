@@ -7,6 +7,8 @@ import com.badlogic.gdx.input.NativeInputConfiguration;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.Pool;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.AWTException;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -30,6 +32,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JDialog;
@@ -57,8 +60,8 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
             return new TouchEvent();
         }
     };
-    List<KeyEvent> keyEvents = new ArrayList<KeyEvent>();
-    List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
+    List<KeyEvent> keyEvents = new ArrayList<>();
+    List<TouchEvent> touchEvents = new ArrayList<>();
     int touchX = 0;
     int touchY = 0;
     int deltaX = 0;
@@ -78,8 +81,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
         setListeners(lwjglAwtCanvas.getCanvas());
         try {
             robot = new Robot(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice());
-        } catch (HeadlessException e) {
-        } catch (AWTException e) {
+        } catch (HeadlessException | AWTException ignored) {
         }
     }
 
@@ -126,13 +128,13 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
     }
 
     @Override
-    public void getTextInput(TextInputListener listener, String title, String text, String hint) {
+    public void getTextInput(@NotNull TextInputListener listener, @NotNull String title, @NotNull String text, @NotNull String hint) {
         getTextInput(listener, title, text, hint, OnscreenKeyboardType.Default);
     }
 
     @Override
-    public void getTextInput(final TextInputListener listener, final String title, final String text, final String hint,
-                             OnscreenKeyboardType type) {
+    public void getTextInput(@NotNull final TextInputListener listener, @NotNull final String title, @NotNull final String text, @NotNull final String hint,
+                             @NotNull OnscreenKeyboardType type) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -175,7 +177,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
                     }
 
                     private void updated() {
-                        placeholderLabel.setVisible(textField.getText().length() == 0);
+                        placeholderLabel.setVisible(textField.getText().isEmpty());
                     }
                 });
 
@@ -208,8 +210,8 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 
                 Object selectedValue = pane.getValue();
 
-                if (selectedValue != null && (selectedValue instanceof Integer)
-                        && ((Integer) selectedValue).intValue() == JOptionPane.OK_OPTION) {
+                if ((selectedValue instanceof Integer)
+                        && (Integer) selectedValue == JOptionPane.OK_OPTION) {
                     listener.input(textField.getText());
                 } else {
                     listener.canceled();
@@ -298,15 +300,11 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
         synchronized (this) {
             if (justTouched) {
                 justTouched = false;
-                for (int i = 0; i < justPressedButtons.length; i++) {
-                    justPressedButtons[i] = false;
-                }
+                Arrays.fill(justPressedButtons, false);
             }
             if (keyJustPressed) {
                 keyJustPressed = false;
-                for (int i = 0; i < justPressedKeys.length; i++) {
-                    justPressedKeys[i] = false;
-                }
+                Arrays.fill(justPressedKeys, false);
             }
 
             if (processor != null) {
@@ -391,7 +389,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
     }
 
     @Override
-    public void openTextInputField(NativeInputConfiguration configuration) {
+    public void openTextInputField(@NotNull NativeInputConfiguration configuration) {
 
     }
 
@@ -401,7 +399,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
     }
 
     @Override
-    public void setKeyboardHeightObserver(KeyboardHeightObserver observer) {
+    public void setKeyboardHeightObserver(@NotNull KeyboardHeightObserver observer) {
 
     }
 
@@ -835,7 +833,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
     }
 
     @Override
-    public void vibrate(VibrationType vibrationType) {
+    public void vibrate(@NotNull VibrationType vibrationType) {
     }
 
     @Override
@@ -870,7 +868,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
     }
 
     @Override
-    public boolean isPeripheralAvailable(Peripheral peripheral) {
+    public boolean isPeripheralAvailable(@NotNull Peripheral peripheral) {
         return peripheral == Peripheral.HardwareKeyboard;
     }
 
@@ -879,6 +877,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
         return 0;
     }
 
+    @NotNull
     @Override
     public Orientation getNativeOrientation() {
         return Orientation.Landscape;
@@ -943,7 +942,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
     }
 
     @Override
-    public void getRotationMatrix(float[] matrix) {
+    public void getRotationMatrix(@NotNull float[] matrix) {
     }
 
     @Override
@@ -961,7 +960,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
         return 0;
     }
 
-    class KeyEvent {
+    static class KeyEvent {
         static final int KEY_DOWN = 0;
         static final int KEY_UP = 1;
         static final int KEY_TYPED = 2;
@@ -972,7 +971,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
         char keyChar;
     }
 
-    class TouchEvent {
+    static class TouchEvent {
         static final int TOUCH_DOWN = 0;
         static final int TOUCH_UP = 1;
         static final int TOUCH_DRAGGED = 2;

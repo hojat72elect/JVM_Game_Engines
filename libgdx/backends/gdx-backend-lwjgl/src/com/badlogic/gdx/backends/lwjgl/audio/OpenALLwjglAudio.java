@@ -30,6 +30,8 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.LongMap;
 import com.badlogic.gdx.utils.ObjectMap;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
@@ -38,9 +40,6 @@ import org.lwjgl.openal.AL10;
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
 
-/**
- *
- */
 public class OpenALLwjglAudio implements LwjglAudio {
     private final int deviceBufferSize;
     private final int deviceBufferCount;
@@ -135,7 +134,7 @@ public class OpenALLwjglAudio implements LwjglAudio {
         }
     }
 
-    public OpenALMusic newMusic(FileHandle file) {
+    public OpenALMusic newMusic(@Nullable FileHandle file) {
         if (file == null) throw new IllegalArgumentException("file cannot be null.");
         Class<? extends OpenALMusic> musicClass = extensionToMusicClass.get(file.extension().toLowerCase());
         if (musicClass == null) throw new GdxRuntimeException("Unknown file extension for music: " + file);
@@ -151,6 +150,7 @@ public class OpenALLwjglAudio implements LwjglAudio {
         return true;
     }
 
+    @NotNull
     @Override
     public String[] getAvailableOutputDevices() {
         return new String[0];
@@ -251,11 +251,6 @@ public class OpenALLwjglAudio implements LwjglAudio {
         return soundId != null ? soundId : -1;
     }
 
-    public int getSourceId(long soundId) {
-        Integer sourceId = soundIdToSource.get(soundId);
-        return sourceId != null ? sourceId : -1;
-    }
-
     public void stopSound(long soundId) {
         Integer sourceId = soundIdToSource.get(soundId);
         if (sourceId != null) alSourceStop(sourceId);
@@ -312,7 +307,7 @@ public class OpenALLwjglAudio implements LwjglAudio {
         while (AL.isCreated()) {
             try {
                 Thread.sleep(10);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
     }

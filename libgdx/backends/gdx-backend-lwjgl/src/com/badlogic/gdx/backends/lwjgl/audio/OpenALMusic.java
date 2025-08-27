@@ -77,7 +77,7 @@ public abstract class OpenALMusic implements Music {
         this.format = channels > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
         if (bitDepth == 8) this.format--; // Use 8-bit AL_FORMAT instead.
         this.sampleRate = sampleRate;
-        maxSecondsPerBuffer = (float) bufferSize / (bitDepth / 8 * channels * sampleRate);
+        maxSecondsPerBuffer = (float) bufferSize / (bitDepth / 8F * channels * sampleRate);
     }
 
     public void play() {
@@ -241,14 +241,6 @@ public abstract class OpenALMusic implements Music {
         reset();
     }
 
-    public int getChannels() {
-        return format == AL_FORMAT_STEREO16 ? 2 : 1;
-    }
-
-    public int getRate() {
-        return sampleRate;
-    }
-
     public void update() {
         if (audio.noDevice) return;
         if (sourceID == -1) return;
@@ -304,9 +296,5 @@ public abstract class OpenALMusic implements Music {
         alDeleteBuffers(buffers);
         buffers = null;
         onCompletionListener = null;
-    }
-
-    public int getSourceId() {
-        return sourceID;
     }
 }

@@ -3,6 +3,8 @@ package com.badlogic.gdx.backends.lwjgl;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.files.FileHandle;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
 public final class LwjglFiles implements Files {
@@ -10,32 +12,32 @@ public final class LwjglFiles implements Files {
     static public final String localPath = new File("").getAbsolutePath() + File.separator;
 
     @Override
-    public FileHandle getFileHandle(String fileName, FileType type) {
+    public FileHandle getFileHandle(@NotNull String fileName, @NotNull FileType type) {
         return new LwjglFileHandle(fileName, type);
     }
 
     @Override
-    public FileHandle classpath(String path) {
+    public FileHandle classpath(@NotNull String path) {
         return new LwjglFileHandle(path, FileType.Classpath);
     }
 
     @Override
-    public FileHandle internal(String path) {
+    public FileHandle internal(@NotNull String path) {
         return new LwjglFileHandle(path, FileType.Internal);
     }
 
     @Override
-    public FileHandle external(String path) {
+    public FileHandle external(@NotNull String path) {
         return new LwjglFileHandle(path, FileType.External);
     }
 
     @Override
-    public FileHandle absolute(String path) {
+    public FileHandle absolute(@NotNull String path) {
         return new LwjglFileHandle(path, FileType.Absolute);
     }
 
     @Override
-    public FileHandle local(String path) {
+    public FileHandle local(@NotNull String path) {
         return new LwjglFileHandle(path, FileType.Local);
     }
 

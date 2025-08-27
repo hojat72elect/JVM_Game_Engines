@@ -26,8 +26,6 @@ import java.nio.ByteOrder;
 public class OpenALSound implements Sound {
     private final OpenALLwjglAudio audio;
     private int bufferID = -1;
-    private float duration;
-    private int sampleRate, channels;
     private String type;
 
     public OpenALSound(OpenALLwjglAudio audio) {
@@ -43,12 +41,8 @@ public class OpenALSound implements Sound {
      * @param sampleRate The number of samples to be played each second. Commonly 44100; can be anything within reason.
      */
     void setup(byte[] pcm, int channels, int bitDepth, int sampleRate) {
-        this.channels = channels;
-        this.sampleRate = sampleRate;
         int format = channels > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
         if (bitDepth == 8) format--; // Use 8-bit AL_FORMAT instead.
-        int samples = pcm.length / (bitDepth / 8 * channels);
-        duration = samples / (float) sampleRate;
 
         ByteBuffer buffer = ByteBuffer.allocateDirect(pcm.length);
         buffer.order(ByteOrder.nativeOrder());
@@ -183,27 +177,6 @@ public class OpenALSound implements Sound {
         setPitch(id, pitch);
         setPan(id, pan, volume);
         return id;
-    }
-
-    /**
-     * Returns the length of the sound in seconds.
-     */
-    public float duration() {
-        return duration;
-    }
-
-    /**
-     * Returns the original sample rate of the sound in Hz.
-     */
-    public int getRate() {
-        return sampleRate;
-    }
-
-    /**
-     * Returns the number of channels of the sound (1 for mono, 2 for stereo).
-     */
-    public int getChannels() {
-        return channels;
     }
 
     public String getType() {

@@ -32,9 +32,9 @@ public class LwjglApplication implements LwjglApplicationBase {
     protected final LwjglInput input;
     protected final LwjglNet net;
     protected final ApplicationListener listener;
-    protected final Array<Runnable> runnables = new Array<Runnable>();
-    protected final Array<Runnable> executedRunnables = new Array<Runnable>();
-    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<LifecycleListener>(
+    protected final Array<Runnable> runnables = new Array<>();
+    protected final Array<Runnable> executedRunnables = new Array<>();
+    protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<>(
             LifecycleListener.class);
     protected LwjglAudio audio;
     protected Thread mainLoopThread;
@@ -43,7 +43,7 @@ public class LwjglApplication implements LwjglApplicationBase {
     protected ApplicationLogger applicationLogger;
     protected String preferencesdir;
     protected Files.FileType preferencesFileType;
-    ObjectMap<String, Preferences> preferences = new ObjectMap<String, Preferences>();
+    ObjectMap<String, Preferences> preferences = new ObjectMap<>();
 
     public LwjglApplication(ApplicationListener listener, String title, int width, int height) {
         this(listener, createConfig(title, width, height));
@@ -191,7 +191,7 @@ public class LwjglApplication implements LwjglApplicationBase {
                     graphics.config.width = (int) (Display.getWidth() * Display.getPixelScaleFactor());
                     graphics.config.height = (int) (Display.getHeight() * Display.getPixelScaleFactor());
                     Gdx.gl.glViewport(0, 0, graphics.config.width, graphics.config.height);
-                    if (listener != null) listener.resize(graphics.config.width, graphics.config.height);
+                    listener.resize(graphics.config.width, graphics.config.height);
                     shouldRender = true;
                 }
             }
@@ -313,7 +313,7 @@ public class LwjglApplication implements LwjglApplicationBase {
         running = false;
         try {
             mainLoopThread.join();
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -403,12 +403,7 @@ public class LwjglApplication implements LwjglApplicationBase {
 
     @Override
     public void exit() {
-        postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                running = false;
-            }
-        });
+        postRunnable(() -> running = false);
     }
 
     @Override

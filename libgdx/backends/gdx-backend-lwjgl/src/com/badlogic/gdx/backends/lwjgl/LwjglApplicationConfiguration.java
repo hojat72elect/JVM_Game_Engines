@@ -4,14 +4,9 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
-
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
 
 public class LwjglApplicationConfiguration {
     /**
@@ -153,80 +148,4 @@ public class LwjglApplicationConfiguration {
     Array<String> iconPaths = new Array();
     Array<FileType> iconFileTypes = new Array();
 
-    public static DisplayMode getDesktopDisplayMode() {
-        GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = genv.getDefaultScreenDevice();
-        java.awt.DisplayMode mode = device.getDisplayMode();
-        return new LwjglApplicationConfigurationDisplayMode(mode.getWidth(), mode.getHeight(), mode.getRefreshRate(),
-                mode.getBitDepth());
-    }
-
-    public static DisplayMode[] getDisplayModes() {
-        GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = genv.getDefaultScreenDevice();
-        java.awt.DisplayMode desktopMode = device.getDisplayMode();
-        java.awt.DisplayMode[] displayModes = device.getDisplayModes();
-        ArrayList<DisplayMode> modes = new ArrayList<DisplayMode>();
-        int idx = 0;
-        for (java.awt.DisplayMode mode : displayModes) {
-            boolean duplicate = false;
-            for (int i = 0; i < modes.size(); i++) {
-                if (modes.get(i).width == mode.getWidth() && modes.get(i).height == mode.getHeight()
-                        && modes.get(i).bitsPerPixel == mode.getBitDepth()) {
-                    duplicate = true;
-                    break;
-                }
-            }
-            if (duplicate) continue;
-            if (mode.getBitDepth() != desktopMode.getBitDepth()) continue;
-            modes.add(new LwjglApplicationConfigurationDisplayMode(mode.getWidth(), mode.getHeight(), mode.getRefreshRate(),
-                    mode.getBitDepth()));
-        }
-
-        return modes.toArray(new DisplayMode[modes.size()]);
-    }
-
-    /**
-     * Adds a window icon. Icons are tried in the order added, the first one that works is used. Typically three icons should be
-     * provided: 128x128 (for Mac), 32x32 (for Windows and Linux), and 16x16 (for Windows).
-     */
-    public void addIcon(String path, FileType fileType) {
-        iconPaths.add(path);
-        iconFileTypes.add(fileType);
-    }
-
-    /**
-     * Sets the r, g, b and a bits per channel based on the given {@link DisplayMode} and sets the fullscreen flag to true.
-     *
-     * @param mode
-     */
-    public void setFromDisplayMode(DisplayMode mode) {
-        this.width = mode.width;
-        this.height = mode.height;
-        if (mode.bitsPerPixel == 16) {
-            this.r = 5;
-            this.g = 6;
-            this.b = 5;
-            this.a = 0;
-        }
-        if (mode.bitsPerPixel == 24) {
-            this.r = 8;
-            this.g = 8;
-            this.b = 8;
-            this.a = 0;
-        }
-        if (mode.bitsPerPixel == 32) {
-            this.r = 8;
-            this.g = 8;
-            this.b = 8;
-            this.a = 8;
-        }
-        this.fullscreen = true;
-    }
-
-    protected static class LwjglApplicationConfigurationDisplayMode extends DisplayMode {
-        protected LwjglApplicationConfigurationDisplayMode(int width, int height, int refreshRate, int bitsPerPixel) {
-            super(width, height, refreshRate, bitsPerPixel);
-        }
-    }
 }

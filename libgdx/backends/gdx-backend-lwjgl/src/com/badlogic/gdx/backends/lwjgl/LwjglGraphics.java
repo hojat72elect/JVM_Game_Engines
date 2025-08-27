@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Os;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.ContextAttribs;
@@ -85,7 +86,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     private static void extractExtensions() {
-        extensions = new Array<String>();
+        extensions = new Array<>();
         if (glVersion.isVersionEqualToOrHigher(3, 2)) {
             int numExtensions = GL11.glGetInteger(GL30.GL_NUM_EXTENSIONS);
             for (int i = 0; i < numExtensions; ++i)
@@ -93,23 +94,6 @@ public class LwjglGraphics extends AbstractGraphics {
         } else {
             extensions.addAll(org.lwjgl.opengl.GL11.glGetString(GL20.GL_EXTENSIONS).split(" "));
         }
-    }
-
-    /**
-     * @return whether the supported OpenGL (not ES) version is compatible with OpenGL ES 3.x.
-     */
-    private static boolean fullCompatibleWithGLES3() {
-        // OpenGL ES 3.0 is compatible with OpenGL 4.3 core, see http://en.wikipedia.org/wiki/OpenGL_ES#OpenGL_ES_3.0
-        return glVersion.isVersionEqualToOrHigher(4, 3);
-    }
-
-    /**
-     * @return whether the supported OpenGL (not ES) version is compatible with OpenGL ES 2.x.
-     */
-    private static boolean fullCompatibleWithGLES2() {
-        // OpenGL ES 2.0 is compatible with OpenGL 4.1 core
-        // see https://www.opengl.org/registry/specs/ARB/ES2_compatibility.txt
-        return glVersion.isVersionEqualToOrHigher(4, 1) || extensions.contains("GL_ARB_ES2_compatibility", false);
     }
 
     private static boolean supportsFBO() {
@@ -157,24 +141,14 @@ public class LwjglGraphics extends AbstractGraphics {
         return deltaTime;
     }
 
-    /**
-     * The delta time for the next frame will be 0. This can be useful if the render thread was blocked for some time to prevent
-     * game state or animations from advancing.
-     */
-    public void resetDeltaTime() {
-        resetDeltaTime = true;
-    }
-
+    @NotNull
     public GraphicsType getType() {
         return GraphicsType.LWJGL;
     }
 
+    @NotNull
     public GLVersion getGLVersion() {
         return glVersion;
-    }
-
-    public boolean isGL20Available() {
-        return gl20 != null;
     }
 
     public GL20 getGL20() {
@@ -182,7 +156,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL20(GL20 gl20) {
+    public void setGL20(@NotNull GL20 gl20) {
         this.gl20 = gl20;
         if (gl30 == null) {
             Gdx.gl = gl20;
@@ -211,15 +185,13 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL30(GL30 gl30) {
+    public void setGL30(@NotNull GL30 gl30) {
         this.gl30 = gl30;
-        if (gl30 != null) {
-            this.gl20 = gl30;
+        this.gl20 = gl30;
 
-            Gdx.gl = gl20;
-            Gdx.gl20 = gl20;
-            Gdx.gl30 = gl30;
-        }
+        Gdx.gl = gl20;
+        Gdx.gl20 = gl20;
+        Gdx.gl30 = gl30;
     }
 
     @Override
@@ -228,7 +200,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL31(GL31 gl31) {
+    public void setGL31(@NotNull GL31 gl31) {
     }
 
     @Override
@@ -237,7 +209,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setGL32(GL32 gl32) {
+    public void setGL32(@NotNull GL32 gl32) {
     }
 
     public int getFramesPerSecond() {
@@ -272,7 +244,7 @@ public class LwjglGraphics extends AbstractGraphics {
         if (canvas != null) {
             Display.setParent(canvas);
         } else {
-            boolean displayCreated = false;
+            boolean displayCreated;
 
             if (!config.fullscreen) {
                 displayCreated = setWindowedMode(config.width, config.height);
@@ -342,8 +314,6 @@ public class LwjglGraphics extends AbstractGraphics {
     /**
      * Enable or disable cubemap seamless feature. Default is true if supported. Should only be called if this feature is
      * supported. (see {@link #supportsCubeMapSeamless()})
-     *
-     * @param enable
      */
     public void enableCubeMapSeamless(boolean enable) {
         if (enable) {
@@ -499,12 +469,12 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public DisplayMode[] getDisplayModes(Monitor monitor) {
+    public DisplayMode[] getDisplayModes(@NotNull Monitor monitor) {
         return getDisplayModes();
     }
 
     @Override
-    public DisplayMode getDisplayMode(Monitor monitor) {
+    public DisplayMode getDisplayMode(@NotNull Monitor monitor) {
         return getDisplayMode();
     }
 
@@ -529,7 +499,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public boolean setFullscreenMode(DisplayMode displayMode) {
+    public boolean setFullscreenMode(@NotNull DisplayMode displayMode) {
         org.lwjgl.opengl.DisplayMode mode = ((LwjglDisplayMode) displayMode).mode;
         try {
             if (!mode.isFullscreenCapable()) {
@@ -549,7 +519,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     /**
-     * Kindly stolen from http://lwjgl.org/wiki/index.php?title=LWJGL_Basics_5_(Fullscreen), not perfect but will do.
+     * Kindly stolen from <a href="http://lwjgl.org/wiki/index.php?title=LWJGL_Basics_5_(Fullscreen)">this document</a>, not perfect but will do.
      */
     @Override
     public boolean setWindowedMode(int width, int height) {
@@ -561,41 +531,10 @@ public class LwjglGraphics extends AbstractGraphics {
         this.forceDisplayModeChange = false;
 
         try {
-            org.lwjgl.opengl.DisplayMode targetDisplayMode = null;
+            org.lwjgl.opengl.DisplayMode targetDisplayMode;
             boolean fullscreen = false;
 
-            if (fullscreen) {
-                org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
-                int freq = 0;
-
-                for (int i = 0; i < modes.length; i++) {
-                    org.lwjgl.opengl.DisplayMode current = modes[i];
-
-                    if ((current.getWidth() == width) && (current.getHeight() == height)) {
-                        if ((targetDisplayMode == null) || (current.getFrequency() >= freq)) {
-                            if ((targetDisplayMode == null) || (current.getBitsPerPixel() > targetDisplayMode.getBitsPerPixel())) {
-                                targetDisplayMode = current;
-                                freq = targetDisplayMode.getFrequency();
-                            }
-                        }
-
-                        // if we've found a match for bpp and frequence against the
-                        // original display mode then it's probably best to go for this one
-                        // since it's most likely compatible with the monitor
-                        if ((current.getBitsPerPixel() == Display.getDesktopDisplayMode().getBitsPerPixel())
-                                && (current.getFrequency() == Display.getDesktopDisplayMode().getFrequency())) {
-                            targetDisplayMode = current;
-                            break;
-                        }
-                    }
-                }
-            } else {
-                targetDisplayMode = new org.lwjgl.opengl.DisplayMode(width, height);
-            }
-
-            if (targetDisplayMode == null) {
-                return false;
-            }
+            targetDisplayMode = new org.lwjgl.opengl.DisplayMode(width, height);
 
             boolean resizable = !fullscreen && config.resizable;
 
@@ -618,6 +557,7 @@ public class LwjglGraphics extends AbstractGraphics {
         }
     }
 
+    @NotNull
     @Override
     public DisplayMode[] getDisplayModes() {
         try {
@@ -645,7 +585,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(@NotNull String title) {
         Display.setTitle(title);
     }
 
@@ -691,7 +631,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public boolean supportsExtension(String extension) {
+    public boolean supportsExtension(@NotNull String extension) {
         return extensions.contains(extension, false);
     }
 
@@ -730,12 +670,12 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public com.badlogic.gdx.graphics.Cursor newCursor(Pixmap pixmap, int xHotspot, int yHotspot) {
+    public com.badlogic.gdx.graphics.Cursor newCursor(@NotNull Pixmap pixmap, int xHotspot, int yHotspot) {
         return new LwjglCursor(pixmap, xHotspot, yHotspot);
     }
 
     @Override
-    public void setCursor(com.badlogic.gdx.graphics.Cursor cursor) {
+    public void setCursor(@NotNull com.badlogic.gdx.graphics.Cursor cursor) {
         if (canvas != null && SharedLibraryLoader.os == Os.MacOsX) {
             return;
         }
@@ -747,7 +687,7 @@ public class LwjglGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void setSystemCursor(SystemCursor systemCursor) {
+    public void setSystemCursor(@NotNull SystemCursor systemCursor) {
         if (canvas != null && SharedLibraryLoader.os == Os.MacOsX) {
             return;
         }
@@ -772,7 +712,7 @@ public class LwjglGraphics extends AbstractGraphics {
         LwjglApplicationConfiguration onFailure(LwjglApplicationConfiguration initialConfig);
     }
 
-    private class LwjglDisplayMode extends DisplayMode {
+    private static class LwjglDisplayMode extends DisplayMode {
         org.lwjgl.opengl.DisplayMode mode;
 
         public LwjglDisplayMode(int width, int height, int refreshRate, int bitsPerPixel, org.lwjgl.opengl.DisplayMode mode) {
@@ -781,7 +721,7 @@ public class LwjglGraphics extends AbstractGraphics {
         }
     }
 
-    private class LwjglMonitor extends Monitor {
+    private static class LwjglMonitor extends Monitor {
         protected LwjglMonitor(int virtualX, int virtualY, String name) {
             super(virtualX, virtualY, name);
         }

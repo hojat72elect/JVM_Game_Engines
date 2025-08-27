@@ -4,6 +4,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.EOFException;
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -77,7 +79,7 @@ public class Wav {
                 if (read() != 'W' || read() != 'A' || read() != 'V' || read() != 'E')
                     throw new GdxRuntimeException("Invalid wave file header: " + file);
 
-                int fmtChunkLength = seekToChunk('f', 'm', 't', ' ');
+                int fmtChunkLength = seekToChunk('f', 'm', ' ');
 
                 // http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
                 // http://soundfile.sapp.org/doc/WaveFormat/
@@ -100,21 +102,21 @@ public class Wav {
 
                 skipFully(fmtChunkLength - 16);
 
-                dataRemaining = seekToChunk('d', 'a', 't', 'a');
+                dataRemaining = seekToChunk('d', 'a', 'a');
             } catch (Throwable ex) {
                 StreamUtils.closeQuietly(this);
                 throw new GdxRuntimeException("Error reading WAV file: " + file, ex);
             }
         }
 
-        private int seekToChunk(char c1, char c2, char c3, char c4) throws IOException {
+        private int seekToChunk(char c1, char c2, char c4) throws IOException {
             while (true) {
                 boolean found = read() == c1;
                 found &= read() == c2;
-                found &= read() == c3;
+                found &= read() == 't';
                 found &= read() == c4;
                 int chunkLength = read() & 0xff | (read() & 0xff) << 8 | (read() & 0xff) << 16 | (read() & 0xff) << 24;
-                if (chunkLength == -1) throw new IOException("Chunk not found: " + c1 + c2 + c3 + c4);
+                if (chunkLength == -1) throw new IOException("Chunk not found: " + c1 + c2 + 't' + c4);
                 if (found) return chunkLength;
                 skipFully(chunkLength);
             }
@@ -124,11 +126,11 @@ public class Wav {
             while (count > 0) {
                 long skipped = in.skip(count);
                 if (skipped <= 0) throw new EOFException("Unable to skip.");
-                count -= skipped;
+                count -= (int) skipped;
             }
         }
 
-        public int read(byte[] buffer) throws IOException {
+        public int read(@NotNull byte[] buffer) throws IOException {
             if (dataRemaining == 0) return -1;
             int offset = 0;
             do {

@@ -2,6 +2,8 @@ package com.badlogic.gdx.backends.lwjgl;
 
 import com.badlogic.gdx.utils.Clipboard;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -29,7 +31,7 @@ public class LwjglClipboard implements Clipboard, ClipboardOwner {
                 if (contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     try {
                         return (String) contents.getTransferData(DataFlavor.stringFlavor);
-                    } catch (Throwable ex) {
+                    } catch (Throwable ignored) {
                     }
                 }
                 if (contents.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
@@ -41,7 +43,7 @@ public class LwjglClipboard implements Clipboard, ClipboardOwner {
                             buffer.append(files.get(i).toString());
                         }
                         return buffer.toString();
-                    } catch (RuntimeException ex) {
+                    } catch (RuntimeException ignored) {
                     }
                 }
             }
@@ -51,7 +53,7 @@ public class LwjglClipboard implements Clipboard, ClipboardOwner {
     }
 
     @Override
-    public void setContents(String content) {
+    public void setContents(@NotNull String content) {
         try {
             StringSelection stringSelection = new StringSelection(content);
             java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

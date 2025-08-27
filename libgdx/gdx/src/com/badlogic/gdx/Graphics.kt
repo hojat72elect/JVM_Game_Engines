@@ -215,17 +215,17 @@ interface Graphics {
     /**
      * @return the primary monitor
      */
-    fun getPrimaryMonitor(): Monitor
+    fun getPrimaryMonitor(): Monitor?
 
     /**
      * @return the monitor the application's window is located on
      */
-    fun getMonitor(): Monitor
+    fun getMonitor(): Monitor?
 
     /**
      * @return the currently connected [Monitor]s
      */
-    fun getMonitors(): Array<Monitor>
+    fun getMonitors(): Array<Monitor>?
 
     /**
      * @return the supported fullscreen [DisplayMode](s) of the monitor the window is on
@@ -235,17 +235,17 @@ interface Graphics {
     /**
      * @return the supported fullscreen [DisplayMode]s of the given [Monitor]
      */
-    fun getDisplayModes(monitor: Monitor): Array<DisplayMode>
+    fun getDisplayModes(monitor: Monitor): Array<DisplayMode>?
 
     /**
      * @return the current [DisplayMode] of the monitor the window is on.
      */
-    fun getDisplayMode(): DisplayMode
+    fun getDisplayMode(): DisplayMode?
 
     /**
      * @return the current [DisplayMode] of the given [Monitor]
      */
-    fun getDisplayMode(monitor: Monitor): DisplayMode
+    fun getDisplayMode(monitor: Monitor): DisplayMode?
 
     /**
      * Sets the window to full-screen mode.
@@ -315,7 +315,7 @@ interface Graphics {
     /**
      * @return the format of the color, depth and stencil buffer in a [BufferFormat] instance
      */
-    fun getBufferFormat(): BufferFormat
+    fun getBufferFormat(): BufferFormat?
 
     /**
      * @param extension the extension name

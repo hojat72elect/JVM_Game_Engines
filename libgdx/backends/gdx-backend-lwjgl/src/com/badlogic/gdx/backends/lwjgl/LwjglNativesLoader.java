@@ -11,7 +11,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 public final class LwjglNativesLoader {
-    static public boolean load = true;
+    static public boolean load;
 
     static {
         System.setProperty("org.lwjgl.input.Mouse.allowNegativeMouseCoords", "true");
@@ -35,7 +35,7 @@ public final class LwjglNativesLoader {
         if (!load) return;
 
         SharedLibraryLoader loader = new SharedLibraryLoader();
-        File nativesDir = null;
+        File nativesDir;
         try {
             String lwjglLib = null;
             String openalLib = null;

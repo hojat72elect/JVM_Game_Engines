@@ -12,6 +12,7 @@ import com.jcraft.jorbis.Comment;
 import com.jcraft.jorbis.DspState;
 import com.jcraft.jorbis.Info;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.BufferUtils;
 
 import java.io.IOException;
@@ -363,7 +364,7 @@ public class OggInputStream extends InputStream {
                                 while ((samples = dspState.synthesis_pcmout(_pcm, _index)) > 0) {
                                     float[][] pcm = _pcm[0];
                                     // boolean clipflag = false;
-                                    int bout = (samples < convsize ? samples : convsize);
+                                    int bout = (Math.min(samples, convsize));
 
                                     // convert floats to 16 bit signed ints (host order) and interleave
                                     for (int i = 0; i < oggInfo.channels; i++) {
@@ -475,7 +476,7 @@ public class OggInputStream extends InputStream {
         return endOfStream && (readIndex >= pcmBuffer.position());
     }
 
-    public int read(byte[] b, int off, int len) {
+    public int read(@NotNull byte[] b, int off, int len) {
         for (int i = 0; i < len; i++) {
             int value = read();
             if (value >= 0) {
@@ -492,7 +493,7 @@ public class OggInputStream extends InputStream {
         return len;
     }
 
-    public int read(byte[] b) {
+    public int read(@NotNull byte[] b) {
         return read(b, 0, b.length);
     }
 
