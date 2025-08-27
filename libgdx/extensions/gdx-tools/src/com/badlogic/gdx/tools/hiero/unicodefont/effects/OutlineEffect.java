@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,11 +21,6 @@ public class OutlineEffect implements ConfigurableEffect {
     private Stroke stroke;
 
     public OutlineEffect() {
-    }
-
-    public OutlineEffect(int width, Color color) {
-        this.width = width;
-        this.color = color;
     }
 
     public void draw(BufferedImage image, Graphics2D g, UnicodeFont unicodeFont, Glyph glyph) {
@@ -63,15 +57,6 @@ public class OutlineEffect implements ConfigurableEffect {
         return join;
     }
 
-    /**
-     * Sets how the corners of the outline are drawn. This is usually only noticeable at large outline widths.
-     *
-     * @param join One of: {@link BasicStroke#JOIN_BEVEL}, {@link BasicStroke#JOIN_MITER}, {@link BasicStroke#JOIN_ROUND}
-     */
-    public void setJoin(int join) {
-        this.join = join;
-    }
-
     public Stroke getStroke() {
         if (stroke == null) return new BasicStroke(width, BasicStroke.CAP_SQUARE, join);
         return stroke;
@@ -102,12 +87,12 @@ public class OutlineEffect implements ConfigurableEffect {
     }
 
     public void setValues(List values) {
-        for (Iterator iter = values.iterator(); iter.hasNext(); ) {
-            Value value = (Value) iter.next();
+        for (Object o : values) {
+            Value value = (Value) o;
             if (value.getName().equals("Color")) {
                 color = (Color) value.getObject();
             } else if (value.getName().equals("Width")) {
-                width = ((Float) value.getObject()).floatValue();
+                width = (Float) value.getObject();
             } else if (value.getName().equals("Join")) {
                 join = Integer.parseInt((String) value.getObject());
             }

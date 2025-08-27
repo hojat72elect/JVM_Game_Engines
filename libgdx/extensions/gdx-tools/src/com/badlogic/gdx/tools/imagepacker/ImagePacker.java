@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -20,7 +19,7 @@ import javax.imageio.ImageIO;
  * </p>
  *
  * <p>
- * See http://www.blackpawn.com/texts/lightmaps/default.html for details.
+ * See <a href="http://www.blackpawn.com/texts/lightmaps/default.html">this doc</a> for details.
  * </p>
  *
  * <p>
@@ -70,7 +69,7 @@ public class ImagePacker {
         this.padding = padding;
         this.duplicateBorder = duplicateBorder;
         this.root = new Node(0, 0, width, height, null, null, null);
-        this.rects = new HashMap<String, Rectangle>();
+        this.rects = new HashMap<>();
     }
 
     public static void main(String[] argv) throws IOException {
@@ -82,14 +81,8 @@ public class ImagePacker {
             Color color = new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 1);
             images[i] = createImage(rand.nextInt(50) + 10, rand.nextInt(50) + 10, color);
         }
-// BufferedImage[] images = { ImageIO.read( new File( "test.png" ) ) };
 
-        Arrays.sort(images, new Comparator<BufferedImage>() {
-            @Override
-            public int compare(BufferedImage o1, BufferedImage o2) {
-                return o2.getWidth() * o2.getHeight() - o1.getWidth() * o1.getHeight();
-            }
-        });
+        Arrays.sort(images, (o1, o2) -> o2.getWidth() * o2.getHeight() - o1.getWidth() * o1.getHeight());
 
         for (int i = 0; i < images.length; i++)
             packer.insertImage("" + i, images[i]);
@@ -108,8 +101,7 @@ public class ImagePacker {
 
     /**
      * <p>
-     * Inserts the given image. You can later on retrieve the images position in the output image via the supplied name and the
-     * method {@link #getRects()}.
+     * Inserts the given image.
      * </p>
      *
      * @param name  the name of the image
@@ -163,7 +155,7 @@ public class ImagePacker {
 
     private Node insert(Node node, Rectangle rect) {
         if (node.leaveName == null && node.leftChild != null && node.rightChild != null) {
-            Node newNode = null;
+            Node newNode;
 
             newNode = insert(node.leftChild, rect);
             if (newNode == null) newNode = insert(node.rightChild, rect);
@@ -213,13 +205,6 @@ public class ImagePacker {
      */
     public BufferedImage getImage() {
         return image;
-    }
-
-    /**
-     * @return the rectangle in the output image of each inserted image
-     */
-    public Map<String, Rectangle> getRects() {
-        return rects;
     }
 
     static final class Node {

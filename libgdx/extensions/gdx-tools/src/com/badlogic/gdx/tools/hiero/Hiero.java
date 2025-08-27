@@ -127,7 +127,7 @@ import javax.swing.event.ListSelectionListener;
 public class Hiero extends JFrame {
     UnicodeFont unicodeFont;
     Color renderingBackgroundColor = Color.BLACK;
-    List<EffectPanel> effectPanels = new ArrayList<EffectPanel>();
+    List<EffectPanel> effectPanels = new ArrayList<>();
     Preferences prefs;
     ColorEffect colorEffect;
     boolean batchMode = false;
@@ -272,7 +272,7 @@ public class Hiero extends JFrame {
     }
 
     void updateFont() {
-        int fontSize = ((Integer) fontSizeSpinner.getValue()).intValue();
+        int fontSize = (Integer) fontSizeSpinner.getValue();
 
         File file = null;
         if (fontFileRadio.isSelected()) {
@@ -281,7 +281,6 @@ public class Hiero extends JFrame {
         }
 
         boolean isFreeType = freeTypeRadio.isSelected();
-        boolean isNative = nativeRadio.isSelected();
         boolean isJava = javaRadio.isSelected();
         addEffectButton.setVisible(isJava);
         effectsScroll.setVisible(isJava);

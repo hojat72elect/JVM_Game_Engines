@@ -24,8 +24,8 @@ public class TexturePanel extends ImagePanel {
     private final Color indexColor = Color.WHITE;
 
     public TexturePanel() {
-        selectedRegions = new Array<TextureRegion>();
-        unselectedRegions = new Array<TextureRegion>();
+        selectedRegions = new Array<>();
+        unselectedRegions = new Array<>();
 
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {

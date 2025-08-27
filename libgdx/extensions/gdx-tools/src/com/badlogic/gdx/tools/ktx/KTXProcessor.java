@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.glutils.ETC1;
 import com.badlogic.gdx.graphics.glutils.ETC1.ETC1Data;
 import com.badlogic.gdx.graphics.glutils.KTXTextureData;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.io.DataOutputStream;
@@ -31,34 +30,7 @@ public class KTXProcessor {
     private final static int DISPOSE_DONT = 0;
     private final static int DISPOSE_PACK = 1;
     private final static int DISPOSE_FACE = 2;
-    private final static int DISPOSE_LEVEL = 4;
 
-    public static void convert(String input, String output, boolean genMipmaps, boolean packETC1, boolean genAlphaAtlas)
-            throws Exception {
-        Array<String> opts = new Array<String>(String.class);
-        opts.add(input);
-        opts.add(output);
-        if (genMipmaps) opts.add("-mipmaps");
-        if (packETC1 && !genAlphaAtlas) opts.add("-etc1");
-        if (packETC1 && genAlphaAtlas) opts.add("-etc1a");
-        main(opts.toArray());
-    }
-
-    public static void convert(String inPx, String inNx, String inPy, String inNy, String inPz, String inNz, String output,
-                               boolean genMipmaps, boolean packETC1, boolean genAlphaAtlas) throws Exception {
-        Array<String> opts = new Array<String>(String.class);
-        opts.add(inPx);
-        opts.add(inNx);
-        opts.add(inPy);
-        opts.add(inNy);
-        opts.add(inPz);
-        opts.add(inNz);
-        opts.add(output);
-        if (genMipmaps) opts.add("-mipmaps");
-        if (packETC1 && !genAlphaAtlas) opts.add("-etc1");
-        if (packETC1 && genAlphaAtlas) opts.add("-etc1a");
-        main(opts.toArray());
-    }
 
     public static void main(String[] args) {
         new HeadlessApplication(new KTXProcessorListener(args));
@@ -131,7 +103,7 @@ public class KTXProcessor {
             // Process all faces
             int nFaces = isCubemap ? 6 : 1;
             Image[][] images = new Image[nFaces][];
-            int texWidth = -1, texHeight = -1, texFormat = -1, nLevels = 0;
+            int texWidth = -1, texHeight = -1, nLevels = 0;
             for (int face = 0; face < nFaces; face++) {
                 ETC1Data etc1 = null;
                 Pixmap facePixmap = null;

@@ -10,7 +10,6 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -78,8 +77,8 @@ public class DistanceFieldEffect implements ConfigurableEffect {
 
     @Override
     public void setValues(List values) {
-        for (Iterator iter = values.iterator(); iter.hasNext(); ) {
-            Value value = (Value) iter.next();
+        for (Object o : values) {
+            Value value = (Value) o;
             if ("Color".equals(value.getName())) {
                 color = (Color) value.getObject();
             } else if ("Scale".equals(value.getName())) {

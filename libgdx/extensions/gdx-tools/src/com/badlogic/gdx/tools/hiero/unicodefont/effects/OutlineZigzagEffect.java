@@ -1,18 +1,13 @@
 package com.badlogic.gdx.tools.hiero.unicodefont.effects;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.FlatteningPathIterator;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
-import java.util.Iterator;
 import java.util.List;
 
-/**
- *
- */
 public class OutlineZigzagEffect extends OutlineEffect {
     float amplitude = 1;
     float wavelength = 3;
@@ -21,9 +16,7 @@ public class OutlineZigzagEffect extends OutlineEffect {
         setStroke(new ZigzagStroke());
     }
 
-    public OutlineZigzagEffect(int width, Color color) {
-        super(width, color);
-    }
+
 
     public String toString() {
         return "Outline (Zigzag)";
@@ -40,12 +33,12 @@ public class OutlineZigzagEffect extends OutlineEffect {
 
     public void setValues(List values) {
         super.setValues(values);
-        for (Iterator iter = values.iterator(); iter.hasNext(); ) {
-            Value value = (Value) iter.next();
+        for (Object o : values) {
+            Value value = (Value) o;
             if (value.getName().equals("Wavelength")) {
-                wavelength = ((Float) value.getObject()).floatValue();
+                wavelength = (Float) value.getObject();
             } else if (value.getName().equals("Amplitude")) {
-                amplitude = ((Float) value.getObject()).floatValue();
+                amplitude = (Float) value.getObject();
             }
         }
     }
@@ -59,8 +52,8 @@ public class OutlineZigzagEffect extends OutlineEffect {
             float[] points = new float[6];
             float moveX = 0, moveY = 0;
             float lastX = 0, lastY = 0;
-            float thisX = 0, thisY = 0;
-            int type = 0;
+            float thisX, thisY;
+            int type;
             float next = 0;
             int phase = 0;
             while (!it.isDone()) {

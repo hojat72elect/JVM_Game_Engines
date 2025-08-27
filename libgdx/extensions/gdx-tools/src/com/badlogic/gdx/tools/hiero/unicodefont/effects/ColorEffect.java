@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -17,10 +16,6 @@ public class ColorEffect implements ConfigurableEffect {
     private Color color = Color.white;
 
     public ColorEffect() {
-    }
-
-    public ColorEffect(Color color) {
-        this.color = color;
     }
 
     public void draw(BufferedImage image, Graphics2D g, UnicodeFont unicodeFont, Glyph glyph) {
@@ -51,8 +46,8 @@ public class ColorEffect implements ConfigurableEffect {
     }
 
     public void setValues(List values) {
-        for (Iterator iter = values.iterator(); iter.hasNext(); ) {
-            Value value = (Value) iter.next();
+        for (Object o : values) {
+            Value value = (Value) o;
             if (value.getName().equals("Color")) {
                 setColor((Color) value.getObject());
             }

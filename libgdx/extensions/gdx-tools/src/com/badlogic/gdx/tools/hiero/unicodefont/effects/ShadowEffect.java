@@ -12,12 +12,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-/**
- *
- */
 public class ShadowEffect implements ConfigurableEffect {
     /**
      * The numberof kernels to apply
@@ -26,7 +22,7 @@ public class ShadowEffect implements ConfigurableEffect {
     /**
      * The blur kernels applied across the effect
      */
-    public static final float[][] GAUSSIAN_BLUR_KERNELS = generateGaussianBlurKernels(NUM_KERNELS);
+    public static final float[][] GAUSSIAN_BLUR_KERNELS = generateGaussianBlurKernels();
 
     private Color color = Color.black;
     private float opacity = 0.6f;
@@ -37,21 +33,13 @@ public class ShadowEffect implements ConfigurableEffect {
     public ShadowEffect() {
     }
 
-    public ShadowEffect(Color color, int xDistance, int yDistance, float opacity) {
-        this.color = color;
-        this.xDistance = xDistance;
-        this.yDistance = yDistance;
-        this.opacity = opacity;
-    }
-
     /**
      * Generate the blur kernels which will be repeatedly applied when blurring images
      *
-     * @param level The number of kernels to generate
      * @return The kernels generated
      */
-    private static float[][] generateGaussianBlurKernels(int level) {
-        float[][] pascalsTriangle = generatePascalsTriangle(level);
+    private static float[][] generateGaussianBlurKernels() {
+        float[][] pascalsTriangle = generatePascalsTriangle(ShadowEffect.NUM_KERNELS);
         float[][] gaussianTriangle = new float[pascalsTriangle.length][];
         for (int i = 0; i < gaussianTriangle.length; i++) {
             float total = 0.0f;
@@ -96,8 +84,8 @@ public class ShadowEffect implements ConfigurableEffect {
         g.fill(glyph.getShape());
 
         // Also shadow the outline, if one exists.
-        for (Iterator iter = unicodeFont.getEffects().iterator(); iter.hasNext(); ) {
-            Effect effect = (Effect) iter.next();
+        for (Object o : unicodeFont.getEffects()) {
+            Effect effect = (Effect) o;
             if (effect instanceof OutlineEffect) {
                 Composite composite = g.getComposite();
                 g.setComposite(AlphaComposite.Src); // Prevent shadow and outline shadow alpha from combining.
@@ -136,58 +124,6 @@ public class ShadowEffect implements ConfigurableEffect {
         this.color = color;
     }
 
-    public float getXDistance() {
-        return xDistance;
-    }
-
-    /**
-     * Sets the pixels to offset the shadow on the x axis. The glyphs will need padding so the shadow doesn't get clipped.
-     */
-    public void setXDistance(float distance) {
-        xDistance = distance;
-    }
-
-    public float getYDistance() {
-        return yDistance;
-    }
-
-    /**
-     * Sets the pixels to offset the shadow on the y axis. The glyphs will need padding so the shadow doesn't get clipped.
-     */
-    public void setYDistance(float distance) {
-        yDistance = distance;
-    }
-
-    public int getBlurKernelSize() {
-        return blurKernelSize;
-    }
-
-    /**
-     * Sets how many neighboring pixels are used to blur the shadow. Set to 0 for no blur.
-     */
-    public void setBlurKernelSize(int blurKernelSize) {
-        this.blurKernelSize = blurKernelSize;
-    }
-
-    public int getBlurPasses() {
-        return blurPasses;
-    }
-
-    /**
-     * Sets the number of times to apply a blur to the shadow. Set to 0 for no blur.
-     */
-    public void setBlurPasses(int blurPasses) {
-        this.blurPasses = blurPasses;
-    }
-
-    public float getOpacity() {
-        return opacity;
-    }
-
-    public void setOpacity(float opacity) {
-        this.opacity = opacity;
-    }
-
     public String toString() {
         return "Shadow";
     }
@@ -215,20 +151,20 @@ public class ShadowEffect implements ConfigurableEffect {
     }
 
     public void setValues(List values) {
-        for (Iterator iter = values.iterator(); iter.hasNext(); ) {
-            Value value = (Value) iter.next();
+        for (Object o : values) {
+            Value value = (Value) o;
             if (value.getName().equals("Color")) {
                 color = (Color) value.getObject();
             } else if (value.getName().equals("Opacity")) {
-                opacity = ((Float) value.getObject()).floatValue();
+                opacity = (Float) value.getObject();
             } else if (value.getName().equals("X distance")) {
-                xDistance = ((Float) value.getObject()).floatValue();
+                xDistance = (Float) value.getObject();
             } else if (value.getName().equals("Y distance")) {
-                yDistance = ((Float) value.getObject()).floatValue();
+                yDistance = (Float) value.getObject();
             } else if (value.getName().equals("Blur kernel size")) {
                 blurKernelSize = Integer.parseInt((String) value.getObject());
             } else if (value.getName().equals("Blur passes")) {
-                blurPasses = ((Integer) value.getObject()).intValue();
+                blurPasses = (Integer) value.getObject();
             }
         }
     }

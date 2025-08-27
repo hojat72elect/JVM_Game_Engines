@@ -1,28 +1,19 @@
 package com.badlogic.gdx.tools.hiero.unicodefont.effects;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.FlatteningPathIterator;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
-import java.util.Iterator;
 import java.util.List;
 
-/**
- *
- */
 public class OutlineWobbleEffect extends OutlineEffect {
     float detail = 1;
     float amplitude = 1;
 
     public OutlineWobbleEffect() {
         setStroke(new WobbleStroke());
-    }
-
-    public OutlineWobbleEffect(int width, Color color) {
-        super(width, color);
     }
 
     public String toString() {
@@ -40,12 +31,12 @@ public class OutlineWobbleEffect extends OutlineEffect {
 
     public void setValues(List values) {
         super.setValues(values);
-        for (Iterator iter = values.iterator(); iter.hasNext(); ) {
-            Value value = (Value) iter.next();
+        for (Object o : values) {
+            Value value = (Value) o;
             if (value.getName().equals("Detail")) {
-                detail = ((Float) value.getObject()).floatValue();
+                detail = (Float) value.getObject();
             } else if (value.getName().equals("Amplitude")) {
-                amplitude = ((Float) value.getObject()).floatValue();
+                amplitude = (Float) value.getObject();
             }
         }
     }
@@ -60,8 +51,8 @@ public class OutlineWobbleEffect extends OutlineEffect {
             float[] points = new float[6];
             float moveX = 0, moveY = 0;
             float lastX = 0, lastY = 0;
-            float thisX = 0, thisY = 0;
-            int type = 0;
+            float thisX, thisY;
+            int type;
             float next = 0;
             while (!it.isDone()) {
                 type = it.currentSegment(points);

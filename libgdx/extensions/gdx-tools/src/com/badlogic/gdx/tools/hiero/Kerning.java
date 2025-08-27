@@ -85,12 +85,16 @@ public class Kerning {
             input.skip(4);
 
             String tag = new String(tagBytes, StandardCharsets.ISO_8859_1);
-            if (tag.equals("head")) {
-                headOffset = offset;
-            } else if (tag.equals("kern")) {
-                kernOffset = offset;
-            } else if (tag.equals("GPOS")) {
-                gposOffset = offset;
+            switch (tag) {
+                case "head":
+                    headOffset = offset;
+                    break;
+                case "kern":
+                    kernOffset = offset;
+                    break;
+                case "GPOS":
+                    gposOffset = offset;
+                    break;
             }
         }
     }
@@ -222,8 +226,7 @@ public class Kerning {
         IntArray[] glyphsByClass2 = readClassDefinition(subTablePosition + classDefOffset2, class2Count);
         input.seek(position);
 
-        for (int i = 0; i < coverage.length; i++) {
-            int glyph = coverage[i];
+        for (int glyph : coverage) {
             boolean found = false;
             for (int j = 1; j < class1Count && !found; j++) {
                 found = glyphsByClass1[j].contains(glyph);
@@ -305,8 +308,7 @@ public class Kerning {
         int format = input.readUnsignedShort();
         if (format == 1) {
             int glyphCount = input.readUnsignedShort();
-            int[] glyphArray = input.readUnsignedShortArray(glyphCount);
-            return glyphArray;
+            return input.readUnsignedShortArray(glyphCount);
         } else if (format == 2) {
             int rangeCount = input.readUnsignedShort();
             IntArray glyphArray = new IntArray();

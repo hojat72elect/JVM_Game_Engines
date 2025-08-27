@@ -16,13 +16,12 @@ import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.Buffer;
 import java.nio.IntBuffer;
+import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +46,7 @@ public class BMFontUtil {
         getGlyph('\u0000');
         unicodeFont.loadGlyphs();
 
-        PrintStream out = new PrintStream(new FileOutputStream(new File(outputDir, outputName + ".fnt")));
+        PrintStream out = new PrintStream(Files.newOutputStream(new File(outputDir, outputName + ".fnt").toPath()));
         Font font = unicodeFont.getFont();
         int pageWidth = unicodeFont.getGlyphPageWidth();
         int pageHeight = unicodeFont.getGlyphPageHeight();
@@ -76,16 +75,11 @@ public class BMFontUtil {
 
         pageIndex = 0;
         List allGlyphs = new ArrayList(512);
-        for (Iterator pageIter = unicodeFont.getGlyphPages().iterator(); pageIter.hasNext(); ) {
-            GlyphPage page = (GlyphPage) pageIter.next();
+        for (Object o : unicodeFont.getGlyphPages()) {
+            GlyphPage page = (GlyphPage) o;
             List<Glyph> glyphs = page.getGlyphs();
-            Collections.sort(glyphs, new Comparator<Glyph>() {
-                public int compare(Glyph o1, Glyph o2) {
-                    return o1.getCodePoint() - o2.getCodePoint();
-                }
-            });
-            for (Iterator glyphIter = page.getGlyphs().iterator(); glyphIter.hasNext(); ) {
-                Glyph glyph = (Glyph) glyphIter.next();
+            glyphs.sort(Comparator.comparingInt(Glyph::getCodePoint));
+            for (Glyph glyph : page.getGlyphs()) {
                 writeGlyph(out, pageWidth, pageHeight, pageIndex, glyph);
             }
             allGlyphs.addAll(page.getGlyphs());
@@ -105,8 +99,8 @@ public class BMFontUtil {
             }
 
             IntIntMap glyphCodeToCodePoint = new IntIntMap();
-            for (Iterator iter = allGlyphs.iterator(); iter.hasNext(); ) {
-                Glyph glyph = (Glyph) iter.next();
+            for (Object allGlyph : allGlyphs) {
+                Glyph glyph = (Glyph) allGlyph;
                 glyphCodeToCodePoint.put(getGlyphCode(font, glyph.getCodePoint()), glyph.getCodePoint());
             }
 
@@ -133,8 +127,8 @@ public class BMFontUtil {
                 kernings.add(pair);
             }
             out.println("kernings count=" + kernings.size());
-            for (Iterator iter = kernings.iterator(); iter.hasNext(); ) {
-                KerningPair pair = (KerningPair) iter.next();
+            for (Object o : kernings) {
+                KerningPair pair = (KerningPair) o;
                 out.println("kerning first=" + pair.firstCodePoint + " second=" + pair.secondCodePoint + " amount=" + pair.offset);
             }
         }
@@ -170,15 +164,12 @@ public class BMFontUtil {
         }
     }
 
-    /**
-     * @return May be null.
-     */
-    private Glyph getGlyph(char c) {
+    private void getGlyph(char c) {
         char[] chars = {c};
         GlyphVector vector = unicodeFont.getFont().layoutGlyphVector(GlyphPage.renderContext, chars, 0, chars.length,
                 Font.LAYOUT_LEFT_TO_RIGHT);
         Rectangle bounds = vector.getGlyphPixelBounds(0, GlyphPage.renderContext, 0, 0);
-        return unicodeFont.getGlyph(vector.getGlyphCode(0), c, bounds, vector, 0);
+        unicodeFont.getGlyph(vector.getGlyphCode(0), c, bounds, vector, 0);
     }
 
     void writeGlyph(PrintStream out, int pageWidth, int pageHeight, int pageIndex, Glyph glyph) {

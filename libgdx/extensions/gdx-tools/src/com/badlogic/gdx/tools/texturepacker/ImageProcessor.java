@@ -37,7 +37,7 @@ public class ImageProcessor {
         this.settings = settings;
     }
 
-    static private String splitError(int x, int y, int[] rgba, String name) {
+    static private void splitError(int x, int y, int[] rgba, String name) {
         throw new RuntimeException("Invalid " + name + " ninepatch split pixel at " + x + ", " + y + ", rgba: " + rgba[0] + ", "
                 + rgba[1] + ", " + rgba[2] + ", " + rgba[3]);
     }
@@ -183,10 +183,6 @@ public class ImageProcessor {
         return rect;
     }
 
-    public float getScale() {
-        return scale;
-    }
-
     public void setScale(float scale) {
         this.scale = scale;
     }
@@ -224,7 +220,7 @@ public class ImageProcessor {
 
         boolean isPatch = name.endsWith(".9");
         int[] splits = null, pads = null;
-        Rect rect = null;
+        Rect rect;
         if (isPatch) {
             // Strip ".9" from file name, read ninepatch split pixels, and strip ninepatch split pixels.
             name = name.substring(0, name.length() - 2);
@@ -271,7 +267,7 @@ public class ImageProcessor {
             rect.pads = pads;
             rect.canRotate = false;
         } else {
-            rect = stripWhitespace(name, image);
+            rect = stripWhitespace(image);
             if (rect == null) return null;
         }
 
@@ -283,7 +279,7 @@ public class ImageProcessor {
     /**
      * Strips whitespace and returns the rect, or null if the image should be ignored.
      */
-    protected Rect stripWhitespace(String name, BufferedImage source) {
+    protected Rect stripWhitespace(BufferedImage source) {
         WritableRaster alphaRaster = source.getAlphaRaster();
         if (alphaRaster == null || (!settings.stripWhitespaceX && !settings.stripWhitespaceY))
             return new Rect(source, 0, 0, source.getWidth(), source.getHeight(), false);
@@ -426,12 +422,12 @@ public class ImageProcessor {
         getSplitPoint(raster, name, right, endY + 1, true, false);
 
         // No pads.
-        if (startX == 0 && endX == 0 && startY == 0 && endY == 0) {
+        if (startX == 0 && startY == 0) {
             return null;
         }
 
         // -2 here is because the coordinates were computed before the 1px border was stripped.
-        if (startX == 0 && endX == 0) {
+        if (startX == 0) {
             startX = -1;
             endX = -1;
         } else {
@@ -443,7 +439,7 @@ public class ImageProcessor {
                 endX = raster.getWidth() - 2;
             }
         }
-        if (startY == 0 && endY == 0) {
+        if (startY == 0) {
             startY = -1;
             endY = -1;
         } else {

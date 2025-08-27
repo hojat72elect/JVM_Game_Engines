@@ -27,7 +27,6 @@ import java.awt.font.TextAttribute;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -42,7 +41,6 @@ import java.util.Map;
  * for display. However, it is best to load the glyphs that are known to be needed at startup.
  */
 public class UnicodeFont {
-    static private final int DISPLAY_LIST_CACHE_SIZE = 200;
     static private final int MAX_GLYPH_CODE = 0x10FFFF;
     static private final int PAGE_SIZE = 512;
     static private final int PAGES = MAX_GLYPH_CODE / PAGE_SIZE;
@@ -51,11 +49,7 @@ public class UnicodeFont {
     /**
      * Sorts glyphs by height, tallest first.
      */
-    static private final Comparator heightComparator = new Comparator() {
-        public int compare(Object o1, Object o2) {
-            return ((Glyph) o2).getHeight() - ((Glyph) o1).getHeight();
-        }
-    };
+    static private final Comparator heightComparator = (o1, o2) -> ((Glyph) o2).getHeight() - ((Glyph) o1).getHeight();
     private final Glyph[][] glyphs = new Glyph[PAGES][];
     private final List<GlyphPage> glyphPages = new ArrayList();
     private final List<Glyph> queuedGlyphs = new ArrayList(256);
@@ -181,18 +175,6 @@ public class UnicodeFont {
     }
 
     /**
-     * Queues the glyphs in the specified codepoint range (inclusive) to be loaded. Note that the glyphs are not actually loaded
-     * until {@link #loadGlyphs()} is called.
-     * <p>
-     * Some characters like combining marks and non-spacing marks can only be rendered with the context of other glyphs. In this
-     * case, use {@link #addGlyphs(String)}.
-     */
-    public void addGlyphs(int startCodePoint, int endCodePoint) {
-        for (int codePoint = startCodePoint; codePoint <= endCodePoint; codePoint++)
-            addGlyphs(new String(Character.toChars(codePoint)));
-    }
-
-    /**
      * Queues the glyphs in the specified text to be loaded. Note that the glyphs are not actually loaded until
      * {@link #loadGlyphs()} is called.
      */
@@ -206,22 +188,6 @@ public class UnicodeFont {
             Rectangle bounds = getGlyphBounds(vector, i, codePoint);
             getGlyph(vector.getGlyphCode(i), codePoint, bounds, vector, i);
         }
-    }
-
-    /**
-     * Queues the glyphs in the ASCII character set (codepoints 32 through 255) to be loaded. Note that the glyphs are not
-     * actually loaded until {@link #loadGlyphs()} is called.
-     */
-    public void addAsciiGlyphs() {
-        addGlyphs(32, 255);
-    }
-
-    /**
-     * Queues the glyphs in the NEHE character set (codepoints 32 through 128) to be loaded. Note that the glyphs are not actually
-     * loaded until {@link #loadGlyphs()} is called.
-     */
-    public void addNeheGlyphs() {
-        addGlyphs(32, 32 + 96);
     }
 
     /**
@@ -245,7 +211,6 @@ public class UnicodeFont {
 
         for (Iterator iter = queuedGlyphs.iterator(); iter.hasNext(); ) {
             Glyph glyph = (Glyph) iter.next();
-            int codePoint = glyph.getCodePoint();
 
             // Only load the first missing glyph.
             if (glyph.isMissing()) {
@@ -257,11 +222,10 @@ public class UnicodeFont {
             }
         }
 
-        Collections.sort(queuedGlyphs, heightComparator);
+        queuedGlyphs.sort(heightComparator);
 
         // Add to existing pages.
-        for (Iterator iter = glyphPages.iterator(); iter.hasNext(); ) {
-            GlyphPage glyphPage = (GlyphPage) iter.next();
+        for (GlyphPage glyphPage : glyphPages) {
             maxGlyphsToLoad -= glyphPage.loadGlyphs(queuedGlyphs, maxGlyphsToLoad);
             if (maxGlyphsToLoad == 0 || queuedGlyphs.isEmpty()) return true;
         }
@@ -282,8 +246,7 @@ public class UnicodeFont {
      * needed.
      */
     public void dispose() {
-        for (Iterator iter = glyphPages.iterator(); iter.hasNext(); ) {
-            GlyphPage page = (GlyphPage) iter.next();
+        for (GlyphPage page : glyphPages) {
             page.getTexture().dispose();
         }
         if (bitmapFont != null) {
@@ -294,7 +257,7 @@ public class UnicodeFont {
 
     public void drawString(float x, float y, String text, Color color, int startIndex, int endIndex) {
         if (text == null) throw new IllegalArgumentException("text cannot be null.");
-        if (text.length() == 0) return;
+        if (text.isEmpty()) return;
         if (color == null) throw new IllegalArgumentException("color cannot be null.");
 
         x -= paddingLeft;
@@ -304,14 +267,14 @@ public class UnicodeFont {
         GL11.glTranslatef(x, y, 0);
 
         if (renderType == RenderType.FreeType && bitmapFont != null)
-            drawBitmap(text, startIndex, endIndex);
+            drawBitmap(text);
         else
             drawUnicode(text, startIndex, endIndex);
 
         GL11.glTranslatef(-x, -y, 0);
     }
 
-    private void drawBitmap(String text, int startIndex, int endIndex) {
+    private void drawBitmap(String text) {
         BitmapFontData data = bitmapFont.getData();
         int padY = paddingTop + paddingBottom + paddingAdvanceY;
         data.setLineHeight(data.lineHeight + padY);
@@ -345,7 +308,7 @@ public class UnicodeFont {
         char[] chars = text.substring(0, endIndex).toCharArray();
         GlyphVector vector = font.layoutGlyphVector(GlyphPage.renderContext, chars, 0, chars.length, Font.LAYOUT_LEFT_TO_RIGHT);
 
-        int maxWidth = 0, totalHeight = 0, lines = 0;
+        int maxWidth = 0, totalHeight = 0;
         int extraX = 0, extraY = ascent;
         boolean startNewLine = false;
         Texture lastBind = null;
@@ -398,19 +361,10 @@ public class UnicodeFont {
             if (codePoint == '\n') {
                 startNewLine = true; // Mac gives -1 for bounds.x of '\n', so use the bounds.x of the next glyph.
                 extraY += getLineHeight();
-                lines++;
                 totalHeight = 0;
             } else if (renderType == RenderType.Native) offsetX += bounds.width;
         }
         if (lastBind != null) GL11.glEnd();
-    }
-
-    public void drawString(float x, float y, String text) {
-        drawString(x, y, text, Color.WHITE);
-    }
-
-    public void drawString(float x, float y, String text, Color col) {
-        drawString(x, y, text, col, 0, text.length());
     }
 
     /**
@@ -427,7 +381,7 @@ public class UnicodeFont {
         }
         int pageIndex = glyphCode / PAGE_SIZE;
         int glyphIndex = glyphCode & (PAGE_SIZE - 1);
-        Glyph glyph = null;
+        Glyph glyph;
         Glyph[] page = glyphs[pageIndex];
         if (page != null) {
             glyph = page[glyphIndex];
@@ -453,13 +407,9 @@ public class UnicodeFont {
         return bounds;
     }
 
-    public int getSpaceWidth() {
-        return spaceWidth;
-    }
-
     public int getWidth(String text) {
         if (text == null) throw new IllegalArgumentException("text cannot be null.");
-        if (text.length() == 0) return 0;
+        if (text.isEmpty()) return 0;
 
         char[] chars = text.toCharArray();
         GlyphVector vector = font.layoutGlyphVector(GlyphPage.renderContext, chars, 0, chars.length, Font.LAYOUT_LEFT_TO_RIGHT);
@@ -485,7 +435,7 @@ public class UnicodeFont {
 
     public int getHeight(String text) {
         if (text == null) throw new IllegalArgumentException("text cannot be null.");
-        if (text.length() == 0) return 0;
+        if (text.isEmpty()) return 0;
 
         char[] chars = text.toCharArray();
         GlyphVector vector = font.layoutGlyphVector(GlyphPage.renderContext, chars, 0, chars.length, Font.LAYOUT_LEFT_TO_RIGHT);
@@ -519,9 +469,8 @@ public class UnicodeFont {
         if (index != -1) text = text.substring(0, index);
         char[] chars = text.toCharArray();
         GlyphVector vector = font.layoutGlyphVector(GlyphPage.renderContext, chars, 0, chars.length, Font.LAYOUT_LEFT_TO_RIGHT);
-        int yOffset = ascent + vector.getPixelBounds(null, 0, 0).y;
 
-        return yOffset;
+        return ascent + vector.getPixelBounds(null, 0, 0).y;
     }
 
     /**
@@ -640,13 +589,6 @@ public class UnicodeFont {
     }
 
     /**
-     * Gets the extra distance between the descent of one line of text to the ascent of the next.
-     */
-    public int getLeading() {
-        return leading;
-    }
-
-    /**
      * Returns the width of the backing textures.
      */
     public int getGlyphPageWidth() {
@@ -688,16 +630,8 @@ public class UnicodeFont {
         return effects;
     }
 
-    public boolean getMono() {
-        return mono;
-    }
-
     public void setMono(boolean mono) {
         this.mono = mono;
-    }
-
-    public float getGamma() {
-        return gamma;
     }
 
     public void setGamma(float gamma) {
@@ -760,7 +694,7 @@ public class UnicodeFont {
             }
             if (ttfFileRef == null) ttfFileRef = "";
         }
-        if (ttfFileRef.length() == 0) return null;
+        if (ttfFileRef.isEmpty()) return null;
         return ttfFileRef;
     }
 
