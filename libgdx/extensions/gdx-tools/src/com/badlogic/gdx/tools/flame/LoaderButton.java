@@ -9,36 +9,21 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-/**
- *
- */
 public abstract class LoaderButton<T> extends JButton {
 
     protected Listener<T> listener;
     FlameMain editor;
-    private String lastDir;
 
     public LoaderButton(FlameMain editor, String text, Listener<T> listener) {
         super(text);
         this.editor = editor;
         this.listener = listener;
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadResource();
-            }
-        });
-    }
-
-    public LoaderButton(FlameMain editor, String text) {
-        this(editor, text, null);
+        addActionListener(e -> loadResource());
     }
 
     public void setListener(Listener listener) {
@@ -52,9 +37,6 @@ public abstract class LoaderButton<T> extends JButton {
     }
 
     public static class ParticleEffectLoaderButton extends LoaderButton<ParticleEffect> {
-        public ParticleEffectLoaderButton(FlameMain editor) {
-            this(editor, null);
-        }
 
         public ParticleEffectLoaderButton(FlameMain editor, Listener<ParticleEffect> listener) {
             super(editor, "Load Controller", listener);
@@ -64,7 +46,6 @@ public abstract class LoaderButton<T> extends JButton {
             File file = editor.showFileLoadDialog();
             if (file != null) {
                 try {
-                    String resource = file.getAbsolutePath();
                     listener.onResourceLoaded(editor.openEffect(file, false));
                 } catch (Exception ex) {
                     System.out.println("Error loading effect: " + file.getAbsolutePath());
@@ -89,7 +70,7 @@ public abstract class LoaderButton<T> extends JButton {
             if (file != null) {
                 try {
                     String resource = file.getAbsolutePath();
-                    ModelLoader modelLoader = null;
+                    ModelLoader modelLoader;
                     if (resource.endsWith(".obj")) {
                         modelLoader = new ObjLoader(new AbsoluteFileHandleResolver());
                     } else if (resource.endsWith(".g3dj")) {

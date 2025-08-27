@@ -9,12 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-/**
- *
- */
 class NumericPanel extends ParticleValuePanel<NumericValue> {
     JSpinner valueSpinner;
 
@@ -43,10 +38,6 @@ class NumericPanel extends ParticleValuePanel<NumericValue> {
             contentPanel.add(valueSpinner, new GridBagConstraints(1, 1, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
                     new Insets(0, 0, 0, 0), 0, 0));
         }
-        valueSpinner.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                NumericPanel.this.value.setValue(((Number) valueSpinner.getValue()).floatValue());
-            }
-        });
+        valueSpinner.addChangeListener(event -> NumericPanel.this.value.setValue(((Number) valueSpinner.getValue()).floatValue()));
     }
 }

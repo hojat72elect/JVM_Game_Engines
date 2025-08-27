@@ -8,9 +8,6 @@ import com.badlogic.gdx.utils.Array;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-/**
- *
- */
 public class ParticleControllerInfluencerPanel extends InfluencerPanel<ParticleControllerInfluencer>
         implements TemplatePickerPanel.Listener<ParticleController>, LoaderButton.Listener<ParticleEffect>, EventManager.Listener {
     TemplatePickerPanel<ParticleController> controllerPicker;
@@ -57,8 +54,8 @@ public class ParticleControllerInfluencerPanel extends InfluencerPanel<ParticleC
     }
 
     private void reloadControllers() {
-        Array<ParticleEffect> effects = new Array<ParticleEffect>();
-        Array<ParticleController> controllers = new Array<ParticleController>();
+        Array<ParticleEffect> effects = new Array<>();
+        Array<ParticleController> controllers = new Array<>();
         editor.assetManager.getAll(ParticleEffect.class, effects);
         for (ParticleEffect effect : effects) {
             controllers.addAll(effect.getControllers());

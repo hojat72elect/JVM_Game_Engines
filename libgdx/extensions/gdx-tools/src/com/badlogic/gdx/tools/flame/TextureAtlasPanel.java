@@ -4,15 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.utils.Array;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -42,22 +39,16 @@ public class TextureAtlasPanel extends JPanel {
 
         regionsPanel.setLayout(new CustomCardLayout());
 
-        backwardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (atlas == null) return;
-                CustomCardLayout layout = (CustomCardLayout) regionsPanel.getLayout();
-                layout.previous(regionsPanel);
-            }
+        backwardButton.addActionListener(arg0 -> {
+            if (atlas == null) return;
+            CustomCardLayout layout = (CustomCardLayout) regionsPanel.getLayout();
+            layout.previous(regionsPanel);
         });
 
-        forwardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (atlas == null) return;
-                CustomCardLayout layout = (CustomCardLayout) regionsPanel.getLayout();
-                layout.next(regionsPanel);
-            }
+        forwardButton.addActionListener(arg0 -> {
+            if (atlas == null) return;
+            CustomCardLayout layout = (CustomCardLayout) regionsPanel.getLayout();
+            layout.next(regionsPanel);
         });
     }
 
@@ -66,9 +57,8 @@ public class TextureAtlasPanel extends JPanel {
         regionsPanel.removeAll();
         Array<AtlasRegion> atlasRegions = atlas.getRegions();
         CustomCardLayout layout = (CustomCardLayout) regionsPanel.getLayout();
-        Array<TextureRegion> regions = new Array<TextureRegion>();
+        Array<TextureRegion> regions = new Array<>();
         for (Texture texture : atlas.getTextures()) {
-            FileTextureData file = (FileTextureData) texture.getTextureData();
             regionsPanel.add(new TexturePanel(texture, getRegions(texture, atlasRegions, regions)));
         }
         layout.first(regionsPanel);
@@ -86,12 +76,6 @@ public class TextureAtlasPanel extends JPanel {
             if (region.getTexture() == texture) out.add(region);
         }
         return out;
-    }
-
-    public Array<TextureRegion> getSelectedRegions() {
-        CustomCardLayout layout = (CustomCardLayout) regionsPanel.getLayout();
-        TexturePanel panel = getCurrentRegionPanel();
-        return panel.selectedRegions;
     }
 
     public TexturePanel getCurrentRegionPanel() {

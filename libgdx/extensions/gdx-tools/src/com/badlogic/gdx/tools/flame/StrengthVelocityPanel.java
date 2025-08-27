@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g3d.particles.influencers.DynamicsModifier;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -61,11 +59,6 @@ public class StrengthVelocityPanel extends EditorPanel<DynamicsModifier.Strength
 
         magnitudePanel.setIsAlwayShown(true);
 
-        isGlobalCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StrengthVelocityPanel.this.value.isGlobal = isGlobalCheckBox.isSelected();
-            }
-        });
+        isGlobalCheckBox.addActionListener(e -> StrengthVelocityPanel.this.value.isGlobal = isGlobalCheckBox.isSelected());
     }
 }

@@ -8,8 +8,6 @@ import com.badlogic.gdx.utils.Array;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -18,9 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-/**
- *
- */
 public class RegionPickerPanel extends JPanel {
 
     TextureAtlasPanel atlasPanel;
@@ -88,52 +83,37 @@ public class RegionPickerPanel extends JPanel {
         add(controls, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
                 new Insets(0, 0, 0, 0), 0, 0));
 
-        selectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
-                TexturePanel currentTexturePanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
-                String atlasName = panel == atlasPanel ? atlasPanel.getAtlasName() : null;
-                listener.onRegionsSelected(currentTexturePanel.selectedRegions, atlasName);
-            }
+        selectButton.addActionListener(arg0 -> {
+            JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
+            TexturePanel currentTexturePanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
+            String atlasName = panel == atlasPanel ? atlasPanel.getAtlasName() : null;
+            listener.onRegionsSelected(currentTexturePanel.selectedRegions, atlasName);
         });
 
-        selectAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
-                TexturePanel currentTexturePanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
-                currentTexturePanel.selectAll();
-            }
+        selectAllButton.addActionListener(arg0 -> {
+            JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
+            TexturePanel currentTexturePanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
+            currentTexturePanel.selectAll();
         });
 
-        reverseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
-                TexturePanel currentTexturePanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
-                currentTexturePanel.selectedRegions.reverse();
-                currentTexturePanel.revalidate();
-                currentTexturePanel.repaint();
-            }
+        reverseButton.addActionListener(arg0 -> {
+            JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
+            TexturePanel currentTexturePanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
+            currentTexturePanel.selectedRegions.reverse();
+            currentTexturePanel.revalidate();
+            currentTexturePanel.repaint();
         });
 
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
-                TexturePanel currentPanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
-                currentPanel.clearSelection();
-            }
+        clearButton.addActionListener(arg0 -> {
+            JPanel panel = ((CustomCardLayout) content.getLayout()).getCurrentCard(content);
+            TexturePanel currentPanel = panel == atlasPanel ? atlasPanel.getCurrentRegionPanel() : texturePanel;
+            currentPanel.clearSelection();
         });
 
-        generateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                generateRegions((GenerationMode) generateBox.getSelectedItem());
-                texturePanel.revalidate();
-                texturePanel.repaint();
-            }
+        generateButton.addActionListener(arg0 -> {
+            generateRegions((GenerationMode) generateBox.getSelectedItem());
+            texturePanel.revalidate();
+            texturePanel.repaint();
         });
     }
 
@@ -192,7 +172,7 @@ public class RegionPickerPanel extends JPanel {
     private enum GenerationMode {
         ByRows("Generate By Rows"), ByColumns("Generate By Columns");
 
-        String string;
+        final String string;
 
         GenerationMode(String string) {
             this.string = string;

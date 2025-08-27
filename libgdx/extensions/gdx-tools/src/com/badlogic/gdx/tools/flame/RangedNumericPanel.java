@@ -4,19 +4,12 @@ import com.badlogic.gdx.graphics.g3d.particles.values.RangedNumericValue;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-/**
- *
- */
 class RangedNumericPanel extends ParticleValuePanel<RangedNumericValue> {
     Slider minSlider, maxSlider;
     JButton rangeButton;
@@ -58,27 +51,19 @@ class RangedNumericPanel extends ParticleValuePanel<RangedNumericValue> {
                     GridBagConstraints.NONE, new Insets(0, 1, 0, 0), 0, 0));
         }
 
-        minSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                RangedNumericPanel.this.value.setLowMin(minSlider.getValue());
-                if (!maxSlider.isVisible()) RangedNumericPanel.this.value.setLowMax(minSlider.getValue());
-            }
+        minSlider.addChangeListener(event -> {
+            RangedNumericPanel.this.value.setLowMin(minSlider.getValue());
+            if (!maxSlider.isVisible()) RangedNumericPanel.this.value.setLowMax(minSlider.getValue());
         });
 
-        maxSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                RangedNumericPanel.this.value.setLowMax(maxSlider.getValue());
-            }
-        });
+        maxSlider.addChangeListener(event -> RangedNumericPanel.this.value.setLowMax(maxSlider.getValue()));
 
-        rangeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                boolean visible = !maxSlider.isVisible();
-                maxSlider.setVisible(visible);
-                rangeButton.setText(visible ? "<" : ">");
-                Slider slider = visible ? maxSlider : minSlider;
-                RangedNumericPanel.this.value.setLowMax(slider.getValue());
-            }
+        rangeButton.addActionListener(event -> {
+            boolean visible = !maxSlider.isVisible();
+            maxSlider.setVisible(visible);
+            rangeButton.setText(visible ? "<" : ">");
+            Slider slider = visible ? maxSlider : minSlider;
+            RangedNumericPanel.this.value.setLowMax(slider.getValue());
         });
     }
 

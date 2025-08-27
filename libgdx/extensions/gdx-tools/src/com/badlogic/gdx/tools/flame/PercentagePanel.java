@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -53,28 +51,26 @@ class PercentagePanel extends ParticleValuePanel<ScaledNumericValue> {
             contentPanel.add(expandButton, new GridBagConstraints(1, 0, 1, 1, 1, 0, GridBagConstraints.NORTHWEST,
                     GridBagConstraints.NONE, new Insets(0, 6, 0, 0), 0, 0));
         }
-        expandButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                chart.setExpanded(!chart.isExpanded());
-                boolean expanded = chart.isExpanded();
-                GridBagLayout layout = (GridBagLayout) getContentPanel().getLayout();
-                GridBagConstraints chartConstraints = layout.getConstraints(chart);
-                GridBagConstraints expandButtonConstraints = layout.getConstraints(expandButton);
-                if (expanded) {
-                    chart.setPreferredSize(new Dimension(150, 200));
-                    expandButton.setText("-");
-                    chartConstraints.weightx = 1;
-                    expandButtonConstraints.weightx = 0;
-                } else {
-                    chart.setPreferredSize(new Dimension(150, 62));
-                    expandButton.setText("+");
-                    chartConstraints.weightx = 0;
-                    expandButtonConstraints.weightx = 1;
-                }
-                layout.setConstraints(chart, chartConstraints);
-                layout.setConstraints(expandButton, expandButtonConstraints);
-                chart.revalidate();
+        expandButton.addActionListener(event -> {
+            chart.setExpanded(!chart.isExpanded());
+            boolean expanded = chart.isExpanded();
+            GridBagLayout layout = (GridBagLayout) getContentPanel().getLayout();
+            GridBagConstraints chartConstraints = layout.getConstraints(chart);
+            GridBagConstraints expandButtonConstraints = layout.getConstraints(expandButton);
+            if (expanded) {
+                chart.setPreferredSize(new Dimension(150, 200));
+                expandButton.setText("-");
+                chartConstraints.weightx = 1;
+                expandButtonConstraints.weightx = 0;
+            } else {
+                chart.setPreferredSize(new Dimension(150, 62));
+                expandButton.setText("+");
+                chartConstraints.weightx = 0;
+                expandButtonConstraints.weightx = 1;
             }
+            layout.setConstraints(chart, chartConstraints);
+            layout.setConstraints(expandButton, expandButtonConstraints);
+            chart.revalidate();
         });
     }
 }

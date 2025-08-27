@@ -17,8 +17,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
@@ -177,7 +176,7 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
         weightMeshSpawnShapeValue.setActive(true);
 
         Model defaultModel = editor.assetManager.get(FlameMain.DEFAULT_MODEL_PARTICLE);
-        Array<Model> models = new Array<Model>();
+        Array<Model> models = new Array<>();
         models.add(defaultModel);
 
         int i = 0;
@@ -191,13 +190,13 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
                 GridBagConstraints.NONE, 0, 0);
         EditorPanel.addContent(panel, i, 0, sideLabel = new JLabel("Side"), false, GridBagConstraints.WEST, GridBagConstraints.NONE,
                 0, 0);
-        EditorPanel.addContent(panel, i++, 1, sideCombo = new JComboBox(new DefaultComboBoxModel(SpawnSide.values())), false,
+        EditorPanel.addContent(panel, i, 1, sideCombo = new JComboBox(new DefaultComboBoxModel(SpawnSide.values())), false,
                 GridBagConstraints.WEST, GridBagConstraints.NONE, 1, 0);
         edgesCheckbox.setHorizontalTextPosition(SwingConstants.LEFT);
 
         i = 0;
         addContent(i++, 0, panel, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-        addContent(i++, 0, meshPanel = new TemplatePickerPanel<Model>(editor, models, this, Model.class,
+        addContent(i++, 0, meshPanel = new TemplatePickerPanel<>(editor, models, this, Model.class,
                 new LoaderButton.ModelLoaderButton(editor), true, false), false, GridBagConstraints.WEST, GridBagConstraints.NONE);
         addContent(i++, 0, xPanel = new RangedNumericPanel(editor, pointSpawnShapeValue.xOffsetValue, "X Offset",
                 "Amount to offset a particle's starting X location, in world units.", false));
@@ -209,57 +208,50 @@ class SpawnInfluencerPanel extends InfluencerPanel<SpawnInfluencer> implements T
                 "Spawn Width", "Width of the spawn shape, in world units.", true));
         addContent(i++, 0, heightPanel = new ScaledNumericPanel(editor, pointSpawnShapeValue.getSpawnWidth(), "Duration",
                 "Spawn Height", "Height of the spawn shape, in world units.", true));
-        addContent(i++, 0, depthPanel = new ScaledNumericPanel(editor, pointSpawnShapeValue.getSpawnWidth(), "Duration",
+        addContent(i, 0, depthPanel = new ScaledNumericPanel(editor, pointSpawnShapeValue.getSpawnWidth(), "Duration",
                 "Spawn Depth", "Depth of the spawn shape, in world units.", true), false);
 
         meshPanel.setIsAlwayShown(true);
         onTemplateChecked(defaultModel, true);
 
-        shapeCombo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                String shape = (String) shapeCombo.getSelectedItem();
-                if (shape == SPAWN_SHAPE_POINT) {
-                    setPrimitiveSpawnShape(pointSpawnShapeValue, false, null);
-                } else if (shape == SPAWN_SHAPE_LINE) {
-                    setPrimitiveSpawnShape(lineSpawnShapeValue, false, null);
-                } else if (shape == SPAWN_SHAPE_RECTANGLE) {
-                    setPrimitiveSpawnShape(rectangleSpawnShapeValue, true, null);
-                } else if (shape == SPAWN_SHAPE_ELLIPSE) {
-                    setPrimitiveSpawnShape(ellipseSpawnShapeValue, true, ellipseSpawnShapeValue.getSide());
-                } else if (shape == SPAWN_SHAPE_CYLINDER) {
-                    setPrimitiveSpawnShape(cylinderSpawnShapeValue, true, null);
-                } else if (shape == SPAWN_SHAPE_MESH) {
-                    setMeshSpawnShape(meshSpawnShapeValue);
-                } else if (shape == SPAWN_SHAPE_WEIGHT_MESH) {
-                    setMeshSpawnShape(weightMeshSpawnShapeValue);
-                }
-                editor.restart();
+        shapeCombo.addActionListener(event -> {
+            String shape = (String) shapeCombo.getSelectedItem();
+            if (Objects.equals(shape, SPAWN_SHAPE_POINT)) {
+                setPrimitiveSpawnShape(pointSpawnShapeValue, false, null);
+            } else if (Objects.equals(shape, SPAWN_SHAPE_LINE)) {
+                setPrimitiveSpawnShape(lineSpawnShapeValue, false, null);
+            } else if (Objects.equals(shape, SPAWN_SHAPE_RECTANGLE)) {
+                setPrimitiveSpawnShape(rectangleSpawnShapeValue, true, null);
+            } else if (Objects.equals(shape, SPAWN_SHAPE_ELLIPSE)) {
+                setPrimitiveSpawnShape(ellipseSpawnShapeValue, true, ellipseSpawnShapeValue.getSide());
+            } else if (Objects.equals(shape, SPAWN_SHAPE_CYLINDER)) {
+                setPrimitiveSpawnShape(cylinderSpawnShapeValue, true, null);
+            } else if (Objects.equals(shape, SPAWN_SHAPE_MESH)) {
+                setMeshSpawnShape(meshSpawnShapeValue);
+            } else if (Objects.equals(shape, SPAWN_SHAPE_WEIGHT_MESH)) {
+                setMeshSpawnShape(weightMeshSpawnShapeValue);
             }
+            editor.restart();
         });
 
-        edgesCheckbox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
-                PrimitiveSpawnShapeValue shapeValue = (PrimitiveSpawnShapeValue) influencer.spawnShapeValue;
-                shapeValue.setEdges(edgesCheckbox.isSelected());
-                setEdgesVisible(true);
-            }
+        edgesCheckbox.addActionListener(event -> {
+            SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+            PrimitiveSpawnShapeValue shapeValue = (PrimitiveSpawnShapeValue) influencer.spawnShapeValue;
+            shapeValue.setEdges(edgesCheckbox.isSelected());
+            setEdgesVisible(true);
         });
 
-        sideCombo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                SpawnSide side = (SpawnSide) sideCombo.getSelectedItem();
-                SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
-                EllipseSpawnShapeValue shapeValue = (EllipseSpawnShapeValue) influencer.spawnShapeValue;
-                shapeValue.setSide(side);
-            }
+        sideCombo.addActionListener(event -> {
+            SpawnSide side = (SpawnSide) sideCombo.getSelectedItem();
+            SpawnInfluencer influencer = editor.getEmitter().findInfluencer(SpawnInfluencer.class);
+            EllipseSpawnShapeValue shapeValue = (EllipseSpawnShapeValue) influencer.spawnShapeValue;
+            shapeValue.setSide(side);
         });
     }
 
     @Override
     public void onTemplateChecked(Model model, boolean isChecked) {
         // Update the shapes
-        SpawnShapeValue shapeValue = null;
         Mesh mesh = model.meshes.get(0);
         weightMeshSpawnShapeValue.setMesh(mesh, model);
         meshSpawnShapeValue.setMesh(mesh, model);

@@ -9,13 +9,8 @@ import java.awt.Insets;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- */
 public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements LoaderButton.Listener<T> {
 
     Array<T> loadedTemplates;
@@ -23,7 +18,7 @@ public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements Loa
     Class<T> type;
     JTable templatesTable;
     DefaultTableModel templatesTableModel;
-    boolean isOneModelSelectedRequired = true, isMultipleSelectionAllowed = true;
+    boolean isOneModelSelectedRequired, isMultipleSelectionAllowed;
     Listener listener;
     int lastSelected = -1;
 
@@ -42,8 +37,8 @@ public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements Loa
         this.listener = listener;
         this.isOneModelSelectedRequired = isOneModelSelectedRequired;
         this.isMultipleSelectionAllowed = isMultipleSelectionAllowed;
-        loadedTemplates = new Array<T>();
-        excludedTemplates = new Array<T>();
+        loadedTemplates = new Array<>();
+        excludedTemplates = new Array<>();
         initializeComponents(type, loaderButton);
         setValue(value);
     }
@@ -64,17 +59,8 @@ public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements Loa
         }
     }
 
-    public void setOneModelSelectionRequired(boolean isOneModelSelectionRequired) {
-        this.isOneModelSelectedRequired = isOneModelSelectionRequired;
-    }
-
     public void setMultipleSelectionAllowed(boolean isMultipleSelectionAllowed) {
         this.isMultipleSelectionAllowed = isMultipleSelectionAllowed;
-    }
-
-    public void setExcludedTemplates(Array<T> excludedTemplates) {
-        this.excludedTemplates.clear();
-        this.excludedTemplates.addAll(excludedTemplates);
     }
 
     public void setLoadedTemplates(Array<T> templates) {
@@ -97,10 +83,11 @@ public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements Loa
     }
 
     public void reloadTemplates() {
-        setLoadedTemplates(editor.assetManager.getAll(type, new Array<T>()));
+        setLoadedTemplates(editor.assetManager.getAll(type, new Array<>()));
     }
 
     protected void initializeComponents(Class<T> type, LoaderButton<T> loaderButton) {
+        this.type = type;
         int i = 0;
         if (loaderButton != null) {
             loaderButton.setListener(this);
@@ -131,18 +118,16 @@ public class TemplatePickerPanel<T> extends EditorPanel<Array<T>> implements Loa
             templatesTable.setModel(templatesTableModel);
             reloadTemplates();
 
-            templatesTableModel.addTableModelListener(new TableModelListener() {
-                public void tableChanged(TableModelEvent event) {
-                    if (event.getColumn() != 1) return;
-                    int row = event.getFirstRow();
-                    boolean checked = (Boolean) templatesTable.getValueAt(row, 1);
-                    if (isOneModelSelectedRequired && (value.size == 1 && !checked)) {
-                        EditorPanel.setValue(templatesTableModel, true, row, 1);
-                        return;
-                    }
-
-                    templateChecked(row, checked);
+            templatesTableModel.addTableModelListener(event -> {
+                if (event.getColumn() != 1) return;
+                int row = event.getFirstRow();
+                boolean checked = (Boolean) templatesTable.getValueAt(row, 1);
+                if (isOneModelSelectedRequired && (value.size == 1 && !checked)) {
+                    EditorPanel.setValue(templatesTableModel, true, row, 1);
+                    return;
                 }
+
+                templateChecked(row, checked);
             });
         }
     }

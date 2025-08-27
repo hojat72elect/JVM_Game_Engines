@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
@@ -40,57 +39,42 @@ public class TextureLoaderPanel extends EditorPanel {
         minFilterBox.setSelectedItem(editor.getTexture().getMinFilter());
         magFilterBox.setSelectedItem(editor.getTexture().getMagFilter());
 
-        ActionListener filterListener = new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                editor.getTexture().setFilter((TextureFilter) minFilterBox.getSelectedItem(),
-                        (TextureFilter) magFilterBox.getSelectedItem());
-            }
-        };
+        ActionListener filterListener = event -> editor.getTexture().setFilter((TextureFilter) minFilterBox.getSelectedItem(),
+                (TextureFilter) magFilterBox.getSelectedItem());
 
         minFilterBox.addActionListener(filterListener);
         magFilterBox.addActionListener(filterListener);
 
-        atlasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                File file = editor.showFileLoadDialog();
-                if (file != null) {
-                    TextureAtlas atlas = editor.load(file.getAbsolutePath(), TextureAtlas.class, null, null);
-                    if (atlas != null) {
-                        editor.setAtlas(atlas);
-                    } else {
-                        JOptionPane.showMessageDialog(editor,
-                                "Error loading atlas file. Make sure you must provide an atlas file, not an image file.");
-                    }
+        atlasButton.addActionListener(e -> {
+            File file = editor.showFileLoadDialog();
+            if (file != null) {
+                TextureAtlas atlas = editor.load(file.getAbsolutePath(), TextureAtlas.class, null, null);
+                if (atlas != null) {
+                    editor.setAtlas(atlas);
+                } else {
+                    JOptionPane.showMessageDialog(editor,
+                            "Error loading atlas file. Make sure you must provide an atlas file, not an image file.");
                 }
             }
         });
 
-        textureButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                File file = editor.showFileLoadDialog();
-                if (file != null) {
-                    TextureParameter params = new TextureParameter();
-                    params.genMipMaps = genMipMaps.isSelected();
-                    params.minFilter = (TextureFilter) minFilterBox.getSelectedItem();
-                    params.magFilter = (TextureFilter) magFilterBox.getSelectedItem();
-                    Texture texture = editor.load(file.getAbsolutePath(), Texture.class, null, params);
-                    if (texture != null) {
-                        editor.setTexture(texture);
-                    } else {
-                        JOptionPane.showMessageDialog(editor, "Error loading texture file.");
-                    }
+        textureButton.addActionListener(e -> {
+            File file = editor.showFileLoadDialog();
+            if (file != null) {
+                TextureParameter params = new TextureParameter();
+                params.genMipMaps = genMipMaps.isSelected();
+                params.minFilter = (TextureFilter) minFilterBox.getSelectedItem();
+                params.magFilter = (TextureFilter) magFilterBox.getSelectedItem();
+                Texture texture = editor.load(file.getAbsolutePath(), Texture.class, null, params);
+                if (texture != null) {
+                    editor.setTexture(texture);
+                } else {
+                    JOptionPane.showMessageDialog(editor, "Error loading texture file.");
                 }
             }
         });
 
-        defaultTextureButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                editor.setTexture(editor.assetManager.get(FlameMain.DEFAULT_BILLBOARD_PARTICLE, Texture.class));
-            }
-        });
+        defaultTextureButton.addActionListener(e -> editor.setTexture(editor.assetManager.get(FlameMain.DEFAULT_BILLBOARD_PARTICLE, Texture.class)));
 
         contentPanel.add(new JLabel("Min. Filter"), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST,
                 GridBagConstraints.NONE, new Insets(6, 0, 0, 0), 0, 0));

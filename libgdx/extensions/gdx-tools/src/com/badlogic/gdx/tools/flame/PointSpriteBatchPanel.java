@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -28,33 +26,27 @@ public class PointSpriteBatchPanel extends EditorPanel<PointSpriteParticleBatch>
         sortCombo = new JComboBox();
         sortCombo.setModel(new DefaultComboBoxModel(SortMode.values()));
         sortCombo.setSelectedItem(SortMode.find(renderer.getSorter()));
-        sortCombo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                SortMode mode = (SortMode) sortCombo.getSelectedItem();
-                editor.getPointSpriteBatch().setSorter(mode.sorter);
-            }
+        sortCombo.addActionListener(event -> {
+            SortMode mode = (SortMode) sortCombo.getSelectedItem();
+            editor.getPointSpriteBatch().setSorter(mode.sorter);
         });
 
         // Blending source
         srcBlendFunction = new JComboBox();
         srcBlendFunction.setModel(new DefaultComboBoxModel(BlendFunction.values()));
         srcBlendFunction.setSelectedItem(BlendFunction.find(renderer.getBlendingAttribute().sourceFunction));
-        srcBlendFunction.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                BlendFunction blend = (BlendFunction) srcBlendFunction.getSelectedItem();
-                editor.getPointSpriteBatch().getBlendingAttribute().sourceFunction = blend.blend;
-            }
+        srcBlendFunction.addActionListener(event -> {
+            BlendFunction blend = (BlendFunction) srcBlendFunction.getSelectedItem();
+            editor.getPointSpriteBatch().getBlendingAttribute().sourceFunction = blend.blend;
         });
 
         // Blending destination
         destBlendFunction = new JComboBox();
         destBlendFunction.setModel(new DefaultComboBoxModel(BlendFunction.values()));
         destBlendFunction.setSelectedItem(BlendFunction.find(renderer.getBlendingAttribute().destFunction));
-        destBlendFunction.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                BlendFunction blend = (BlendFunction) destBlendFunction.getSelectedItem();
-                editor.getPointSpriteBatch().getBlendingAttribute().destFunction = blend.blend;
-            }
+        destBlendFunction.addActionListener(event -> {
+            BlendFunction blend = (BlendFunction) destBlendFunction.getSelectedItem();
+            editor.getPointSpriteBatch().getBlendingAttribute().destFunction = blend.blend;
         });
 
         int i = 0;
@@ -70,6 +62,6 @@ public class PointSpriteBatchPanel extends EditorPanel<PointSpriteParticleBatch>
         contentPanel.add(new JLabel("Blending Dest"),
                 new GridBagConstraints(0, i, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, insets, 0, 0));
         contentPanel.add(destBlendFunction,
-                new GridBagConstraints(1, i++, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, insets, 0, 0));
+                new GridBagConstraints(1, i, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, insets, 0, 0));
     }
 }

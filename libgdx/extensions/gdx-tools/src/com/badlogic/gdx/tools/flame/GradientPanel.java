@@ -19,12 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-/**
- *
- */
 class GradientPanel extends ParticleValuePanel<GradientColorValue> {
     ColorSlider saturationSlider, lightnessSlider;
     JPanel colorPanel;
@@ -163,7 +158,6 @@ class GradientPanel extends ParticleValuePanel<GradientColorValue> {
     static public class ColorSlider extends JPanel {
         Color[] paletteColors;
         JSlider slider;
-        private final ColorPicker colorPicker;
 
         public ColorSlider(Color[] paletteColors) {
             this.paletteColors = paletteColors;
@@ -175,16 +169,12 @@ class GradientPanel extends ParticleValuePanel<GradientColorValue> {
                         new Insets(0, 6, 0, 6), 0, 0));
             }
             {
-                colorPicker = new ColorPicker();
+                ColorPicker colorPicker = new ColorPicker();
                 add(colorPicker, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                         GridBagConstraints.HORIZONTAL, new Insets(0, 6, 0, 6), 0, 0));
             }
 
-            slider.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent event) {
-                    colorPicked();
-                }
-            });
+            slider.addChangeListener(event -> colorPicked());
         }
 
         public Dimension getPreferredSize() {
@@ -237,9 +227,9 @@ class GradientPanel extends ParticleValuePanel<GradientColorValue> {
         }
     }
 
-    public class GradientEditor extends JPanel {
-        ArrayList<Color> colors = new ArrayList();
-        ArrayList<Float> percentages = new ArrayList();
+    public static class GradientEditor extends JPanel {
+        ArrayList<Color> colors = new ArrayList<>();
+        ArrayList<Float> percentages = new ArrayList<>();
 
         int handleWidth = 12;
         int handleHeight = 12;

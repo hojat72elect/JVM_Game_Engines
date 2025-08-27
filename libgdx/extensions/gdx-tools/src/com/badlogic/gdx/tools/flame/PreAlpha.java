@@ -2,8 +2,6 @@ package com.badlogic.gdx.tools.flame;
 
 import java.awt.EventQueue;
 import java.awt.FileDialog;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -53,11 +51,7 @@ public class PreAlpha extends JFrame {
                 break;
             }
         }
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PreAlpha();
-            }
-        });
+        EventQueue.invokeLater(PreAlpha::new);
     }
 
     private void initializeComponents() {
@@ -70,23 +64,11 @@ public class PreAlpha extends JFrame {
 
         // a group of JMenuItems
         JMenuItem menuItem = new JMenuItem("Open");
-        menuItem.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                open();
-            }
-        });
+        menuItem.addActionListener(arg0 -> open());
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Save");
-        menuItem.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                save();
-            }
-        });
+        menuItem.addActionListener(arg0 -> save());
         menu.add(menuItem);
         setJMenuBar(menuBar);
 
@@ -100,7 +82,7 @@ public class PreAlpha extends JFrame {
         dialog.setVisible(true);
         final String file = dialog.getFile();
         final String dir = dialog.getDirectory();
-        if (dir == null || file == null || file.trim().length() == 0) return;
+        if (dir == null || file == null || file.trim().isEmpty()) return;
         lastDir = dir;
         try {
             generatePremultiplyAlpha(new File(dir, file));
@@ -116,7 +98,7 @@ public class PreAlpha extends JFrame {
         dialog.setVisible(true);
         final String file = dialog.getFile();
         final String dir = dialog.getDirectory();
-        if (dir == null || file == null || file.trim().length() == 0) return;
+        if (dir == null || file == null || file.trim().isEmpty()) return;
         lastDir = dir;
         try {
             image = ImageIO.read(new File(dir, file));

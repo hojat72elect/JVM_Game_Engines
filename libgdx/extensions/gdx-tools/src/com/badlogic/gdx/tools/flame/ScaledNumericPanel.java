@@ -6,20 +6,13 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-/**
- *
- */
 class ScaledNumericPanel extends ParticleValuePanel<ScaledNumericValue> {
     Slider lowMinSlider, lowMaxSlider;
     Slider highMinSlider, highMaxSlider;
@@ -39,10 +32,6 @@ class ScaledNumericPanel extends ParticleValuePanel<ScaledNumericValue> {
         super(editor, name, description, isAlwaysActive);
         initializeComponents(chartTitle);
         setValue(value);
-    }
-
-    public JPanel getFormPanel() {
-        return formPanel;
     }
 
     private void initializeComponents(String chartTitle) {
@@ -117,87 +106,65 @@ class ScaledNumericPanel extends ParticleValuePanel<ScaledNumericValue> {
                     GridBagConstraints.NONE, new Insets(0, 6, 0, 0), 0, 0));
         }
 
-        lowMinSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                ScaledNumericPanel.this.value.setLowMin(lowMinSlider.getValue());
-                if (!lowMaxSlider.isVisible()) ScaledNumericPanel.this.value.setLowMax(lowMinSlider.getValue());
-            }
+        lowMinSlider.addChangeListener(event -> {
+            ScaledNumericPanel.this.value.setLowMin(lowMinSlider.getValue());
+            if (!lowMaxSlider.isVisible()) ScaledNumericPanel.this.value.setLowMax(lowMinSlider.getValue());
         });
-        lowMaxSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                ScaledNumericPanel.this.value.setLowMax(lowMaxSlider.getValue());
-            }
+        lowMaxSlider.addChangeListener(event -> ScaledNumericPanel.this.value.setLowMax(lowMaxSlider.getValue()));
+        highMinSlider.addChangeListener(event -> {
+            ScaledNumericPanel.this.value.setHighMin(highMinSlider.getValue());
+            if (!highMaxSlider.isVisible()) ScaledNumericPanel.this.value.setHighMax(highMinSlider.getValue());
         });
-        highMinSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                ScaledNumericPanel.this.value.setHighMin(highMinSlider.getValue());
-                if (!highMaxSlider.isVisible()) ScaledNumericPanel.this.value.setHighMax(highMinSlider.getValue());
-            }
-        });
-        highMaxSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                ScaledNumericPanel.this.value.setHighMax(highMaxSlider.getValue());
-            }
+        highMaxSlider.addChangeListener(event -> ScaledNumericPanel.this.value.setHighMax(highMaxSlider.getValue()));
+
+        relativeCheckBox.addActionListener(event -> ScaledNumericPanel.this.value.setRelative(relativeCheckBox.isSelected()));
+
+        lowRangeButton.addActionListener(event -> {
+            boolean visible = !lowMaxSlider.isVisible();
+            lowMaxSlider.setVisible(visible);
+            lowRangeButton.setText(visible ? "<" : ">");
+            GridBagLayout layout = (GridBagLayout) formPanel.getLayout();
+            GridBagConstraints constraints = layout.getConstraints(lowRangeButton);
+            constraints.gridx = visible ? 5 : 4;
+            layout.setConstraints(lowRangeButton, constraints);
+            Slider slider = visible ? lowMaxSlider : lowMinSlider;
+            ScaledNumericPanel.this.value.setLowMax(slider.getValue());
         });
 
-        relativeCheckBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                ScaledNumericPanel.this.value.setRelative(relativeCheckBox.isSelected());
-            }
+        highRangeButton.addActionListener(event -> {
+            boolean visible = !highMaxSlider.isVisible();
+            highMaxSlider.setVisible(visible);
+            highRangeButton.setText(visible ? "<" : ">");
+            GridBagLayout layout = (GridBagLayout) formPanel.getLayout();
+            GridBagConstraints constraints = layout.getConstraints(highRangeButton);
+            constraints.gridx = visible ? 5 : 4;
+            layout.setConstraints(highRangeButton, constraints);
+            Slider slider = visible ? highMaxSlider : highMinSlider;
+            ScaledNumericPanel.this.value.setHighMax(slider.getValue());
         });
 
-        lowRangeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                boolean visible = !lowMaxSlider.isVisible();
-                lowMaxSlider.setVisible(visible);
-                lowRangeButton.setText(visible ? "<" : ">");
-                GridBagLayout layout = (GridBagLayout) formPanel.getLayout();
-                GridBagConstraints constraints = layout.getConstraints(lowRangeButton);
-                constraints.gridx = visible ? 5 : 4;
-                layout.setConstraints(lowRangeButton, constraints);
-                Slider slider = visible ? lowMaxSlider : lowMinSlider;
-                ScaledNumericPanel.this.value.setLowMax(slider.getValue());
+        expandButton.addActionListener(event -> {
+            chart.setExpanded(!chart.isExpanded());
+            boolean expanded = chart.isExpanded();
+            GridBagLayout layout = (GridBagLayout) getContentPanel().getLayout();
+            GridBagConstraints chartConstraints = layout.getConstraints(chart);
+            GridBagConstraints expandButtonConstraints = layout.getConstraints(expandButton);
+            if (expanded) {
+                chart.setPreferredSize(new Dimension(150, 200));
+                expandButton.setText("-");
+                chartConstraints.weightx = 1;
+                expandButtonConstraints.weightx = 0;
+            } else {
+                chart.setPreferredSize(new Dimension(150, 30));
+                expandButton.setText("+");
+                chartConstraints.weightx = 0;
+                expandButtonConstraints.weightx = 1;
             }
-        });
-
-        highRangeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                boolean visible = !highMaxSlider.isVisible();
-                highMaxSlider.setVisible(visible);
-                highRangeButton.setText(visible ? "<" : ">");
-                GridBagLayout layout = (GridBagLayout) formPanel.getLayout();
-                GridBagConstraints constraints = layout.getConstraints(highRangeButton);
-                constraints.gridx = visible ? 5 : 4;
-                layout.setConstraints(highRangeButton, constraints);
-                Slider slider = visible ? highMaxSlider : highMinSlider;
-                ScaledNumericPanel.this.value.setHighMax(slider.getValue());
-            }
-        });
-
-        expandButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                chart.setExpanded(!chart.isExpanded());
-                boolean expanded = chart.isExpanded();
-                GridBagLayout layout = (GridBagLayout) getContentPanel().getLayout();
-                GridBagConstraints chartConstraints = layout.getConstraints(chart);
-                GridBagConstraints expandButtonConstraints = layout.getConstraints(expandButton);
-                if (expanded) {
-                    chart.setPreferredSize(new Dimension(150, 200));
-                    expandButton.setText("-");
-                    chartConstraints.weightx = 1;
-                    expandButtonConstraints.weightx = 0;
-                } else {
-                    chart.setPreferredSize(new Dimension(150, 30));
-                    expandButton.setText("+");
-                    chartConstraints.weightx = 0;
-                    expandButtonConstraints.weightx = 1;
-                }
-                layout.setConstraints(chart, chartConstraints);
-                layout.setConstraints(expandButton, expandButtonConstraints);
-                relativeCheckBox.setVisible(!expanded);
-                formPanel.setVisible(!expanded);
-                chart.revalidate();
-            }
+            layout.setConstraints(chart, chartConstraints);
+            layout.setConstraints(expandButton, expandButtonConstraints);
+            relativeCheckBox.setVisible(!expanded);
+            formPanel.setVisible(!expanded);
+            chart.revalidate();
         });
     }
 
@@ -219,9 +186,5 @@ class ScaledNumericPanel extends ParticleValuePanel<ScaledNumericValue> {
         if (((this.value.getHighMin() == this.value.getHighMax()) && highMaxSlider.isVisible())
                 || ((this.value.getHighMin() != this.value.getHighMax()) && !highMaxSlider.isVisible()))
             highRangeButton.doClick(0);
-    }
-
-    public Chart getChart() {
-        return chart;
     }
 }

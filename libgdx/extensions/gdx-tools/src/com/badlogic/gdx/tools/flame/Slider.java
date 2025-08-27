@@ -8,9 +8,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 
-/**
- *
- */
 public class Slider extends JPanel {
     public JSpinner spinner;
 

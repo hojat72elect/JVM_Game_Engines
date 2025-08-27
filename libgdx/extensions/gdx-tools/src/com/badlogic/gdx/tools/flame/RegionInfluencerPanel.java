@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
 import com.badlogic.gdx.utils.Array;
 
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -40,28 +38,25 @@ public class RegionInfluencerPanel extends InfluencerPanel<RegionInfluencer> imp
 
         addContent(0, 0, pickButton = new JButton("Pick Regions"), false, GridBagConstraints.WEST, GridBagConstraints.NONE);
 
-        pickButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (editor.isUsingDefaultTexture()) {
-                    JOptionPane.showMessageDialog(editor, "Load a Texture or an Atlas first.");
-                    return;
-                }
-
-                TextureAtlas atlas = editor.getAtlas();
-                String atlasFilename = editor.getAtlasFilename();
-                if (atlas != null)
-                    regionPickerPanel.setAtlas(atlas, atlasFilename);
-                else
-                    regionPickerPanel.setTexture(editor.getTexture());
-
-                regionPickerPanel.revalidate();
-                regionPickerPanel.repaint();
-                regionSelectDialog.validate();
-                regionSelectDialog.repaint();
-                regionSelectDialog.pack();
-                regionSelectDialog.setVisible(true);
+        pickButton.addActionListener(arg0 -> {
+            if (editor.isUsingDefaultTexture()) {
+                JOptionPane.showMessageDialog(editor, "Load a Texture or an Atlas first.");
+                return;
             }
+
+            TextureAtlas atlas = editor.getAtlas();
+            String atlasFilename = editor.getAtlasFilename();
+            if (atlas != null)
+                regionPickerPanel.setAtlas(atlas, atlasFilename);
+            else
+                regionPickerPanel.setTexture(editor.getTexture());
+
+            regionPickerPanel.revalidate();
+            regionPickerPanel.repaint();
+            regionSelectDialog.validate();
+            regionSelectDialog.repaint();
+            regionSelectDialog.pack();
+            regionSelectDialog.setVisible(true);
         });
     }
 

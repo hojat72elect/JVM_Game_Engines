@@ -4,8 +4,6 @@ import com.badlogic.gdx.utils.JsonWriter;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
@@ -41,16 +39,8 @@ public class SavePanel extends EditorPanel<Void> {
         contentPanel.add(prettyPrintBox, new GridBagConstraints(1, 2, 1, 1, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
                 new Insets(6, 6, 0, 0), 0, 0));
 
-        jsonMode.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                SavePanel.this.editor.jsonOutputType = (JsonWriter.OutputType) jsonMode.getSelectedItem();
-            }
-        });
+        jsonMode.addActionListener(event -> SavePanel.this.editor.jsonOutputType = (JsonWriter.OutputType) jsonMode.getSelectedItem());
 
-        prettyPrintBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                SavePanel.this.editor.jsonPrettyPrint = prettyPrintBox.isSelected();
-            }
-        });
+        prettyPrintBox.addActionListener(event -> SavePanel.this.editor.jsonPrettyPrint = prettyPrintBox.isSelected());
     }
 }
