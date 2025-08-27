@@ -13,14 +13,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- */
 public class TexturePackerFileProcessor extends FileProcessor {
     private final Settings defaultSettings;
     private final ProgressListener progress;
@@ -31,10 +27,6 @@ public class TexturePackerFileProcessor extends FileProcessor {
     private final Json json = new Json();
     private final String packFileName;
     private File root;
-
-    public TexturePackerFileProcessor() {
-        this(new Settings(), "pack.atlas", null);
-    }
 
     /**
      * @param progress May be null.
@@ -51,11 +43,7 @@ public class TexturePackerFileProcessor extends FileProcessor {
         addInputSuffix(".png", ".jpg", ".jpeg");
 
         // Sort input files by name to avoid platform-dependent atlas output changes.
-        setComparator(new Comparator<File>() {
-            public int compare(File file1, File file2) {
-                return file1.getName().compareTo(file2.getName());
-            }
-        });
+        setComparator(Comparator.comparing(File::getName));
     }
 
     public ArrayList<Entry> process(File inputFile, File outputRoot) throws Exception {
@@ -64,18 +52,14 @@ public class TexturePackerFileProcessor extends FileProcessor {
         // Collect pack.json setting files.
         final ArrayList<File> settingsFiles = new ArrayList();
         FileProcessor settingsProcessor = new FileProcessor() {
-            protected void processFile(Entry inputFile) throws Exception {
+            protected void processFile(Entry inputFile) {
                 settingsFiles.add(inputFile.inputFile);
             }
         };
         settingsProcessor.addInputRegex("pack\\.json");
         settingsProcessor.process(inputFile, null);
         // Sort parent first.
-        Collections.sort(settingsFiles, new Comparator<File>() {
-            public int compare(File file1, File file2) {
-                return file1.toString().length() - file2.toString().length();
-            }
-        });
+        settingsFiles.sort(Comparator.comparingInt(file -> file.toString().length()));
         for (File settingsFile : settingsFiles) {
             // Find first parent with settings, or use defaults.
             Settings settings = null;
@@ -137,14 +121,13 @@ public class TexturePackerFileProcessor extends FileProcessor {
 
         for (int i = 0, n = rootSettings.scale.length; i < n; i++) {
             FileProcessor deleteProcessor = new FileProcessor() {
-                protected void processFile(Entry inputFile) throws Exception {
+                protected void processFile(Entry inputFile) {
                     inputFile.inputFile.delete();
                 }
             };
             deleteProcessor.setRecursive(false);
 
             File packFile = new File(rootSettings.getScaledPackFileName(packFileName, i));
-            String scaledPackFileName = packFile.getName();
 
             String prefix = packFile.getName();
             int dotIndex = prefix.lastIndexOf('.');
@@ -164,7 +147,7 @@ public class TexturePackerFileProcessor extends FileProcessor {
         if (ignoreDirs.contains(inputDir.inputFile)) return;
 
         // Find first parent with settings, or use defaults.
-        Settings settings = null;
+        Settings settings;
         File parent = inputDir.inputFile;
         while (true) {
             settings = dirToSettings.get(parent);
@@ -206,7 +189,7 @@ public class TexturePackerFileProcessor extends FileProcessor {
         }
 
         // Sort by name using numeric suffix, then alpha.
-        Collections.sort(files, new Comparator<Entry>() {
+        files.sort(new Comparator<Entry>() {
             final Pattern digitSuffix = Pattern.compile("(.*?)(\\d+)$");
 
             public int compare(Entry entry1, Entry entry2) {
@@ -264,9 +247,9 @@ public class TexturePackerFileProcessor extends FileProcessor {
                 }
             } catch (IOException ignored) {
             }
-            if (inputPath == null || inputPath.length() == 0)
+            if (inputPath == null || inputPath.isEmpty())
                 inputPath = inputDir.inputFile.getName();
-            progress.setMessage(inputPath);
+            progress.setMessage();
         }
         TexturePacker packer = newTexturePacker(root, settings);
         for (Entry file : files)
@@ -287,9 +270,5 @@ public class TexturePackerFileProcessor extends FileProcessor {
 
     protected Settings newSettings(Settings settings) {
         return new Settings(settings);
-    }
-
-    public ProgressListener getProgressListener() {
-        return progress;
     }
 }

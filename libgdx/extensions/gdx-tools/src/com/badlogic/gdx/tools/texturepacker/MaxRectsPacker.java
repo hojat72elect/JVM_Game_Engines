@@ -50,24 +50,18 @@ public class MaxRectsPacker implements Packer {
         if (settings.fast) {
             if (settings.rotation) {
                 // Sort by longest side if rotation is enabled.
-                sort.sort(inputRects, new Comparator<Rect>() {
-                    public int compare(Rect o1, Rect o2) {
-                        int n1 = o1.width > o1.height ? o1.width : o1.height;
-                        int n2 = o2.width > o2.height ? o2.width : o2.height;
-                        return n2 - n1;
-                    }
+                sort.sort(inputRects, (o1, o2) -> {
+                    int n1 = Math.max(o1.width, o1.height);
+                    int n2 = Math.max(o2.width, o2.height);
+                    return n2 - n1;
                 });
             } else {
                 // Sort only by width (largest to smallest) if rotation is disabled.
-                sort.sort(inputRects, new Comparator<Rect>() {
-                    public int compare(Rect o1, Rect o2) {
-                        return o2.width - o1.width;
-                    }
-                });
+                sort.sort(inputRects, (o1, o2) -> o2.width - o1.width);
             }
         }
 
-        Array<Page> pages = new Array();
+        Array<Page> pages = new Array<>();
         while (inputRects.size > 0) {
             progress.count = n - inputRects.size + 1;
             if (progress.update(progress.count, n)) break;
@@ -114,7 +108,7 @@ public class MaxRectsPacker implements Packer {
                     throw new RuntimeException("Image does not fit within max page width " + settings.maxWidth + paddingMessage + ": "
                             + rect.name + " " + width + "x" + height);
                 }
-                if (height > maxHeight && (!settings.rotation || width > maxHeight)) {
+                if (height > maxHeight) {
                     String paddingMessage = edgePadY ? (" and Y edge padding " + paddingY + "*2") : "";
                     throw new RuntimeException("Image does not fit within max page height " + settings.maxHeight + paddingMessage
                             + ": " + rect.name + " " + width + "x" + height);
@@ -205,16 +199,16 @@ public class MaxRectsPacker implements Packer {
      */
     private Page packAtSize(boolean fully, int width, int height, Array<Rect> inputRects) {
         Page bestResult = null;
-        for (int i = 0, n = methods.length; i < n; i++) {
+        for (FreeRectChoiceHeuristic method : methods) {
             maxRects.init(width, height);
             Page result;
             if (!settings.fast) {
-                result = maxRects.pack(inputRects, methods[i]);
+                result = maxRects.pack(inputRects, method);
             } else {
                 Array<Rect> remaining = new Array();
                 for (int ii = 0, nn = inputRects.size; ii < nn; ii++) {
                     Rect rect = inputRects.get(ii);
-                    if (maxRects.insert(rect, methods[i]) == null) {
+                    if (maxRects.insert(rect, method) == null) {
                         while (ii < nn)
                             remaining.add(inputRects.get(ii++));
                     }
@@ -303,12 +297,11 @@ public class MaxRectsPacker implements Packer {
     }
 
     /**
-     * Maximal rectangles bin packing algorithm. Adapted from this C++ public domain source:
-     * http://clb.demon.fi/projects/even-more-rectangle-bin-packing
+     * Maximal rectangles bin packing algorithm. Adapted from <a href="http://clb.demon.fi/projects/even-more-rectangle-bin-packing">this</a> C++ public domain source:
      */
     class MaxRects {
-        private final Array<Rect> usedRectangles = new Array();
-        private final Array<Rect> freeRectangles = new Array();
+        private final Array<Rect> usedRectangles = new Array<>();
+        private final Array<Rect> freeRectangles = new Array<>();
         private int binWidth, binHeight;
 
         public void init(int width, int height) {
@@ -361,7 +354,7 @@ public class MaxRectsPacker implements Packer {
          * For each rectangle, packs each one then chooses the best and packs that. Slow!
          */
         public Page pack(Array<Rect> rects, FreeRectChoiceHeuristic method) {
-            rects = new Array(rects);
+            rects = new Array<>(rects);
             while (rects.size > 0) {
                 int bestRectIndex = -1;
                 Rect bestNode = new Rect();

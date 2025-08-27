@@ -25,8 +25,6 @@ public class TextureUnpacker {
     private static final String HELP = "Usage: atlasFile [imageDir] [outputDir]";
     private static final String ATLAS_FILE_EXTENSION = ".atlas";
 
-    private boolean quiet;
-
     public static void main(String[] args) {
         TextureUnpacker unpacker = new TextureUnpacker();
 
@@ -95,6 +93,7 @@ public class TextureUnpacker {
     public void splitAtlas(TextureAtlasData atlas, String outputDir) {
         // create the output directory if it did not exist yet
         File outputDirFile = new File(outputDir);
+        boolean quiet = false;
         if (!outputDirFile.exists()) {
             outputDirFile.mkdirs();
             if (!quiet) System.out.printf("Creating directory: %s%n", outputDirFile.getPath());
@@ -117,12 +116,12 @@ public class TextureUnpacker {
 
                 // check if the page this region is in is currently loaded in a Buffered Image
                 if (region.page == page) {
-                    BufferedImage splitImage = null;
-                    String extension = null;
+                    BufferedImage splitImage;
+                    String extension;
 
                     // check if the region is a ninepatch or a normal image and delegate accordingly
                     if (region.findValue("split") == null) {
-                        splitImage = extractImage(img, region, outputDirFile, 0);
+                        splitImage = extractImage(img, region, 0);
                         if (region.width != region.originalWidth || region.height != region.originalHeight) {
                             BufferedImage originalImg = new BufferedImage(region.originalWidth, region.originalHeight, img.getType());
                             Graphics2D g2 = originalImg.createGraphics();
@@ -133,7 +132,7 @@ public class TextureUnpacker {
                         }
                         extension = OUTPUT_TYPE;
                     } else {
-                        splitImage = extractNinePatch(img, region, outputDirFile);
+                        splitImage = extractNinePatch(img, region);
                         extension = String.format("9.%s", OUTPUT_TYPE);
                     }
 
@@ -162,12 +161,11 @@ public class TextureUnpacker {
      *
      * @param page          The image file related to the page the region is in
      * @param region        The region to extract
-     * @param outputDirFile The output directory
      * @param padding       padding (in pixels) to apply to the image
      * @return The extracted image
      */
-    private BufferedImage extractImage(BufferedImage page, Region region, File outputDirFile, int padding) {
-        BufferedImage splitImage = null;
+    private BufferedImage extractImage(BufferedImage page, Region region, int padding) {
+        BufferedImage splitImage;
 
         // get the needed part of the page and rotate if needed
         if (region.rotate) {
@@ -203,8 +201,8 @@ public class TextureUnpacker {
      * @param region The region to extract
      * @see <a href="http://developer.android.com/guide/topics/graphics/2d-graphics.html#nine-patch">ninepatch specification</a>
      */
-    private BufferedImage extractNinePatch(BufferedImage page, Region region, File outputDirFile) {
-        BufferedImage splitImage = extractImage(page, region, outputDirFile, NINEPATCH_PADDING);
+    private BufferedImage extractNinePatch(BufferedImage page, Region region) {
+        BufferedImage splitImage = extractImage(page, region, NINEPATCH_PADDING);
         Graphics2D g2 = splitImage.createGraphics();
         g2.setColor(Color.BLACK);
 
@@ -233,9 +231,5 @@ public class TextureUnpacker {
     private void printExceptionAndExit(Exception e) {
         e.printStackTrace();
         System.exit(1);
-    }
-
-    public void setQuiet(boolean quiet) {
-        this.quiet = quiet;
     }
 }
